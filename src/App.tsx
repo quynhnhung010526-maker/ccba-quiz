@@ -241,7 +241,7 @@ function formatSavedTime(value: string): string {
 
 function publicFilePath(fileName: string): string {
   const baseUrl = import.meta.env.BASE_URL || '/';
-  return `${baseUrl.replace(/\/$/, '')}/quiz-data/${fileName}`;
+  return `${baseUrl.replace(/\/$/, '')}/${fileName}`;
 }
 
 async function loadDefaultRawSets(): Promise<RawSet[]> {
@@ -645,7 +645,7 @@ export default function QuizLearningApp() {
   const [hasSavedData, setHasSavedData] = useState(false);
   const [isLoadingDefaults, setIsLoadingDefaults] = useState(true);
   const [importStatus, setImportStatus] = useState(
-    'Đang tải 9 bộ đề mặc định từ thư mục public/quiz-data...'
+    'Đang tải 9 bộ đề mặc định từ thư mục public...'
   );
 
   const loadBundledDefaultData = async (statusPrefix?: string) => {
@@ -664,7 +664,7 @@ export default function QuizLearningApp() {
       setHasSavedData(false);
       setImportStatus(
         statusPrefix ||
-          `Đã tải ${temporaryReport.fileCount} bộ đề mặc định từ public/quiz-data, parse được ${temporaryReport.parsedQuestionCount} câu.`
+          `Đã tải ${temporaryReport.fileCount} bộ đề mặc định từ public, parse được ${temporaryReport.parsedQuestionCount} câu.`
       );
     } catch (error) {
       setRawSets(DEMO_RAW_SETS);
@@ -673,7 +673,7 @@ export default function QuizLearningApp() {
       setCurrentIndex(0);
       setHasSavedData(false);
       setImportStatus(
-        'Chưa tải được 9 file mặc định trong public/quiz-data. App đang dùng bộ demo. Hãy kiểm tra tên file bo-1.txt đến bo-9.txt.'
+        'Chưa tải được 9 file mặc định trong public. App đang dùng bộ demo. Hãy kiểm tra tên file bo-1.txt đến bo-9.txt.'
       );
     } finally {
       setIsLoadingDefaults(false);
@@ -697,7 +697,7 @@ export default function QuizLearningApp() {
       setImportStatus(
         `Đã tải lại ${savedStorage.rawSets.length} bộ đề đã lưu trên trình duyệt. Lưu gần nhất: ${formatSavedTime(
           savedStorage.updatedAt
-        )}. Bấm “Khôi phục 9 bộ mặc định” nếu muốn dùng lại dữ liệu trong public/quiz-data.`
+        )}. Bấm “Khôi phục 9 bộ mặc định” nếu muốn dùng lại dữ liệu trong public.`
       );
       setIsLoadingDefaults(false);
       return;
@@ -807,7 +807,7 @@ export default function QuizLearningApp() {
   const resetToDefaultData = async () => {
     clearQuizStorage();
     await loadBundledDefaultData(
-      'Đã xóa dữ liệu đã lưu trên trình duyệt và khôi phục lại 9 bộ đề mặc định từ public/quiz-data.'
+      'Đã xóa dữ liệu đã lưu trên trình duyệt và khôi phục lại 9 bộ đề mặc định từ public.'
     );
   };
 
@@ -828,7 +828,7 @@ export default function QuizLearningApp() {
     if (nextRawSets.length === 0) {
       clearQuizStorage();
       await loadBundledDefaultData(
-        'Bạn đã xóa hết bộ đề hiện tại. App đã khôi phục lại 9 bộ đề mặc định từ public/quiz-data.'
+        'Bạn đã xóa hết bộ đề hiện tại. App đã khôi phục lại 9 bộ đề mặc định từ public.'
       );
       return;
     }
@@ -897,11 +897,7 @@ export default function QuizLearningApp() {
                 <h1 className="text-3xl font-bold tracking-tight md:text-5xl">
                   CCBA Practice Quiz
                 </h1>
-                <p className="mt-4 max-w-3xl text-base leading-7 text-slate-300 md:text-lg">
-                  App tải sẵn các file .txt trong thư mục public/quiz-data. Bạn
-                  vẫn có thể import file .txt để thay thế dữ liệu hiện tại, và
-                  app luôn tạo thêm 1 bộ cuối tổng hợp toàn bộ câu hỏi.
-                </p>
+               
 
                 <div className="mt-5 rounded-2xl border border-white/10 bg-white/[0.04] p-4">
                   <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
@@ -912,12 +908,7 @@ export default function QuizLearningApp() {
                       <p className="mt-1 text-sm leading-6 text-slate-400">
                         {importStatus}
                       </p>
-                      <p className="mt-1 text-xs leading-5 text-slate-500">
-                        9 bộ đề mặc định nằm trong Git ở thư mục public/quiz-data.
-                        Các thao tác xóa/import trên web chỉ lưu riêng trong
-                        trình duyệt hiện tại. Muốn đổi dữ liệu mặc định cho mọi
-                        người, hãy sửa file trong Git rồi deploy lại.
-                      </p>
+                   
                     </div>
                     <div className="flex flex-wrap gap-2">
                       <label className="inline-flex cursor-pointer items-center gap-2 rounded-2xl bg-cyan-400 px-4 py-3 text-sm font-semibold text-slate-950 transition hover:bg-cyan-300">
