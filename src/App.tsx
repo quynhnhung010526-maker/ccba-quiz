@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   AlertTriangle,
   ArrowLeft,
@@ -65,6 +65,17 @@ type OptionPosition = {
   label: string;
 };
 
+type SavedQuizStorage = {
+  version: number;
+  rawSets: RawSet[];
+  selectedSetId: string;
+  questionLimit: string;
+  updatedAt: string;
+};
+
+const STORAGE_VERSION = 1;
+const STORAGE_KEY = `ccba-practice-quiz-storage-v${STORAGE_VERSION}`;
+
 const DEMO_RAW_SETS: RawSet[] = [
   {
     id: 'demo-1',
@@ -91,6 +102,109 @@ Question 3What term describes the money and effort already committed to an initi
 ];
 
 const ANSWER_LABELS = ['A', 'B', 'C', 'D', 'E', 'F'];
+
+function isRawSet(value: unknown): value is RawSet {
+  if (!value || typeof value !== 'object') return false;
+
+  const item = value as RawSet;
+
+  return (
+    typeof item.id === 'string' &&
+    typeof item.title === 'string' &&
+    typeof item.fileName === 'string' &&
+    typeof item.raw === 'string' &&
+    item.raw.trim().length > 0
+  );
+}
+
+function loadSavedQuizStorage(): SavedQuizStorage | null {
+  if (typeof window === 'undefined') return null;
+
+  try {
+    const saved = window.localStorage.getItem(STORAGE_KEY);
+    if (!saved) return null;
+
+    const parsed = JSON.parse(saved) as Partial<SavedQuizStorage>;
+
+    if (
+      !parsed ||
+      parsed.version !== STORAGE_VERSION ||
+      !Array.isArray(parsed.rawSets)
+    ) {
+      return null;
+    }
+
+    const rawSets = parsed.rawSets.filter(isRawSet);
+    if (rawSets.length === 0) return null;
+
+    const selectedSetId =
+      typeof parsed.selectedSetId === 'string'
+        ? parsed.selectedSetId
+        : rawSets[0].id;
+
+    const questionLimit =
+      typeof parsed.questionLimit === 'string' ? parsed.questionLimit : 'all';
+
+    const updatedAt =
+      typeof parsed.updatedAt === 'string'
+        ? parsed.updatedAt
+        : new Date().toISOString();
+
+    return {
+      version: STORAGE_VERSION,
+      rawSets,
+      selectedSetId,
+      questionLimit,
+      updatedAt,
+    };
+  } catch {
+    return null;
+  }
+}
+
+function saveQuizStorage(
+  rawSets: RawSet[],
+  selectedSetId: string,
+  questionLimit: string
+): boolean {
+  if (typeof window === 'undefined') return false;
+
+  try {
+    const payload: SavedQuizStorage = {
+      version: STORAGE_VERSION,
+      rawSets,
+      selectedSetId,
+      questionLimit,
+      updatedAt: new Date().toISOString(),
+    };
+
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+function clearQuizStorage(): void {
+  if (typeof window === 'undefined') return;
+
+  try {
+    window.localStorage.removeItem(STORAGE_KEY);
+  } catch {
+    // Ignore localStorage errors.
+  }
+}
+
+function formatSavedTime(value: string): string {
+  try {
+    return new Intl.DateTimeFormat('vi-VN', {
+      dateStyle: 'short',
+      timeStyle: 'short',
+    }).format(new Date(value));
+  } catch {
+    return value;
+  }
+}
 
 function normalizeLineEndings(value: string): string {
   return value.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
@@ -472,26 +586,74 @@ function StatCard({
 }
 
 export default function QuizLearningApp() {
-  const [rawSets, setRawSets] = useState<RawSet[]>(DEMO_RAW_SETS);
-  const [selectedSetId, setSelectedSetId] = useState('demo-1');
-  const [questionLimit, setQuestionLimit] = useState('all');
+  const [initialSavedStorage] = useState<SavedQuizStorage | null>(() =>
+    loadSavedQuizStorage()
+  );
+
+  const [rawSets, setRawSets] = useState<RawSet[]>(
+    () => initialSavedStorage?.rawSets || DEMO_RAW_SETS
+  );
+
+  const [selectedSetId, setSelectedSetId] = useState(() => {
+    if (!initialSavedStorage) return 'demo-1';
+
+    const selectedExists =
+      initialSavedStorage.selectedSetId === 'all' ||
+      initialSavedStorage.rawSets.some(
+        (set) => set.id === initialSavedStorage.selectedSetId
+      );
+
+    return selectedExists
+      ? initialSavedStorage.selectedSetId
+      : initialSavedStorage.rawSets[0]?.id || 'demo-1';
+  });
+
+  const [questionLimit, setQuestionLimit] = useState(
+    () => initialSavedStorage?.questionLimit || 'all'
+  );
+
   const [search, setSearch] = useState('');
   const [currentIndex, setCurrentIndex] = useState(0);
   const [session, setSession] = useState<QuizSession | null>(null);
-  const [importStatus, setImportStatus] = useState(
-    'Đang dùng bộ mẫu. Import bao nhiêu file .txt thì tạo bấy nhiêu bộ đề riêng và thêm 1 bộ tổng hợp.'
+  const [hasSavedData, setHasSavedData] = useState(() =>
+    Boolean(initialSavedStorage)
   );
+
+  const [importStatus, setImportStatus] = useState(() => {
+    if (initialSavedStorage) {
+      return `Đã tải lại ${initialSavedStorage.rawSets.length} file đã lưu trên trình duyệt. Lưu gần nhất: ${formatSavedTime(
+        initialSavedStorage.updatedAt
+      )}.`;
+    }
+
+    return 'Đang dùng bộ mẫu. Import bao nhiêu file .txt thì tạo bấy nhiêu bộ đề riêng và thêm 1 bộ tổng hợp.';
+  });
+
+  useEffect(() => {
+    if (!hasSavedData) return;
+
+    const saved = saveQuizStorage(rawSets, selectedSetId, questionLimit);
+
+    if (!saved) {
+      setImportStatus(
+        'Dữ liệu hiện tại vẫn dùng được, nhưng chưa lưu được vào trình duyệt. Có thể localStorage đã đầy hoặc trình duyệt đang chặn lưu dữ liệu.'
+      );
+    }
+  }, [hasSavedData, rawSets, selectedSetId, questionLimit]);
 
   const parsedSets = useMemo<QuizSet[]>(
     () => buildQuizSets(rawSets),
     [rawSets]
   );
+
   const importReport = useMemo<ImportReport>(
     () => createImportReport(rawSets),
     [rawSets]
   );
+
   const selectedSet =
     parsedSets.find((set) => set.id === selectedSetId) || parsedSets[0];
+
   const filteredSets = parsedSets.filter((set) =>
     set.title.toLowerCase().includes(search.toLowerCase())
   );
@@ -546,24 +708,34 @@ export default function QuizLearningApp() {
       return;
     }
 
+    const nextSelectedSetId = imported[0].id;
+    const temporaryReport = createImportReport(imported);
+    const saved = saveQuizStorage(imported, nextSelectedSetId, questionLimit);
+
     setRawSets(imported);
-    setSelectedSetId(imported[0].id);
+    setSelectedSetId(nextSelectedSetId);
     setSession(null);
     setCurrentIndex(0);
+    setHasSavedData(saved);
 
-    const temporaryReport = createImportReport(imported);
     setImportStatus(
-      `Đã import ${temporaryReport.fileCount} file, parse được ${temporaryReport.parsedQuestionCount} câu. App đã tạo ${temporaryReport.fileCount} bộ riêng và 1 bộ tổng hợp cuối.`
+      `Đã import ${temporaryReport.fileCount} file, parse được ${temporaryReport.parsedQuestionCount} câu. App đã tạo ${temporaryReport.fileCount} bộ riêng và 1 bộ tổng hợp cuối. ${
+        saved
+          ? 'Dữ liệu đã được lưu trên trình duyệt, lần sau mở lại web sẽ còn.'
+          : 'Chưa lưu được vào trình duyệt, có thể localStorage đã đầy hoặc bị chặn.'
+      }`
     );
   };
 
   const resetToDemo = () => {
+    clearQuizStorage();
+    setHasSavedData(false);
     setRawSets(DEMO_RAW_SETS);
     setSelectedSetId('demo-1');
     setSession(null);
     setCurrentIndex(0);
     setImportStatus(
-      'Đã quay lại bộ mẫu. Import bao nhiêu file .txt thì tạo bấy nhiêu bộ đề riêng và thêm 1 bộ tổng hợp.'
+      'Đã xóa dữ liệu đã lưu và quay lại bộ mẫu. Import file mới thì app sẽ lưu lại để lần sau vào học tiếp.'
     );
   };
 
@@ -600,7 +772,12 @@ export default function QuizLearningApp() {
                 <h1 className="text-3xl font-bold tracking-tight md:text-5xl">
                   CCBA Practice Quiz
                 </h1>
-              
+                <p className="mt-4 max-w-3xl text-base leading-7 text-slate-300 md:text-lg">
+                  App không nhúng sẵn dữ liệu dài vào code. Bạn import bao nhiêu
+                  file .txt thì hệ thống tạo bấy nhiêu bộ đề riêng, rồi thêm 1
+                  bộ cuối tổng hợp toàn bộ câu hỏi.
+                </p>
+
                 <div className="mt-5 rounded-2xl border border-white/10 bg-white/[0.04] p-4">
                   <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
                     <div>
@@ -609,6 +786,11 @@ export default function QuizLearningApp() {
                       </p>
                       <p className="mt-1 text-sm leading-6 text-slate-400">
                         {importStatus}
+                      </p>
+                      <p className="mt-1 text-xs leading-5 text-slate-500">
+                        Dữ liệu được lưu trong trình duyệt hiện tại. Nếu đổi máy,
+                        đổi trình duyệt hoặc xóa cache/localStorage thì cần import
+                        lại file.
                       </p>
                     </div>
                     <div className="flex flex-wrap gap-2">
