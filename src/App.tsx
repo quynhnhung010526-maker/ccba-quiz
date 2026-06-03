@@ -11,6 +11,7 @@ import {
   RotateCcw,
   Search,
   Shuffle,
+  Trash2,
   Trophy,
   XCircle,
 } from 'lucide-react';
@@ -20,6 +21,12 @@ type RawSet = {
   title: string;
   fileName: string;
   raw: string;
+};
+
+type DefaultQuizFile = {
+  id: string;
+  fallbackTitle: string;
+  fileName: string;
 };
 
 type Option = {
@@ -73,13 +80,27 @@ type SavedQuizStorage = {
   updatedAt: string;
 };
 
-const STORAGE_VERSION = 1;
+const STORAGE_VERSION = 2;
 const STORAGE_KEY = `ccba-practice-quiz-storage-v${STORAGE_VERSION}`;
+
+// Đặt 9 file .txt của bạn vào: public/quiz-data/
+// Tên file phải khớp với danh sách dưới đây.
+const DEFAULT_QUIZ_FILES: DefaultQuizFile[] = [
+  { id: 'default-1', fallbackTitle: 'Bộ 1 - CCBA Practice', fileName: 'bo-1.txt' },
+  { id: 'default-2', fallbackTitle: 'Bộ 2 - CCBA Practice', fileName: 'bo-2.txt' },
+  { id: 'default-3', fallbackTitle: 'Bộ 3 - CCBA Practice', fileName: 'bo-3.txt' },
+  { id: 'default-4', fallbackTitle: 'Bộ 4 - CCBA Practice', fileName: 'bo-4.txt' },
+  { id: 'default-5', fallbackTitle: 'Bộ 5 - CCBA Practice', fileName: 'bo-5.txt' },
+  { id: 'default-6', fallbackTitle: 'Bộ 6 - CCBA Practice', fileName: 'bo-6.txt' },
+  { id: 'default-7', fallbackTitle: 'Bộ 7 - CCBA Practice', fileName: 'bo-7.txt' },
+  { id: 'default-8', fallbackTitle: 'Bộ 8 - CCBA Practice', fileName: 'bo-8.txt' },
+  { id: 'default-9', fallbackTitle: 'Bộ 9 - CCBA Practice', fileName: 'bo-9.txt' },
+];
 
 const DEMO_RAW_SETS: RawSet[] = [
   {
     id: 'demo-1',
-    title: 'Bộ mẫu - Import file .txt để tạo bộ đề',
+    title: 'Bộ mẫu - Chưa tìm thấy file mặc định',
     fileName: 'demo.txt',
     raw: `CCBA Practice - Demo
 
@@ -103,9 +124,21 @@ Question 3What term describes the money and effort already committed to an initi
 
 const ANSWER_LABELS = ['A', 'B', 'C', 'D', 'E', 'F'];
 
+function normalizeLineEndings(value: string): string {
+  return value.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+}
+
+function cleanTitleFromFile(raw: string, fileName: string): string {
+  const firstLine = normalizeLineEndings(raw)
+    .split('\n')
+    .find((line) => line.trim().length > 0)
+    ?.trim();
+
+  return firstLine || fileName.replace(/\.txt$/i, '');
+}
+
 function isRawSet(value: unknown): value is RawSet {
   if (!value || typeof value !== 'object') return false;
-
   const item = value as RawSet;
 
   return (
@@ -206,17 +239,34 @@ function formatSavedTime(value: string): string {
   }
 }
 
-function normalizeLineEndings(value: string): string {
-  return value.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+function publicFilePath(fileName: string): string {
+  const baseUrl = import.meta.env.BASE_URL || '/';
+  return `${baseUrl.replace(/\/$/, '')}/quiz-data/${fileName}`;
 }
 
-function cleanTitleFromFile(raw: string, fileName: string): string {
-  const firstLine = normalizeLineEndings(raw)
-    .split('\n')
-    .find((line) => line.trim().length > 0)
-    ?.trim();
+async function loadDefaultRawSets(): Promise<RawSet[]> {
+  const loaded = await Promise.all(
+    DEFAULT_QUIZ_FILES.map(async (file) => {
+      const response = await fetch(publicFilePath(file.fileName), {
+        cache: 'no-cache',
+      });
 
-  return firstLine || fileName.replace(/\.txt$/i, '');
+      if (!response.ok) {
+        throw new Error(`Không tải được ${file.fileName}`);
+      }
+
+      const raw = await response.text();
+
+      return {
+        id: file.id,
+        title: cleanTitleFromFile(raw, file.fileName) || file.fallbackTitle,
+        fileName: file.fileName,
+        raw,
+      };
+    })
+  );
+
+  return loaded.filter((set) => set.raw.trim().length > 0);
 }
 
 function stripCorrectMarker(value: string): {
@@ -586,51 +636,78 @@ function StatCard({
 }
 
 export default function QuizLearningApp() {
-  const [initialSavedStorage] = useState<SavedQuizStorage | null>(() =>
-    loadSavedQuizStorage()
-  );
-
-  const [rawSets, setRawSets] = useState<RawSet[]>(
-    () => initialSavedStorage?.rawSets || DEMO_RAW_SETS
-  );
-
-  const [selectedSetId, setSelectedSetId] = useState(() => {
-    if (!initialSavedStorage) return 'demo-1';
-
-    const selectedExists =
-      initialSavedStorage.selectedSetId === 'all' ||
-      initialSavedStorage.rawSets.some(
-        (set) => set.id === initialSavedStorage.selectedSetId
-      );
-
-    return selectedExists
-      ? initialSavedStorage.selectedSetId
-      : initialSavedStorage.rawSets[0]?.id || 'demo-1';
-  });
-
-  const [questionLimit, setQuestionLimit] = useState(
-    () => initialSavedStorage?.questionLimit || 'all'
-  );
-
+  const [rawSets, setRawSets] = useState<RawSet[]>([]);
+  const [selectedSetId, setSelectedSetId] = useState('');
+  const [questionLimit, setQuestionLimit] = useState('all');
   const [search, setSearch] = useState('');
   const [currentIndex, setCurrentIndex] = useState(0);
   const [session, setSession] = useState<QuizSession | null>(null);
-  const [hasSavedData, setHasSavedData] = useState(() =>
-    Boolean(initialSavedStorage)
+  const [hasSavedData, setHasSavedData] = useState(false);
+  const [isLoadingDefaults, setIsLoadingDefaults] = useState(true);
+  const [importStatus, setImportStatus] = useState(
+    'Đang tải 9 bộ đề mặc định từ thư mục public/quiz-data...'
   );
 
-  const [importStatus, setImportStatus] = useState(() => {
-    if (initialSavedStorage) {
-      return `Đã tải lại ${initialSavedStorage.rawSets.length} file đã lưu trên trình duyệt. Lưu gần nhất: ${formatSavedTime(
-        initialSavedStorage.updatedAt
-      )}.`;
-    }
+  const loadBundledDefaultData = async (statusPrefix?: string) => {
+    setIsLoadingDefaults(true);
 
-    return 'Đang dùng bộ mẫu. Import bao nhiêu file .txt thì tạo bấy nhiêu bộ đề riêng và thêm 1 bộ tổng hợp.';
-  });
+    try {
+      const defaults = await loadDefaultRawSets();
+      const nextRawSets = defaults.length > 0 ? defaults : DEMO_RAW_SETS;
+      const nextSelectedSetId = nextRawSets[0]?.id || 'all';
+      const temporaryReport = createImportReport(nextRawSets);
+
+      setRawSets(nextRawSets);
+      setSelectedSetId(nextSelectedSetId);
+      setSession(null);
+      setCurrentIndex(0);
+      setHasSavedData(false);
+      setImportStatus(
+        statusPrefix ||
+          `Đã tải ${temporaryReport.fileCount} bộ đề mặc định từ public/quiz-data, parse được ${temporaryReport.parsedQuestionCount} câu.`
+      );
+    } catch (error) {
+      setRawSets(DEMO_RAW_SETS);
+      setSelectedSetId('demo-1');
+      setSession(null);
+      setCurrentIndex(0);
+      setHasSavedData(false);
+      setImportStatus(
+        'Chưa tải được 9 file mặc định trong public/quiz-data. App đang dùng bộ demo. Hãy kiểm tra tên file bo-1.txt đến bo-9.txt.'
+      );
+    } finally {
+      setIsLoadingDefaults(false);
+    }
+  };
 
   useEffect(() => {
-    if (!hasSavedData) return;
+    const savedStorage = loadSavedQuizStorage();
+
+    if (savedStorage) {
+      const selectedExists =
+        savedStorage.selectedSetId === 'all' ||
+        savedStorage.rawSets.some((set) => set.id === savedStorage.selectedSetId);
+
+      setRawSets(savedStorage.rawSets);
+      setSelectedSetId(
+        selectedExists ? savedStorage.selectedSetId : savedStorage.rawSets[0].id
+      );
+      setQuestionLimit(savedStorage.questionLimit);
+      setHasSavedData(true);
+      setImportStatus(
+        `Đã tải lại ${savedStorage.rawSets.length} bộ đề đã lưu trên trình duyệt. Lưu gần nhất: ${formatSavedTime(
+          savedStorage.updatedAt
+        )}. Bấm “Khôi phục 9 bộ mặc định” nếu muốn dùng lại dữ liệu trong public/quiz-data.`
+      );
+      setIsLoadingDefaults(false);
+      return;
+    }
+
+    void loadBundledDefaultData();
+  }, []);
+
+  useEffect(() => {
+    if (!hasSavedData || rawSets.length === 0) return;
 
     const saved = saveQuizStorage(rawSets, selectedSetId, questionLimit);
 
@@ -721,21 +798,55 @@ export default function QuizLearningApp() {
     setImportStatus(
       `Đã import ${temporaryReport.fileCount} file, parse được ${temporaryReport.parsedQuestionCount} câu. App đã tạo ${temporaryReport.fileCount} bộ riêng và 1 bộ tổng hợp cuối. ${
         saved
-          ? 'Dữ liệu đã được lưu trên trình duyệt, lần sau mở lại web sẽ còn.'
+          ? 'Dữ liệu import đã được lưu trên trình duyệt hiện tại.'
           : 'Chưa lưu được vào trình duyệt, có thể localStorage đã đầy hoặc bị chặn.'
       }`
     );
   };
 
-  const resetToDemo = () => {
+  const resetToDefaultData = async () => {
     clearQuizStorage();
-    setHasSavedData(false);
-    setRawSets(DEMO_RAW_SETS);
-    setSelectedSetId('demo-1');
+    await loadBundledDefaultData(
+      'Đã xóa dữ liệu đã lưu trên trình duyệt và khôi phục lại 9 bộ đề mặc định từ public/quiz-data.'
+    );
+  };
+
+  const deleteQuizSet = async (setId: string) => {
+    if (setId === 'all') return;
+
+    const targetSet = rawSets.find((set) => set.id === setId);
+    if (!targetSet) return;
+
+    const confirmed = window.confirm(
+      `Bạn có chắc muốn xóa bộ đề "${targetSet.title}" không?\n\nLưu ý: thao tác này chỉ xóa/ẩn trên trình duyệt hiện tại. File gốc trong Git vẫn còn.`
+    );
+
+    if (!confirmed) return;
+
+    const nextRawSets = rawSets.filter((set) => set.id !== setId);
+
+    if (nextRawSets.length === 0) {
+      clearQuizStorage();
+      await loadBundledDefaultData(
+        'Bạn đã xóa hết bộ đề hiện tại. App đã khôi phục lại 9 bộ đề mặc định từ public/quiz-data.'
+      );
+      return;
+    }
+
+    const nextSelectedSetId =
+      selectedSetId === setId ? nextRawSets[0].id : selectedSetId;
+    const saved = saveQuizStorage(nextRawSets, nextSelectedSetId, questionLimit);
+    const temporaryReport = createImportReport(nextRawSets);
+
+    setRawSets(nextRawSets);
+    setSelectedSetId(nextSelectedSetId);
     setSession(null);
     setCurrentIndex(0);
+    setHasSavedData(saved);
     setImportStatus(
-      'Đã xóa dữ liệu đã lưu và quay lại bộ mẫu. Import file mới thì app sẽ lưu lại để lần sau vào học tiếp.'
+      `Đã xóa "${targetSet.title}". Còn ${temporaryReport.fileCount} bộ đề, tổng ${temporaryReport.parsedQuestionCount} câu. ${
+        saved ? 'Thay đổi đã được lưu trên trình duyệt hiện tại.' : ''
+      }`
     );
   };
 
@@ -758,6 +869,20 @@ export default function QuizLearningApp() {
     setCurrentIndex(0);
   };
 
+  if (isLoadingDefaults) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-slate-950 px-4 text-slate-100">
+        <div className="max-w-lg rounded-3xl border border-white/10 bg-white/[0.04] p-6 text-center shadow-xl">
+          <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-cyan-300/10 text-cyan-100">
+            <BookOpen className="h-6 w-6" />
+          </div>
+          <h1 className="text-2xl font-bold">Đang tải bộ đề...</h1>
+          <p className="mt-3 leading-7 text-slate-400">{importStatus}</p>
+        </div>
+      </div>
+    );
+  }
+
   if (!session) {
     return (
       <div className="min-h-screen bg-slate-950 text-slate-100">
@@ -772,21 +897,26 @@ export default function QuizLearningApp() {
                 <h1 className="text-3xl font-bold tracking-tight md:text-5xl">
                   CCBA Practice Quiz
                 </h1>
-            
+                <p className="mt-4 max-w-3xl text-base leading-7 text-slate-300 md:text-lg">
+                  App tải sẵn các file .txt trong thư mục public/quiz-data. Bạn
+                  vẫn có thể import file .txt để thay thế dữ liệu hiện tại, và
+                  app luôn tạo thêm 1 bộ cuối tổng hợp toàn bộ câu hỏi.
+                </p>
 
                 <div className="mt-5 rounded-2xl border border-white/10 bg-white/[0.04] p-4">
                   <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
                     <div>
                       <p className="font-semibold text-slate-100">
-                        Import dữ liệu câu hỏi
+                        Dữ liệu câu hỏi
                       </p>
                       <p className="mt-1 text-sm leading-6 text-slate-400">
                         {importStatus}
                       </p>
                       <p className="mt-1 text-xs leading-5 text-slate-500">
-                        Dữ liệu được lưu trong trình duyệt hiện tại. Nếu đổi máy,
-                        đổi trình duyệt hoặc xóa cache/localStorage thì cần import
-                        lại file.
+                        9 bộ đề mặc định nằm trong Git ở thư mục public/quiz-data.
+                        Các thao tác xóa/import trên web chỉ lưu riêng trong
+                        trình duyệt hiện tại. Muốn đổi dữ liệu mặc định cho mọi
+                        người, hãy sửa file trong Git rồi deploy lại.
                       </p>
                     </div>
                     <div className="flex flex-wrap gap-2">
@@ -801,10 +931,10 @@ export default function QuizLearningApp() {
                         />
                       </label>
                       <button
-                        onClick={resetToDemo}
+                        onClick={resetToDefaultData}
                         className="rounded-2xl border border-white/10 px-4 py-3 text-sm font-semibold text-slate-200 hover:bg-white/10"
                       >
-                        Xóa dữ liệu & dùng mẫu
+                        Khôi phục 9 bộ mặc định
                       </button>
                     </div>
                   </div>
@@ -887,8 +1017,7 @@ export default function QuizLearningApp() {
             <div>
               <h2 className="text-2xl font-bold">Danh sách bộ trắc nghiệm</h2>
               <p className="mt-1 text-slate-400">
-                Import bao nhiêu file thì có bấy nhiêu bộ riêng, cộng thêm 1 bộ
-                cuối tổng hợp.
+                Mỗi file .txt là 1 bộ riêng, cộng thêm 1 bộ cuối tổng hợp.
               </p>
             </div>
             <div className="relative w-full md:w-80">
@@ -904,10 +1033,15 @@ export default function QuizLearningApp() {
 
           <div className="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
             {filteredSets.map((set, index) => (
-              <button
+              <div
                 key={set.id}
+                role="button"
+                tabIndex={0}
                 onClick={() => setSelectedSetId(set.id)}
                 onDoubleClick={() => startQuiz(set.id)}
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter') setSelectedSetId(set.id);
+                }}
                 className={cn(
                   'group rounded-3xl border p-5 text-left shadow-xl transition hover:-translate-y-1',
                   selectedSetId === set.id
@@ -921,10 +1055,28 @@ export default function QuizLearningApp() {
                       ? `Bộ ${rawSets.length + 1}`
                       : `Bộ ${index + 1}`}
                   </div>
-                  <div className="rounded-full bg-slate-950/70 px-3 py-1 text-sm text-slate-300">
-                    {set.questions.length} câu
+
+                  <div className="flex items-center gap-2">
+                    <div className="rounded-full bg-slate-950/70 px-3 py-1 text-sm text-slate-300">
+                      {set.questions.length} câu
+                    </div>
+
+                    {set.id !== 'all' && (
+                      <button
+                        type="button"
+                        onClick={(event) => {
+                          event.stopPropagation();
+                          void deleteQuizSet(set.id);
+                        }}
+                        className="rounded-full border border-rose-300/30 bg-rose-300/10 p-2 text-rose-200 transition hover:bg-rose-300 hover:text-rose-950"
+                        title="Xóa bộ đề này"
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </button>
+                    )}
                   </div>
                 </div>
+
                 <h3 className="mt-4 text-lg font-semibold leading-6 text-slate-100">
                   {set.title}
                 </h3>
@@ -936,7 +1088,7 @@ export default function QuizLearningApp() {
                   </span>
                   <ArrowRight className="h-4 w-4 text-cyan-200 transition group-hover:translate-x-1" />
                 </div>
-              </button>
+              </div>
             ))}
           </div>
         </div>
@@ -1303,3 +1455,4 @@ export default function QuizLearningApp() {
     </div>
   );
 }
+
