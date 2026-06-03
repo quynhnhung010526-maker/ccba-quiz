@@ -83,7 +83,7 @@ type SavedQuizStorage = {
 const STORAGE_VERSION = 2;
 const STORAGE_KEY = `ccba-practice-quiz-storage-v${STORAGE_VERSION}`;
 
-// Đặt 9 file .txt của bạn vào: public/quiz-data/
+// Đặt 9 file .txt của bạn vào: public/
 // Tên file phải khớp với danh sách dưới đây.
 const DEFAULT_QUIZ_FILES: DefaultQuizFile[] = [
   { id: 'default-1', fallbackTitle: 'Bộ 1 - CCBA Practice', fileName: 'bo-1.txt' },
