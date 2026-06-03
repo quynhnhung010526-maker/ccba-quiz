@@ -86,15 +86,15 @@ const STORAGE_KEY = `ccba-practice-quiz-storage-v${STORAGE_VERSION}`;
 // Đặt 9 file .txt của bạn vào: public/
 // Tên file phải khớp với danh sách dưới đây.
 const DEFAULT_QUIZ_FILES: DefaultQuizFile[] = [
-  { id: 'default-1', fallbackTitle: 'Bộ 1 - CCBA Practice', fileName: 'bo-1.txt' },
-  { id: 'default-2', fallbackTitle: 'Bộ 2 - CCBA Practice', fileName: 'bo-2.txt' },
-  { id: 'default-3', fallbackTitle: 'Bộ 3 - CCBA Practice', fileName: 'bo-3.txt' },
-  { id: 'default-4', fallbackTitle: 'Bộ 4 - CCBA Practice', fileName: 'bo-4.txt' },
-  { id: 'default-5', fallbackTitle: 'Bộ 5 - CCBA Practice', fileName: 'bo-5.txt' },
-  { id: 'default-6', fallbackTitle: 'Bộ 6 - CCBA Practice', fileName: 'bo-6.txt' },
-  { id: 'default-7', fallbackTitle: 'Bộ 7 - CCBA Practice', fileName: 'bo-7.txt' },
-  { id: 'default-8', fallbackTitle: 'Bộ 8 - CCBA Practice', fileName: 'bo-8.txt' },
-  { id: 'default-9', fallbackTitle: 'Bộ 9 - CCBA Practice', fileName: 'bo-9.txt' },
+  { id: 'default-1', fallbackTitle: 'Bộ 1 - CCBA Practice', fileName: 'CCBA1.txt' },
+  { id: 'default-2', fallbackTitle: 'Bộ 2 - CCBA Practice', fileName: 'CCBA2.txt' },
+  { id: 'default-3', fallbackTitle: 'Bộ 3 - CCBA Practice', fileName: 'CCBA3.txt' },
+  { id: 'default-4', fallbackTitle: 'Bộ 4 - CCBA Practice', fileName: 'CCBA4.txt' },
+  { id: 'default-5', fallbackTitle: 'Bộ 5 - CCBA Practice', fileName: 'CCBA5.txt' },
+  { id: 'default-6', fallbackTitle: 'Bộ 6 - CCBA Practice', fileName: 'CCBA6.txt' },
+  { id: 'default-7', fallbackTitle: 'Bộ 7 - CCBA Practice', fileName: 'CCBA7.txt' },
+  { id: 'default-8', fallbackTitle: 'Bộ 8 - CCBA Practice', fileName: 'CCBA8.txt' },
+  { id: 'default-9', fallbackTitle: 'Bộ 9 - CCBA Practice', fileName: 'CCBA9.txt' },
 ];
 
 const DEMO_RAW_SETS: RawSet[] = [
@@ -673,7 +673,7 @@ export default function QuizLearningApp() {
       setCurrentIndex(0);
       setHasSavedData(false);
       setImportStatus(
-        'Chưa tải được 9 file mặc định trong public. App đang dùng bộ demo. Hãy kiểm tra tên file bo-1.txt đến bo-9.txt.'
+        'Chưa tải được 9 file mặc định trong public. App đang dùng bộ demo. Hãy kiểm tra tên file CCBA1.txt đến CCBA9.txt.'
       );
     } finally {
       setIsLoadingDefaults(false);
