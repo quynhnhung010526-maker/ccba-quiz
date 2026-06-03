@@ -772,11 +772,7 @@ export default function QuizLearningApp() {
                 <h1 className="text-3xl font-bold tracking-tight md:text-5xl">
                   CCBA Practice Quiz
                 </h1>
-                <p className="mt-4 max-w-3xl text-base leading-7 text-slate-300 md:text-lg">
-                  App không nhúng sẵn dữ liệu dài vào code. Bạn import bao nhiêu
-                  file .txt thì hệ thống tạo bấy nhiêu bộ đề riêng, rồi thêm 1
-                  bộ cuối tổng hợp toàn bộ câu hỏi.
-                </p>
+            
 
                 <div className="mt-5 rounded-2xl border border-white/10 bg-white/[0.04] p-4">
                   <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
