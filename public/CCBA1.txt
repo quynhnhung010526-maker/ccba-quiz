@@ -1,0 +1,84 @@
+CCBA Practice - Pre Exam Advance 01
+
+Question 1An organization prefers to execute projects using an adaptive approach. However, the new project is much more complex than previously executed projects. What will the business analyst (BA) recommend?
+A)Review current approach with key stakeholders => true
+B)Select an extreme programming approach
+C)Follow a predictive approach
+D)Choose an agile programming approach
+
+Question 2A business analyst (BA) is validating requirements and has found that the design cannot be validated to support the requirements. Which of the following is creating this situation?
+A)Lack of requirements traceability.
+B)Incorrect assumptions.
+C)Missing requirements. => True
+D)Substandard solution design.
+
+Question 3The business analyst (BA) assigned to support a legacy system has developed a customer survey to assess its usability. Before distributing the survey, what should the BA do?
+A)Observe customer interaction with the system => True
+B)Validate the survey with the project sponsor
+C)Update the project plan to include the survey
+D)Review the risk register with the project sponsor
+
+Question 4In order to plan the business analysis approach, the business analyst must understand the organizational process needs and what other thing?
+A)Consideration of risk and reward
+B)Stakeholders' threats and perceived threats
+C)Purpose of the proposed solution
+D)Operation of organizations and the objectives of business analysis => True
+
+Question 5A business analyst (BA) is supporting an organization in its product launch. The BA wants to identify assumptions about the benefits resulting from the new product. What does identifying assumptions help the BA manage?
+A)Priorities
+B)Requirements
+C)Metrics
+D)Risks => True
+
+Question 6A business analyst (BA) has completed an impact analysis of a proposed change, gained approval for the change, and has updated the requirements. The project sponsor wants to be updated with an overview of the results. How should the BA communicate the results?A)Schedule a requirements workshop
+B)Present the requirements at a high-level => True
+C)Create use case scenarios
+D)Email the requirements package
+
+Question 7Performance measures have been collected and analyzed by a business analyst (BA) to evaluate a solution that was launched a few years ago; however, the performance measures do not indicate whether or not the solution is contributing to the desired value. What is the recommended next step?A)Identify and collect more measurements => trueB)Reduce the business' expectations of valueC)Increase the efficiency of the solutionD)Replace the solution as soon as possible
+
+Question 8A business analyst (BA) is verifying a set of requirements. One of the requirements is “After the customer has received an email confirmation, the customer is likely to access the order status in the order history which is available upon order submission.” Which one of the following requirements quality characteristic is breached?A)UnderstandableB)ConciseC)PrioritizedD)Atomic => True
+
+Question 9A global organization is implementing a new Knowledge Management System and communication to the different regions has been informal. The approach is to convert the few remaining regions iteratively. The team has experienced variances at this point but feels confident in these final conversions. How should the business analyst (BA) communicate the information?A)RepositoryB)Individual collaborationC)Document managementD)Email => True
+
+Question 10A business analyst (BA) is measuring solution performance of a new system. What should the BA consider to avoid skewed results and an inaccurate conclusion?A)TimingB)FrequencyC)Volume => TrueD)Currency
+
+Question 11A business analyst (BA) has determined that “Product Box”, a collaboration game, will provide a fun way to engage the stakeholders when working on prioritizing the list of features. What should the BA do?A)Consider meeting logisticsB)Send out an agenda in advanceC)Ensure buy-in from key stakeholders => TrueD)Research ideas for the new product
+
+Question 12The business analyst (BA) recommended a new application be rolled out in phases. After reviewing alternatives, the project sponsor agreed. What does the BA expect to achieve by this approach?A)Increase stakeholder engagementB)Maximize allocationC)Maximize benefits => TrueD)Increase process validation
+
+Question 13A business analyst (BA) is working on a project to provide a temporary solution that will last for two months. The BA is feeling overwhelmed with the work needed to create the huge number of links to provide full traceability from solution requirements to design for this solution. How can the BA justify omitting all possible links?A)The value each link is delivering in this situation is not high => TrueB)Such traceability is at a lower level of abstraction for this projectC)It is impossible for anyone to confirm if such links are correctD)Traceability is a low priority as the BA has other work to complete
+
+Question 14A business analyst (BA) has discovered an old checklist prepared for another initiative, which includes the following characteristics: Complete, Feasible, Unambiguous, Testable. What is the purpose of this checklist?A)To compare solution optionsB)To verify requirements => TrueC)To validate requirementsD)To measure solution performance
+
+Question 15The business analyst (BA) is assigned a small project, requiring minor enhancements to an existing system. The BA will meet with the business sponsor and developer next week to gather information about the change. What should the BA review before the meeting?A)Functional design specification of the existing system => TrueB)Current list of funded initiatives for the current yearC)Minutes from the last steering committee meetingD)Organizational structure of the impacted department
+
+Question 16A business analyst (BA) is working to identity the business need, specifically the problems with the current state of a process. At which level of the enterprise can the BA identify problems with the current state?A)Top-downB)From external driversC)Bottom-up => TrueD)From middle-management
+
+Question 17A company is embarking on a software project in a heavily regulated domain. The client expects large upfront planning and detailed documentation for the project. The recommended approach for the project will beA)waterfall.B)scrum.C)adaptive.D)predictive. => True
+
+Question 18The business analyst (BA) has traced the requirements for the interaction between a customer and the new online ordering system. Besides enabling the BA to ensure quality of the requirements to stakeholders, tracing the requirements will also enable the BA to:A)show all of the decision points in the business process.B)capture all users that will be impacted by the project.C)illustrate the relationships between relevant requirements. => TrueD)detail the inner workings of the system being changed.
+
+Question 19A business analyst (BA) is in the process of eliciting requirements. It has been determined that not all requirements can be implemented by the project deadline due to complexity. What must the BA do to ensure maximum benefit for the stakeholders?A)Maintain requirements based on priority => TrueB)Apply quality control on requirementsC)Ensure users are trained based on requirementsD)Utilize requirements documentation template
+
+Question 20A business analyst (BA) working with a large insurance corporation interviewed an industry thought leader who predicted that many of the regulations currently imposed by the government will change very soon. The BA carefully documented all these inputs from the thought leader because it will impact many of the strategic initiatives of the insurance company. What specific element of requirement validation is being executed by the BA?A)Evaluate alignment with solution scopeB)Identify constraintsC)Identify assumptions => TrueD)Define measurable evaluation criteria
+
+Question 21A business analyst (BA) is defining a stakeholder approval approach for the requirement deliverables. The project involves implementing new government regulatory requirements with significant risk to the organization in case of non-compliance. According to the BABOK ® GUIDE, what will the BA need to do?A)Ensure high level user stories are completed and acceptedB)Use an informal approval process to speed up deliveryC)Use a rigorous approval process of detailed specifications => TrueD)Ensure the document is completed and signed off
+
+Question 22The business analyst (BA) has completed the verification of a set of requirements, but a change in scope has materialized. Which technique should the BA use to obtain consensus and reach agreement among the stakeholders?A)Business rules analysisB)Risk analysis and managementC)Financial analysisD)Decision analysis => True
+
+Question 23A business analyst (BA) was asked by the vice president (VP) to evaluate the organization's claims processing capability and recommend improvements. The VP agreed to the BA's recommended solution approach and identified an external vendor to develop the modernized claims processing system. Before contracting with the external vendor, the BA realized that the budget should be approved by the Chief Financial Officer. What was missed by the BA when performing stakeholder analysis?A)AttitudeB)Decision making authority => TrueC)RolesD)Level of influence
+
+Question 24The business analysis (BA) team is evaluating a new commercial off-the-shelf (COTS) application that will be implemented in the coming months. The company has over 20 legacy systems deployed. The Chief Information Officer (CIO) is worried about the need for integration and that some key linkages are missing. What is the BA team evaluating?A)Technology and infrastructureB)Industry standard architectureC)Business architecture => TrueD)Service oriented architecture
+
+Question 25Before beginning requirements elicitation, a business analyst (BA) has planned the necessary activities, identified needed stakeholders, and documented this in the Business Analysis Plan. Which approach will help the BA ensure that stakeholders are available when required?A)Talk to the stakeholders' managers to ensure the resources will be availableB)Conduct a review of the plan with the stakeholders and adjust according to the feedback received => TrueC)Request an introduction letter from the business sponsor highlighting the importance of the initiativeD)Send meeting invitations well in advance so stakeholders can plan in time
+
+Question 26A business analyst (BA) must model information characteristics across multiple information systems for a project. What type of model captures this information?A)Interface analysis => TrueB)Decision analysisC)Force field analysisD)Business capability analysis
+
+Question 27A business analyst (BA) has completed documenting requirements and to save time, recommends sharing the requirements document with the development team to fast-track development immediately. What issue may arise by doing so?A)The business need may change.B)Requirements metrics may not be measurable.C)Stakeholders may refuse the solution. => TrueD)The BA may significantly impact other aspects of the project timeline.
+
+Question 28A company wants to increase transaction service offerings using its on-line channels. The existing application already has some of the required functionality. A new project has been initiated to implement the additional capabilities but the company management is unsure of the complexity of the project. What exercise must be carried out to determine the changes needed in the new application?A)Evaluate competitor applicationsB)Perform gap analysis of current and future states => TrueC)Assess organizational cultureD)Identify internal solution component dependencies
+
+Question 29The business analyst (BA) has scheduled an informal review of audit requirements with the compliance officer. The BA wants to demonstrate that the requirements collectively support one another so begins with reviewing the:A)template architectures. => TrueB)work breakdown structure.C)business rules document.D)functional specification.
+
+Question 30Several user groups are impacted by a proposed change to their daily work flow. How should the business analyst (BA) convey these changes so that the user groups understand the impact?A)Create business process models => TrueB)Establish a communication planC)Develop a data model diagramD)Write functional requirements
