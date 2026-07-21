@@ -6,8 +6,11 @@ import {
   BookOpen,
   CheckCircle2,
   FileUp,
+  Languages,
   Layers3,
+  Lightbulb,
   ListChecks,
+  RefreshCw,
   RotateCcw,
   Search,
   Shuffle,
@@ -80,6 +83,20 @@ type SavedQuizStorage = {
   updatedAt: string;
 };
 
+type KeywordItem = {
+  en: string;
+  vi: string;
+  appearsInQuestion: boolean;
+};
+
+type LearningNote = {
+  status: 'loading' | 'ready' | 'error';
+  keywords: KeywordItem[];
+  questionVi: string;
+  correctAnswerVi: string;
+  errorMessage?: string;
+};
+
 const STORAGE_VERSION = 2;
 const STORAGE_KEY = `ccba-practice-quiz-storage-v${STORAGE_VERSION}`;
 
@@ -123,6 +140,259 @@ Question 3What term describes the money and effort already committed to an initi
 ];
 
 const ANSWER_LABELS = ['A', 'B', 'C', 'D', 'E', 'F'];
+const TRANSLATION_CACHE_KEY = 'ccba-vi-translation-cache-v1';
+
+const KEYWORD_GLOSSARY: Array<{ en: string; vi: string }> = [
+  { en: 'business analysis approach', vi: 'phương pháp phân tích nghiệp vụ' },
+  { en: 'business analysis information', vi: 'thông tin phân tích nghiệp vụ' },
+  { en: 'business analysis performance assessment', vi: 'đánh giá hiệu suất phân tích nghiệp vụ' },
+  { en: 'business analysis performance improvements', vi: 'cải tiến hiệu suất phân tích nghiệp vụ' },
+  { en: 'stakeholder engagement approach', vi: 'phương pháp gắn kết bên liên quan' },
+  { en: 'manage stakeholder collaboration', vi: 'quản lý sự cộng tác của bên liên quan' },
+  { en: 'communicate business analysis information', vi: 'truyền đạt thông tin phân tích nghiệp vụ' },
+  { en: 'prepare for elicitation', vi: 'chuẩn bị khai thác thông tin' },
+  { en: 'conduct elicitation', vi: 'thực hiện khai thác thông tin' },
+  { en: 'confirm elicitation results', vi: 'xác nhận kết quả khai thác thông tin' },
+  { en: 'elicitation and collaboration', vi: 'khai thác thông tin và cộng tác' },
+  { en: 'plan stakeholder engagement', vi: 'lập kế hoạch gắn kết bên liên quan' },
+  { en: 'plan business analysis governance', vi: 'lập kế hoạch quản trị phân tích nghiệp vụ' },
+  { en: 'plan business analysis information management', vi: 'lập kế hoạch quản lý thông tin phân tích nghiệp vụ' },
+  { en: 'information management approach', vi: 'phương pháp quản lý thông tin' },
+  { en: 'governance approach', vi: 'phương pháp quản trị' },
+  { en: 'change control', vi: 'kiểm soát thay đổi' },
+  { en: 'requirements traceability', vi: 'truy xuất nguồn gốc yêu cầu' },
+  { en: 'traceability approach', vi: 'phương pháp truy xuất yêu cầu' },
+  { en: 'requirements life cycle management', vi: 'quản lý vòng đời yêu cầu' },
+  { en: 'maintain requirements', vi: 'duy trì yêu cầu' },
+  { en: 'prioritize requirements', vi: 'ưu tiên yêu cầu' },
+  { en: 'assess requirements changes', vi: 'đánh giá thay đổi yêu cầu' },
+  { en: 'approve requirements', vi: 'phê duyệt yêu cầu' },
+  { en: 'requirements architecture', vi: 'kiến trúc yêu cầu' },
+  { en: 'specify and model requirements', vi: 'đặc tả và mô hình hóa yêu cầu' },
+  { en: 'verify requirements', vi: 'xác minh yêu cầu' },
+  { en: 'validate requirements', vi: 'thẩm định yêu cầu' },
+  { en: 'define design options', vi: 'xác định các phương án thiết kế' },
+  { en: 'analyze potential value and recommend solution', vi: 'phân tích giá trị tiềm năng và đề xuất giải pháp' },
+  { en: 'requirements analysis and design definition', vi: 'phân tích yêu cầu và xác định thiết kế' },
+  { en: 'current state', vi: 'trạng thái hiện tại' },
+  { en: 'future state', vi: 'trạng thái tương lai' },
+  { en: 'define change strategy', vi: 'xác định chiến lược thay đổi' },
+  { en: 'change strategy', vi: 'chiến lược thay đổi' },
+  { en: 'business need', vi: 'nhu cầu kinh doanh' },
+  { en: 'business objective', vi: 'mục tiêu kinh doanh' },
+  { en: 'business objectives', vi: 'các mục tiêu kinh doanh' },
+  { en: 'business case', vi: 'luận chứng kinh doanh' },
+  { en: 'desired outcomes', vi: 'kết quả mong muốn' },
+  { en: 'potential value', vi: 'giá trị tiềm năng' },
+  { en: 'realized value', vi: 'giá trị đã hiện thực hóa' },
+  { en: 'solution scope', vi: 'phạm vi giải pháp' },
+  { en: 'solution performance measures', vi: 'thước đo hiệu suất giải pháp' },
+  { en: 'measure solution performance', vi: 'đo lường hiệu suất giải pháp' },
+  { en: 'analyze performance measures', vi: 'phân tích thước đo hiệu suất' },
+  { en: 'assess solution limitations', vi: 'đánh giá hạn chế của giải pháp' },
+  { en: 'assess enterprise limitations', vi: 'đánh giá hạn chế của doanh nghiệp' },
+  { en: 'recommend actions to increase solution value', vi: 'đề xuất hành động tăng giá trị giải pháp' },
+  { en: 'solution evaluation', vi: 'đánh giá giải pháp' },
+  { en: 'stakeholder analysis', vi: 'phân tích bên liên quan' },
+  { en: 'stakeholder register', vi: 'sổ đăng ký bên liên quan' },
+  { en: 'stakeholder', vi: 'bên liên quan' },
+  { en: 'stakeholders', vi: 'các bên liên quan' },
+  { en: 'domain subject matter expert', vi: 'chuyên gia nghiệp vụ lĩnh vực' },
+  { en: 'implementation subject matter expert', vi: 'chuyên gia triển khai' },
+  { en: 'operational support', vi: 'hỗ trợ vận hành' },
+  { en: 'project manager', vi: 'quản lý dự án' },
+  { en: 'sponsor', vi: 'nhà tài trợ' },
+  { en: 'regulator', vi: 'cơ quan quản lý' },
+  { en: 'root cause analysis', vi: 'phân tích nguyên nhân gốc rễ' },
+  { en: 'process modeling', vi: 'mô hình hóa quy trình' },
+  { en: 'scope modeling', vi: 'mô hình hóa phạm vi' },
+  { en: 'data flow diagram', vi: 'sơ đồ luồng dữ liệu' },
+  { en: 'sequence diagram', vi: 'sơ đồ tuần tự' },
+  { en: 'use case', vi: 'ca sử dụng' },
+  { en: 'functional decomposition', vi: 'phân rã chức năng' },
+  { en: 'non-functional requirements', vi: 'yêu cầu phi chức năng' },
+  { en: 'acceptance criteria', vi: 'tiêu chí chấp nhận' },
+  { en: 'metrics and key performance indicators', vi: 'chỉ số đo lường và KPI' },
+  { en: 'key performance indicators', vi: 'chỉ số hiệu suất chính' },
+  { en: 'performance measures', vi: 'thước đo hiệu suất' },
+  { en: 'adaptive approach', vi: 'phương pháp thích ứng' },
+  { en: 'predictive approach', vi: 'phương pháp dự đoán' },
+  { en: 'sunk cost', vi: 'chi phí chìm' },
+  { en: 'opportunity cost', vi: 'chi phí cơ hội' },
+  { en: 'return on investment', vi: 'tỷ suất hoàn vốn' },
+  { en: 'risk', vi: 'rủi ro' },
+  { en: 'constraint', vi: 'ràng buộc' },
+  { en: 'assumption', vi: 'giả định' },
+  { en: 'dependency', vi: 'sự phụ thuộc' },
+  { en: 'requirements', vi: 'yêu cầu' },
+  { en: 'designs', vi: 'thiết kế' },
+  { en: 'solution', vi: 'giải pháp' },
+];
+
+const ENGLISH_STOP_WORDS = new Set([
+  'about', 'after', 'again', 'against', 'because', 'before', 'being', 'between',
+  'could', 'does', 'during', 'following', 'from', 'have', 'having', 'into',
+  'most', 'other', 'should', 'some', 'such', 'than', 'that', 'their', 'there',
+  'these', 'they', 'this', 'those', 'through', 'under', 'using', 'very', 'what',
+  'when', 'where', 'which', 'while', 'with', 'would', 'your', 'following',
+  'business', 'analyst', 'organization', 'project', 'following', 'activity',
+  'task', 'tasks', 'statement', 'statements', 'option', 'options', 'example',
+]);
+
+let translationCacheMemory: Record<string, string> | null = null;
+
+function loadTranslationCache(): Record<string, string> {
+  if (translationCacheMemory) return translationCacheMemory;
+  if (typeof window === 'undefined') return {};
+
+  try {
+    const raw = window.localStorage.getItem(TRANSLATION_CACHE_KEY);
+    const parsed = raw ? (JSON.parse(raw) as Record<string, unknown>) : {};
+    translationCacheMemory = Object.fromEntries(
+      Object.entries(parsed).filter(([, value]) => typeof value === 'string')
+    ) as Record<string, string>;
+  } catch {
+    translationCacheMemory = {};
+  }
+
+  return translationCacheMemory;
+}
+
+function saveTranslationToCache(source: string, translated: string): void {
+  if (!source.trim() || !translated.trim() || typeof window === 'undefined') return;
+
+  try {
+    const cache = loadTranslationCache();
+    cache[source] = translated;
+    translationCacheMemory = cache;
+    window.localStorage.setItem(TRANSLATION_CACHE_KEY, JSON.stringify(cache));
+  } catch {
+    // Bản dịch vẫn hiển thị được dù localStorage đầy hoặc bị chặn.
+  }
+}
+
+async function translateEnglishToVietnamese(source: string): Promise<string> {
+  const text = source.trim();
+  if (!text) return '';
+
+  const cached = loadTranslationCache()[text];
+  if (cached) return cached;
+
+  const endpoint = new URL('https://translate.googleapis.com/translate_a/single');
+  endpoint.searchParams.set('client', 'gtx');
+  endpoint.searchParams.set('sl', 'en');
+  endpoint.searchParams.set('tl', 'vi');
+  endpoint.searchParams.set('dt', 't');
+  endpoint.searchParams.set('q', text);
+
+  const response = await fetch(endpoint.toString());
+  if (!response.ok) {
+    throw new Error(`Dịch tự động thất bại (${response.status})`);
+  }
+
+  const data = (await response.json()) as unknown;
+  if (!Array.isArray(data) || !Array.isArray(data[0])) {
+    throw new Error('Dữ liệu bản dịch không hợp lệ');
+  }
+
+  const translated = (data[0] as unknown[])
+    .map((part) => (Array.isArray(part) && typeof part[0] === 'string' ? part[0] : ''))
+    .join('')
+    .trim();
+
+  if (!translated) throw new Error('Không nhận được nội dung bản dịch');
+  saveTranslationToCache(text, translated);
+  return translated;
+}
+
+function extractLearningKeywords(
+  questionText: string,
+  correctAnswerText: string
+): KeywordItem[] {
+  const questionLower = questionText.toLowerCase();
+  const combinedLower = `${questionText} ${correctAnswerText}`.toLowerCase();
+
+  const glossaryMatches = KEYWORD_GLOSSARY
+    .filter((item) => combinedLower.includes(item.en.toLowerCase()))
+    .map((item) => ({
+      ...item,
+      appearsInQuestion: questionLower.includes(item.en.toLowerCase()),
+    }))
+    .sort((left, right) => {
+      if (left.appearsInQuestion !== right.appearsInQuestion) {
+        return left.appearsInQuestion ? -1 : 1;
+      }
+      return right.en.length - left.en.length;
+    });
+
+  const selected: KeywordItem[] = [];
+  glossaryMatches.forEach((candidate) => {
+    const overlapsExisting = selected.some(
+      (item) =>
+        item.en.toLowerCase().includes(candidate.en.toLowerCase()) ||
+        candidate.en.toLowerCase().includes(item.en.toLowerCase())
+    );
+
+    if (!overlapsExisting && selected.length < 6) selected.push(candidate);
+  });
+
+  if (selected.length >= 4) return selected;
+
+  const tokens = `${questionText} ${correctAnswerText}`.match(/[A-Za-z][A-Za-z-]{3,}/g) || [];
+  const frequency = new Map<string, number>();
+
+  tokens.forEach((token) => {
+    const normalized = token.toLowerCase();
+    if (ENGLISH_STOP_WORDS.has(normalized)) return;
+    if (selected.some((item) => item.en.toLowerCase().includes(normalized))) return;
+    frequency.set(normalized, (frequency.get(normalized) || 0) + 1);
+  });
+
+  Array.from(frequency.entries())
+    .sort((left, right) => right[1] - left[1] || right[0].length - left[0].length)
+    .slice(0, 6 - selected.length)
+    .forEach(([word]) => {
+      selected.push({
+        en: word,
+        vi: '',
+        appearsInQuestion: questionLower.includes(word),
+      });
+    });
+
+  return selected;
+}
+
+function escapeRegExp(value: string): string {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function highlightLearningKeywords(
+  text: string,
+  keywords: KeywordItem[]
+): React.ReactNode {
+  const phrases = keywords
+    .filter((item) => item.appearsInQuestion)
+    .map((item) => item.en)
+    .sort((left, right) => right.length - left.length);
+
+  if (phrases.length === 0) return text;
+
+  const pattern = new RegExp(`(${phrases.map(escapeRegExp).join('|')})`, 'gi');
+  const keywordSet = new Set(phrases.map((phrase) => phrase.toLowerCase()));
+
+  return text.split(pattern).map((part, index) =>
+    keywordSet.has(part.toLowerCase()) ? (
+      <mark
+        key={`${part}-${index}`}
+        className="rounded-md bg-amber-300/20 px-1 text-amber-100 ring-1 ring-amber-300/30"
+      >
+        {part}
+      </mark>
+    ) : (
+      <React.Fragment key={`${part}-${index}`}>{part}</React.Fragment>
+    )
+  );
+}
 
 function normalizeLineEndings(value: string): string {
   return value.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
@@ -615,6 +885,82 @@ async function readTextFiles(files: FileList | null): Promise<RawSet[]> {
   );
 }
 
+function LearningNotePanel({
+  note,
+  onRetry,
+}: {
+  note: LearningNote;
+  onRetry: () => void;
+}) {
+  return (
+    <section className="mt-4 rounded-3xl border border-amber-300/25 bg-amber-300/[0.07] p-5">
+      <div className="flex items-center gap-2 text-amber-100">
+        <Lightbulb className="h-5 w-5" />
+        <h3 className="font-bold">Ghi nhớ nhanh</h3>
+      </div>
+
+      <div className="mt-4">
+        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-amber-100/70">
+          Từ khóa cần nhớ
+        </p>
+        <div className="mt-2 flex flex-wrap gap-2">
+          {note.keywords.map((keyword) => (
+            <span
+              key={keyword.en}
+              className="rounded-full border border-amber-200/20 bg-slate-950/40 px-3 py-1.5 text-sm text-amber-50"
+            >
+              <strong>{keyword.en}</strong>
+              {keyword.vi ? <span className="text-slate-300"> · {keyword.vi}</span> : null}
+            </span>
+          ))}
+        </div>
+        <p className="mt-2 text-xs leading-5 text-slate-400">
+          Các cụm xuất hiện trong câu hỏi được tô vàng để bạn liên kết từ khóa với đáp án đúng.
+        </p>
+      </div>
+
+      <div className="mt-5 border-t border-amber-200/15 pt-4">
+        <div className="flex items-center gap-2 text-cyan-100">
+          <Languages className="h-5 w-5" />
+          <h3 className="font-bold">Ghi chú tiếng Việt</h3>
+        </div>
+
+        {note.status === 'loading' && (
+          <div className="mt-3 flex items-center gap-2 text-sm text-slate-300">
+            <RefreshCw className="h-4 w-4 animate-spin" /> Đang dịch câu hỏi và đáp án đúng...
+          </div>
+        )}
+
+        {note.status === 'ready' && (
+          <div className="mt-3 space-y-3 leading-7 text-slate-200">
+            <p>
+              <span className="font-semibold text-cyan-200">Câu hỏi:</span>{' '}
+              {note.questionVi}
+            </p>
+            <p>
+              <span className="font-semibold text-emerald-200">Ý đúng cần nhớ:</span>{' '}
+              {note.correctAnswerVi}
+            </p>
+          </div>
+        )}
+
+        {note.status === 'error' && (
+          <div className="mt-3 rounded-2xl border border-rose-300/30 bg-rose-300/10 p-3 text-sm leading-6 text-rose-100">
+            <p>{note.errorMessage || 'Chưa dịch được nội dung. Hãy kiểm tra kết nối mạng.'}</p>
+            <button
+              type="button"
+              onClick={onRetry}
+              className="mt-2 inline-flex items-center gap-2 rounded-xl border border-rose-200/30 px-3 py-2 font-semibold hover:bg-rose-200/10"
+            >
+              <RefreshCw className="h-4 w-4" /> Dịch lại
+            </button>
+          </div>
+        )}
+      </div>
+    </section>
+  );
+}
+
 function StatCard({
   icon,
   label,
@@ -642,6 +988,7 @@ export default function QuizLearningApp() {
   const [search, setSearch] = useState('');
   const [currentIndex, setCurrentIndex] = useState(0);
   const [session, setSession] = useState<QuizSession | null>(null);
+  const [learningNotes, setLearningNotes] = useState<Record<string, LearningNote>>({});
   const [hasSavedData, setHasSavedData] = useState(false);
   const [isLoadingDefaults, setIsLoadingDefaults] = useState(true);
   const [importStatus, setImportStatus] = useState(
@@ -850,12 +1197,71 @@ export default function QuizLearningApp() {
     );
   };
 
+  const loadLearningNote = async (question: Question, force = false) => {
+    const existing = learningNotes[question.id];
+    if (!force && (existing?.status === 'loading' || existing?.status === 'ready')) {
+      return;
+    }
+
+    const correctAnswer = question.options.find((option) => option.isCorrect);
+    if (!correctAnswer) return;
+
+    const keywords = extractLearningKeywords(question.text, correctAnswer.text);
+    setLearningNotes((current) => ({
+      ...current,
+      [question.id]: {
+        status: 'loading',
+        keywords,
+        questionVi: current[question.id]?.questionVi || '',
+        correctAnswerVi: current[question.id]?.correctAnswerVi || '',
+      },
+    }));
+
+    try {
+      const [questionVi, correctAnswerVi] = await Promise.all([
+        translateEnglishToVietnamese(question.text),
+        translateEnglishToVietnamese(correctAnswer.text),
+      ]);
+
+      setLearningNotes((current) => ({
+        ...current,
+        [question.id]: {
+          status: 'ready',
+          keywords,
+          questionVi,
+          correctAnswerVi,
+        },
+      }));
+    } catch (error) {
+      setLearningNotes((current) => ({
+        ...current,
+        [question.id]: {
+          status: 'error',
+          keywords,
+          questionVi: '',
+          correctAnswerVi: '',
+          errorMessage:
+            error instanceof Error
+              ? `${error.message}. Hãy kiểm tra Internet rồi bấm “Dịch lại”.`
+              : 'Chưa dịch được nội dung. Hãy kiểm tra Internet rồi thử lại.',
+        },
+      }));
+    }
+  };
+
   const selectAnswer = (questionId: string, optionId: string) => {
     if (!session || session.answers[questionId]) return;
+
+    const answeredQuestion = session.questions.find(
+      (question) => question.id === questionId
+    );
+
     setSession({
       ...session,
       answers: { ...session.answers, [questionId]: optionId },
     });
+
+    if (answeredQuestion) void loadLearningNote(answeredQuestion);
   };
 
   const submitQuiz = () => {
@@ -1104,6 +1510,12 @@ export default function QuizLearningApp() {
     currentCorrectIndex >= 0 ? ANSWER_LABELS[currentCorrectIndex] : '';
   const hasAnsweredCurrent = Boolean(currentPickedId);
   const currentAnswerIsCorrect = Boolean(currentPickedOption?.isCorrect);
+  const currentLearningNote = learningNotes[currentQuestion.id];
+  const currentKeywords =
+    currentLearningNote?.keywords ||
+    (hasAnsweredCurrent && currentCorrectOption
+      ? extractLearningKeywords(currentQuestion.text, currentCorrectOption.text)
+      : []);
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100">
@@ -1189,7 +1601,9 @@ export default function QuizLearningApp() {
             </div>
 
             <h2 className="mt-6 whitespace-pre-line text-xl font-semibold leading-8 md:text-2xl">
-              {currentQuestion.text}
+              {hasAnsweredCurrent
+                ? highlightLearningKeywords(currentQuestion.text, currentKeywords)
+                : currentQuestion.text}
             </h2>
 
             <div className="mt-6 grid gap-3">
@@ -1293,6 +1707,13 @@ export default function QuizLearningApp() {
                   </div>
                 </div>
               </div>
+            )}
+
+            {hasAnsweredCurrent && currentLearningNote && (
+              <LearningNotePanel
+                note={currentLearningNote}
+                onRetry={() => void loadLearningNote(currentQuestion, true)}
+              />
             )}
 
             <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
@@ -1436,6 +1857,12 @@ export default function QuizLearningApp() {
                         </span>
                       </p>
                     </div>
+                    {pickedId && learningNotes[question.id] && (
+                      <LearningNotePanel
+                        note={learningNotes[question.id]}
+                        onRetry={() => void loadLearningNote(question, true)}
+                      />
+                    )}
                   </details>
                 );
               })}
@@ -1446,4 +1873,3 @@ export default function QuizLearningApp() {
     </div>
   );
 }
-
