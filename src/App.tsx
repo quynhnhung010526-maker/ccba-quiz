@@ -6,7 +6,9 @@ import {
   BookOpen,
   CheckCircle2,
   FileUp,
+  Languages,
   Layers3,
+  Lightbulb,
   ListChecks,
   RefreshCw,
   RotateCcw,
@@ -891,39 +893,70 @@ function LearningNotePanel({
   onRetry: () => void;
 }) {
   return (
-    <section className="mt-4 rounded-2xl border border-amber-300/35 bg-amber-300/[0.075] px-4 py-3.5 shadow-inner shadow-amber-950/10">
-      {note.status === 'loading' && (
-        <div className="flex items-center gap-2 text-xs text-slate-300">
-          <RefreshCw className="h-3.5 w-3.5 animate-spin text-amber-200" />
-          Đang dịch câu hỏi và đáp án đúng...
-        </div>
-      )}
+    <section className="mt-4 rounded-3xl border border-amber-300/25 bg-amber-300/[0.07] p-5">
+      <div className="flex items-center gap-2 text-amber-100">
+        <Lightbulb className="h-5 w-5" />
+        <h3 className="font-bold">Ghi nhớ nhanh</h3>
+      </div>
 
-      {note.status === 'ready' && (
-        <div className="space-y-3 text-[13px] leading-6 text-slate-100 sm:text-sm">
-          <p>
-            <span className="font-bold text-cyan-200">Câu hỏi:</span>{' '}
-            {note.questionVi}
-          </p>
-          <p>
-            <span className="font-bold text-emerald-200">Ý đúng cần nhớ:</span>{' '}
-            {note.correctAnswerVi}
-          </p>
+      <div className="mt-4">
+        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-amber-100/70">
+          Từ khóa cần nhớ
+        </p>
+        <div className="mt-2 flex flex-wrap gap-2">
+          {note.keywords.map((keyword) => (
+            <span
+              key={keyword.en}
+              className="rounded-full border border-amber-200/20 bg-slate-950/40 px-3 py-1.5 text-sm text-amber-50"
+            >
+              <strong>{keyword.en}</strong>
+              {keyword.vi ? <span className="text-slate-300"> · {keyword.vi}</span> : null}
+            </span>
+          ))}
         </div>
-      )}
+        <p className="mt-2 text-xs leading-5 text-slate-400">
+          Các cụm xuất hiện trong câu hỏi được tô vàng để bạn liên kết từ khóa với đáp án đúng.
+        </p>
+      </div>
 
-      {note.status === 'error' && (
-        <div className="flex flex-wrap items-center justify-between gap-2 text-xs leading-5 text-rose-100">
-          <span>{note.errorMessage || 'Chưa dịch được. Hãy kiểm tra kết nối mạng.'}</span>
-          <button
-            type="button"
-            onClick={onRetry}
-            className="inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-rose-200/30 px-2 py-1 font-semibold hover:bg-rose-200/10"
-          >
-            <RefreshCw className="h-3.5 w-3.5" /> Dịch lại
-          </button>
+      <div className="mt-5 border-t border-amber-200/15 pt-4">
+        <div className="flex items-center gap-2 text-cyan-100">
+          <Languages className="h-5 w-5" />
+          <h3 className="font-bold">Ghi chú tiếng Việt</h3>
         </div>
-      )}
+
+        {note.status === 'loading' && (
+          <div className="mt-3 flex items-center gap-2 text-sm text-slate-300">
+            <RefreshCw className="h-4 w-4 animate-spin" /> Đang dịch câu hỏi và đáp án đúng...
+          </div>
+        )}
+
+        {note.status === 'ready' && (
+          <div className="mt-3 space-y-3 leading-7 text-slate-200">
+            <p>
+              <span className="font-semibold text-cyan-200">Câu hỏi:</span>{' '}
+              {note.questionVi}
+            </p>
+            <p>
+              <span className="font-semibold text-emerald-200">Ý đúng cần nhớ:</span>{' '}
+              {note.correctAnswerVi}
+            </p>
+          </div>
+        )}
+
+        {note.status === 'error' && (
+          <div className="mt-3 rounded-2xl border border-rose-300/30 bg-rose-300/10 p-3 text-sm leading-6 text-rose-100">
+            <p>{note.errorMessage || 'Chưa dịch được nội dung. Hãy kiểm tra kết nối mạng.'}</p>
+            <button
+              type="button"
+              onClick={onRetry}
+              className="mt-2 inline-flex items-center gap-2 rounded-xl border border-rose-200/30 px-3 py-2 font-semibold hover:bg-rose-200/10"
+            >
+              <RefreshCw className="h-4 w-4" /> Dịch lại
+            </button>
+          </div>
+        )}
+      </div>
     </section>
   );
 }
@@ -1486,79 +1519,79 @@ export default function QuizLearningApp() {
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100">
-      <div className="mx-auto max-w-[1180px] px-2.5 py-2 md:px-3">
-        <div className="mb-3 flex flex-col gap-2 rounded-2xl border border-white/10 bg-white/[0.04] p-3 sm:flex-row sm:items-center sm:justify-between">
-          <div className="min-w-0">
+      <div className="mx-auto max-w-6xl px-4 py-6 md:px-8">
+        <div className="mb-5 flex flex-col gap-3 rounded-3xl border border-white/10 bg-white/[0.04] p-4 md:flex-row md:items-center md:justify-between">
+          <div>
             <button
               onClick={resetToHome}
-              className="mb-1 inline-flex items-center gap-1.5 text-xs text-slate-300 hover:text-white"
+              className="mb-2 inline-flex items-center gap-2 text-sm text-slate-300 hover:text-white"
             >
-              <ArrowLeft className="h-3.5 w-3.5" /> Về danh sách bộ đề
+              <ArrowLeft className="h-4 w-4" /> Về danh sách bộ đề
             </button>
-            <h1 className="truncate text-base font-bold md:text-lg">
+            <h1 className="text-xl font-bold md:text-2xl">
               {session.setTitle}
             </h1>
-            <p className="mt-0.5 text-xs text-slate-400">
-              Đã chọn {answeredCount}/{session.questions.length} câu · Tiến độ {progress}%
+            <p className="mt-1 text-sm text-slate-400">
+              Đã chọn {answeredCount}/{session.questions.length} câu · Tiến độ{' '}
+              {progress}%
             </p>
           </div>
 
-          <div className="flex shrink-0 flex-wrap gap-2">
+          <div className="flex flex-wrap gap-2">
             <button
               onClick={() => startQuiz(session.setId)}
-              className="inline-flex items-center gap-1.5 rounded-xl border border-white/10 px-3 py-2 text-xs font-semibold text-slate-200 transition hover:bg-white/10"
+              className="inline-flex items-center gap-2 rounded-2xl border border-white/10 px-4 py-3 text-sm font-semibold text-slate-200 transition hover:bg-white/10"
             >
-              <RotateCcw className="h-3.5 w-3.5" /> Làm lại & trộn mới
+              <RotateCcw className="h-4 w-4" /> Làm lại & trộn mới
             </button>
             <button
               onClick={submitQuiz}
               disabled={session.submitted}
-              className="inline-flex items-center gap-1.5 rounded-xl bg-cyan-400 px-3 py-2 text-xs font-semibold text-slate-950 transition hover:bg-cyan-300 disabled:cursor-not-allowed disabled:opacity-50"
+              className="inline-flex items-center gap-2 rounded-2xl bg-cyan-400 px-4 py-3 text-sm font-semibold text-slate-950 transition hover:bg-cyan-300 disabled:cursor-not-allowed disabled:opacity-50"
             >
-              <Trophy className="h-3.5 w-3.5" /> Nộp bài
+              <Trophy className="h-4 w-4" /> Nộp bài
             </button>
           </div>
         </div>
 
         {session.submitted && (
-          <section className="mb-3 flex flex-col gap-2 rounded-2xl border border-cyan-300/20 bg-cyan-300/10 p-3 shadow-xl sm:flex-row sm:items-center sm:justify-between">
-            <div>
-              <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-cyan-100">
-                Kết quả
-              </p>
-              <h2 className="text-xl font-bold">
-                {score.correct}/{score.total} câu đúng · {score.percent}%
-              </h2>
-              <p className="text-xs text-slate-300">
-                Còn {score.unanswered} câu chưa chọn.
-              </p>
+          <section className="mb-5 rounded-3xl border border-cyan-300/20 bg-cyan-300/10 p-5 shadow-xl">
+            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+              <div>
+                <p className="text-sm uppercase tracking-[0.2em] text-cyan-100">
+                  Kết quả
+                </p>
+                <h2 className="mt-1 text-3xl font-bold">
+                  {score.correct}/{score.total} câu đúng · {score.percent}%
+                </h2>
+                <p className="mt-2 text-slate-300">
+                  Còn {score.unanswered} câu chưa chọn. Bên dưới có phần rà soát
+                  đáp án đúng/sai.
+                </p>
+              </div>
+              <button
+                onClick={() => startQuiz(session.setId)}
+                className="rounded-2xl bg-white px-5 py-3 font-semibold text-slate-950 transition hover:bg-cyan-100"
+              >
+                Làm lại bộ này
+              </button>
             </div>
-            <button
-              onClick={() => startQuiz(session.setId)}
-              className="rounded-xl bg-white px-3 py-2 text-xs font-semibold text-slate-950 transition hover:bg-cyan-100"
-            >
-              Làm lại bộ này
-            </button>
           </section>
         )}
 
-        <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_232px]">
-          <main className="rounded-2xl border border-white/10 bg-white/[0.04] p-4 shadow-xl md:p-6">
-            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-2">
+        <div className="grid gap-5 lg:grid-cols-[1fr_280px]">
+          <main className="rounded-3xl border border-white/10 bg-white/[0.04] p-5 shadow-xl md:p-7">
+            <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-4">
               <div>
-                <p className="text-xs font-semibold text-slate-300">
+                <p className="text-sm text-slate-400">
                   Câu {currentIndex + 1}/{session.questions.length}
                 </p>
-                <p className="mt-0.5 text-[10px] text-slate-500">
-                  Nguồn: {currentQuestion.sourceTitle} · Câu gốc {currentQuestion.originalNumber}
+                <p className="mt-1 text-xs text-slate-500">
+                  Nguồn: {currentQuestion.sourceTitle} · Câu gốc{' '}
+                  {currentQuestion.originalNumber}
                 </p>
               </div>
-              <div className={cn(
-                'rounded-full px-2.5 py-1 text-[11px] font-semibold',
-                !hasAnsweredCurrent && 'bg-white/10 text-slate-300',
-                hasAnsweredCurrent && currentAnswerIsCorrect && 'bg-emerald-300/15 text-emerald-200',
-                hasAnsweredCurrent && !currentAnswerIsCorrect && 'bg-rose-300/15 text-rose-200'
-              )}>
+              <div className="rounded-full bg-white/10 px-4 py-2 text-sm text-slate-300">
                 {hasAnsweredCurrent
                   ? currentAnswerIsCorrect
                     ? 'Đã chọn · Đúng'
@@ -1567,20 +1600,13 @@ export default function QuizLearningApp() {
               </div>
             </div>
 
-            <h2 className="mt-5 whitespace-pre-line text-base font-semibold leading-7 md:text-[17px] md:leading-7">
+            <h2 className="mt-6 whitespace-pre-line text-xl font-semibold leading-8 md:text-2xl">
               {hasAnsweredCurrent
                 ? highlightLearningKeywords(currentQuestion.text, currentKeywords)
                 : currentQuestion.text}
             </h2>
 
-            {hasAnsweredCurrent && currentLearningNote && (
-              <LearningNotePanel
-                note={currentLearningNote}
-                onRetry={() => void loadLearningNote(currentQuestion, true)}
-              />
-            )}
-
-            <div className="mt-5 grid gap-2.5">
+            <div className="mt-6 grid gap-3">
               {currentQuestion.options.map((option, optionIndex) => {
                 const selected =
                   session.answers[currentQuestion.id] === option.id;
@@ -1597,7 +1623,7 @@ export default function QuizLearningApp() {
                     onClick={() => selectAnswer(currentQuestion.id, option.id)}
                     disabled={hasAnsweredCurrent || session.submitted}
                     className={cn(
-                      'flex min-h-[58px] items-center gap-3 rounded-2xl border px-3.5 py-3 text-left text-sm transition disabled:cursor-default',
+                      'flex items-start gap-4 rounded-2xl border p-4 text-left transition disabled:cursor-default',
                       selected &&
                         !session.submitted &&
                         'border-cyan-300 bg-cyan-300/10',
@@ -1610,12 +1636,12 @@ export default function QuizLearningApp() {
                       (session.submitted || hasAnsweredCurrent) &&
                         !showCorrect &&
                         !showWrong &&
-                        'border-white/10 bg-slate-900/60 opacity-75'
+                        'border-white/10 bg-slate-900/60 opacity-80'
                     )}
                   >
                     <span
                       className={cn(
-                        'flex h-8 w-8 shrink-0 items-center justify-center rounded-xl text-xs font-bold',
+                        'flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-sm font-bold',
                         showCorrect
                           ? 'bg-emerald-300 text-emerald-950'
                           : showWrong
@@ -1627,30 +1653,79 @@ export default function QuizLearningApp() {
                     >
                       {ANSWER_LABELS[optionIndex]}
                     </span>
-                    <span className="flex-1 whitespace-pre-line leading-5 text-slate-100">
+                    <span className="flex-1 whitespace-pre-line leading-7 text-slate-100">
                       {option.text}
                     </span>
                     {showCorrect && (
-                      <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-300" />
+                      <CheckCircle2 className="mt-1 h-5 w-5 text-emerald-300" />
                     )}
                     {showWrong && (
-                      <XCircle className="h-4 w-4 shrink-0 text-rose-300" />
+                      <XCircle className="mt-1 h-5 w-5 text-rose-300" />
                     )}
                   </button>
                 );
               })}
             </div>
 
-            <div className="mt-5 flex items-center justify-between gap-2 border-t border-white/10 pt-4">
+            {hasAnsweredCurrent && (
+              <div
+                className={cn(
+                  'mt-5 rounded-3xl border p-5 shadow-xl',
+                  currentAnswerIsCorrect
+                    ? 'border-emerald-300/40 bg-emerald-300/10'
+                    : 'border-rose-300/40 bg-rose-300/10'
+                )}
+              >
+                <div className="flex items-start gap-3">
+                  {currentAnswerIsCorrect ? (
+                    <CheckCircle2 className="mt-1 h-6 w-6 shrink-0 text-emerald-300" />
+                  ) : (
+                    <XCircle className="mt-1 h-6 w-6 shrink-0 text-rose-300" />
+                  )}
+                  <div>
+                    <p className="text-lg font-bold">
+                      {currentAnswerIsCorrect ? 'Đúng rồi!' : 'Sai rồi!'}
+                    </p>
+                    <p className="mt-2 leading-7 text-slate-200">
+                      Bạn đã chọn:{' '}
+                      <span
+                        className={
+                          currentAnswerIsCorrect
+                            ? 'font-semibold text-emerald-300'
+                            : 'font-semibold text-rose-300'
+                        }
+                      >
+                        {currentPickedOption?.text}
+                      </span>
+                    </p>
+                    <p className="mt-1 leading-7 text-slate-200">
+                      Đáp án đúng là:{' '}
+                      <span className="font-semibold text-emerald-300">
+                        {currentCorrectLabel}. {currentCorrectOption?.text}
+                      </span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {hasAnsweredCurrent && currentLearningNote && (
+              <LearningNotePanel
+                note={currentLearningNote}
+                onRetry={() => void loadLearningNote(currentQuestion, true)}
+              />
+            )}
+
+            <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
               <button
                 onClick={() => setCurrentIndex(Math.max(0, currentIndex - 1))}
                 disabled={currentIndex === 0}
-                className="rounded-xl border border-white/10 px-3 py-2 text-xs font-semibold text-slate-200 transition hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-40"
+                className="rounded-2xl border border-white/10 px-5 py-3 font-semibold text-slate-200 transition hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-40"
               >
                 Câu trước
               </button>
-              <div className="hidden text-center text-[11px] text-slate-500 sm:block">
-                Đáp án được xáo trộn riêng cho lượt làm bài
+              <div className="text-center text-sm text-slate-400">
+                Đáp án được xáo trộn riêng cho lượt làm bài này
               </div>
               <button
                 onClick={() =>
@@ -1659,16 +1734,16 @@ export default function QuizLearningApp() {
                   )
                 }
                 disabled={currentIndex === session.questions.length - 1}
-                className="rounded-xl bg-white px-3 py-2 text-xs font-semibold text-slate-950 transition hover:bg-cyan-100 disabled:cursor-not-allowed disabled:opacity-40"
+                className="rounded-2xl bg-white px-5 py-3 font-semibold text-slate-950 transition hover:bg-cyan-100 disabled:cursor-not-allowed disabled:opacity-40"
               >
                 Câu tiếp
               </button>
             </div>
           </main>
 
-          <aside className="rounded-2xl border border-white/10 bg-white/[0.04] p-3 shadow-xl lg:sticky lg:top-3 lg:h-fit">
-            <h3 className="text-sm font-semibold">Bảng câu hỏi</h3>
-            <div className="mt-2 grid max-h-[calc(100vh-185px)] grid-cols-5 gap-1.5 overflow-auto pr-1">
+          <aside className="rounded-3xl border border-white/10 bg-white/[0.04] p-4 shadow-xl lg:sticky lg:top-4 lg:h-fit">
+            <h3 className="font-semibold">Bảng câu hỏi</h3>
+            <div className="mt-4 grid max-h-[560px] grid-cols-5 gap-2 overflow-auto pr-1">
               {session.questions.map((question, index) => {
                 const picked = session.answers[question.id];
                 const correct = question.options.find(
@@ -1679,7 +1754,7 @@ export default function QuizLearningApp() {
                     key={question.id}
                     onClick={() => setCurrentIndex(index)}
                     className={cn(
-                      'h-8 rounded-lg text-xs font-semibold transition',
+                      'h-10 rounded-xl text-sm font-semibold transition',
                       index === currentIndex && 'ring-2 ring-cyan-300',
                       !session.submitted &&
                         picked &&
@@ -1709,17 +1784,17 @@ export default function QuizLearningApp() {
                 );
               })}
             </div>
-            <div className="mt-3 flex flex-wrap gap-x-3 gap-y-1 text-[11px] text-slate-400 lg:block lg:space-y-1.5">
+            <div className="mt-4 space-y-2 text-sm text-slate-400">
               <p>
-                <span className="inline-block h-2.5 w-2.5 rounded bg-white/10 align-middle" />{' '}
+                <span className="inline-block h-3 w-3 rounded bg-white/10 align-middle" />{' '}
                 Chưa làm
               </p>
               <p>
-                <span className="inline-block h-2.5 w-2.5 rounded bg-emerald-300 align-middle" />{' '}
+                <span className="inline-block h-3 w-3 rounded bg-emerald-300 align-middle" />{' '}
                 Đúng
               </p>
               <p>
-                <span className="inline-block h-2.5 w-2.5 rounded bg-rose-300 align-middle" />{' '}
+                <span className="inline-block h-3 w-3 rounded bg-rose-300 align-middle" />{' '}
                 Sai
               </p>
             </div>
