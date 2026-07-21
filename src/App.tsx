@@ -857,6 +857,14 @@ function cn(...classes: Array<string | false | undefined | null>): string {
   return classes.filter(Boolean).join(' ');
 }
 
+function scrollToPageTop(): void {
+  if (typeof window === 'undefined') return;
+
+  window.requestAnimationFrame(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+}
+
 async function readTextFiles(files: FileList | null): Promise<RawSet[]> {
   if (!files || files.length === 0) return [];
 
@@ -1121,6 +1129,7 @@ export default function QuizLearningApp() {
       submitted: false,
     });
     setCurrentIndex(0);
+    scrollToPageTop();
   };
 
   const importFiles = async (files: FileList | null) => {
@@ -1434,10 +1443,16 @@ export default function QuizLearningApp() {
                 key={set.id}
                 role="button"
                 tabIndex={0}
-                onClick={() => setSelectedSetId(set.id)}
-                onDoubleClick={() => startQuiz(set.id)}
+                onClick={() => {
+                  setSelectedSetId(set.id);
+                  startQuiz(set.id);
+                }}
                 onKeyDown={(event) => {
-                  if (event.key === 'Enter') setSelectedSetId(set.id);
+                  if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    setSelectedSetId(set.id);
+                    startQuiz(set.id);
+                  }
                 }}
                 className={cn(
                   'group rounded-3xl border p-5 text-left shadow-xl transition hover:-translate-y-1',
@@ -1481,7 +1496,7 @@ export default function QuizLearningApp() {
                 <p className="mt-1 text-sm text-slate-500">{set.description}</p>
                 <div className="mt-5 flex items-center justify-between text-sm">
                   <span className="text-slate-400">
-                    Bấm để chọn, bấm đúp để làm ngay
+                    Bấm 1 lần để bắt đầu làm đề
                   </span>
                   <ArrowRight className="h-4 w-4 text-cyan-200 transition group-hover:translate-x-1" />
                 </div>
@@ -1516,6 +1531,16 @@ export default function QuizLearningApp() {
     (hasAnsweredCurrent && currentCorrectOption
       ? extractLearningKeywords(currentQuestion.text, currentCorrectOption.text)
       : []);
+
+  const goToQuestion = (nextIndex: number) => {
+    const safeIndex = Math.max(
+      0,
+      Math.min(session.questions.length - 1, nextIndex)
+    );
+
+    setCurrentIndex(safeIndex);
+    scrollToPageTop();
+  };
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100">
@@ -1718,7 +1743,7 @@ export default function QuizLearningApp() {
 
             <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
               <button
-                onClick={() => setCurrentIndex(Math.max(0, currentIndex - 1))}
+                onClick={() => goToQuestion(currentIndex - 1)}
                 disabled={currentIndex === 0}
                 className="rounded-2xl border border-white/10 px-5 py-3 font-semibold text-slate-200 transition hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-40"
               >
@@ -1728,11 +1753,7 @@ export default function QuizLearningApp() {
                 Đáp án được xáo trộn riêng cho lượt làm bài này
               </div>
               <button
-                onClick={() =>
-                  setCurrentIndex(
-                    Math.min(session.questions.length - 1, currentIndex + 1)
-                  )
-                }
+                onClick={() => goToQuestion(currentIndex + 1)}
                 disabled={currentIndex === session.questions.length - 1}
                 className="rounded-2xl bg-white px-5 py-3 font-semibold text-slate-950 transition hover:bg-cyan-100 disabled:cursor-not-allowed disabled:opacity-40"
               >
@@ -1752,7 +1773,7 @@ export default function QuizLearningApp() {
                 return (
                   <button
                     key={question.id}
-                    onClick={() => setCurrentIndex(index)}
+                    onClick={() => goToQuestion(index)}
                     className={cn(
                       'h-10 rounded-xl text-sm font-semibold transition',
                       index === currentIndex && 'ring-2 ring-cyan-300',
