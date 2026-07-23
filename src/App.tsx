@@ -273,9 +273,11 @@ const ENGLISH_STOP_WORDS = new Set([
 
 
 
-// Đặt file PDF BABOK này trong thư mục public/ để nút mở đúng trang hoạt động.
-// Có thể đổi tên tại hằng số dưới đây nếu bạn dùng tên file khác.
-const BABOK_PDF_FILE_NAME = 'BABOK v3 (1).pdf';
+// File PDF được phục vụ trực tiếp từ thư mục public của dự án.
+// Cấu trúc cần có: public/BABOK v3 (1).pdf
+// Không import PDF vào component và không cần tải PDF qua giao diện ứng dụng.
+const BABOK_PDF_PUBLIC_FILE = 'BABOK v3 (1).pdf';
+// Trang in số 1 của BABOK nằm ở trang PDF số 11, do đó chênh lệch là 10 trang.
 const BABOK_PDF_PAGE_OFFSET = 10;
 
 function createBabokTopic(
@@ -771,10 +773,12 @@ function babokPdfPage(bookPage: number): number {
   return bookPage + BABOK_PDF_PAGE_OFFSET;
 }
 
+function babokPdfPublicUrl(): string {
+  return encodeURI(publicFilePath(BABOK_PDF_PUBLIC_FILE));
+}
+
 function babokPdfHref(bookPage: number): string {
-  return `${encodeURI(publicFilePath(BABOK_PDF_FILE_NAME))}#page=${babokPdfPage(
-    bookPage
-  )}`;
+  return `${babokPdfPublicUrl()}#page=${babokPdfPage(bookPage)}`;
 }
 
 
@@ -1512,7 +1516,7 @@ function BabokStudyGuidePanel({
           target="_blank"
           rel="noreferrer"
           className="inline-flex shrink-0 items-center justify-center gap-1.5 rounded-xl border border-violet-200/25 bg-violet-200/10 px-3 py-2 text-xs font-semibold text-violet-100 transition hover:bg-violet-200/20"
-          title={`Mở ${BABOK_PDF_FILE_NAME} tại trang PDF ${pdfPage}`}
+          title={`Mở ${BABOK_PDF_PUBLIC_FILE} tại trang PDF ${pdfPage}`}
         >
           Mở BABOK trang {primary.bookPage} <ArrowRight className="h-3.5 w-3.5" />
         </a>
@@ -1551,8 +1555,12 @@ function BabokStudyGuidePanel({
         <span>
           Trang in BABOK: {primary.bookPage} · Trang trong file PDF: {pdfPage}
         </span>
-        <span>File cần đặt trong public/: {BABOK_PDF_FILE_NAME}</span>
+        <span>Đọc từ: public/{BABOK_PDF_PUBLIC_FILE}</span>
       </div>
+
+      <p className="mt-2 text-[11px] leading-5 text-slate-500">
+        Ứng dụng mở trực tiếp file PDF tĩnh trong thư mục public; không cần chọn hoặc tải lại file BABOK trong màn hình làm bài.
+      </p>
 
       {related.length > 0 && (
         <div className="mt-3 flex flex-wrap items-center gap-2 text-xs">
