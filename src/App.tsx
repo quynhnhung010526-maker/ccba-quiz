@@ -526,6 +526,955 @@ const BABOK_ROUTING_HINTS: Array<{
   { section: '10.48', patterns: [/user stor/i, /brief statement.*people.*need/i], score: 120 },
 ];
 
+
+const BABOK_KA_QUESTION_ROUTES: Record<string, Record<number, string>> = {
+  '3': {
+    1: '3.5.5',
+    2: '3.3.4',
+    3: '3.1.4',
+    4: '3.5.8',
+    5: '10.19.3',
+    6: 'Chapter 3',
+    7: '3.3',
+    8: '3.5.4',
+    9: '1.1',
+    10: '10.19.3',
+    11: '3.1.4',
+    12: '3.2.4',
+    13: '3.2',
+    14: '3.2.8',
+    15: '3.2.8',
+    16: '3.4.4',
+    17: '3.4.3',
+    18: '3.4.5',
+    19: '3.1.4',
+    20: '3.1.4',
+    21: '3.2',
+    22: '3.5.4',
+    23: '3.5.7',
+    24: '3.1.2',
+    25: '3.1',
+    26: '3.5.4',
+    27: '3.3.3',
+    28: '3.3.6',
+    29: '5.2.4',
+    30: 'Chapter 3',
+  },
+  '4': {
+    1: '4.5.3',
+    2: '4.2.6',
+    3: 'Chapter 4',
+    4: '4.2.4',
+    5: '4.1.4',
+    6: '4.2.8',
+    7: '4.4.4',
+    8: '4.2.7',
+    9: '4.1.4',
+    10: '4.4.8',
+    11: '10.5.1',
+    12: '4.2.4',
+    13: '4.2.6',
+    14: '4.2.2',
+    15: '4.1.5',
+    16: '4.5.4',
+    17: '4.2.4',
+    18: '4.1.4',
+    19: '7.1.2',
+    20: '4.4.4',
+    21: '4.2.4',
+    22: '4.3.1',
+    23: '4.3.6',
+    24: '4.2.7',
+    25: '4.5.4',
+    26: 'Chapter 4',
+    27: '4.1.4',
+    28: '4.1.3',
+    29: '4.5.4',
+    30: '4.1.4',
+  },
+  '5': {
+    1: '5.1.4',
+    2: '5.3.4',
+    3: '5.3.8',
+    4: '5.4.4',
+    5: '5.3.5',
+    6: '5.5.3',
+    7: '5.5.7',
+    8: '5.2.1',
+    9: '5.4.7',
+    10: '5.3.8',
+    11: '5.4.8',
+    12: '5.4.2',
+    13: '5.5.4',
+    14: '5.2.7',
+    15: '5.3.4',
+    16: '5.1.5',
+    17: '5.5.4',
+    18: '5.4.4',
+    19: '5.1.5',
+    20: '5.3.4',
+    21: '5.2.4',
+    22: '5.5.3',
+    23: '5.5.5',
+    24: '5.5.8',
+    25: '5.2.3',
+    26: '5.3.4',
+    27: '5.5.7',
+    28: '5.1.5',
+    29: '5.4.5',
+    30: '5.3.4',
+  },
+  '6': {
+    1: '6.1.4',
+    2: '6.1.4',
+    3: '6.4.2',
+    4: '6.2.4',
+    5: '6.1.1',
+    6: '10.7.3',
+    7: '6.4.4',
+    8: 'Chapter 6',
+    9: '6.1.4',
+    10: '6.1.4',
+    11: '6.4.4',
+    12: '6.3.6',
+    13: '6.3.6',
+    14: '6.4.6',
+    15: '6.1.4',
+    16: '1.2',
+    17: '10.7.3',
+    18: '6.2.5',
+    19: '6.1.1',
+    20: '9.5',
+    21: 'Chapter 6',
+    22: 'Chapter 6',
+    23: '6.2.8',
+    24: '6.4.1',
+    25: '6.3.2',
+    26: '10.4.1',
+    27: '6.1.4',
+    28: '6.4.4',
+    29: '6.1.5',
+    30: '10.20.3',
+  },
+  '7': {
+    1: '7.1.4',
+    2: '10.47.3',
+    3: '7.1.8',
+    4: '7.2.4',
+    5: '7.4.6',
+    6: '10.47.3',
+    7: '7.2.1',
+    8: '7.3.2',
+    9: '7.3.5',
+    10: '7.3.1',
+    11: '10.22.1',
+    12: '10.30.3',
+    13: '7.5.3',
+    14: '7.5.7',
+    15: '7.6.6',
+    16: '7.1.6',
+    17: '2.3',
+    18: '7.3.7',
+    19: 'Chapter 7',
+    20: '10.34.3',
+    21: '1.4.5',
+    22: '7.4.4',
+    23: '7.3.3',
+    24: '7.4.4',
+    25: 'Chapter 7',
+    26: '10.9.3',
+    27: '7.1.6',
+    28: '2.5',
+    29: '7.4.4',
+    30: '7.1.4',
+  },
+  '8': {
+    1: '8.1.4',
+    2: '8.3.1',
+    3: '8.4.4',
+    4: '8.5.4',
+    5: 'Chapter 8',
+    6: '8.1.3',
+    7: '10.45.1',
+    8: '8.3.6',
+    9: '8.4.7',
+    10: '8.1.4',
+    11: '8.1.4',
+    12: '8.1.4',
+    13: '8.4.6',
+    14: '8.5.8',
+    15: '8.5.8',
+    16: '8.4.6',
+    17: '8.4.4',
+    18: '8.2.4',
+    19: '8.5.4',
+    20: '8.1.3',
+    21: '8.5.3',
+    22: '8.2.7',
+    23: '8.3.6',
+    24: '8.1.4',
+    25: '8.2.1',
+    26: '8.3.5',
+    27: '10.20.3',
+    28: '8.4.6',
+    29: '8.4.1',
+    30: '8.2.4',
+  },
+};
+
+const BABOK_SECTION_BOOK_PAGES: Record<string, number> = {
+  '1.1': 1,
+  '1.2': 2,
+  '1.3': 2,
+  '1.4': 3,
+  '1.4.1': 4,
+  '1.4.2': 4,
+  '1.4.3': 5,
+  '1.4.4': 7,
+  '1.4.5': 8,
+  '1.4.6': 9,
+  '2.0': 484,
+  '2.1': 12,
+  '2.2': 14,
+  '2.3': 16,
+  '2.4': 16,
+  '2.4.1': 17,
+  '2.4.2': 17,
+  '2.4.3': 17,
+  '2.4.4': 17,
+  '2.4.5': 17,
+  '2.4.6': 18,
+  '2.4.7': 18,
+  '2.4.8': 18,
+  '2.4.9': 18,
+  '2.4.10': 18,
+  '2.4.11': 19,
+  '2.5': 19,
+  '2.6': 484,
+  '3.0': 484,
+  '3.1': 23,
+  '3.1.1': 24,
+  '3.1.2': 24,
+  '3.1.3': 24,
+  '3.1.4': 26,
+  '3.1.5': 29,
+  '3.1.6': 29,
+  '3.1.7': 30,
+  '3.1.8': 31,
+  '3.2': 23,
+  '3.2.1': 31,
+  '3.2.2': 31,
+  '3.2.3': 31,
+  '3.2.4': 32,
+  '3.2.5': 35,
+  '3.2.6': 35,
+  '3.2.7': 36,
+  '3.2.8': 36,
+  '3.3': 23,
+  '3.3.1': 37,
+  '3.3.2': 37,
+  '3.3.3': 37,
+  '3.3.4': 38,
+  '3.3.5': 40,
+  '3.3.6': 41,
+  '3.3.7': 41,
+  '3.3.8': 42,
+  '3.4': 23,
+  '3.4.1': 42,
+  '3.4.2': 42,
+  '3.4.3': 42,
+  '3.4.4': 43,
+  '3.4.5': 46,
+  '3.4.6': 46,
+  '3.4.7': 47,
+  '3.4.8': 47,
+  '3.5': 23,
+  '3.5.1': 47,
+  '3.5.2': 47,
+  '3.5.3': 47,
+  '3.5.4': 48,
+  '3.5.5': 50,
+  '3.5.6': 50,
+  '3.5.7': 51,
+  '3.5.8': 51,
+  '4.1': 25,
+  '4.1.1': 56,
+  '4.1.2': 57,
+  '4.1.3': 57,
+  '4.1.4': 58,
+  '4.1.5': 60,
+  '4.1.6': 60,
+  '4.1.7': 60,
+  '4.1.8': 61,
+  '4.2': 25,
+  '4.2.1': 61,
+  '4.2.2': 61,
+  '4.2.3': 61,
+  '4.2.4': 62,
+  '4.2.5': 63,
+  '4.2.6': 63,
+  '4.2.7': 64,
+  '4.2.8': 65,
+  '4.3': 56,
+  '4.3.1': 65,
+  '4.3.2': 65,
+  '4.3.3': 65,
+  '4.3.4': 66,
+  '4.3.5': 67,
+  '4.3.6': 67,
+  '4.3.7': 67,
+  '4.3.8': 67,
+  '4.4': 25,
+  '4.4.1': 67,
+  '4.4.2': 68,
+  '4.4.3': 68,
+  '4.4.4': 69,
+  '4.4.5': 70,
+  '4.4.6': 70,
+  '4.4.7': 70,
+  '4.4.8': 71,
+  '4.5': 25,
+  '4.5.1': 71,
+  '4.5.2': 71,
+  '4.5.3': 72,
+  '4.5.4': 73,
+  '4.5.5': 74,
+  '4.5.6': 74,
+  '4.5.7': 74,
+  '4.5.8': 74,
+  '5.1': 43,
+  '5.1.1': 79,
+  '5.1.2': 79,
+  '5.1.3': 80,
+  '5.1.4': 81,
+  '5.1.5': 82,
+  '5.1.6': 82,
+  '5.1.7': 83,
+  '5.1.8': 83,
+  '5.2': 43,
+  '5.2.1': 83,
+  '5.2.2': 83,
+  '5.2.3': 84,
+  '5.2.4': 84,
+  '5.2.5': 85,
+  '5.2.6': 85,
+  '5.2.7': 86,
+  '5.2.8': 86,
+  '5.3': 38,
+  '5.3.1': 86,
+  '5.3.2': 87,
+  '5.3.3': 87,
+  '5.3.4': 88,
+  '5.3.5': 89,
+  '5.3.6': 90,
+  '5.3.7': 90,
+  '5.3.8': 91,
+  '5.4': 38,
+  '5.4.1': 91,
+  '5.4.2': 91,
+  '5.4.3': 91,
+  '5.4.4': 92,
+  '5.4.5': 93,
+  '5.4.6': 94,
+  '5.4.7': 94,
+  '5.4.8': 95,
+  '5.5': 38,
+  '5.5.1': 95,
+  '5.5.2': 95,
+  '5.5.3': 95,
+  '5.5.4': 96,
+  '5.5.5': 97,
+  '5.5.6': 97,
+  '5.5.7': 98,
+  '5.5.8': 98,
+  '6.1': 25,
+  '6.1.1': 103,
+  '6.1.2': 103,
+  '6.1.3': 103,
+  '6.1.4': 104,
+  '6.1.5': 108,
+  '6.1.6': 108,
+  '6.1.7': 110,
+  '6.1.8': 110,
+  '6.2': 102,
+  '6.2.1': 110,
+  '6.2.2': 110,
+  '6.2.3': 112,
+  '6.2.4': 113,
+  '6.2.5': 117,
+  '6.2.6': 117,
+  '6.2.7': 118,
+  '6.2.8': 119,
+  '6.3': 25,
+  '6.3.1': 120,
+  '6.3.2': 120,
+  '6.3.3': 120,
+  '6.3.4': 121,
+  '6.3.5': 123,
+  '6.3.6': 123,
+  '6.3.7': 124,
+  '6.3.8': 124,
+  '6.4': 25,
+  '6.4.1': 124,
+  '6.4.2': 125,
+  '6.4.3': 125,
+  '6.4.4': 127,
+  '6.4.5': 129,
+  '6.4.6': 129,
+  '6.4.7': 130,
+  '6.4.8': 131,
+  '6.5': 487,
+  '6.6': 487,
+  '7.1': 126,
+  '7.1.1': 136,
+  '7.1.2': 136,
+  '7.1.3': 137,
+  '7.1.4': 138,
+  '7.1.5': 140,
+  '7.1.6': 140,
+  '7.1.7': 141,
+  '7.1.8': 141,
+  '7.2': 78,
+  '7.2.1': 141,
+  '7.2.2': 142,
+  '7.2.3': 142,
+  '7.2.4': 143,
+  '7.2.5': 144,
+  '7.2.6': 144,
+  '7.2.7': 144,
+  '7.2.8': 144,
+  '7.3': 112,
+  '7.3.1': 144,
+  '7.3.2': 145,
+  '7.3.3': 145,
+  '7.3.4': 146,
+  '7.3.5': 146,
+  '7.3.6': 146,
+  '7.3.7': 147,
+  '7.3.8': 147,
+  '7.4': 43,
+  '7.4.1': 148,
+  '7.4.2': 148,
+  '7.4.3': 148,
+  '7.4.4': 149,
+  '7.4.5': 151,
+  '7.4.6': 152,
+  '7.4.7': 152,
+  '7.4.8': 152,
+  '7.5': 81,
+  '7.5.1': 152,
+  '7.5.2': 152,
+  '7.5.3': 153,
+  '7.5.4': 154,
+  '7.5.5': 155,
+  '7.5.6': 155,
+  '7.5.7': 156,
+  '7.5.8': 156,
+  '7.6': 104,
+  '7.6.1': 157,
+  '7.6.2': 157,
+  '7.6.3': 157,
+  '7.6.4': 158,
+  '7.6.5': 160,
+  '7.6.6': 160,
+  '7.6.7': 161,
+  '7.6.8': 162,
+  '8.1': 112,
+  '8.1.1': 166,
+  '8.1.2': 167,
+  '8.1.3': 167,
+  '8.1.4': 168,
+  '8.1.5': 169,
+  '8.1.6': 169,
+  '8.1.7': 170,
+  '8.1.8': 170,
+  '8.2': 112,
+  '8.2.1': 170,
+  '8.2.2': 170,
+  '8.2.3': 170,
+  '8.2.4': 171,
+  '8.2.5': 172,
+  '8.2.6': 172,
+  '8.2.7': 173,
+  '8.2.8': 173,
+  '8.3': 121,
+  '8.3.1': 173,
+  '8.3.2': 173,
+  '8.3.3': 174,
+  '8.3.4': 175,
+  '8.3.5': 175,
+  '8.3.6': 176,
+  '8.3.7': 176,
+  '8.3.8': 177,
+  '8.4': 104,
+  '8.4.1': 177,
+  '8.4.2': 177,
+  '8.4.3': 178,
+  '8.4.4': 178,
+  '8.4.5': 180,
+  '8.4.6': 180,
+  '8.4.7': 181,
+  '8.4.8': 182,
+  '8.5': 104,
+  '8.5.1': 182,
+  '8.5.2': 182,
+  '8.5.3': 182,
+  '8.5.4': 183,
+  '8.5.5': 185,
+  '8.5.6': 185,
+  '8.5.7': 186,
+  '8.5.8': 186,
+  '9.1': 188,
+  '9.1.1': 188,
+  '9.1.2': 189,
+  '9.1.3': 190,
+  '9.1.4': 191,
+  '9.1.5': 191,
+  '9.1.6': 192,
+  '9.1.7': 193,
+  '9.2': 194,
+  '9.2.1': 194,
+  '9.2.2': 195,
+  '9.2.3': 195,
+  '9.2.4': 196,
+  '9.2.5': 197,
+  '9.3': 199,
+  '9.3.1': 199,
+  '9.3.2': 200,
+  '9.3.3': 201,
+  '9.3.4': 202,
+  '9.3.5': 202,
+  '9.4': 203,
+  '9.4.1': 204,
+  '9.4.2': 205,
+  '9.4.3': 205,
+  '9.4.4': 206,
+  '9.5': 207,
+  '9.5.1': 207,
+  '9.5.2': 208,
+  '9.5.3': 209,
+  '9.5.4': 210,
+  '9.5.5': 210,
+  '9.6': 211,
+  '9.6.1': 212,
+  '9.6.2': 213,
+  '9.6.3': 215,
+  '10.1': 217,
+  '10.1.1': 217,
+  '10.1.2': 218,
+  '10.1.3': 218,
+  '10.1.4': 220,
+  '10.2': 220,
+  '10.2.1': 220,
+  '10.2.2': 220,
+  '10.2.3': 221,
+  '10.2.4': 222,
+  '10.3': 223,
+  '10.3.1': 223,
+  '10.3.2': 223,
+  '10.3.3': 224,
+  '10.3.4': 225,
+  '10.4': 226,
+  '10.4.1': 226,
+  '10.4.2': 226,
+  '10.4.3': 226,
+  '10.4.4': 227,
+  '10.5': 227,
+  '10.5.1': 227,
+  '10.5.2': 228,
+  '10.5.3': 229,
+  '10.5.4': 229,
+  '10.6': 230,
+  '10.6.1': 230,
+  '10.6.2': 230,
+  '10.6.3': 230,
+  '10.6.4': 233,
+  '10.7': 234,
+  '10.7.1': 234,
+  '10.7.2': 234,
+  '10.7.3': 234,
+  '10.7.4': 236,
+  '10.8': 236,
+  '10.8.1': 236,
+  '10.8.2': 236,
+  '10.9': 240,
+  '10.9.1': 240,
+  '10.9.2': 240,
+  '10.9.3': 241,
+  '10.9.4': 243,
+  '10.10': 243,
+  '10.10.1': 243,
+  '10.10.2': 243,
+  '10.10.3': 244,
+  '10.10.4': 245,
+  '10.11': 245,
+  '10.11.1': 245,
+  '10.11.2': 246,
+  '10.11.3': 246,
+  '10.11.4': 247,
+  '10.12': 247,
+  '10.12.1': 247,
+  '10.12.2': 247,
+  '10.12.3': 248,
+  '10.12.4': 249,
+  '10.13': 250,
+  '10.13.1': 250,
+  '10.13.2': 250,
+  '10.13.3': 251,
+  '10.13.4': 253,
+  '10.14': 253,
+  '10.14.1': 253,
+  '10.14.2': 253,
+  '10.14.3': 254,
+  '10.14.4': 256,
+  '10.15': 256,
+  '10.15.1': 256,
+  '10.15.2': 256,
+  '10.15.3': 257,
+  '10.15.4': 260,
+  '10.16': 261,
+  '10.16.1': 261,
+  '10.16.2': 261,
+  '10.16.3': 262,
+  '10.16.4': 264,
+  '10.17': 265,
+  '10.17.1': 265,
+  '10.17.2': 265,
+  '10.17.3': 265,
+  '10.17.4': 268,
+  '10.18': 269,
+  '10.18.1': 269,
+  '10.18.2': 269,
+  '10.18.3': 269,
+  '10.18.4': 270,
+  '10.19': 271,
+  '10.19.1': 271,
+  '10.19.2': 271,
+  '10.19.3': 271,
+  '10.19.4': 274,
+  '10.20': 274,
+  '10.20.1': 274,
+  '10.20.2': 274,
+  '10.20.3': 275,
+  '10.20.4': 279,
+  '10.21': 279,
+  '10.21.1': 279,
+  '10.21.2': 279,
+  '10.21.3': 280,
+  '10.21.4': 282,
+  '10.22': 283,
+  '10.22.1': 283,
+  '10.22.2': 283,
+  '10.22.3': 284,
+  '10.22.4': 285,
+  '10.23': 286,
+  '10.23.1': 286,
+  '10.23.2': 286,
+  '10.23.3': 286,
+  '10.23.4': 287,
+  '10.24': 287,
+  '10.24.1': 287,
+  '10.24.2': 287,
+  '10.24.3': 288,
+  '10.24.4': 290,
+  '10.25': 290,
+  '10.25.1': 290,
+  '10.25.2': 290,
+  '10.25.3': 291,
+  '10.25.4': 293,
+  '10.26': 294,
+  '10.26.1': 294,
+  '10.26.2': 294,
+  '10.26.3': 294,
+  '10.26.4': 295,
+  '10.27': 296,
+  '10.27.1': 296,
+  '10.27.2': 296,
+  '10.27.3': 296,
+  '10.27.4': 296,
+  '10.28': 297,
+  '10.28.1': 297,
+  '10.28.2': 297,
+  '10.28.3': 297,
+  '10.28.4': 299,
+  '10.29': 299,
+  '10.29.1': 299,
+  '10.29.2': 299,
+  '10.29.3': 301,
+  '10.29.4': 302,
+  '10.30': 302,
+  '10.30.1': 302,
+  '10.30.2': 302,
+  '10.30.3': 303,
+  '10.30.4': 305,
+  '10.31': 305,
+  '10.31.1': 305,
+  '10.31.2': 305,
+  '10.31.3': 306,
+  '10.31.4': 307,
+  '10.32': 308,
+  '10.32.1': 308,
+  '10.32.2': 308,
+  '10.32.3': 308,
+  '10.32.4': 311,
+  '10.33': 311,
+  '10.33.1': 311,
+  '10.33.2': 312,
+  '10.33.3': 313,
+  '10.33.4': 313,
+  '10.34': 314,
+  '10.34.1': 314,
+  '10.34.2': 314,
+  '10.34.3': 314,
+  '10.34.4': 317,
+  '10.35': 318,
+  '10.35.1': 318,
+  '10.35.2': 318,
+  '10.35.3': 319,
+  '10.35.4': 322,
+  '10.36': 323,
+  '10.36.1': 323,
+  '10.36.2': 323,
+  '10.36.3': 324,
+  '10.36.4': 325,
+  '10.37': 326,
+  '10.37.1': 326,
+  '10.37.2': 326,
+  '10.37.3': 327,
+  '10.37.4': 328,
+  '10.38': 329,
+  '10.38.1': 329,
+  '10.38.2': 329,
+  '10.38.3': 329,
+  '10.38.4': 332,
+  '10.39': 333,
+  '10.39.1': 333,
+  '10.39.2': 333,
+  '10.39.3': 334,
+  '10.39.4': 335,
+  '10.40': 335,
+  '10.40.1': 335,
+  '10.40.2': 335,
+  '10.40.3': 336,
+  '10.40.4': 337,
+  '10.41': 338,
+  '10.41.1': 338,
+  '10.41.2': 338,
+  '10.41.3': 338,
+  '10.41.4': 341,
+  '10.42': 341,
+  '10.42.1': 341,
+  '10.42.2': 341,
+  '10.42.3': 342,
+  '10.42.4': 343,
+  '10.43': 344,
+  '10.43.1': 344,
+  '10.43.2': 344,
+  '10.43.3': 344,
+  '10.43.4': 347,
+  '10.44': 348,
+  '10.44.1': 348,
+  '10.44.2': 348,
+  '10.44.3': 348,
+  '10.44.4': 350,
+  '10.45': 350,
+  '10.45.1': 350,
+  '10.45.2': 351,
+  '10.45.3': 351,
+  '10.45.4': 353,
+  '10.46': 353,
+  '10.46.1': 353,
+  '10.46.2': 353,
+  '10.46.3': 354,
+  '10.46.4': 355,
+  '10.47': 356,
+  '10.47.1': 356,
+  '10.47.2': 356,
+  '10.47.3': 356,
+  '10.47.4': 358,
+  '10.48': 359,
+  '10.48.1': 359,
+  '10.48.2': 359,
+  '10.48.3': 360,
+  '10.48.4': 360,
+  '10.49': 361,
+  '10.49.1': 361,
+  '10.49.2': 361,
+  '10.49.3': 362,
+  '10.49.4': 363,
+  '10.50': 363,
+  '10.50.1': 363,
+  '10.50.2': 363,
+  '10.50.3': 364,
+  '10.50.4': 365,
+};
+
+function findBabokTopicBySection(section: string): BabokTopic | undefined {
+  return BABOK_TOPICS.find((topic) => topic.section === section);
+}
+
+function baseTopicSectionForRoute(routeSection: string): string {
+  if (/^Chapter\s+/i.test(routeSection)) return routeSection;
+
+  const numericParts = routeSection.match(/^([0-9]+)\.([0-9]+)/);
+  if (!numericParts) return routeSection;
+
+  const baseSection = `${numericParts[1]}.${numericParts[2]}`;
+  if (findBabokTopicBySection(baseSection)) return baseSection;
+
+  return `Chapter ${numericParts[1]}`;
+}
+
+function knownQuestionRoute(question: Question): string | null {
+  const sourceChapter = detectSourceChapter(question.sourceTitle);
+  if (!sourceChapter) return null;
+
+  return (
+    BABOK_KA_QUESTION_ROUTES[sourceChapter]?.[question.originalNumber] || null
+  );
+}
+
+function isSpecificBabokAlias(alias: string): boolean {
+  const normalized = normalizeBabokMatchText(alias);
+  return normalized.length >= 5 && !BABOK_GENERIC_ALIASES.has(normalized);
+}
+
+function answerMatchesTopic(answerText: string, topic: BabokTopic): boolean {
+  const answer = normalizeBabokMatchText(answerText);
+  if (!answer) return false;
+
+  return [topic.titleEn, ...topic.aliases].some((alias) => {
+    if (!isSpecificBabokAlias(alias)) return false;
+    const normalizedAlias = normalizeBabokMatchText(alias);
+    return (
+      answer === normalizedAlias ||
+      (normalizedAlias.length >= 8 && answer.includes(normalizedAlias))
+    );
+  });
+}
+
+function resolveStrongBabokTopic(question: Question): BabokTopic | undefined {
+  const correctAnswer =
+    question.options.find((option) => option.isCorrect)?.text || '';
+  const questionNormalized = normalizeBabokMatchText(question.text);
+
+  const asksForTask =
+    /\b(which|what)\b.{0,50}\btask\b|during which task|task is|what task|which knowledge area/i.test(
+      question.text
+    );
+  const asksForTechnique =
+    /\b(which|what)\b.{0,55}\btechnique\b|best suited|most suitable|which diagram|which matrix|what approach/i.test(
+      question.text
+    );
+  const asksForKnowledgeArea =
+    /which knowledge area|knowledge area does|task in which of the following knowledge areas/i.test(
+      question.text
+    );
+  const asksForTerm =
+    /what term describes|best be described as what|which type of requirement|which type of stakeholder/i.test(
+      question.text
+    );
+
+  if (asksForTask) {
+    const answerTask = BABOK_TOPICS.find(
+      (topic) =>
+        topic.kind === 'task' && answerMatchesTopic(correctAnswer, topic)
+    );
+    if (answerTask) return answerTask;
+  }
+
+  if (asksForKnowledgeArea) {
+    const answerChapter = BABOK_TOPICS.find(
+      (topic) =>
+        topic.kind === 'chapter' && answerMatchesTopic(correctAnswer, topic)
+    );
+    if (answerChapter) return answerChapter;
+  }
+
+  const explicitlyNamedTask = BABOK_TOPICS
+    .filter((topic) => topic.kind === 'task')
+    .filter((topic) =>
+      questionNormalized.includes(normalizeBabokMatchText(topic.titleEn))
+    )
+    .sort((left, right) => right.titleEn.length - left.titleEn.length)[0];
+
+  if (explicitlyNamedTask) return explicitlyNamedTask;
+
+  if (asksForTechnique) {
+    const answerTechnique = BABOK_TOPICS.find(
+      (topic) =>
+        topic.kind === 'technique' && answerMatchesTopic(correctAnswer, topic)
+    );
+    if (answerTechnique) return answerTechnique;
+  }
+
+  const explicitlyNamedTechnique = BABOK_TOPICS
+    .filter((topic) => topic.kind === 'technique')
+    .filter((topic) =>
+      questionNormalized.includes(normalizeBabokMatchText(topic.titleEn))
+    )
+    .sort((left, right) => right.titleEn.length - left.titleEn.length)[0];
+
+  if (
+    explicitlyNamedTechnique &&
+    /purpose|element|component|advantage|disadvantage|difference|usage|used for|describ/i.test(
+      question.text
+    )
+  ) {
+    return explicitlyNamedTechnique;
+  }
+
+  if (asksForTerm) {
+    const answerTopic = BABOK_TOPICS
+      .filter((topic) => topic.kind !== 'chapter')
+      .find((topic) => answerMatchesTopic(correctAnswer, topic));
+    if (answerTopic) return answerTopic;
+  }
+
+  return undefined;
+}
+
+function focusNameForSection(section: string, fallback: BabokFocus): string {
+  if (/\.1$/.test(section)) return 'Mục đích';
+  if (/\.2$/.test(section)) return 'Mô tả';
+  if (/\.3$/.test(section)) return /^10\./.test(section) ? 'Các thành phần' : 'Đầu vào';
+  if (/\.4$/.test(section)) return /^10\./.test(section) ? 'Lưu ý sử dụng' : 'Các yếu tố';
+  if (/\.5$/.test(section)) return 'Guidelines and Tools';
+  if (/\.6$/.test(section)) return 'Các kỹ thuật';
+  if (/\.7$/.test(section)) return 'Các bên liên quan';
+  if (/\.8$/.test(section)) return 'Đầu ra';
+  return fallback.focusName;
+}
+
+function applyKnownRouteFocus(
+  routeSection: string | null,
+  fallback: BabokFocus
+): BabokFocus {
+  if (!routeSection || /^Chapter\s+/i.test(routeSection)) return fallback;
+
+  const routeParts = routeSection.split('.');
+  if (routeParts.length < 3) return fallback;
+
+  return {
+    sectionLabel: routeSection,
+    focusName: focusNameForSection(routeSection, fallback),
+    readingGuide: `Đọc trực tiếp mục ${routeSection} trong BABOK để trả lời câu hỏi này.`,
+  };
+}
+
+function babokBookPageForSection(
+  sectionLabel: string,
+  fallbackBookPage: number
+): number {
+  const normalizedSection =
+    sectionLabel.match(/^(?:Chapter\s+)?[0-9]+(?:\.[0-9]+)*/i)?.[0] || '';
+
+  if (/^Chapter\s+/i.test(normalizedSection)) return fallbackBookPage;
+
+  return BABOK_SECTION_BOOK_PAGES[normalizedSection] || fallbackBookPage;
+}
+
+
 function topicChapterNumber(topic: BabokTopic): string | null {
   const sectionMatch = topic.section.match(/^(?:Chapter\s+)?([0-9]+)/i);
   return sectionMatch?.[1] || null;
@@ -621,56 +1570,62 @@ function inferBabokFocus(questionText: string, topic: BabokTopic): BabokFocus {
         suffix: '.1 Purpose',
         name: 'Mục đích của task',
         guide:
-          'Purpose giải thích lý do thực hiện task và value được tạo ra. Không nhầm Purpose với Description, vốn giải thích task được thực hiện như thế nào và nhằm đạt điều gì.',
+          'Purpose giải thích lý do thực hiện task và value được tạo ra.',
       },
       {
-        pattern: /\bdescription\b|\bdescribes\b|\bwhat does\b/,
-        suffix: '.2 Description',
-        name: 'Mô tả của task',
-        guide:
-          'Description làm rõ task là gì, tại sao thực hiện và kết quả tổng quát cần đạt. Đọc cùng Purpose để nhận ra câu hỏi đang hỏi “vì sao” hay “làm gì”.',
-      },
-      {
-        pattern: /\binput\b|\binputs\b|\bprerequisite\b|\brequired before\b/,
+        pattern:
+          /\binput\b|\binputs\b|\bprerequisite\b|\brequired before\b|\bneeded before\b/,
         suffix: '.3 Inputs',
         name: 'Đầu vào của task',
         guide:
-          'Inputs là thông tin được tiêu thụ hoặc chuyển đổi để task bắt đầu. Hãy phân biệt input với Guidelines and Tools và với output của chính task.',
+          'Inputs là thông tin cần có để task bắt đầu.',
       },
       {
-        pattern: /\belement\b|\belements\b|\bkey concept\b|\bconsideration\b|\bcharacteristic\b/,
-        suffix: '.4 Elements',
-        name: 'Các yếu tố cần hiểu',
-        guide:
-          'Elements là các khái niệm quan trọng để hiểu cách thực hiện task; chúng không mặc nhiên là deliverables bắt buộc và có thể được tailoring theo approach.',
-      },
-      {
-        pattern: /\bguideline\b|\bguidelines\b|\btool\b|\btools\b|\bartifact\b|\breference\b/,
-        suffix: '.5 Guidelines and Tools',
-        name: 'Guidelines and Tools',
-        guide:
-          'Guidelines and Tools là nguồn lực/hướng dẫn giúp biến inputs thành outputs. Chúng có thể là output của task khác nhưng không phải output của task đang xét.',
-      },
-      {
-        pattern: /\btechnique\b|\btechniques\b|\bbest suited\b|\bused during\b/,
-        suffix: '.6 Techniques',
-        name: 'Các kỹ thuật áp dụng',
-        guide:
-          'Techniques là các cách có thể dùng để thực hiện task. Một technique có thể hỗ trợ nhiều task; cần đối chiếu đúng task-to-technique mapping thay vì chỉ nhớ tên technique.',
-      },
-      {
-        pattern: /\bstakeholder\b|\bstakeholders\b|\bwho\b|\bparticipate\b|\bresponsible\b/,
-        suffix: '.7 Stakeholders',
-        name: 'Stakeholder tham gia hoặc bị ảnh hưởng',
-        guide:
-          'Danh sách Stakeholders của task nêu các vai trò thường tham gia hoặc bị ảnh hưởng, không bắt buộc mọi vai trò phải xuất hiện trong mọi initiative.',
-      },
-      {
-        pattern: /\boutput\b|\boutputs\b|\bdeliverable\b|\bresult\b|\bproduces\b/,
+        pattern:
+          /\boutput\b|\boutputs\b|\bdeliverable\b|\bproduces\b|\bproduced\b|\bdeliver\b|\bresult of the task\b|\bmain output\b/,
         suffix: '.8 Outputs',
         name: 'Đầu ra của task',
         guide:
-          'Output là business analysis information được tạo mới, biến đổi hoặc thay đổi trạng thái sau khi task hoàn tất; một output có thể là một phần của deliverable lớn hơn.',
+          'Outputs là kết quả được tạo ra hoặc thay đổi trạng thái sau khi task hoàn tất.',
+      },
+      {
+        pattern:
+          /\btechnique\b|\btechniques\b|\bbest suited\b|\bmost suitable\b|\bused during\b|\bapproach would you use\b/,
+        suffix: '.6 Techniques',
+        name: 'Các kỹ thuật áp dụng',
+        guide:
+          'Đối chiếu đúng danh sách Techniques được BABOK nêu cho task.',
+      },
+      {
+        pattern:
+          /\bstakeholder\b|\bstakeholders\b|\bwho\b|\bparticipate\b|\bresponsible\b|\bconsulted\b/,
+        suffix: '.7 Stakeholders',
+        name: 'Stakeholder tham gia hoặc bị ảnh hưởng',
+        guide:
+          'Đọc danh sách stakeholder thường tham gia hoặc bị ảnh hưởng bởi task.',
+      },
+      {
+        pattern:
+          /\bguideline\b|\bguidelines\b|\btool\b|\btools\b|\bartifact\b|\breference\b|\bdocument should\b/,
+        suffix: '.5 Guidelines and Tools',
+        name: 'Guidelines and Tools',
+        guide:
+          'Guidelines and Tools là nguồn lực hỗ trợ biến inputs thành outputs.',
+      },
+      {
+        pattern:
+          /\belement\b|\belements\b|\bkey concept\b|\bconsideration\b|\bcharacteristic\b|\binclude\b|\bcontains?\b|\btypes?\b|\bfactors?\b|\bcriteria\b/,
+        suffix: '.4 Elements',
+        name: 'Các yếu tố cần hiểu',
+        guide:
+          'Elements là các khái niệm và nội dung cốt lõi để thực hiện task.',
+      },
+      {
+        pattern: /\bdescription\b|\bdescribes\b|\bwhat is the task\b/,
+        suffix: '.2 Description',
+        name: 'Mô tả của task',
+        guide:
+          'Description giải thích task là gì, vì sao thực hiện và cần đạt điều gì.',
       },
     ];
 
@@ -701,7 +1656,7 @@ function inferBabokFocus(questionText: string, topic: BabokTopic): BabokFocus {
       };
     }
 
-    if (/\belement\b|\belements\b|\bcomponent\b|\bcharacteristic\b/.test(question)) {
+    if (/\belement\b|\belements\b|\bcomponent\b|\bcharacteristic\b|\btype\b|\btypes\b|\bmethod\b|\bmethods\b|\bcriteria\b/.test(question)) {
       return {
         sectionLabel: `${topic.section}.3 Elements`,
         focusName: 'Các thành phần của technique',
@@ -938,9 +1893,16 @@ function buildBabokStudyGuide(question: Question): BabokStudyGuide {
     ),
   })).sort((left, right) => right.score - left.score);
 
-  let primary = ranked[0]?.topic;
+  const routeSection = knownQuestionRoute(question);
+  const routedPrimary = routeSection
+    ? findBabokTopicBySection(baseTopicSectionForRoute(routeSection))
+    : resolveStrongBabokTopic(question);
+
+  let primary = routedPrimary || ranked[0]?.topic;
   const shouldUseChapterFallback =
-    !primary || ranked[0].score <= 0 || Boolean(sourceChapter && ranked[0].score <= 70);
+    !primary ||
+    (!routedPrimary &&
+      (ranked[0].score <= 0 || Boolean(sourceChapter && ranked[0].score <= 70)));
 
   if (shouldUseChapterFallback) {
     const fallbackChapter = sourceChapter
@@ -962,7 +1924,8 @@ function buildBabokStudyGuide(question: Question): BabokStudyGuide {
     .slice(0, 2)
     .map((item) => item.topic);
 
-  const focus = inferBabokFocus(question.text, primary);
+  const inferredFocus = inferBabokFocus(question.text, primary);
+  const focus = applyKnownRouteFocus(routeSection, inferredFocus);
   const isNegativeQuestion = /\bnot\b|\bleast\b|\bexcept\b|\bfalse\b|\bincorrect\b/i.test(
     question.text
   );
@@ -2214,7 +3177,10 @@ function buildMinimalBabokMemory(
     rememberEn: shortenMemoryText(buildGenericRememberEnglish(question, guide), 230),
     rememberVi: shortenMemoryText(translatedAnswer || topicSummary, 230),
     keyEn: getGenericKeyEnglish(question, guide, note),
-    bookPage: getBabokBookPageRange(guide.primary).start,
+    bookPage: babokBookPageForSection(
+      guide.focus.sectionLabel,
+      getBabokBookPageRange(guide.primary).start
+    ),
   };
 }
 
