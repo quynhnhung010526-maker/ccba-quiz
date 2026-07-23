@@ -2263,7 +2263,7 @@ function BabokStudyGuidePanel({
   }
 
   return (
-    <section className="mt-4 overflow-hidden rounded-2xl border border-cyan-300/25 bg-slate-950/45 shadow-xl">
+    <section className="overflow-hidden rounded-2xl border border-cyan-300/25 bg-slate-950/45 shadow-xl">
       <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 px-3 py-2.5 md:px-4">
         <div className="min-w-0">
           <p className="flex items-center gap-1.5 text-xs font-bold text-cyan-100">
@@ -2322,7 +2322,7 @@ function BabokStudyGuidePanel({
         src={pdfEmbedHref}
         title={`BABOK ${memory.section} - ${memory.title}`}
         loading="lazy"
-        className="h-[560px] w-full bg-white md:h-[700px]"
+        className="h-[520px] w-full bg-white lg:h-[calc(100vh-285px)] lg:min-h-[520px] xl:h-[calc(100vh-260px)]"
       />
 
       <div className="border-t border-white/10 px-3 py-2 text-[10px] text-slate-400 md:px-4">
@@ -2979,7 +2979,7 @@ export default function QuizLearningApp() {
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100">
-      <div className="mx-auto max-w-[1180px] px-2.5 py-2 md:px-3">
+      <div className="mx-auto max-w-[1880px] px-2.5 py-2 md:px-3">
         <div className="mb-3 flex flex-col gap-2 rounded-2xl border border-white/10 bg-white/[0.04] p-3 sm:flex-row sm:items-center sm:justify-between">
           <div className="min-w-0">
             <button
@@ -3035,7 +3035,7 @@ export default function QuizLearningApp() {
           </section>
         )}
 
-        <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_232px]">
+        <div className="grid gap-3 lg:grid-cols-[minmax(0,1.65fr)_minmax(330px,0.95fr)_210px] lg:items-start xl:grid-cols-[minmax(0,1.8fr)_minmax(380px,1fr)_220px]">
           <main className="rounded-2xl border border-white/10 bg-white/[0.04] p-4 shadow-xl md:p-6">
             <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-2">
               <div>
@@ -3134,14 +3134,6 @@ export default function QuizLearningApp() {
               })}
             </div>
 
-            {hasAnsweredCurrent && (
-              <BabokStudyGuidePanel
-                question={currentQuestion}
-                note={currentLearningNote}
-                selectedOptionId={currentPickedId}
-              />
-            )}
-
             <div className="mt-5 flex items-center justify-between gap-2 border-t border-white/10 pt-4">
               <button
                 onClick={() => goToQuestion(currentIndex - 1)}
@@ -3163,9 +3155,31 @@ export default function QuizLearningApp() {
             </div>
           </main>
 
+          <section className="min-w-0 lg:sticky lg:top-3 lg:max-h-[calc(100vh-24px)]">
+            {hasAnsweredCurrent ? (
+              <BabokStudyGuidePanel
+                question={currentQuestion}
+                note={currentLearningNote}
+                selectedOptionId={currentPickedId}
+              />
+            ) : (
+              <div className="flex min-h-[360px] items-center justify-center rounded-2xl border border-cyan-300/20 bg-white/[0.04] p-5 text-center shadow-xl lg:min-h-[calc(100vh-145px)]">
+                <div>
+                  <BookOpen className="mx-auto h-8 w-8 text-cyan-300/70" />
+                  <h3 className="mt-3 text-sm font-semibold text-slate-200">
+                    Tóm tắt và BABOK
+                  </h3>
+                  <p className="mt-1.5 text-xs leading-5 text-slate-400">
+                    Chọn một đáp án để hiện phần tóm tắt và đúng trang PDF liên quan.
+                  </p>
+                </div>
+              </div>
+            )}
+          </section>
+
           <aside className="rounded-2xl border border-white/10 bg-white/[0.04] p-3 shadow-xl lg:sticky lg:top-3 lg:h-fit">
-            <h3 className="text-sm font-semibold">Bảng câu hỏi</h3>
-            <div className="mt-2 grid max-h-[calc(100vh-185px)] grid-cols-5 gap-1.5 overflow-auto pr-1">
+            <h3 className="text-sm font-semibold">Theo dõi tiến độ</h3>
+            <div className="mt-2 grid max-h-[calc(100vh-245px)] grid-cols-5 gap-1.5 overflow-auto pr-1">
               {session.questions.map((question, index) => {
                 const picked = session.answers[question.id];
                 const correct = question.options.find(
