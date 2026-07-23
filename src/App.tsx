@@ -2233,6 +2233,11 @@ function BabokStudyGuidePanel({
   const pdfPage = babokPdfPage(memory.bookPage);
   const pdfHref = babokPdfHref(memory.bookPage);
   const pdfEmbedHref = babokPdfEmbedHref(memory.bookPage);
+  const [showVietnameseSummary, setShowVietnameseSummary] = useState(false);
+
+  useEffect(() => {
+    setShowVietnameseSummary(false);
+  }, [question.id]);
 
   if (compact) {
     return (
@@ -2278,6 +2283,38 @@ function BabokStudyGuidePanel({
         >
           Mở toàn màn hình
         </a>
+      </div>
+
+      <div className="border-b border-white/10 bg-cyan-300/[0.05] px-3 py-3 md:px-4">
+        <div className="flex items-start justify-between gap-3">
+          <div className="min-w-0">
+            <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-cyan-300">
+              Tóm tắt để trả lời
+            </p>
+            <p className="mt-1.5 text-sm font-medium leading-5 text-slate-100">
+              {memory.rememberEn}
+            </p>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => setShowVietnameseSummary((current) => !current)}
+            className="shrink-0 rounded-lg border border-white/10 bg-white/5 px-2.5 py-1.5 text-[10px] font-semibold text-cyan-200 transition hover:bg-white/10"
+          >
+            {showVietnameseSummary ? 'Ẩn bản dịch' : 'Dịch tiếng Việt'}
+          </button>
+        </div>
+
+        {showVietnameseSummary && (
+          <p className="mt-2 border-t border-white/10 pt-2 text-xs leading-5 text-slate-300">
+            {memory.rememberVi}
+          </p>
+        )}
+
+        <p className="mt-2 text-[11px] leading-4 text-slate-400">
+          <span className="font-semibold text-slate-300">Key English:</span>{' '}
+          {memory.keyEn}
+        </p>
       </div>
 
       <iframe
