@@ -122,11 +122,28 @@ type BabokFocus = {
   readingGuide: string;
 };
 
+type BilingualStudyItem = {
+  en: string;
+  vi: string;
+};
+
+type BabokOptionReason = {
+  label: string;
+  optionId: string;
+  optionText: string;
+  isCorrect: boolean;
+  relatedTopic?: BabokTopic;
+  explanationVi: string;
+};
+
 type BabokStudyGuide = {
   primary: BabokTopic;
   related: BabokTopic[];
   focus: BabokFocus;
   answerTakeaway: string;
+  questionIntent: BilingualStudyItem;
+  memoryRule: BilingualStudyItem;
+  optionReasons: BabokOptionReason[];
 };
 
 const STORAGE_VERSION = 2;
@@ -468,9 +485,9 @@ const BABOK_ROUTING_HINTS: Array<{
   score: number;
 }> = [
   { section: 'Chapter 1', patterns: [/what does.*babok.*contain/i, /according to.*babok.*what is business analysis/i, /purpose of the babok guide/i, /structure of the babok guide/i], score: 135 },
-  { section: '2.1', patterns: [/baccm/i, /business analysis core concept model/i, /change.*need.*solution.*stakeholder.*value.*context/i], score: 135 },
+  { section: '2.1', patterns: [/\bbaccm\b/i, /business analysis core concept model/i, /change.*need.*solution.*stakeholder.*value.*context/i], score: 135 },
   { section: '2.3', patterns: [/type of requirement/i, /requirements classification/i, /transition requirement/i, /functional requirement/i, /non-functional requirement/i], score: 135 },
-  { section: '2.4', patterns: [/type of stakeholder/i, /stakeholder role/i, /domain subject matter expert/i, /implementation subject matter expert/i, /operational support/i, /regulator/i, /sponsor/i, /supplier/i, /tester/i], score: 125 },
+  { section: '2.4', patterns: [/type of stakeholder/i, /stakeholder role/i, /domain subject matter expert/i, /implementation subject matter expert/i, /operational support/i, /\bregulator\b/i, /\bsponsor\b/i, /\bsupplier\b/i, /\btester\b/i], score: 125 },
   { section: '2.5', patterns: [/difference between requirements and designs/i, /requirements.*focused on.*need/i, /designs.*focused on.*solution/i], score: 140 },
   { section: '3.1', patterns: [/\badaptive\b/i, /\bpredictive\b/i, /\bwaterfall\b/i, /formal requirements documentation/i], score: 120 },
   { section: '3.2', patterns: [/stakeholder analysis/i, /stakeholder attitudes/i, /roles and responsibilities/i], score: 105 },
@@ -494,11 +511,11 @@ const BABOK_ROUTING_HINTS: Array<{
   { section: '7.1', patterns: [/specify and model/i, /requirements formats/i, /text.*matrices.*diagrams/i, /metadata/i], score: 110 },
   { section: '7.2', patterns: [/\batomic\b/i, /quality characteristic/i, /verify requirements/i, /unambiguous/i, /testable/i], score: 125 },
   { section: '7.3', patterns: [/validate requirements/i, /validating requirements/i, /right requirements/i, /missing requirements/i, /validation criteria/i], score: 120 },
-  { section: '7.4', patterns: [/requirements architecture/i, /template architectures/i, /relationships between relevant requirements/i], score: 115 },
+  { section: '7.4', patterns: [/requirements architecture/i, /template architectures/i, /collectively support one another/i, /work in harmony/i, /single whole/i, /fit.*together.*meaningful whole/i, /cohesive whole/i, /organize requirements based on.*solution components/i], score: 160 },
   { section: '7.5', patterns: [/design options/i, /requirements allocation/i, /solution approach/i], score: 110 },
   { section: '7.6', patterns: [/recommend solution/i, /potential value.*solution/i, /trade-offs/i], score: 110 },
   { section: '8.1', patterns: [/measure solution performance/i, /performance measures/i, /measurement.*volume/i, /measurement.*frequency/i, /measurement.*timing/i], score: 115 },
-  { section: '8.2', patterns: [/analyz.*performance measure/i, /performance trend/i, /a trend/i, /repeatable and reproducible/i], score: 115 },
+  { section: '8.2', patterns: [/analyz.*performance measure/i, /performance trend/i, /\ba trend\b/i, /repeatable and reproducible/i], score: 115 },
   { section: '8.3', patterns: [/solution limitation/i, /solution component.*problem/i, /ineffective outputs/i, /source of the problem/i], score: 115 },
   { section: '8.4', patterns: [/enterprise limitation/i, /cultural assessment/i, /interpersonal conflict/i, /organizational structure/i], score: 115 },
   { section: '8.5', patterns: [/increase solution value/i, /retire the solution/i, /replace the solution/i, /sunk cost/i, /necessity/i], score: 115 },
@@ -718,6 +735,194 @@ function inferBabokFocus(questionText: string, topic: BabokTopic): BabokFocus {
   };
 }
 
+function getFocusEnglishLabel(focus: BabokFocus): string {
+  const section = focus.sectionLabel;
+
+  if (/\.1\b/.test(section)) return 'Purpose';
+  if (/\.2\b/.test(section)) return 'Description';
+  if (/\.3\b/.test(section)) return 'Inputs';
+  if (/\.4\b/.test(section)) {
+    return /10\./.test(section) ? 'Usage Considerations' : 'Elements';
+  }
+  if (/\.5\b/.test(section)) return 'Guidelines and Tools';
+  if (/\.6\b/.test(section)) return 'Techniques';
+  if (/\.7\b/.test(section)) return 'Stakeholders';
+  if (/\.8\b/.test(section)) return 'Outputs';
+
+  return 'Core concept and application';
+}
+
+function identifyQuestionIntent(
+  questionText: string,
+  topic: BabokTopic,
+  focus: BabokFocus
+): BilingualStudyItem {
+  const normalized = normalizeBabokMatchText(questionText);
+  const negative = /\bnot\b|\bleast\b|\bexcept\b|\bfalse\b|\bincorrect\b/.test(
+    normalized
+  );
+
+  if (negative) {
+    return {
+      en: 'Negative / exception question: identify the option that does NOT belong.',
+      vi: 'Câu hỏi phủ định hoặc loại trừ: phải tìm phương án KHÔNG thuộc, ÍT phù hợp nhất hoặc là ngoại lệ.',
+    };
+  }
+
+  if (/\binput\b|\binputs\b|\bprerequisite\b|required before/.test(normalized)) {
+    return {
+      en: `Identify the input required before ${topic.titleEn} can begin.`,
+      vi: `Xác định đầu vào cần có trước khi thực hiện ${topic.titleVi}.`,
+    };
+  }
+
+  if (/\boutput\b|\boutputs\b|\bdeliverable\b|\bproduces\b|\bresult\b/.test(normalized)) {
+    return {
+      en: `Identify the output produced by ${topic.titleEn}.`,
+      vi: `Xác định đầu ra được tạo ra sau khi thực hiện ${topic.titleVi}.`,
+    };
+  }
+
+  if (/\btechnique\b|best suited|most suitable|which diagram|which matrix/.test(normalized)) {
+    return {
+      en: 'Match the scenario goal to the purpose of the most suitable technique.',
+      vi: 'Ghép mục tiêu của tình huống với mục đích của kỹ thuật phù hợp nhất.',
+    };
+  }
+
+  if (/\bstakeholder\b|\bstakeholders\b|\bwho\b|participate|responsible/.test(normalized)) {
+    return {
+      en: `Identify the stakeholder role associated with ${topic.titleEn}.`,
+      vi: `Xác định vai trò bên liên quan thường tham gia, chịu trách nhiệm hoặc bị ảnh hưởng trong ${topic.titleVi}.`,
+    };
+  }
+
+  if (/which task|what task|task is|knowledge area|during which task/.test(normalized)) {
+    return {
+      en: 'Recognize the BABOK task from its purpose, activity, input, or output.',
+      vi: 'Nhận diện đúng task BABOK từ mục đích, hoạt động, đầu vào hoặc đầu ra được mô tả trong đề.',
+    };
+  }
+
+  if (/purpose|primary goal|goal of|why/.test(normalized)) {
+    return {
+      en: `Understand the purpose and value of ${topic.titleEn}.`,
+      vi: `Hiểu mục đích và giá trị mà ${topic.titleVi} tạo ra.`,
+    };
+  }
+
+  return {
+    en: `Apply the ${getFocusEnglishLabel(focus)} of ${topic.titleEn} to the scenario.`,
+    vi: `Áp dụng phần ${focus.focusName.toLowerCase()} của ${topic.titleVi} vào tình huống trong đề.`,
+  };
+}
+
+function buildMemoryRule(
+  topic: BabokTopic,
+  focus: BabokFocus,
+  questionText: string
+): BilingualStudyItem {
+  const normalized = normalizeBabokMatchText(questionText);
+
+  if (/\bnot\b|\bleast\b|\bexcept\b|\bfalse\b|\bincorrect\b/.test(normalized)) {
+    return {
+      en: 'Mark the negative word first, validate every option, then choose the exception.',
+      vi: 'Khoanh từ phủ định trước, kiểm tra lần lượt từng phương án, rồi chọn phương án ngoại lệ; không chọn ngay phương án nghe quen nhất.',
+    };
+  }
+
+  if (topic.kind === 'task') {
+    return {
+      en: `Read the stem as Purpose → Inputs → Elements → Outputs for ${topic.titleEn}.`,
+      vi: `Đọc đề theo chuỗi Mục đích → Đầu vào → Thành phần → Đầu ra của ${topic.titleVi}; xác định đề đang hỏi đúng mắt xích nào.`,
+    };
+  }
+
+  if (topic.kind === 'technique') {
+    return {
+      en: `Match “what needs to be achieved” with the Purpose and Usage Considerations of ${topic.titleEn}.`,
+      vi: `Ghép “cần đạt được điều gì” với Purpose và Usage Considerations của ${topic.titleVi}; đừng chỉ chọn vì tên kỹ thuật xuất hiện quen thuộc.`,
+    };
+  }
+
+  if (topic.kind === 'concept') {
+    return {
+      en: `Separate the definition of ${topic.titleEn} from nearby BABOK concepts.`,
+      vi: `Tách định nghĩa của ${topic.titleVi} khỏi các khái niệm BABOK gần giống; chú ý ranh giới và từ khóa định nghĩa.`,
+    };
+  }
+
+  return {
+    en: `Use the definition and the ${getFocusEnglishLabel(focus)} in BABOK, not general project-management intuition.`,
+    vi: `Dựa vào định nghĩa và ${focus.focusName.toLowerCase()} trong BABOK, không suy luận theo kinh nghiệm quản lý dự án chung.`,
+  };
+}
+
+function scoreOptionAgainstTopic(topic: BabokTopic, optionText: string): number {
+  const option = normalizeBabokMatchText(optionText);
+  let score = 0;
+
+  topic.aliases.forEach((alias) => {
+    score = Math.max(score, aliasMatchScore(option, alias, 115));
+  });
+
+  BABOK_ROUTING_HINTS.forEach((hint) => {
+    if (
+      hint.section === topic.section &&
+      hint.patterns.some((pattern) => pattern.test(optionText))
+    ) {
+      score = Math.max(score, hint.score);
+    }
+  });
+
+  return score;
+}
+
+function findBestTopicForOption(optionText: string): BabokTopic | undefined {
+  const ranked = BABOK_TOPICS.map((topic) => ({
+    topic,
+    score: scoreOptionAgainstTopic(topic, optionText),
+  })).sort((left, right) => right.score - left.score);
+
+  return ranked[0]?.score >= 70 ? ranked[0].topic : undefined;
+}
+
+function buildOptionReasons(
+  question: Question,
+  primary: BabokTopic,
+  focus: BabokFocus
+): BabokOptionReason[] {
+  const negative = /\bnot\b|\bleast\b|\bexcept\b|\bfalse\b|\bincorrect\b/i.test(
+    question.text
+  );
+
+  return question.options.map((option, optionIndex) => {
+    const relatedTopic = findBestTopicForOption(option.text);
+    let explanationVi = '';
+
+    if (option.isCorrect) {
+      explanationVi = negative
+        ? `Đây là phương án phải chọn vì đề đang hỏi theo dạng phủ định/ngoại lệ. Khi đối chiếu ${focus.sectionLabel}, nội dung này là phương án không thuộc hoặc không phù hợp với ${focus.focusName.toLowerCase()} của ${primary.titleVi}.`
+        : `Đây là phương án phải chọn vì nội dung của nó khớp trực tiếp với ${focus.focusName.toLowerCase()} tại ${focus.sectionLabel} của ${primary.titleVi}.`;
+    } else if (negative) {
+      explanationVi = `Phương án này bị loại vì nó vẫn phù hợp với nội dung BABOK đang xét. Trong câu hỏi NOT/EXCEPT, các phương án đúng về kiến thức không phải là đáp án cần khoanh.`;
+    } else if (relatedTopic && relatedTopic.id !== primary.id) {
+      explanationVi = `Đây là thuật ngữ BABOK có thể đúng trong ngữ cảnh khác, gần với ${relatedTopic.section} ${relatedTopic.titleVi}, nhưng không trả lời đúng ${focus.focusName.toLowerCase()} của ${primary.titleVi} mà đề đang hỏi.`;
+    } else {
+      explanationVi = `Phương án này có từ khóa liên quan nhưng không khớp đúng vai trò, loại thông tin hoặc mục tiêu được quy định tại ${focus.sectionLabel}. Đây là phương án gây nhiễu “đúng chủ đề nhưng sai điểm hỏi”.`;
+    }
+
+    return {
+      label: ANSWER_LABELS[optionIndex] || option.originalLabel,
+      optionId: option.id,
+      optionText: option.text,
+      isCorrect: option.isCorrect,
+      relatedTopic,
+      explanationVi,
+    };
+  });
+}
+
 function buildBabokStudyGuide(question: Question): BabokStudyGuide {
   const correctAnswer = question.options.find((option) => option.isCorrect);
   const correctAnswerText = correctAnswer?.text || '';
@@ -766,7 +971,19 @@ function buildBabokStudyGuide(question: Question): BabokStudyGuide {
     ? `Đây là câu hỏi loại trừ. Lựa chọn cần xác định là “${correctAnswerText}”. Hãy kiểm tra từng phương án với ${focus.sectionLabel}, đặc biệt xem phương án nào không thuộc hoặc không phù hợp với nội dung BABOK đang hỏi.`
     : `Điểm chốt cần nhớ là “${correctAnswerText}”. Khi gặp câu tương tự, hãy xác định trước câu hỏi đang kiểm tra ${focus.focusName.toLowerCase()}, rồi đối chiếu với ${focus.sectionLabel} thay vì chọn theo từ khóa quen mắt.`;
 
-  return { primary, related, focus, answerTakeaway };
+  const questionIntent = identifyQuestionIntent(question.text, primary, focus);
+  const memoryRule = buildMemoryRule(primary, focus, question.text);
+  const optionReasons = buildOptionReasons(question, primary, focus);
+
+  return {
+    primary,
+    related,
+    focus,
+    answerTakeaway,
+    questionIntent,
+    memoryRule,
+    optionReasons,
+  };
 }
 
 function babokPdfPage(bookPage: number): number {
@@ -779,6 +996,172 @@ function babokPdfPublicUrl(): string {
 
 function babokPdfHref(bookPage: number): string {
   return `${babokPdfPublicUrl()}#page=${babokPdfPage(bookPage)}`;
+}
+
+function getBabokBookPageRange(topic: BabokTopic): { start: number; end: number } {
+  const nextTopic = BABOK_TOPICS
+    .filter(
+      (candidate) =>
+        candidate.kind === topic.kind &&
+        candidate.chapter === topic.chapter &&
+        candidate.bookPage > topic.bookPage
+    )
+    .sort((left, right) => left.bookPage - right.bookPage)[0];
+
+  const defaultLength = topic.kind === 'technique' ? 2 : topic.kind === 'task' ? 5 : 2;
+  const end = nextTopic
+    ? Math.max(topic.bookPage, nextTopic.bookPage - 1)
+    : topic.bookPage + defaultLength;
+
+  return { start: topic.bookPage, end };
+}
+
+function getFocusKeyword(focus: BabokFocus): BilingualStudyItem {
+  const en = getFocusEnglishLabel(focus);
+  const viMap: Record<string, string> = {
+    Purpose: 'Mục đích',
+    Description: 'Mô tả',
+    Inputs: 'Đầu vào',
+    Elements: 'Các thành phần/yếu tố',
+    'Guidelines and Tools': 'Hướng dẫn và công cụ',
+    Techniques: 'Các kỹ thuật',
+    Stakeholders: 'Các bên liên quan',
+    Outputs: 'Đầu ra',
+    'Usage Considerations': 'Lưu ý khi sử dụng',
+    'Core concept and application': 'Khái niệm cốt lõi và cách áp dụng',
+  };
+
+  return { en, vi: viMap[en] || focus.focusName };
+}
+
+function getTopicKindKeyword(topic: BabokTopic): BilingualStudyItem {
+  const labels: Record<BabokTopicKind, BilingualStudyItem> = {
+    chapter: { en: 'Knowledge area / chapter', vi: 'Vùng kiến thức / chương' },
+    concept: { en: 'Core concept', vi: 'Khái niệm cốt lõi' },
+    task: { en: 'Business analysis task', vi: 'Nhiệm vụ phân tích nghiệp vụ' },
+    competency: { en: 'Underlying competency', vi: 'Năng lực nền tảng' },
+    technique: { en: 'Business analysis technique', vi: 'Kỹ thuật phân tích nghiệp vụ' },
+    perspective: { en: 'Business analysis perspective', vi: 'Góc nhìn phân tích nghiệp vụ' },
+  };
+
+  return labels[topic.kind];
+}
+
+function buildBilingualKnowledgePoints(
+  question: Question,
+  guide: BabokStudyGuide,
+  note?: LearningNote
+): BilingualStudyItem[] {
+  const correct = question.options.find((option) => option.isCorrect);
+  const correctVi =
+    note?.status === 'ready' && note.correctAnswerVi
+      ? note.correctAnswerVi
+      : correct?.text || '';
+  const focusKeyword = getFocusKeyword(guide.focus);
+
+  return [
+    {
+      en: `${guide.primary.section} — ${guide.primary.titleEn}`,
+      vi: `${guide.primary.titleVi}: ${guide.primary.summaryVi}`,
+    },
+    {
+      en: `${focusKeyword.en} — ${guide.focus.sectionLabel}`,
+      vi: `${focusKeyword.vi}: ${guide.focus.readingGuide}`,
+    },
+    {
+      en: `Question intent — ${guide.questionIntent.en}`,
+      vi: `Đề đang kiểm tra — ${guide.questionIntent.vi}`,
+    },
+    {
+      en: `Correct answer — ${correct?.text || ''}`,
+      vi: `Đáp án đúng — ${correctVi}`,
+    },
+    {
+      en: `Exam rule — ${guide.memoryRule.en}`,
+      vi: `Quy tắc ghi nhớ — ${guide.memoryRule.vi}`,
+    },
+  ];
+}
+
+function buildBabokKeywordRows(
+  question: Question,
+  guide: BabokStudyGuide,
+  note?: LearningNote
+): BilingualStudyItem[] {
+  const correct = question.options.find((option) => option.isCorrect);
+  const extracted = correct
+    ? extractLearningKeywords(question.text, correct.text)
+    : [];
+  const focusKeyword = getFocusKeyword(guide.focus);
+  const topicKindKeyword = getTopicKindKeyword(guide.primary);
+  const correctVi =
+    note?.status === 'ready' && note.correctAnswerVi
+      ? note.correctAnswerVi
+      : '';
+
+  const candidates: BilingualStudyItem[] = [
+    { en: guide.primary.titleEn, vi: guide.primary.titleVi },
+    focusKeyword,
+    topicKindKeyword,
+    ...extracted
+      .filter((item) => item.vi.trim().length > 0)
+      .map((item) => ({ en: item.en, vi: item.vi })),
+  ];
+
+  if (correct && correct.text.length <= 120 && correctVi) {
+    candidates.push({ en: correct.text, vi: correctVi });
+  }
+
+  const seen = new Set<string>();
+  return candidates
+    .filter((item) => {
+      const key = normalizeBabokMatchText(item.en);
+      if (!key || seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    })
+    .slice(0, 10);
+}
+
+function buildWhyCorrectExplanation(
+  question: Question,
+  guide: BabokStudyGuide,
+  note?: LearningNote
+): string {
+  const correct = question.options.find((option) => option.isCorrect);
+  const correctEn = correct?.text || '';
+  const correctVi =
+    note?.status === 'ready' && note.correctAnswerVi
+      ? note.correctAnswerVi
+      : correctEn;
+  const normalized = normalizeBabokMatchText(question.text);
+  const location = `${guide.focus.sectionLabel} — ${guide.primary.titleEn}`;
+
+  if (/\bnot\b|\bleast\b|\bexcept\b|\bfalse\b|\bincorrect\b/.test(normalized)) {
+    return `Phải khoanh “${correctVi}” vì đây là câu hỏi phủ định/loại trừ. Khi đối chiếu từng lựa chọn với ${location}, phương án này là nội dung không thuộc, không đúng hoặc ít phù hợp nhất; các phương án còn lại là những nội dung vẫn phù hợp với BABOK nên phải loại.`;
+  }
+
+  if (/\binput\b|\binputs\b|\bprerequisite\b|required before/.test(normalized)) {
+    return `Phải khoanh “${correctVi}” vì đề đang hỏi INPUT. Theo ${location}, input là thông tin phải có để task bắt đầu hoặc được sử dụng/chuyển đổi trong task. Đáp án này đúng vai trò đầu vào; các lựa chọn gây nhiễu thường là output, guideline/tool hoặc đầu ra của task khác.`;
+  }
+
+  if (/\boutput\b|\boutputs\b|\bdeliverable\b|\bproduces\b|\bresult\b/.test(normalized)) {
+    return `Phải khoanh “${correctVi}” vì đề đang hỏi OUTPUT. Theo ${location}, output là kết quả được tạo mới, biến đổi hoặc thay đổi trạng thái sau khi task hoàn tất. Đáp án này là kết quả của task; các phương án còn lại thường là input, technique hoặc tài liệu tham chiếu.`;
+  }
+
+  if (/\btechnique\b|best suited|most suitable|which diagram|which matrix/.test(normalized)) {
+    return `Phải khoanh “${correctVi}” vì mục đích của kỹ thuật này khớp trực tiếp với việc mà tình huống cần thực hiện. BABOK đặt nội dung liên quan tại ${location}. Khi chọn technique, phải ghép mục tiêu của tình huống với Purpose/Description của technique, không chọn chỉ vì tên kỹ thuật quen thuộc.`;
+  }
+
+  if (/which task|what task|task is|knowledge area|during which task/.test(normalized)) {
+    return `Phải khoanh “${correctVi}” vì hoạt động, mục đích hoặc kết quả được mô tả trong đề trùng với phạm vi của ${guide.primary.titleVi}. Nội dung này được trình bày tại ${location}; các phương án khác có thể là task BABOK thật nhưng giải quyết một mục tiêu khác.`;
+  }
+
+  if (/\bstakeholder\b|\bstakeholders\b|\bwho\b|participate|responsible/.test(normalized)) {
+    return `Phải khoanh “${correctVi}” vì vai trò này phù hợp với trách nhiệm hoặc mức độ tham gia được mô tả trong ${location}. Cần phân biệt stakeholder “thường tham gia/bị ảnh hưởng” với người có quyền phê duyệt hoặc người trực tiếp thực hiện solution.`;
+  }
+
+  return `Phải khoanh “${correctVi}” vì đáp án này diễn đạt đúng nguyên tắc tại ${location}. Câu hỏi đang kiểm tra ${guide.focus.focusName.toLowerCase()}; đáp án đúng phải khớp cả bản chất khái niệm lẫn điểm hỏi, không chỉ có từ khóa cùng chủ đề. Từ khóa tiếng Anh của đáp án là “${correctEn}”.`;
 }
 
 
@@ -1474,16 +1857,470 @@ function LearningNotePanel({
 }
 
 
+
+type RequirementsArchitecturePattern =
+  | 'purpose'
+  | 'traceability'
+  | 'relationship-quality'
+  | 'techniques'
+  | 'viewpoints'
+  | 'completeness'
+  | 'inputs'
+  | 'output'
+  | 'general';
+
+function detectRequirementsArchitecturePattern(
+  question: Question
+): RequirementsArchitecturePattern {
+  const correct = question.options.find((option) => option.isCorrect)?.text || '';
+  const text = `${question.text} ${correct}`.toLowerCase();
+
+  if (/\btechniques?\b|not a stated technique|which.*technique/.test(text)) {
+    return 'techniques';
+  }
+
+  if (
+    /quality criteria|criterion|necessary|unambiguous|consistent|testable|defined relationship/.test(
+      text
+    )
+  ) {
+    return 'relationship-quality';
+  }
+
+  if (/traceability|links? back to an objective|objective was met/.test(text)) {
+    return 'traceability';
+  }
+
+  if (/viewpoint|view\b|template architecture|architectural framework/.test(text)) {
+    return 'viewpoints';
+  }
+
+  if (/organize requirements based on.*solution components/.test(text)) {
+    return 'general';
+  }
+
+  if (/\binputs?\b|information management approach|requirements \(any state\)|solution scope/.test(text)) {
+    return 'inputs';
+  }
+
+  if (/\boutputs?\b|interrelationships among them|contextual information/.test(text)) {
+    return 'output';
+  }
+
+  if (/complete|completeness|missing|contradictory|inconsistent|full story|gap/.test(text)) {
+    return 'completeness';
+  }
+
+  if (
+    /purpose|collectively support|work in harmony|single whole|fit together|overall objectives|meaningful whole/.test(
+      text
+    )
+  ) {
+    return 'purpose';
+  }
+
+  return 'general';
+}
+
+function getRequirementsArchitecturePatternCard(
+  pattern: RequirementsArchitecturePattern
+): {
+  label: string;
+  triggerEn: string;
+  triggerVi: string;
+  actionEn: string;
+  actionVi: string;
+} {
+  const cards: Record<RequirementsArchitecturePattern, {
+    label: string;
+    triggerEn: string;
+    triggerVi: string;
+    actionEn: string;
+    actionVi: string;
+  }> = {
+    purpose: {
+      label: 'PURPOSE / MỤC ĐÍCH',
+      triggerEn: 'collectively support · fit together · single whole · overall objectives',
+      triggerVi: 'cùng hỗ trợ nhau · ghép lại · một chỉnh thể · đạt mục tiêu chung',
+      actionEn: 'Choose Define Requirements Architecture.',
+      actionVi: 'Khoanh Define Requirements Architecture.',
+    },
+    traceability: {
+      label: 'TRAP / BẪY TRACEABILITY',
+      triggerEn: 'link back to objective · show how objective was met',
+      triggerVi: 'truy ngược về mục tiêu · chứng minh mục tiêu được đáp ứng',
+      actionEn: 'That is Trace Requirements, not architecture.',
+      actionVi: 'Đó là Trace Requirements, không phải kiến trúc yêu cầu.',
+    },
+    'relationship-quality': {
+      label: 'RELATIONSHIP CHECK / KIỂM TRA QUAN HỆ',
+      triggerEn: 'quality criteria for requirement relationships',
+      triggerVi: 'tiêu chí chất lượng của mối quan hệ giữa yêu cầu',
+      actionEn: 'Recall D-N-C-U-C; “Testable” is the usual distractor.',
+      actionVi: 'Nhớ D-N-C-U-C; “Testable” thường là đáp án nhiễu.',
+    },
+    techniques: {
+      label: 'TECHNIQUE / KỸ THUẬT',
+      triggerEn: 'NOT a technique for Define Requirements Architecture',
+      triggerVi: 'KHÔNG phải kỹ thuật của Define Requirements Architecture',
+      actionEn: 'Recall D-F-I-O-S-W; Process Modelling is not listed.',
+      actionVi: 'Nhớ D-F-I-O-S-W; Process Modelling không nằm trong danh sách.',
+    },
+    viewpoints: {
+      label: 'VIEWPOINTS / GÓC NHÌN',
+      triggerEn: 'viewpoint · view · template architecture · framework',
+      triggerVi: 'quy ước góc nhìn · sản phẩm thực tế · kiến trúc mẫu · framework',
+      actionEn: 'Viewpoint = rules/template; View = actual requirements/designs.',
+      actionVi: 'Viewpoint = quy ước/mẫu; View = yêu cầu và thiết kế thực tế.',
+    },
+    completeness: {
+      label: 'COMPLETENESS / TÍNH ĐẦY ĐỦ',
+      triggerEn: 'missing · inconsistent · contradictory · dependencies · full story',
+      triggerVi: 'thiếu · không nhất quán · mâu thuẫn · phụ thuộc · câu chuyện đầy đủ',
+      actionEn: 'Architecture checks whether the whole set is cohesive and complete.',
+      actionVi: 'Kiến trúc kiểm tra toàn bộ tập yêu cầu có đầy đủ và gắn kết hay không.',
+    },
+    inputs: {
+      label: 'INPUTS / ĐẦU VÀO',
+      triggerEn: 'input to Define Requirements Architecture',
+      triggerVi: 'đầu vào của Define Requirements Architecture',
+      actionEn: 'Recall I-R-S: Information Management Approach, Requirements, Solution Scope.',
+      actionVi: 'Nhớ I-R-S: cách quản lý thông tin, yêu cầu, phạm vi giải pháp.',
+    },
+    output: {
+      label: 'OUTPUT / ĐẦU RA',
+      triggerEn: 'requirements + interrelationships + contextual information',
+      triggerVi: 'yêu cầu + quan hệ giữa chúng + thông tin bối cảnh',
+      actionEn: 'The output is Requirements Architecture.',
+      actionVi: 'Đầu ra là Requirements Architecture.',
+    },
+    general: {
+      label: 'CORE / CỐT LÕI',
+      triggerEn: 'structure · organize · relate · cohesive whole',
+      triggerVi: 'cấu trúc · tổ chức · liên kết · chỉnh thể gắn kết',
+      actionEn: 'Think “many requirements → one working whole”.',
+      actionVi: 'Nghĩ “nhiều yêu cầu → một chỉnh thể hoạt động được”.',
+    },
+  };
+
+  return cards[pattern];
+}
+
+function buildRequirementsArchitectureWhy(
+  question: Question,
+  correctText: string,
+  pattern: RequirementsArchitecturePattern
+): string {
+  const negative = /\bnot\b|\bleast\b|\bexcept\b|\bfalse\b|\bincorrect\b/i.test(
+    question.text
+  );
+
+  if (pattern === 'techniques') {
+    return `Khoanh “${correctText}” vì BABOK 7.4.6 chỉ liệt kê Data Modelling, Functional Decomposition, Interviews, Organizational Modelling, Scope Modelling và Workshops. ${correctText} không nằm trong nhóm này${negative ? ', nên là phương án cần chọn trong câu NOT/EXCEPT' : ''}.`;
+  }
+
+  if (pattern === 'relationship-quality') {
+    return `Khoanh “${correctText}” vì tiêu chí kiểm tra quan hệ trong kiến trúc yêu cầu là Defined, Necessary, Correct, Unambiguous và Consistent. “Testable” là đặc tính chất lượng của requirement, không phải tiêu chí của relationship.`;
+  }
+
+  if (pattern === 'traceability') {
+    return `Khoanh “${correctText}” vì câu này mô tả traceability: liên kết requirement về objective và cho thấy objective được đáp ứng thế nào. Requirements Architecture hỏi các phần có ghép thành một chỉnh thể gắn kết và hoạt động được hay không.`;
+  }
+
+  if (pattern === 'viewpoints') {
+    return `Khoanh “${correctText}” vì BABOK 7.4.4 dùng viewpoints, views và template architectures để tổ chức requirements theo mối quan tâm của từng stakeholder. Viewpoint là bộ quy ước/mẫu; view là nội dung requirement/design thực tế được tạo ra theo góc nhìn đó.`;
+  }
+
+  if (pattern === 'inputs') {
+    return `Khoanh “${correctText}” khi nó thuộc bộ I-R-S: Information Management Approach, Requirements (any state), Solution Scope. Đây là ba đầu vào chính thức của Define Requirements Architecture.`;
+  }
+
+  if (pattern === 'output') {
+    return `Khoanh “${correctText}” vì đầu ra của task là Requirements Architecture: tập requirements, các interrelationships giữa chúng và contextual information được ghi nhận.`;
+  }
+
+  if (pattern === 'completeness') {
+    return `Khoanh “${correctText}” vì architecture giúp nhìn toàn bộ tập requirements như một câu chuyện đầy đủ: không thiếu, không mâu thuẫn, không nhất quán và đã xét các dependencies có thể cản trở objective.`;
+  }
+
+  return `Khoanh “${correctText}” vì key của Define Requirements Architecture là WHOLE: các requirements, models và specifications phải cùng hỗ trợ nhau, ghép thành một chỉnh thể thống nhất và đạt overall business objectives. Đề có các từ như “collectively support”, “fit together”, “work in harmony” hoặc “single whole” thì bắt ngay task 7.4.`;
+}
+
+function RequirementsArchitectureMemoryPanel({
+  question,
+  note,
+  selectedOptionId,
+  guide,
+  compact,
+}: {
+  question: Question;
+  note?: LearningNote;
+  selectedOptionId?: string;
+  guide: BabokStudyGuide;
+  compact: boolean;
+}) {
+  const pattern = detectRequirementsArchitecturePattern(question);
+  const patternCard = getRequirementsArchitecturePatternCard(pattern);
+  const correct = question.options.find((option) => option.isCorrect);
+  const correctIndex = question.options.findIndex((option) => option.isCorrect);
+  const correctLabel =
+    correctIndex >= 0 ? ANSWER_LABELS[correctIndex] : correct?.originalLabel || '';
+  const correctVi =
+    note?.status === 'ready' && note.correctAnswerVi
+      ? note.correctAnswerVi
+      : correct?.text || '';
+  const whyCorrect = buildRequirementsArchitectureWhy(
+    question,
+    correct?.text || '',
+    pattern
+  );
+  const selectedReason = guide.optionReasons.find(
+    (item) => item.optionId === selectedOptionId
+  );
+  const selectedWasWrong = Boolean(selectedReason && !selectedReason.isCorrect);
+  const pageRange = getBabokBookPageRange(guide.primary);
+  const pdfPage = babokPdfPage(pageRange.start);
+
+  const relatedQuestionPatterns = [
+    ['Purpose', 'collectively support / harmony / one whole', 'Define Requirements Architecture'],
+    ['NOT description', 'links back to objective', 'Traceability statement = distractor'],
+    ['NOT technique', 'Process Modelling', 'Not listed in 7.4.6'],
+    ['NOT relationship criterion', 'Testable', 'Not in D-N-C-U-C'],
+    ['Element', 'Template Architectures', 'Predefined viewpoints/framework'],
+  ];
+
+  return (
+    <section
+      className={cn(
+        'mt-4 rounded-2xl border border-cyan-300/25 bg-cyan-300/[0.055] shadow-inner shadow-cyan-950/10',
+        compact ? 'p-3' : 'p-3.5 md:p-4'
+      )}
+    >
+      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-2.5">
+        <div className="min-w-0">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-cyan-300 px-2.5 py-1 text-[10px] font-black tracking-[0.12em] text-cyan-950">
+              <BookOpen className="h-3.5 w-3.5" /> KEY MASTER 7.4
+            </span>
+            <span className="text-[11px] font-bold text-white">
+              DEFINE REQUIREMENTS ARCHITECTURE
+            </span>
+            <span className="text-[11px] text-cyan-100/80">
+              Xác định kiến trúc yêu cầu
+            </span>
+          </div>
+          <p className="mt-1 text-[11px] text-slate-400">
+            BABOK 7.4 · Trang in 148–151 · Trang PDF {pdfPage}–{babokPdfPage(151)}
+          </p>
+        </div>
+        <a
+          href={babokPdfHref(148)}
+          target="_blank"
+          rel="noreferrer"
+          className="inline-flex items-center gap-1 rounded-lg border border-cyan-200/20 bg-cyan-200/10 px-2.5 py-1.5 text-[11px] font-semibold text-cyan-100 hover:bg-cyan-200/20"
+        >
+          Mở BABOK <ArrowRight className="h-3.5 w-3.5" />
+        </a>
+      </div>
+
+      <div className="mt-3 grid gap-3 lg:grid-cols-[1.08fr_0.92fr]">
+        <div className="space-y-3">
+          <div className="rounded-xl border border-emerald-200/25 bg-emerald-200/[0.065] p-3">
+            <div className="flex items-start gap-2.5">
+              <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-emerald-300 text-xs font-black text-emerald-950">
+                {correctLabel}
+              </span>
+              <div className="min-w-0">
+                <p className="text-[10px] font-black uppercase tracking-[0.13em] text-emerald-200">
+                  Chốt câu này
+                </p>
+                <p className="mt-1 text-[12px] font-bold leading-5 text-white">
+                  {correct?.text}
+                </p>
+                {correctVi !== correct?.text && (
+                  <p className="mt-0.5 text-[11px] leading-5 text-amber-100">
+                    {correctVi}
+                  </p>
+                )}
+              </div>
+            </div>
+            <p className="mt-2 text-[11px] leading-5 text-slate-200">{whyCorrect}</p>
+            {selectedWasWrong && selectedReason && (
+              <p className="mt-2 rounded-lg border border-rose-200/15 bg-rose-200/[0.05] px-2.5 py-2 text-[10.5px] leading-[18px] text-rose-100">
+                <span className="font-bold text-rose-200">Bẫy bạn vừa dính: </span>
+                {selectedReason.explanationVi}
+              </p>
+            )}
+          </div>
+
+          <div className="rounded-xl border border-amber-200/20 bg-amber-200/[0.05] p-3">
+            <p className="text-[10px] font-black uppercase tracking-[0.13em] text-amber-200">
+              Bắt key trong 3 giây — {patternCard.label}
+            </p>
+            <div className="mt-2 grid grid-cols-2 overflow-hidden rounded-lg border border-white/10 text-[10.5px] leading-[18px]">
+              <div className="border-r border-white/10 bg-slate-950/30 px-2.5 py-2">
+                <p className="font-bold text-cyan-100">EN key</p>
+                <p className="mt-1 text-slate-200">{patternCard.triggerEn}</p>
+                <p className="mt-1 font-semibold text-emerald-200">→ {patternCard.actionEn}</p>
+              </div>
+              <div className="bg-slate-950/30 px-2.5 py-2">
+                <p className="font-bold text-amber-100">Key tiếng Việt</p>
+                <p className="mt-1 text-slate-200">{patternCard.triggerVi}</p>
+                <p className="mt-1 font-semibold text-emerald-200">→ {patternCard.actionVi}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="grid content-start gap-2.5 sm:grid-cols-2 lg:grid-cols-1">
+          <div className="rounded-xl border border-white/10 bg-slate-950/30 p-3">
+            <p className="text-[10px] font-black uppercase tracking-[0.13em] text-cyan-200">
+              Công thức gốc: WHOLE
+            </p>
+            <p className="mt-1.5 text-[11px] leading-[18px] text-white">
+              <span className="font-bold text-cyan-100">EN:</span> Requirements + models + specifications → fit together → one cohesive whole → objectives.
+            </p>
+            <p className="mt-1 text-[11px] leading-[18px] text-slate-300">
+              <span className="font-bold text-amber-100">VI:</span> Nhiều yêu cầu/mô hình → ghép đúng cấu trúc → thành một chỉnh thể → đạt mục tiêu chung.
+            </p>
+          </div>
+
+          <div className="rounded-xl border border-rose-200/20 bg-rose-200/[0.045] p-3">
+            <p className="text-[10px] font-black uppercase tracking-[0.13em] text-rose-200">
+              Không nhầm: Architecture ≠ Traceability
+            </p>
+            <div className="mt-1.5 grid grid-cols-2 gap-2 text-[10.5px] leading-[18px]">
+              <div>
+                <p className="font-bold text-cyan-100">Architecture</p>
+                <p className="text-slate-300">Do the parts work as one whole?</p>
+                <p className="text-slate-400">Các phần có vận hành như một chỉnh thể?</p>
+              </div>
+              <div>
+                <p className="font-bold text-amber-100">Traceability</p>
+                <p className="text-slate-300">Where did it come from / what does it satisfy?</p>
+                <p className="text-slate-400">Yêu cầu đến từ đâu / đáp ứng mục tiêu nào?</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="rounded-xl border border-violet-200/20 bg-violet-200/[0.045] p-3 sm:col-span-2 lg:col-span-1">
+            <p className="text-[10px] font-black uppercase tracking-[0.13em] text-violet-200">
+              2 mã nhớ phải thuộc
+            </p>
+            <div className="mt-1.5 grid grid-cols-2 gap-2 text-[10.5px] leading-[18px]">
+              <div>
+                <p className="font-black text-white">D-N-C-U-C</p>
+                <p className="text-slate-300">Defined · Necessary · Correct · Unambiguous · Consistent</p>
+                <p className="text-slate-400">Quan hệ: Có định nghĩa · Cần · Đúng · Rõ · Nhất quán</p>
+              </div>
+              <div>
+                <p className="font-black text-white">D-F-I-O-S-W</p>
+                <p className="text-slate-300">Data · Functional · Interviews · Organizational · Scope · Workshops</p>
+                <p className="text-slate-400">6 techniques; không có Process Modelling</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {!compact && (
+        <div className="mt-3 grid gap-3 xl:grid-cols-[1.15fr_0.85fr]">
+          <div className="overflow-hidden rounded-xl border border-white/10 bg-slate-950/25">
+            <div className="grid grid-cols-[0.72fr_1.15fr_1fr] bg-white/[0.06] px-2.5 py-1.5 text-[9.5px] font-black uppercase tracking-[0.1em]">
+              <span className="text-violet-200">Dạng câu</span>
+              <span className="text-cyan-200">Key nhìn thấy</span>
+              <span className="text-amber-200">Phản xạ cần có</span>
+            </div>
+            {relatedQuestionPatterns.map(([type, key, reaction]) => (
+              <div
+                key={type}
+                className="grid grid-cols-[0.72fr_1.15fr_1fr] border-t border-white/10 px-2.5 py-1.5 text-[10.5px] leading-4"
+              >
+                <span className="font-semibold text-slate-100">{type}</span>
+                <span className="pr-2 text-slate-300">{key}</span>
+                <span className="text-slate-300">{reaction}</span>
+              </div>
+            ))}
+          </div>
+
+          <div className="grid grid-cols-2 gap-2 text-[10px] leading-4">
+            <div className="rounded-xl border border-white/10 bg-white/[0.025] p-2.5">
+              <p className="font-black text-cyan-200">INPUTS — I-R-S</p>
+              <p className="mt-1 text-slate-300">Information Management Approach</p>
+              <p className="text-slate-300">Requirements (any state)</p>
+              <p className="text-slate-300">Solution Scope</p>
+            </div>
+            <div className="rounded-xl border border-white/10 bg-white/[0.025] p-2.5">
+              <p className="font-black text-amber-200">ELEMENTS — V-T-C-R-I</p>
+              <p className="mt-1 text-slate-300">Viewpoints & Views</p>
+              <p className="text-slate-300">Template Architectures</p>
+              <p className="text-slate-300">Completeness</p>
+              <p className="text-slate-300">Relate & Verify Relationships</p>
+              <p className="text-slate-300">BA Information Architecture</p>
+            </div>
+            <div className="col-span-2 rounded-xl border border-white/10 bg-white/[0.025] px-2.5 py-2">
+              <p className="font-black text-emerald-200">
+                OUTPUT: Requirements Architecture
+              </p>
+              <p className="mt-0.5 text-slate-300">
+                Requirements + interrelationships + recorded contextual information.
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <div className="mt-2.5 flex flex-wrap items-center justify-between gap-2 border-t border-white/10 pt-2 text-[10px] text-slate-500">
+        <span>Nhớ một câu: <strong className="text-slate-300">Architecture = MANY → ONE WHOLE</strong></span>
+        <span>7.4.1 Purpose · 7.4.4 Elements · 7.4.6 Techniques · 7.4.8 Output</span>
+      </div>
+    </section>
+  );
+}
+
 function BabokStudyGuidePanel({
   question,
+  note,
+  selectedOptionId,
   compact = false,
 }: {
   question: Question;
+  note?: LearningNote;
+  selectedOptionId?: string;
   compact?: boolean;
 }) {
   const guide = buildBabokStudyGuide(question);
   const { primary, related, focus } = guide;
-  const pdfPage = babokPdfPage(primary.bookPage);
+  const pageRange = getBabokBookPageRange(primary);
+  const pdfPageStart = babokPdfPage(pageRange.start);
+  const pdfPageEnd = babokPdfPage(pageRange.end);
+  const correct = question.options.find((option) => option.isCorrect);
+  const correctIndex = question.options.findIndex((option) => option.isCorrect);
+  const correctLabel =
+    correctIndex >= 0 ? ANSWER_LABELS[correctIndex] : correct?.originalLabel || '';
+  const correctVi =
+    note?.status === 'ready' && note.correctAnswerVi
+      ? note.correctAnswerVi
+      : correct?.text || '';
+  const whyCorrect = buildWhyCorrectExplanation(question, guide, note);
+  const knowledgePoints = buildBilingualKnowledgePoints(question, guide, note);
+  const keywordRows = buildBabokKeywordRows(question, guide, note);
+  const selectedReason = guide.optionReasons.find(
+    (item) => item.optionId === selectedOptionId
+  );
+  const selectedWasWrong = Boolean(selectedReason && !selectedReason.isCorrect);
+
+  if (primary.section === '7.4') {
+    return (
+      <RequirementsArchitectureMemoryPanel
+        question={question}
+        note={note}
+        selectedOptionId={selectedOptionId}
+        guide={guide}
+        compact={compact}
+      />
+    );
+  }
 
   return (
     <section
@@ -1496,7 +2333,7 @@ function BabokStudyGuidePanel({
         <div className="min-w-0">
           <div className="flex flex-wrap items-center gap-2">
             <span className="inline-flex items-center gap-1.5 rounded-full border border-violet-200/20 bg-violet-200/10 px-2.5 py-1 text-[11px] font-bold uppercase tracking-[0.12em] text-violet-100">
-              <BookOpen className="h-3.5 w-3.5" /> BABOK v3 - Nội dung cần nắm
+              <BookOpen className="h-3.5 w-3.5" /> Giải thích theo BABOK v3
             </span>
             <span className="rounded-full bg-slate-950/50 px-2.5 py-1 text-[11px] font-semibold text-slate-300">
               {focus.sectionLabel}
@@ -1504,63 +2341,190 @@ function BabokStudyGuidePanel({
           </div>
 
           <h3 className="mt-3 text-base font-bold leading-6 text-white">
-            {primary.titleVi}
+            {primary.titleEn}
           </h3>
-          <p className="mt-0.5 text-xs leading-5 text-violet-100/75">
-            {primary.chapter} → {primary.section} {primary.titleEn}
+          <p className="mt-0.5 text-sm font-medium leading-5 text-violet-100">
+            {primary.titleVi}
+          </p>
+          <p className="mt-1 text-[11px] leading-5 text-slate-400">
+            {primary.chapter} → {focus.sectionLabel} · Trang in BABOK {pageRange.start}
+            {pageRange.end > pageRange.start ? `–${pageRange.end}` : ''} · Trang PDF{' '}
+            {pdfPageStart}{pdfPageEnd > pdfPageStart ? `–${pdfPageEnd}` : ''}
           </p>
         </div>
 
         <a
-          href={babokPdfHref(primary.bookPage)}
+          href={babokPdfHref(pageRange.start)}
           target="_blank"
           rel="noreferrer"
           className="inline-flex shrink-0 items-center justify-center gap-1.5 rounded-xl border border-violet-200/25 bg-violet-200/10 px-3 py-2 text-xs font-semibold text-violet-100 transition hover:bg-violet-200/20"
-          title={`Mở ${BABOK_PDF_PUBLIC_FILE} tại trang PDF ${pdfPage}`}
+          title={`Mở ${BABOK_PDF_PUBLIC_FILE} tại trang PDF ${pdfPageStart}`}
         >
-          Mở BABOK trang {primary.bookPage} <ArrowRight className="h-3.5 w-3.5" />
+          Mở đúng mục BABOK <ArrowRight className="h-3.5 w-3.5" />
         </a>
       </div>
 
-      <div className="mt-4 grid gap-3 md:grid-cols-2">
-        <div className="rounded-xl border border-white/10 bg-slate-950/35 p-3.5">
-          <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-cyan-200">
-            Tóm tắt nội dung
-          </p>
-          <p className="mt-2 text-[13px] leading-6 text-slate-100">
-            {primary.summaryVi}
+      <div className="mt-4 rounded-2xl border border-emerald-200/25 bg-emerald-200/[0.07] p-4">
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-emerald-300 text-sm font-black text-emerald-950">
+            {correctLabel}
+          </span>
+          <p className="text-sm font-bold text-emerald-100">
+            Vì sao phải khoanh đáp án này?
           </p>
         </div>
 
-        <div className="rounded-xl border border-white/10 bg-slate-950/35 p-3.5">
-          <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-amber-200">
-            Tập trung khi đọc: {focus.focusName}
+        <div className="mt-3 grid overflow-hidden rounded-xl border border-white/10 md:grid-cols-2">
+          <div className="border-b border-white/10 bg-slate-950/35 p-3 md:border-b-0 md:border-r">
+            <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-cyan-200">
+              Correct answer — English
+            </p>
+            <p className="mt-1.5 text-[13px] font-semibold leading-6 text-white">
+              {correct?.text}
+            </p>
+          </div>
+          <div className="bg-slate-950/35 p-3">
+            <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-amber-200">
+              Đáp án đúng — Tiếng Việt
+            </p>
+            <p className="mt-1.5 text-[13px] font-semibold leading-6 text-white">
+              {correctVi}
+            </p>
+          </div>
+        </div>
+
+        <p className="mt-3 text-[13px] leading-6 text-slate-100">{whyCorrect}</p>
+
+        {selectedWasWrong && selectedReason && (
+          <div className="mt-3 rounded-xl border border-rose-200/20 bg-rose-200/[0.06] p-3 text-[12px] leading-5 text-rose-50">
+            <span className="font-bold text-rose-200">Vì sao lựa chọn của bạn chưa đúng: </span>
+            {selectedReason.explanationVi}
+          </div>
+        )}
+      </div>
+
+      <div className="mt-4">
+        <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
+          <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-cyan-200">
+            Các đầu mục cần nắm để làm được câu này
           </p>
-          <p className="mt-2 text-[13px] leading-6 text-slate-100">
-            {focus.readingGuide}
-          </p>
+          <span className="text-[10px] text-slate-500">English key ↔ Giải thích tiếng Việt</span>
+        </div>
+
+        <div className="overflow-hidden rounded-xl border border-white/10">
+          <div className="grid grid-cols-2 bg-white/[0.07] text-[11px] font-bold uppercase tracking-[0.12em]">
+            <div className="border-r border-white/10 px-3 py-2 text-cyan-200">English</div>
+            <div className="px-3 py-2 text-amber-200">Tiếng Việt</div>
+          </div>
+          {knowledgePoints.map((item, index) => (
+            <div
+              key={`${item.en}-${index}`}
+              className="grid grid-cols-2 border-t border-white/10 bg-slate-950/30 text-[12px] leading-5 sm:text-[13px] sm:leading-6"
+            >
+              <div className="border-r border-white/10 px-3 py-2.5 font-medium text-slate-100">
+                {item.en}
+              </div>
+              <div className="px-3 py-2.5 text-slate-200">{item.vi}</div>
+            </div>
+          ))}
         </div>
       </div>
 
-      <div className="mt-3 rounded-xl border border-emerald-200/15 bg-emerald-200/[0.055] p-3.5">
-        <p className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.14em] text-emerald-200">
-          <CheckCircle2 className="h-3.5 w-3.5" /> Cách áp dụng vào câu này
+      <div className="mt-4">
+        <p className="mb-2 text-[11px] font-bold uppercase tracking-[0.14em] text-amber-200">
+          Key words cần thuộc
         </p>
-        <p className="mt-2 text-[13px] leading-6 text-slate-100">
-          {guide.answerTakeaway}
+        <div className="overflow-hidden rounded-xl border border-white/10">
+          <div className="grid grid-cols-2 bg-white/[0.07] text-[11px] font-bold uppercase tracking-[0.12em]">
+            <div className="border-r border-white/10 px-3 py-2 text-cyan-200">English keyword</div>
+            <div className="px-3 py-2 text-amber-200">Nghĩa tiếng Việt</div>
+          </div>
+          {keywordRows.map((item, index) => (
+            <div
+              key={`${item.en}-${index}`}
+              className="grid grid-cols-2 border-t border-white/10 bg-slate-950/30 text-[12px] leading-5 sm:text-[13px]"
+            >
+              <div className="border-r border-white/10 px-3 py-2 font-semibold text-cyan-50">
+                {item.en}
+              </div>
+              <div className="px-3 py-2 text-slate-200">{item.vi}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {!compact && (
+        <details
+          className="mt-4 rounded-xl border border-white/10 bg-slate-950/30 p-3.5"
+          open={selectedWasWrong}
+        >
+          <summary className="cursor-pointer text-[12px] font-bold text-violet-100">
+            Phân tích và loại trừ từng phương án
+          </summary>
+          <div className="mt-3 space-y-2.5">
+            {guide.optionReasons.map((item) => {
+              const isSelected = item.optionId === selectedOptionId;
+              return (
+                <div
+                  key={item.optionId}
+                  className={cn(
+                    'rounded-xl border p-3 text-[12px] leading-5',
+                    item.isCorrect
+                      ? 'border-emerald-200/25 bg-emerald-200/[0.055]'
+                      : isSelected
+                      ? 'border-rose-200/25 bg-rose-200/[0.055]'
+                      : 'border-white/10 bg-white/[0.025]'
+                  )}
+                >
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span
+                      className={cn(
+                        'flex h-6 w-6 items-center justify-center rounded-lg text-[11px] font-black',
+                        item.isCorrect
+                          ? 'bg-emerald-300 text-emerald-950'
+                          : 'bg-white/10 text-slate-200'
+                      )}
+                    >
+                      {item.label}
+                    </span>
+                    <span className="font-semibold text-slate-100">{item.optionText}</span>
+                    {item.isCorrect && (
+                      <span className="rounded-full bg-emerald-300/15 px-2 py-0.5 text-[10px] font-bold text-emerald-200">
+                        Đáp án đúng
+                      </span>
+                    )}
+                    {isSelected && !item.isCorrect && (
+                      <span className="rounded-full bg-rose-300/15 px-2 py-0.5 text-[10px] font-bold text-rose-200">
+                        Bạn đã chọn
+                      </span>
+                    )}
+                  </div>
+                  <p className="mt-2 text-slate-300">{item.explanationVi}</p>
+                </div>
+              );
+            })}
+          </div>
+        </details>
+      )}
+
+      <div className="mt-4 rounded-xl border border-violet-200/15 bg-violet-200/[0.045] p-3.5">
+        <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-violet-200">
+          Công thức nhớ nhanh
+        </p>
+        <p className="mt-2 text-[12px] leading-5 text-slate-200">
+          <span className="font-semibold text-cyan-100">EN:</span> {guide.memoryRule.en}
+        </p>
+        <p className="mt-1 text-[12px] leading-5 text-slate-200">
+          <span className="font-semibold text-amber-100">VI:</span> {guide.memoryRule.vi}
         </p>
       </div>
 
       <div className="mt-3 flex flex-col gap-2 border-t border-white/10 pt-3 text-[11px] text-slate-400 sm:flex-row sm:items-center sm:justify-between">
         <span>
-          Trang in BABOK: {primary.bookPage} · Trang trong file PDF: {pdfPage}
+          Nguồn: public/{BABOK_PDF_PUBLIC_FILE} · Mục {focus.sectionLabel}
         </span>
-        <span>Đọc từ: public/{BABOK_PDF_PUBLIC_FILE}</span>
+        <span>{guide.answerTakeaway}</span>
       </div>
-
-      <p className="mt-2 text-[11px] leading-5 text-slate-500">
-        Ứng dụng mở trực tiếp file PDF tĩnh trong thư mục public; không cần chọn hoặc tải lại file BABOK trong màn hình làm bài.
-      </p>
 
       {related.length > 0 && (
         <div className="mt-3 flex flex-wrap items-center gap-2 text-xs">
@@ -2321,7 +3285,11 @@ export default function QuizLearningApp() {
             </div>
 
             {hasAnsweredCurrent && (
-              <BabokStudyGuidePanel question={currentQuestion} />
+              <BabokStudyGuidePanel
+                question={currentQuestion}
+                note={currentLearningNote}
+                selectedOptionId={currentPickedId}
+              />
             )}
 
             <div className="mt-5 flex items-center justify-between gap-2 border-t border-white/10 pt-4">
@@ -2468,7 +3436,12 @@ export default function QuizLearningApp() {
                       />
                     )}
                     {pickedId && (
-                      <BabokStudyGuidePanel question={question} compact />
+                      <BabokStudyGuidePanel
+                        question={question}
+                        note={learningNotes[question.id]}
+                        selectedOptionId={pickedId}
+                        compact
+                      />
                     )}
                   </details>
                 );
