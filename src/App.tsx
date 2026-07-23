@@ -95,6 +95,40 @@ type LearningNote = {
   errorMessage?: string;
 };
 
+
+type BabokTopicKind =
+  | 'chapter'
+  | 'concept'
+  | 'task'
+  | 'competency'
+  | 'technique'
+  | 'perspective';
+
+type BabokTopic = {
+  id: string;
+  kind: BabokTopicKind;
+  chapter: string;
+  section: string;
+  titleEn: string;
+  titleVi: string;
+  bookPage: number;
+  aliases: string[];
+  summaryVi: string;
+};
+
+type BabokFocus = {
+  sectionLabel: string;
+  focusName: string;
+  readingGuide: string;
+};
+
+type BabokStudyGuide = {
+  primary: BabokTopic;
+  related: BabokTopic[];
+  focus: BabokFocus;
+  answerTakeaway: string;
+};
+
 const STORAGE_VERSION = 2;
 const STORAGE_KEY = `ccba-practice-quiz-storage-v${STORAGE_VERSION}`;
 
@@ -236,6 +270,513 @@ const ENGLISH_STOP_WORDS = new Set([
   'business', 'analyst', 'organization', 'project', 'following', 'activity',
   'task', 'tasks', 'statement', 'statements', 'option', 'options', 'example',
 ]);
+
+
+
+// Đặt file PDF BABOK này trong thư mục public/ để nút mở đúng trang hoạt động.
+// Có thể đổi tên tại hằng số dưới đây nếu bạn dùng tên file khác.
+const BABOK_PDF_FILE_NAME = 'BABOK v3 (1).pdf';
+const BABOK_PDF_PAGE_OFFSET = 10;
+
+function createBabokTopic(
+  kind: BabokTopicKind,
+  chapter: string,
+  section: string,
+  titleEn: string,
+  titleVi: string,
+  bookPage: number,
+  aliases: string[],
+  summaryVi: string
+): BabokTopic {
+  return {
+    id: `${section}-${titleEn}`,
+    kind,
+    chapter,
+    section,
+    titleEn,
+    titleVi,
+    bookPage,
+    aliases: Array.from(new Set([titleEn, titleVi, ...aliases])),
+    summaryVi,
+  };
+}
+
+const BABOK_TOPICS: BabokTopic[] = [
+  createBabokTopic("chapter", "Chapter 1: Introduction", "Chapter 1", "Introduction", "Giới thiệu", 1, ["purpose of the babok guide", "what is business analysis", "who is a business analyst", "structure of the babok guide", "babok guide"], "Nắm mục đích, phạm vi và cấu trúc của BABOK: knowledge areas, tasks, techniques, competencies và perspectives; BABOK mô tả thực hành được chấp nhận rộng rãi chứ không áp đặt một quy trình duy nhất."),
+  createBabokTopic("chapter", "Chapter 2: Business Analysis Key Concepts", "Chapter 2", "Business Analysis Key Concepts", "Các khái niệm chính của phân tích nghiệp vụ", 11, ["business analysis key concepts", "key concepts chapter"], "Chapter 2 cung cấp nền tảng để đọc toàn bộ BABOK, gồm BACCM, các thuật ngữ chính, phân loại requirements, các stakeholder roles và mối quan hệ giữa requirements với designs."),
+  createBabokTopic("concept", "Chapter 2: Business Analysis Key Concepts", "2.1", "The Business Analysis Core Concept Model (BACCM)", "Mô hình khái niệm cốt lõi BACCM", 12, ["baccm", "business analysis core concept model", "change need solution stakeholder value context", "core concept"], "BACCM gồm sáu khái niệm liên kết ngang nhau: Change, Need, Solution, Stakeholder, Value và Context. Khi một khái niệm thay đổi, cần đánh giá lại quan hệ của cả sáu đối với việc tạo giá trị."),
+  createBabokTopic("concept", "Chapter 2: Business Analysis Key Concepts", "2.2", "Key Terms", "Các thuật ngữ chính", 14, ["business analysis information", "enterprise", "organization", "plan", "requirement definition", "risk definition", "key terms"], "Mục này định nghĩa các thuật ngữ nền tảng như business analysis information, requirement, design, enterprise, organization, plan và risk; nhiều câu thi kiểm tra ranh giới giữa các khái niệm này."),
+  createBabokTopic("concept", "Chapter 2: Business Analysis Key Concepts", "2.3", "Requirements Classification Schema", "Phân loại yêu cầu", 16, ["requirements classification schema", "business requirements", "stakeholder requirements", "solution requirements", "functional requirements", "non-functional requirements", "transition requirements", "quality of service requirements"], "Phân biệt business, stakeholder, solution và transition requirements. Solution requirements gồm functional và non-functional; transition requirements chỉ cần trong quá trình chuyển từ current state sang future state."),
+  createBabokTopic("concept", "Chapter 2: Business Analysis Key Concepts", "2.4", "Stakeholders", "Các vai trò bên liên quan", 16, ["stakeholder roles", "business analyst customer domain subject matter expert end user", "implementation subject matter expert", "operational support", "project manager", "regulator", "sponsor", "supplier", "tester"], "Hiểu trách nhiệm của các stakeholder chuẩn trong BABOK và nhớ rằng một người có thể giữ nhiều vai trò; danh sách stakeholder của từng task là vai trò có khả năng tham gia hoặc bị ảnh hưởng, không phải yêu cầu bắt buộc."),
+  createBabokTopic("concept", "Chapter 2: Business Analysis Key Concepts", "2.5", "Requirements and Designs", "Yêu cầu và thiết kế", 19, ["requirements and designs", "requirement and design", "requirements versus designs", "requirements vs designs"], "Requirements tập trung vào nhu cầu và giá trị cần đạt; designs tập trung vào cách giải pháp hiện thực hóa giá trị. Ranh giới phụ thuộc vào ngữ cảnh, người sử dụng thông tin và mức độ chi tiết."),
+  createBabokTopic("chapter", "Chapter 3: Business Analysis Planning and Monitoring", "Chapter 3", "Business Analysis Planning and Monitoring", "Lập kế hoạch và giám sát phân tích nghiệp vụ", 21, ["business analysis planning and monitoring", "planning and monitoring knowledge area"], "Knowledge area này tổ chức và điều phối công việc BA, stakeholder, cơ chế quản trị, quản lý thông tin và đo lường hiệu suất BA; các đầu ra của nó là hướng dẫn quan trọng cho các knowledge area khác."),
+  createBabokTopic("chapter", "Chapter 4: Elicitation and Collaboration", "Chapter 4", "Elicitation and Collaboration", "Khai thác thông tin và cộng tác", 53, ["elicitation and collaboration", "elicitation knowledge area"], "Knowledge area này bao quát chuẩn bị, thực hiện và xác nhận elicitation; truyền đạt business analysis information; và duy trì sự cộng tác của stakeholder trong suốt initiative."),
+  createBabokTopic("chapter", "Chapter 5: Requirements Life Cycle Management", "Chapter 5", "Requirements Life Cycle Management", "Quản lý vòng đời yêu cầu", 77, ["requirements life cycle management", "requirement life cycle management"], "Knowledge area này quản lý requirements và designs từ khi hình thành đến khi ngừng sử dụng thông qua trace, maintain, prioritize, assess changes và approve."),
+  createBabokTopic("chapter", "Chapter 6: Strategy Analysis", "Chapter 6", "Strategy Analysis", "Phân tích chiến lược", 99, ["strategy analysis", "strategy analysis knowledge area"], "Strategy Analysis xác định business need, hiểu current state, định nghĩa future state, đánh giá risk và xây dựng change strategy để chuyển đổi có kiểm soát và tạo giá trị."),
+  createBabokTopic("chapter", "Chapter 7: Requirements Analysis and Design Definition", "Chapter 7", "Requirements Analysis and Design Definition", "Phân tích yêu cầu và xác định thiết kế", 133, ["requirements analysis and design definition", "radd", "requirements analysis knowledge area"], "RADD biến thông tin elicitation thành requirements và designs có cấu trúc, được verify và validate; sau đó xác định design options và đề xuất solution dựa trên potential value."),
+  createBabokTopic("chapter", "Chapter 8: Solution Evaluation", "Chapter 8", "Solution Evaluation", "Đánh giá giải pháp", 163, ["solution evaluation", "solution evaluation knowledge area"], "Solution Evaluation đo và phân tích hiệu suất solution đang dùng, xác định solution/enterprise limitations và đề xuất hành động để tăng realized value."),
+  createBabokTopic("task", "Chapter 3: Business Analysis Planning and Monitoring", "3.1", "Plan Business Analysis Approach", "Lập kế hoạch phương pháp phân tích nghiệp vụ", 24, ["plan business analysis approach", "business analysis approach", "adaptive approach", "adaptive", "predictive approach", "predictive", "plan-driven approach", "waterfall"], "Xác định cách thức tổng thể để thực hiện BA work: phương pháp, thời điểm, task, deliverable, kỹ thuật và mức độ hình thức; approach phải phù hợp bối cảnh, rủi ro, mục tiêu thay đổi và chuẩn của tổ chức."),
+  createBabokTopic("task", "Chapter 3: Business Analysis Planning and Monitoring", "3.2", "Plan Stakeholder Engagement", "Lập kế hoạch gắn kết bên liên quan", 31, ["plan stakeholder engagement", "stakeholder engagement approach", "stakeholder analysis", "stakeholder list map or personas", "roles and responsibilities", "stakeholder attitudes"], "Xác định stakeholder liên quan, đặc điểm, vai trò, nhu cầu thông tin, mức ảnh hưởng và cách cộng tác phù hợp; đầu ra là Stakeholder Engagement Approach."),
+  createBabokTopic("task", "Chapter 3: Business Analysis Planning and Monitoring", "3.3", "Plan Business Analysis Governance", "Lập kế hoạch quản trị phân tích nghiệp vụ", 37, ["plan business analysis governance", "governance approach", "decision making", "change control process", "prioritization approach", "plan for approvals", "approval authority"], "Thiết lập cách ra quyết định, ưu tiên, phê duyệt và kiểm soát thay đổi đối với business analysis information để quyết định nhất quán và đúng thẩm quyền."),
+  createBabokTopic("task", "Chapter 3: Business Analysis Planning and Monitoring", "3.4", "Plan Business Analysis Information Management", "Lập kế hoạch quản lý thông tin phân tích nghiệp vụ", 42, ["plan business analysis information management", "information management approach", "requirements reuse", "plan for requirements reuse", "organization of business analysis information", "repository", "level of abstraction"], "Xác định cách thu thập, tổ chức, lưu trữ, truy cập, truy xuất, bảo mật và tái sử dụng requirements, designs và các business analysis information khác."),
+  createBabokTopic("task", "Chapter 3: Business Analysis Planning and Monitoring", "3.5", "Identify Business Analysis Performance Improvements", "Xác định cải tiến hiệu suất phân tích nghiệp vụ", 47, ["identify business analysis performance improvements", "business analysis performance assessment", "business analysis performance improvements", "performance objectives", "corrective action", "preventive action"], "Định nghĩa hiệu suất BA hiệu quả, xác lập measures, phân tích kết quả và đề xuất corrective/preventive actions để cải tiến liên tục."),
+  createBabokTopic("task", "Chapter 4: Elicitation and Collaboration", "4.1", "Prepare for Elicitation", "Chuẩn bị khai thác thông tin", 56, ["prepare for elicitation", "elicitation activity plan", "elicitation objectives", "supporting materials", "elicitation scope", "elicitation logistics"], "Làm rõ mục tiêu và phạm vi elicitation, chọn kỹ thuật, chuẩn bị nguồn lực/tài liệu, lịch và logistics để hoạt động elicitation có thể diễn ra hiệu quả."),
+  createBabokTopic("task", "Chapter 4: Elicitation and Collaboration", "4.2", "Conduct Elicitation", "Thực hiện khai thác thông tin", 61, ["conduct elicitation", "elicitation results unconfirmed", "elicitation results", "collaborative elicitation", "research elicitation", "experiment elicitation", "collaborative research experiments", "research", "experiments"], "Thực hiện hoạt động elicitation để khám phá, thử nghiệm hoặc xác nhận thông tin; kết quả ban đầu là Elicitation Results (Unconfirmed) và cần được ghi nhận trước khi confirm."),
+  createBabokTopic("task", "Chapter 4: Elicitation and Collaboration", "4.3", "Confirm Elicitation Results", "Xác nhận kết quả khai thác thông tin", 65, ["confirm elicitation results", "elicitation results confirmed", "confirm elicitation"], "So sánh kết quả elicitation với nguồn khác, kiểm tra tính chính xác và nhất quán, giải quyết mâu thuẫn để tạo Elicitation Results (Confirmed)."),
+  createBabokTopic("task", "Chapter 4: Elicitation and Collaboration", "4.4", "Communicate Business Analysis Information", "Truyền đạt thông tin phân tích nghiệp vụ", 67, ["communicate business analysis information", "business analysis information communicated", "business analysis information package", "formal documentation", "informal documentation", "communication package"], "Đóng gói và truyền đạt đúng nội dung, mức chi tiết, định dạng và thời điểm cho từng stakeholder nhằm tạo shared understanding và hỗ trợ quyết định."),
+  createBabokTopic("task", "Chapter 4: Elicitation and Collaboration", "4.5", "Manage Stakeholder Collaboration", "Quản lý sự cộng tác của bên liên quan", 71, ["manage stakeholder collaboration", "stakeholder collaboration", "stakeholder engagement risks", "stakeholder participation"], "Theo dõi mức tham gia, quan hệ và thái độ của stakeholder; xử lý rào cản cộng tác để duy trì sự tham gia cần thiết trong toàn bộ BA work."),
+  createBabokTopic("task", "Chapter 5: Requirements Life Cycle Management", "5.1", "Trace Requirements", "Truy xuất yêu cầu", 79, ["trace requirements", "requirements traceability", "traceability approach", "derive depends satisfy validate", "traceability relationship"], "Thiết lập và duy trì quan hệ giữa requirements, designs, business objectives và solution components để hỗ trợ phân tích tác động, phạm vi, kiểm thử và kiểm soát thay đổi."),
+  createBabokTopic("task", "Chapter 5: Requirements Life Cycle Management", "5.2", "Maintain Requirements", "Duy trì yêu cầu", 83, ["maintain requirements", "requirements maintenance", "requirements reuse", "reusable requirements", "requirements attributes"], "Giữ requirements và designs chính xác, nhất quán, cập nhật và có thể tái sử dụng trong suốt vòng đời; duy trì attributes và trạng thái cần thiết."),
+  createBabokTopic("task", "Chapter 5: Requirements Life Cycle Management", "5.3", "Prioritize Requirements", "Ưu tiên yêu cầu", 86, ["prioritize requirements", "requirements prioritized", "designs prioritized", "continual prioritization", "basis for prioritization", "rationale for prioritization", "challenges of prioritization", "priority of the requirements", "update the priority", "requirements priority"], "Xếp hạng tương đối requirements/designs dựa trên value, risk, cost, dependency, time sensitivity, compliance và các ràng buộc; ưu tiên có thể thay đổi liên tục khi có thông tin mới."),
+  createBabokTopic("task", "Chapter 5: Requirements Life Cycle Management", "5.4", "Assess Requirements Changes", "Đánh giá thay đổi yêu cầu", 91, ["assess requirements changes", "requirements change assessment", "designs change assessment", "impact analysis", "proposed change", "change assessment"], "Đánh giá lợi ích, chi phí, impact, risk, dependency và ảnh hưởng tới scope/stakeholder trước khi khuyến nghị chấp nhận, từ chối hoặc hoãn thay đổi."),
+  createBabokTopic("task", "Chapter 5: Requirements Life Cycle Management", "5.5", "Approve Requirements", "Phê duyệt yêu cầu", 95, ["approve requirements", "requirements approved", "designs approved", "requirements approval", "sign-off", "approval workshop", "gaining approval", "approval of requirements"], "Đạt agreement và approval từ đúng người có thẩm quyền; xác định và quản lý risk khi không có đồng thuận hoàn toàn, đồng thời ghi nhận quyết định."),
+  createBabokTopic("task", "Chapter 6: Strategy Analysis", "6.1", "Analyze Current State", "Phân tích trạng thái hiện tại", 103, ["analyze current state", "current state description", "current state", "business need", "internal assets", "external influencers", "current capabilities"], "Hiểu business need, current capabilities, processes, structures, culture, assets và external influencers; chỉ phân tích sâu đến mức cần để đánh giá thay đổi và xác định nguyên nhân thực."),
+  createBabokTopic("task", "Chapter 6: Strategy Analysis", "6.2", "Define Future State", "Xác định trạng thái tương lai", 110, ["define future state", "future state description", "future state", "business objectives", "desired outcomes", "potential value", "future capabilities"], "Mô tả business objectives, desired outcomes, scope, constraints, assumptions, potential value và capabilities cần có trong future state; objectives cần rõ và đo lường được."),
+  createBabokTopic("task", "Chapter 6: Strategy Analysis", "6.3", "Assess Risks", "Đánh giá rủi ro", 120, ["assess risks", "risk assessment", "risk tolerance", "risk analysis", "uncertainty on value"], "Xác định và phân tích uncertainty có thể ảnh hưởng value, đánh giá likelihood/impact và risk tolerance để lựa chọn response phù hợp."),
+  createBabokTopic("task", "Chapter 6: Strategy Analysis", "6.4", "Define Change Strategy", "Xác định chiến lược thay đổi", 124, ["define change strategy", "change strategy", "transition state", "gap analysis", "solution scope", "change recommendation"], "Xác định cách chuyển từ current state sang future state bằng cách so sánh capability gaps, đánh giá solution scope, transition states, release/timing và readiness của tổ chức."),
+  createBabokTopic("task", "Chapter 7: Requirements Analysis and Design Definition", "7.1", "Specify and Model Requirements", "Đặc tả và mô hình hóa yêu cầu", 136, ["specify and model requirements", "requirements specified and modeled", "stakeholder requirements", "solution requirements", "model requirements"], "Chuyển elicitation results thành requirements/designs rõ ràng bằng văn bản hoặc models phù hợp, dùng mức trừu tượng và ký pháp đáp ứng nhu cầu stakeholder."),
+  createBabokTopic("task", "Chapter 7: Requirements Analysis and Design Definition", "7.2", "Verify Requirements", "Xác minh yêu cầu", 141, ["verify requirements", "requirements verified", "designs verified", "requirements quality characteristics", "atomic testable consistent feasible complete understandable", "unambiguous concise", "atomic", "quality characteristic", "requirements quality"], "Kiểm tra chất lượng của requirements/designs: atomic, complete, consistent, concise, feasible, unambiguous, testable, understandable và phù hợp chuẩn/ký pháp."),
+  createBabokTopic("task", "Chapter 7: Requirements Analysis and Design Definition", "7.3", "Validate Requirements", "Thẩm định yêu cầu", 144, ["validate requirements", "requirements validated", "designs validated", "right requirements", "business objectives and potential value", "validating requirements", "validation criteria", "missing requirements"], "Xác nhận requirements/designs phù hợp business need, business objectives và future state, hỗ trợ potential value và không bỏ sót yêu cầu cần thiết."),
+  createBabokTopic("task", "Chapter 7: Requirements Analysis and Design Definition", "7.4", "Define Requirements Architecture", "Xác định kiến trúc yêu cầu", 148, ["define requirements architecture", "requirements architecture", "requirements architecture aligned", "requirements architecture complete", "requirements relationships", "template architectures", "illustrate relationships between requirements"], "Tổ chức requirements/designs thành một kiến trúc thống nhất, thể hiện mối quan hệ, viewpoints và tính đầy đủ/phù hợp để toàn bộ tập thông tin hoạt động như một chỉnh thể."),
+  createBabokTopic("task", "Chapter 7: Requirements Analysis and Design Definition", "7.5", "Define Design Options", "Xác định các phương án thiết kế", 152, ["define design options", "design options", "requirements allocation", "solution approach", "design option"], "Xác định nhiều cách đáp ứng requirements, mô tả solution approach, phân bổ requirements và nhận diện cơ hội cải thiện để tạo các design options khả thi."),
+  createBabokTopic("task", "Chapter 7: Requirements Analysis and Design Definition", "7.6", "Analyze Potential Value and Recommend Solution", "Phân tích giá trị tiềm năng và đề xuất giải pháp", 157, ["analyze potential value and recommend solution", "potential value and recommend solution", "recommend solution", "solution recommendation", "trade-offs", "design option value"], "So sánh design options theo potential value, cost, risk, constraints, available resources và trade-offs; đề xuất lựa chọn mang lại value tổng thể tốt nhất trong context."),
+  createBabokTopic("task", "Chapter 8: Solution Evaluation", "8.1", "Measure Solution Performance", "Đo lường hiệu suất giải pháp", 166, ["measure solution performance", "solution performance measures", "performance measurements", "measurement frequency", "measurement timing", "measurement volume", "volume", "frequency", "timing"], "Xác định và thu thập measures phù hợp với business objectives/potential value; bảo đảm có phương pháp, ownership, timing, frequency và dữ liệu cần thiết để đo."),
+  createBabokTopic("task", "Chapter 8: Solution Evaluation", "8.2", "Analyze Performance Measures", "Phân tích thước đo hiệu suất", 170, ["analyze performance measures", "solution performance analysis", "performance trends", "performance results"], "Phân tích measurements, xu hướng, độ chính xác và chênh lệch so với expected value để xác định solution đang tạo ra value đến mức nào."),
+  createBabokTopic("task", "Chapter 8: Solution Evaluation", "8.3", "Assess Solution Limitations", "Đánh giá hạn chế của giải pháp", 173, ["assess solution limitations", "solution limitations", "solution component problem", "defect", "problem analysis"], "Xác định vấn đề trong solution hoặc solution components, phân tích nguyên nhân gốc, mức độ nghiêm trọng và impact đối với operations/value."),
+  createBabokTopic("task", "Chapter 8: Solution Evaluation", "8.4", "Assess Enterprise Limitations", "Đánh giá hạn chế của doanh nghiệp", 177, ["assess enterprise limitations", "enterprise limitations", "organizational culture limitation", "organizational structure limitation", "interpersonal conflict", "change absorption"], "Xác định culture, structure, processes, policies, skills hoặc stakeholder factors của enterprise đang cản trở solution tạo ra đầy đủ value."),
+  createBabokTopic("task", "Chapter 8: Solution Evaluation", "8.5", "Recommend Actions to Increase Solution Value", "Đề xuất hành động tăng giá trị giải pháp", 182, ["recommend actions to increase solution value", "increase solution value", "retire solution", "replace solution", "modify solution", "sunk cost", "opportunity cost", "necessity"], "Đề xuất duy trì, cải tiến, thay thế hoặc loại bỏ solution; cân nhắc cost, benefit, risk, opportunity cost, sunk cost và khả năng enterprise hấp thụ thay đổi."),
+  createBabokTopic("competency", "Chapter 9: Underlying Competencies", "9.1", "Analytical Thinking and Problem Solving", "Tư duy phân tích và giải quyết vấn đề", 188, ["analytical thinking", "problem solving", "creative thinking", "decision making competency", "systems thinking"], "Bao gồm tư duy sáng tạo, ra quyết định, học hỏi, giải quyết vấn đề, systems thinking và conceptual thinking để phân tích thông tin và lựa chọn hành động hợp lý."),
+  createBabokTopic("competency", "Chapter 9: Underlying Competencies", "9.2", "Behavioural Characteristics", "Đặc điểm hành vi", 194, ["behavioural characteristics", "ethics", "personal accountability", "trustworthiness", "adaptability"], "Tập trung vào ethics, personal accountability, trustworthiness, organization/time management và adaptability để BA tạo niềm tin và hoàn thành cam kết."),
+  createBabokTopic("competency", "Chapter 9: Underlying Competencies", "9.3", "Business Knowledge", "Kiến thức kinh doanh", 199, ["business knowledge", "business acumen", "industry knowledge", "organization knowledge", "solution knowledge", "methodology knowledge"], "BA cần hiểu business principles, industry, organization, solution và methodology để giải thích context, đánh giá tác động và giao tiếp chính xác."),
+  createBabokTopic("competency", "Chapter 9: Underlying Competencies", "9.4", "Communication Skills", "Kỹ năng giao tiếp", 203, ["communication skills", "verbal communication", "non-verbal communication", "written communication", "listening"], "Giao tiếp hiệu quả đòi hỏi verbal, non-verbal, written communication và active listening phù hợp với audience, purpose và context."),
+  createBabokTopic("competency", "Chapter 9: Underlying Competencies", "9.5", "Interaction Skills", "Kỹ năng tương tác", 207, ["interaction skills", "facilitation", "leadership and influencing", "teamwork", "negotiation and conflict resolution", "teaching"], "Bao gồm facilitation, leadership/influencing, teamwork, negotiation/conflict resolution và teaching để đạt shared understanding và agreement."),
+  createBabokTopic("competency", "Chapter 9: Underlying Competencies", "9.6", "Tools and Technology", "Công cụ và công nghệ", 211, ["tools and technology", "office productivity tools", "business analysis tools", "communication tools"], "BA lựa chọn và sử dụng tools hỗ trợ productivity, communication, modeling, requirements management và collaboration phù hợp với initiative."),
+  createBabokTopic("technique", "Chapter 10: Techniques", "10.1", "Acceptance and Evaluation Criteria", "Tiêu chí chấp nhận và đánh giá", 217, ["acceptance and evaluation criteria", "acceptance criteria", "evaluation criteria"], "Xác định các điều kiện dùng để đánh giá một requirement, design, solution hoặc option có được chấp nhận và đáp ứng kỳ vọng hay không."),
+  createBabokTopic("technique", "Chapter 10: Techniques", "10.2", "Backlog Management", "Quản lý backlog", 220, ["backlog management", "backlog"], "Duy trì danh sách item được ưu tiên và liên tục tinh chỉnh để định hướng công việc, release và việc tạo value theo từng increment."),
+  createBabokTopic("technique", "Chapter 10: Techniques", "10.3", "Balanced Scorecard", "Thẻ điểm cân bằng", 223, ["balanced scorecard"], "Đo lường performance từ nhiều góc nhìn liên kết với strategy, thường gồm financial, customer, internal process và learning/growth."),
+  createBabokTopic("technique", "Chapter 10: Techniques", "10.4", "Benchmarking and Market Analysis", "Đối chuẩn và phân tích thị trường", 226, ["benchmarking and market analysis", "benchmarking", "market analysis"], "So sánh performance/capability với tổ chức hoặc thị trường để nhận diện gap, xu hướng, cơ hội và mục tiêu cải thiện."),
+  createBabokTopic("technique", "Chapter 10: Techniques", "10.5", "Brainstorming", "Động não", 227, ["brainstorming"], "Tạo nhiều ý tưởng nhanh trong môi trường không phán xét trước khi nhóm sàng lọc, kết hợp và đánh giá các ý tưởng."),
+  createBabokTopic("technique", "Chapter 10: Techniques", "10.6", "Business Capability Analysis", "Phân tích năng lực kinh doanh", 230, ["business capability analysis", "capability analysis"], "Mô tả enterprise làm được gì, đánh giá mức hiện tại/tương lai và xác định capability gaps cần xử lý."),
+  createBabokTopic("technique", "Chapter 10: Techniques", "10.7", "Business Cases", "Luận chứng kinh doanh", 234, ["business cases", "business case", "cost benefit analysis"], "Trình bày business need, desired outcomes, alternatives, costs, benefits, risks và recommendation để hỗ trợ quyết định đầu tư."),
+  createBabokTopic("technique", "Chapter 10: Techniques", "10.8", "Business Model Canvas", "Khung mô hình kinh doanh", 236, ["business model canvas"], "Mô tả cách tổ chức tạo, cung cấp và thu nhận value qua chín khối như customer segments, value propositions, channels, resources và revenue/cost."),
+  createBabokTopic("technique", "Chapter 10: Techniques", "10.9", "Business Rules Analysis", "Phân tích quy tắc kinh doanh", 240, ["business rules analysis", "business rules"], "Khám phá, diễn đạt, kiểm tra và quản lý các quy tắc chi phối quyết định, hành vi và operations của enterprise."),
+  createBabokTopic("technique", "Chapter 10: Techniques", "10.10", "Collaborative Games", "Trò chơi cộng tác", 243, ["collaborative games", "product box"], "Dùng hoạt động có cấu trúc và tương tác để tăng engagement, khám phá ưu tiên, tạo ý tưởng hoặc xây shared understanding."),
+  createBabokTopic("technique", "Chapter 10: Techniques", "10.11", "Concept Modelling", "Mô hình hóa khái niệm", 245, ["concept modelling", "concept modeling", "concept model"], "Xác định các khái niệm quan trọng trong domain và quan hệ giữa chúng để tạo ngôn ngữ chung, không tập trung vào thiết kế dữ liệu vật lý."),
+  createBabokTopic("technique", "Chapter 10: Techniques", "10.12", "Data Dictionary", "Từ điển dữ liệu", 247, ["data dictionary", "data glossary"], "Định nghĩa data elements, meaning, format, allowed values và relationships nhằm bảo đảm cách hiểu và sử dụng dữ liệu nhất quán."),
+  createBabokTopic("technique", "Chapter 10: Techniques", "10.13", "Data Flow Diagrams", "Sơ đồ luồng dữ liệu", 250, ["data flow diagram", "data flow diagrams", "dfd"], "Mô tả cách dữ liệu đi vào, được xử lý, lưu trữ và đi ra khỏi processes/systems; tập trung vào luồng thông tin thay vì trình tự thời gian."),
+  createBabokTopic("technique", "Chapter 10: Techniques", "10.14", "Data Mining", "Khai phá dữ liệu", 253, ["data mining"], "Phân tích tập dữ liệu lớn để tìm pattern, correlation, anomaly hoặc insight hỗ trợ hiểu vấn đề và ra quyết định."),
+  createBabokTopic("technique", "Chapter 10: Techniques", "10.15", "Data Modelling", "Mô hình hóa dữ liệu", 256, ["data modelling", "data modeling", "entity relationship diagram", "erd", "crud matrix", "create read update delete matrix"], "Mô tả entities/data objects, attributes, relationships và rules của dữ liệu ở mức conceptual, logical hoặc physical."),
+  createBabokTopic("technique", "Chapter 10: Techniques", "10.16", "Decision Analysis", "Phân tích quyết định", 261, ["decision analysis"], "Đánh giá alternatives theo criteria, uncertainty, risk, cost và value để hỗ trợ lựa chọn minh bạch và có căn cứ."),
+  createBabokTopic("technique", "Chapter 10: Techniques", "10.17", "Decision Modelling", "Mô hình hóa quyết định", 265, ["decision modelling", "decision modeling", "decision table", "decision tree"], "Biểu diễn logic quyết định, inputs, business rules và outcomes để làm rõ, kiểm tra và tự động hóa quyết định."),
+  createBabokTopic("technique", "Chapter 10: Techniques", "10.18", "Document Analysis", "Phân tích tài liệu", 269, ["document analysis", "historical documents"], "Rà soát tài liệu hiện có để khám phá context, requirements, rules, processes, issues và nguồn thông tin cần xác nhận."),
+  createBabokTopic("technique", "Chapter 10: Techniques", "10.19", "Estimation", "Ước lượng", 271, ["estimation", "rough order of magnitude", "rom", "delphi estimation", "parametric estimation", "top-down estimation", "rolling wave"], "Ước lượng size, effort, duration hoặc cost bằng phương pháp phù hợp với mức thông tin và độ bất định; kết quả cần nêu assumptions và range."),
+  createBabokTopic("technique", "Chapter 10: Techniques", "10.20", "Financial Analysis", "Phân tích tài chính", 274, ["financial analysis", "return on investment", "roi", "net present value", "npv", "internal rate of return", "irr", "payback period", "sunk cost", "opportunity cost"], "Đánh giá chi phí và lợi ích theo thời gian bằng ROI, NPV, IRR, payback và các khái niệm như sunk/opportunity cost để so sánh alternatives."),
+  createBabokTopic("technique", "Chapter 10: Techniques", "10.21", "Focus Groups", "Nhóm tập trung", 279, ["focus groups", "focus group"], "Thu thập quan điểm và phản ứng từ nhóm người đại diện được dẫn dắt bởi moderator; phù hợp khám phá perceptions nhưng không mặc nhiên đại diện toàn bộ population."),
+  createBabokTopic("technique", "Chapter 10: Techniques", "10.22", "Functional Decomposition", "Phân rã chức năng", 283, ["functional decomposition"], "Chia một chức năng hoặc vấn đề phức tạp thành các phần nhỏ hơn, dễ hiểu, phân tích và quản lý hơn."),
+  createBabokTopic("technique", "Chapter 10: Techniques", "10.23", "Glossary", "Bảng thuật ngữ", 286, ["glossary"], "Định nghĩa thuật ngữ domain và từ viết tắt để các stakeholder sử dụng ngôn ngữ nhất quán và giảm ambiguity."),
+  createBabokTopic("technique", "Chapter 10: Techniques", "10.24", "Interface Analysis", "Phân tích giao diện", 287, ["interface analysis", "interface"], "Xác định interactions và data exchanged giữa people, processes, systems hoặc components, cùng constraints và requirements của interface."),
+  createBabokTopic("technique", "Chapter 10: Techniques", "10.25", "Interviews", "Phỏng vấn", 290, ["interviews", "interview"], "Trao đổi trực tiếp có cấu trúc hoặc bán cấu trúc để khám phá knowledge, needs, assumptions và concerns của từng stakeholder."),
+  createBabokTopic("technique", "Chapter 10: Techniques", "10.26", "Item Tracking", "Theo dõi hạng mục", 294, ["item tracking", "action items register", "issue log"], "Ghi nhận và theo dõi issues, actions, assumptions, dependencies hoặc decisions với owner, status và due date cho đến khi đóng."),
+  createBabokTopic("technique", "Chapter 10: Techniques", "10.27", "Lessons Learned", "Bài học kinh nghiệm", 296, ["lessons learned", "retrospective"], "Xác định điều hiệu quả/chưa hiệu quả và hành động cải tiến để áp dụng trong initiative hiện tại hoặc tương lai."),
+  createBabokTopic("technique", "Chapter 10: Techniques", "10.28", "Metrics and Key Performance Indicators (KPIs)", "Thước đo và chỉ số hiệu suất chính", 297, ["metrics and key performance indicators", "key performance indicators", "kpis", "performance measures"], "Định nghĩa quantitative/qualitative measures gắn với objectives, cách thu thập, target và cách diễn giải để đánh giá performance/value."),
+  createBabokTopic("technique", "Chapter 10: Techniques", "10.29", "Mind Mapping", "Sơ đồ tư duy", 299, ["mind mapping", "mind map"], "Tổ chức ý tưởng theo cấu trúc phân nhánh trực quan để khám phá quan hệ, phạm vi và chủ đề trong brainstorming hoặc analysis."),
+  createBabokTopic("technique", "Chapter 10: Techniques", "10.30", "Non-Functional Requirements Analysis", "Phân tích yêu cầu phi chức năng", 302, ["non-functional requirements analysis", "non-functional requirements", "quality of service requirements", "reliability availability scalability compatibility localization"], "Xác định quality attributes và conditions như performance, security, reliability, availability, usability, scalability, compatibility và localization."),
+  createBabokTopic("technique", "Chapter 10: Techniques", "10.31", "Observation", "Quan sát", 305, ["observation", "job shadowing"], "Quan sát stakeholder thực hiện công việc trong context thực tế để phát hiện hành vi, exception và tacit knowledge khó mô tả bằng lời."),
+  createBabokTopic("technique", "Chapter 10: Techniques", "10.32", "Organizational Modelling", "Mô hình hóa tổ chức", 308, ["organizational modelling", "organizational modeling", "organization chart"], "Mô tả units, roles, reporting lines, responsibilities và relationships để hiểu cấu trúc và tác động của change."),
+  createBabokTopic("technique", "Chapter 10: Techniques", "10.33", "Prioritization", "Ưu tiên hóa", 311, ["prioritization", "moscow", "weighted scoring", "ranking requirements"], "Xác định thứ tự tương đối của items dựa trên criteria như value, urgency, risk, dependency, cost và compliance; ưu tiên cần được xem xét lại khi context thay đổi."),
+  createBabokTopic("technique", "Chapter 10: Techniques", "10.34", "Process Analysis", "Phân tích quy trình", 314, ["process analysis", "process improvement"], "Đánh giá process hiện tại để tìm value, waste, bottleneck, root cause và cơ hội cải thiện trước khi thiết kế future process."),
+  createBabokTopic("technique", "Chapter 10: Techniques", "10.35", "Process Modelling", "Mô hình hóa quy trình", 318, ["process modelling", "process modeling", "process map", "activity flow", "activity diagram", "draw a diagram of the process", "bpmn"], "Biểu diễn activities, events, decisions, roles và flow của process để hiểu current/future state và trao đổi requirements."),
+  createBabokTopic("technique", "Chapter 10: Techniques", "10.36", "Prototyping", "Tạo mẫu", 323, ["prototyping", "prototype", "proof of concept"], "Tạo representation sớm của solution hoặc component để khám phá/kiểm tra requirements, usability, feasibility và stakeholder expectations."),
+  createBabokTopic("technique", "Chapter 10: Techniques", "10.37", "Reviews", "Rà soát", 326, ["reviews", "walkthrough", "peer review"], "Đánh giá work product bởi một hoặc nhiều người để tìm defect, inconsistency, omission và xác nhận quality hoặc agreement."),
+  createBabokTopic("technique", "Chapter 10: Techniques", "10.38", "Risk Analysis and Management", "Phân tích và quản lý rủi ro", 329, ["risk analysis and management", "risk analysis", "risk management", "risk register"], "Xác định, phân tích, ưu tiên và response với uncertainty ảnh hưởng value; theo dõi risk và điều chỉnh response theo context."),
+  createBabokTopic("technique", "Chapter 10: Techniques", "10.39", "Roles and Permissions Matrix", "Ma trận vai trò và quyền hạn", 333, ["roles and permissions matrix", "roles and permissions", "raci matrix"], "Ánh xạ roles với activities, data hoặc permissions để làm rõ responsibility, authority và access."),
+  createBabokTopic("technique", "Chapter 10: Techniques", "10.40", "Root Cause Analysis", "Phân tích nguyên nhân gốc rễ", 335, ["root cause analysis", "five whys", "fishbone diagram", "problem analysis"], "Tìm nguyên nhân nền tảng tạo ra problem thay vì chỉ xử lý symptom, thường dùng Five Whys, fishbone hoặc causal analysis."),
+  createBabokTopic("technique", "Chapter 10: Techniques", "10.41", "Scope Modelling", "Mô hình hóa phạm vi", 338, ["scope modelling", "scope modeling", "context diagram", "scope model"], "Xác định boundary, elements trong/ngoài scope và interfaces với external actors/systems để kiểm soát phạm vi."),
+  createBabokTopic("technique", "Chapter 10: Techniques", "10.42", "Sequence Diagrams", "Sơ đồ tuần tự", 341, ["sequence diagram", "sequence diagrams"], "Mô tả interaction theo thời gian giữa actors/objects và messages được truyền trong một scenario."),
+  createBabokTopic("technique", "Chapter 10: Techniques", "10.43", "Stakeholder List, Map, or Personas", "Danh sách, bản đồ hoặc chân dung bên liên quan", 344, ["stakeholder list map or personas", "stakeholder list", "stakeholder map", "personas", "power interest grid"], "Xác định stakeholder và phân tích đặc điểm, influence, impact, interest, attitude hoặc nhu cầu thông qua list, map hay personas."),
+  createBabokTopic("technique", "Chapter 10: Techniques", "10.44", "State Modelling", "Mô hình hóa trạng thái", 348, ["state modelling", "state modeling", "state diagram"], "Mô tả các state của entity/system và events/conditions gây transition giữa các state."),
+  createBabokTopic("technique", "Chapter 10: Techniques", "10.45", "Survey or Questionnaire", "Khảo sát hoặc bảng hỏi", 350, ["survey or questionnaire", "survey", "questionnaire"], "Thu thập dữ liệu chuẩn hóa từ nhiều người; cần thiết kế câu hỏi, sample và cách phân tích để tránh bias và tạo baseline tin cậy."),
+  createBabokTopic("technique", "Chapter 10: Techniques", "10.46", "SWOT Analysis", "Phân tích SWOT", 353, ["swot analysis", "strengths weaknesses opportunities threats"], "Đánh giá strengths/weaknesses nội bộ và opportunities/threats bên ngoài để hiểu strategic context và lựa chọn hướng thay đổi."),
+  createBabokTopic("technique", "Chapter 10: Techniques", "10.47", "Use Cases and Scenarios", "Ca sử dụng và kịch bản", 356, ["use cases and scenarios", "use case", "use case diagram", "actor", "extension", "association"], "Mô tả mục tiêu và interaction giữa actor với solution qua main/alternate/exception flows; diagram thể hiện actors, use cases và relationships."),
+  createBabokTopic("technique", "Chapter 10: Techniques", "10.48", "User Stories", "Câu chuyện người dùng", 359, ["user stories", "user story", "brief statement about what people do or need", "story that allows the developer"], "Mô tả nhu cầu ngắn gọn từ góc nhìn stakeholder cùng acceptance criteria; được làm rõ và ưu tiên trong backlog."),
+  createBabokTopic("technique", "Chapter 10: Techniques", "10.49", "Vendor Assessment", "Đánh giá nhà cung cấp", 361, ["vendor assessment", "supplier assessment", "vendor"], "Đánh giá vendor và offering theo capability, fit, cost, risk, support, contract và khả năng đáp ứng requirements."),
+  createBabokTopic("technique", "Chapter 10: Techniques", "10.50", "Workshops", "Hội thảo", 363, ["workshops", "facilitated workshop", "requirements workshop"], "Tập hợp stakeholder trong phiên có facilitator, mục tiêu và agenda rõ để nhanh chóng elicitate, analyze, prioritize hoặc đạt agreement."),
+  createBabokTopic("perspective", "Chapter 11: Perspectives", "11.1", "The Agile Perspective", "Góc nhìn Agile", 368, ["agile perspective", "agile", "iterative", "incremental"], "Điều chỉnh BA work cho delivery lặp và tăng dần, ưu tiên collaboration, backlog, feedback nhanh, vừa đủ tài liệu và value theo increment."),
+  createBabokTopic("perspective", "Chapter 11: Perspectives", "11.2", "The Business Intelligence Perspective", "Góc nhìn Business Intelligence", 381, ["business intelligence perspective", "business intelligence", "bi perspective"], "Tập trung biến data thành information/insight, bao gồm data quality, analytics, decision support và governance."),
+  createBabokTopic("perspective", "Chapter 11: Perspectives", "11.3", "The Information Technology Perspective", "Góc nhìn Công nghệ thông tin", 394, ["information technology perspective", "information technology", "it perspective", "cots system"], "Áp dụng BA trong thay đổi technology, systems và software; chú trọng interfaces, non-functional requirements, architecture, testing và implementation."),
+  createBabokTopic("perspective", "Chapter 11: Perspectives", "11.4", "The Business Architecture Perspective", "Góc nhìn Kiến trúc kinh doanh", 408, ["business architecture perspective", "business architecture", "capability map", "value stream"], "Xem enterprise ở mức chiến lược thông qua capabilities, value streams, information và organization để liên kết strategy với change initiatives."),
+  createBabokTopic("perspective", "Chapter 11: Perspectives", "11.5", "The Business Process Management Perspective", "Góc nhìn Quản lý quy trình kinh doanh", 424, ["business process management perspective", "business process management", "bpm perspective", "process re-engineering"], "Tập trung khám phá, phân tích, thiết kế, đo lường và cải tiến end-to-end business processes để tăng hiệu quả và value."),
+];
+
+const BABOK_CHAPTER_FALLBACKS: Record<string, string> = {
+  '3': 'Chapter 3',
+  '4': 'Chapter 4',
+  '5': 'Chapter 5',
+  '6': 'Chapter 6',
+  '7': 'Chapter 7',
+  '8': 'Chapter 8',
+};
+
+function normalizeBabokMatchText(value: string): string {
+  return value
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function detectSourceChapter(sourceTitle: string): string | null {
+  const source = normalizeBabokMatchText(sourceTitle);
+  const rules: Array<[string, string[]]> = [
+    ['3', ['ka 3', 'business analysis planning and monitoring']],
+    ['4', ['ka 4', 'elicitation and collaboration']],
+    ['5', ['ka 5', 'requirements life cycle management']],
+    ['6', ['ka 6', 'strategy analysis']],
+    ['7', ['ka 7', 'requirements analysis and design definition']],
+    ['8', ['ka 8', 'solution evaluation']],
+  ];
+
+  return (
+    rules.find(([, aliases]) =>
+      aliases.some((alias) => source.includes(normalizeBabokMatchText(alias)))
+    )?.[0] || null
+  );
+}
+
+const BABOK_GENERIC_ALIASES = new Set([
+  'stakeholder',
+  'stakeholders',
+  'enterprise',
+  'organization',
+  'plan',
+  'risk',
+  'requirements',
+  'designs',
+  'requirements and designs',
+  'solution',
+  'interface',
+  'model',
+]);
+
+const BABOK_ROUTING_HINTS: Array<{
+  section: string;
+  patterns: RegExp[];
+  score: number;
+}> = [
+  { section: 'Chapter 1', patterns: [/what does.*babok.*contain/i, /according to.*babok.*what is business analysis/i, /purpose of the babok guide/i, /structure of the babok guide/i], score: 135 },
+  { section: '2.1', patterns: [/baccm/i, /business analysis core concept model/i, /change.*need.*solution.*stakeholder.*value.*context/i], score: 135 },
+  { section: '2.3', patterns: [/type of requirement/i, /requirements classification/i, /transition requirement/i, /functional requirement/i, /non-functional requirement/i], score: 135 },
+  { section: '2.4', patterns: [/type of stakeholder/i, /stakeholder role/i, /domain subject matter expert/i, /implementation subject matter expert/i, /operational support/i, /regulator/i, /sponsor/i, /supplier/i, /tester/i], score: 125 },
+  { section: '2.5', patterns: [/difference between requirements and designs/i, /requirements.*focused on.*need/i, /designs.*focused on.*solution/i], score: 140 },
+  { section: '3.1', patterns: [/\badaptive\b/i, /\bpredictive\b/i, /\bwaterfall\b/i, /formal requirements documentation/i], score: 120 },
+  { section: '3.2', patterns: [/stakeholder analysis/i, /stakeholder attitudes/i, /roles and responsibilities/i], score: 105 },
+  { section: '3.3', patterns: [/governance approach/i, /change control process/i, /authority to approve/i, /decision making/i, /decisions about requirements and designs/i, /stakeholder approval approach/i], score: 110 },
+  { section: '3.4', patterns: [/information management approach/i, /requirements reuse/i, /repository/i, /long-term use/i], score: 105 },
+  { section: '3.5', patterns: [/business analysis performance/i, /corrective action/i, /preventive action/i, /performance improvement/i, /monitoring and controlling.*business analysis work/i, /organizational performance standards/i], score: 110 },
+  { section: '4.1', patterns: [/prepare for elicitation/i, /elicitation objectives/i, /supporting materials/i, /resources.*organized.*scheduled/i], score: 110 },
+  { section: '4.2', patterns: [/conduct elicitation/i, /collaborative.*research.*experiment/i, /type of elicitation/i, /elicitation session/i], score: 110 },
+  { section: '4.3', patterns: [/confirm elicitation/i, /accurate and consistent with other information/i], score: 110 },
+  { section: '4.4', patterns: [/communicat.*business analysis information/i, /information package/i, /format to present/i, /formal and informal documentation/i], score: 110 },
+  { section: '4.5', patterns: [/manage stakeholder collaboration/i, /stakeholder collaboration/i, /stakeholder participation/i], score: 110 },
+  { section: '5.1', patterns: [/traceability/i, /trace requirements/i, /relationships.*requirements/i, /missing functionality/i], score: 115 },
+  { section: '5.2', patterns: [/maintain requirements/i, /maintaining requirements/i, /requirements re-use/i, /requirements reuse/i, /requirements attributes/i], score: 110 },
+  { section: '5.3', patterns: [/priorit/i, /priority of.*requirements/i, /rank requirements/i], score: 115 },
+  { section: '5.4', patterns: [/assess requirement.*change/i, /requirements require a change/i, /areas of impact/i, /impact analysis.*change/i, /proposed change/i, /change assessment/i], score: 115 },
+  { section: '5.5', patterns: [/approv.*requirements/i, /gaining approval/i, /sign-off/i], score: 115 },
+  { section: '6.1', patterns: [/current state/i, /business need/i, /internal assets/i, /current capabilities/i], score: 105 },
+  { section: '6.2', patterns: [/future state/i, /business objectives/i, /desired outcomes/i, /potential value/i], score: 105 },
+  { section: '6.3', patterns: [/assess risks/i, /risk tolerance/i, /uncertainty.*value/i], score: 110 },
+  { section: '6.4', patterns: [/change strategy/i, /gap analysis/i, /transition state/i, /solution scope/i], score: 110 },
+  { section: '7.1', patterns: [/specify and model/i, /requirements formats/i, /text.*matrices.*diagrams/i, /metadata/i], score: 110 },
+  { section: '7.2', patterns: [/\batomic\b/i, /quality characteristic/i, /verify requirements/i, /unambiguous/i, /testable/i], score: 125 },
+  { section: '7.3', patterns: [/validate requirements/i, /validating requirements/i, /right requirements/i, /missing requirements/i, /validation criteria/i], score: 120 },
+  { section: '7.4', patterns: [/requirements architecture/i, /template architectures/i, /relationships between relevant requirements/i], score: 115 },
+  { section: '7.5', patterns: [/design options/i, /requirements allocation/i, /solution approach/i], score: 110 },
+  { section: '7.6', patterns: [/recommend solution/i, /potential value.*solution/i, /trade-offs/i], score: 110 },
+  { section: '8.1', patterns: [/measure solution performance/i, /performance measures/i, /measurement.*volume/i, /measurement.*frequency/i, /measurement.*timing/i], score: 115 },
+  { section: '8.2', patterns: [/analyz.*performance measure/i, /performance trend/i, /a trend/i, /repeatable and reproducible/i], score: 115 },
+  { section: '8.3', patterns: [/solution limitation/i, /solution component.*problem/i, /ineffective outputs/i, /source of the problem/i], score: 115 },
+  { section: '8.4', patterns: [/enterprise limitation/i, /cultural assessment/i, /interpersonal conflict/i, /organizational structure/i], score: 115 },
+  { section: '8.5', patterns: [/increase solution value/i, /retire the solution/i, /replace the solution/i, /sunk cost/i, /necessity/i], score: 115 },
+  { section: '10.15', patterns: [/crud.*matrix/i, /create.*read.*update.*delete/i, /entity relationship diagram/i], score: 120 },
+  { section: '10.30', patterns: [/non-functional requirement/i, /reliability.*compatibility.*scalability/i, /quality of service requirement/i], score: 130 },
+  { section: '10.35', patterns: [/activity diagram/i, /process diagram/i, /draw a diagram of the process/i, /bpmn/i], score: 120 },
+  { section: '10.47', patterns: [/use case diagram/i, /actor.*use case/i, /association.*extension/i], score: 120 },
+  { section: '10.48', patterns: [/user stor/i, /brief statement.*people.*need/i], score: 120 },
+];
+
+function topicChapterNumber(topic: BabokTopic): string | null {
+  const sectionMatch = topic.section.match(/^(?:Chapter\s+)?([0-9]+)/i);
+  return sectionMatch?.[1] || null;
+}
+
+function aliasMatchScore(
+  text: string,
+  alias: string,
+  baseScore: number
+): number {
+  const normalizedAlias = normalizeBabokMatchText(alias);
+  if (normalizedAlias.length < 3 || !text.includes(normalizedAlias)) return 0;
+
+  const adjustedBase = BABOK_GENERIC_ALIASES.has(normalizedAlias)
+    ? Math.min(baseScore, 22)
+    : baseScore;
+
+  return adjustedBase + Math.min(45, normalizedAlias.length);
+}
+
+function scoreBabokTopic(
+  topic: BabokTopic,
+  questionText: string,
+  correctAnswerText: string,
+  sourceChapter: string | null
+): number {
+  const question = normalizeBabokMatchText(questionText);
+  const answer = normalizeBabokMatchText(correctAnswerText);
+  const combinedOriginal = `${questionText} ${correctAnswerText}`;
+  const asksForTask =
+    /\bwhich\b.{0,45}\btask\b|\bwhat\b.{0,35}\btask\b|\bduring which task\b|\btask is\b|\bknowledge area\b/i.test(
+      questionText
+    );
+  const asksForTechnique =
+    /\bwhich\b.{0,45}\btechnique\b|\bwhat\b.{0,35}\btechnique\b|\bbest suited\b|\bmost suitable\b|\bdiagram\b|\bmatrix\b/i.test(
+      questionText
+    );
+  let score = 0;
+
+  topic.aliases.forEach((alias) => {
+    const questionBase =
+      topic.kind === 'task'
+        ? 175
+        : topic.kind === 'technique'
+        ? asksForTask
+          ? 72
+          : 135
+        : 105;
+    const answerBase =
+      asksForTask && topic.kind === 'task'
+        ? 180
+        : asksForTechnique && topic.kind === 'technique'
+        ? 155
+        : topic.kind === 'task'
+        ? 105
+        : 82;
+
+    score = Math.max(score, aliasMatchScore(question, alias, questionBase));
+    score = Math.max(score, aliasMatchScore(answer, alias, answerBase));
+  });
+
+  BABOK_ROUTING_HINTS.forEach((hint) => {
+    if (
+      hint.section === topic.section &&
+      hint.patterns.some((pattern) => pattern.test(combinedOriginal))
+    ) {
+      score = Math.max(score, hint.score + 45);
+    }
+  });
+
+  if (sourceChapter && topicChapterNumber(topic) === sourceChapter) {
+    score += topic.kind === 'task' ? 55 : topic.kind === 'chapter' ? 42 : 12;
+  }
+
+  if (asksForTechnique && topic.kind === 'technique' && score > 0) score += 12;
+  if (asksForTask && topic.kind === 'task' && score > 0) score += 14;
+
+  return score;
+}
+
+function inferBabokFocus(questionText: string, topic: BabokTopic): BabokFocus {
+  const question = normalizeBabokMatchText(questionText);
+
+  if (topic.kind === 'task') {
+    const taskFocusRules: Array<{
+      pattern: RegExp;
+      suffix: string;
+      name: string;
+      guide: string;
+    }> = [
+      {
+        pattern: /\bpurpose\b|\bprimary goal\b|\bgoal of\b|\bwhy\b/,
+        suffix: '.1 Purpose',
+        name: 'Mục đích của task',
+        guide:
+          'Purpose giải thích lý do thực hiện task và value được tạo ra. Không nhầm Purpose với Description, vốn giải thích task được thực hiện như thế nào và nhằm đạt điều gì.',
+      },
+      {
+        pattern: /\bdescription\b|\bdescribes\b|\bwhat does\b/,
+        suffix: '.2 Description',
+        name: 'Mô tả của task',
+        guide:
+          'Description làm rõ task là gì, tại sao thực hiện và kết quả tổng quát cần đạt. Đọc cùng Purpose để nhận ra câu hỏi đang hỏi “vì sao” hay “làm gì”.',
+      },
+      {
+        pattern: /\binput\b|\binputs\b|\bprerequisite\b|\brequired before\b/,
+        suffix: '.3 Inputs',
+        name: 'Đầu vào của task',
+        guide:
+          'Inputs là thông tin được tiêu thụ hoặc chuyển đổi để task bắt đầu. Hãy phân biệt input với Guidelines and Tools và với output của chính task.',
+      },
+      {
+        pattern: /\belement\b|\belements\b|\bkey concept\b|\bconsideration\b|\bcharacteristic\b/,
+        suffix: '.4 Elements',
+        name: 'Các yếu tố cần hiểu',
+        guide:
+          'Elements là các khái niệm quan trọng để hiểu cách thực hiện task; chúng không mặc nhiên là deliverables bắt buộc và có thể được tailoring theo approach.',
+      },
+      {
+        pattern: /\bguideline\b|\bguidelines\b|\btool\b|\btools\b|\bartifact\b|\breference\b/,
+        suffix: '.5 Guidelines and Tools',
+        name: 'Guidelines and Tools',
+        guide:
+          'Guidelines and Tools là nguồn lực/hướng dẫn giúp biến inputs thành outputs. Chúng có thể là output của task khác nhưng không phải output của task đang xét.',
+      },
+      {
+        pattern: /\btechnique\b|\btechniques\b|\bbest suited\b|\bused during\b/,
+        suffix: '.6 Techniques',
+        name: 'Các kỹ thuật áp dụng',
+        guide:
+          'Techniques là các cách có thể dùng để thực hiện task. Một technique có thể hỗ trợ nhiều task; cần đối chiếu đúng task-to-technique mapping thay vì chỉ nhớ tên technique.',
+      },
+      {
+        pattern: /\bstakeholder\b|\bstakeholders\b|\bwho\b|\bparticipate\b|\bresponsible\b/,
+        suffix: '.7 Stakeholders',
+        name: 'Stakeholder tham gia hoặc bị ảnh hưởng',
+        guide:
+          'Danh sách Stakeholders của task nêu các vai trò thường tham gia hoặc bị ảnh hưởng, không bắt buộc mọi vai trò phải xuất hiện trong mọi initiative.',
+      },
+      {
+        pattern: /\boutput\b|\boutputs\b|\bdeliverable\b|\bresult\b|\bproduces\b/,
+        suffix: '.8 Outputs',
+        name: 'Đầu ra của task',
+        guide:
+          'Output là business analysis information được tạo mới, biến đổi hoặc thay đổi trạng thái sau khi task hoàn tất; một output có thể là một phần của deliverable lớn hơn.',
+      },
+    ];
+
+    const matched = taskFocusRules.find((rule) => rule.pattern.test(question));
+    if (matched) {
+      return {
+        sectionLabel: `${topic.section}${matched.suffix}`,
+        focusName: matched.name,
+        readingGuide: matched.guide,
+      };
+    }
+
+    return {
+      sectionLabel: topic.section,
+      focusName: 'Tổng quan task và luồng Input - Task - Output',
+      readingGuide:
+        'Đọc lần lượt Purpose, Description, Inputs, Elements, Guidelines and Tools, Techniques, Stakeholders và Outputs; đây là cấu trúc chuẩn của mỗi task trong BABOK.',
+    };
+  }
+
+  if (topic.kind === 'technique') {
+    if (/\badvantage\b|\bdisadvantage\b|\blimitation\b|\bconsideration\b|\bmore effective\b|\bless effective\b/.test(question)) {
+      return {
+        sectionLabel: `${topic.section}.4 Usage Considerations`,
+        focusName: 'Điều kiện và lưu ý khi sử dụng technique',
+        readingGuide:
+          'Usage Considerations giúp phân biệt khi technique phù hợp, hạn chế, chi phí hoặc rủi ro của nó. Đây thường là phần tạo các lựa chọn gây nhiễu trong câu thi.',
+      };
+    }
+
+    if (/\belement\b|\belements\b|\bcomponent\b|\bcharacteristic\b/.test(question)) {
+      return {
+        sectionLabel: `${topic.section}.3 Elements`,
+        focusName: 'Các thành phần của technique',
+        readingGuide:
+          'Elements mô tả các bước hoặc thành phần cốt lõi để áp dụng technique. Hãy nhớ logic và mục đích của từng thành phần thay vì chỉ học thuộc tên.',
+      };
+    }
+
+    if (/\bpurpose\b|\bused for\b|\bbest suited\b|\bmost suitable\b/.test(question)) {
+      return {
+        sectionLabel: `${topic.section}.1 Purpose`,
+        focusName: 'Mục đích và trường hợp sử dụng',
+        readingGuide:
+          'Purpose cho biết technique được dùng để đạt điều gì và trong hoàn cảnh nào. So sánh mục tiêu của technique này với các technique gần giống.',
+      };
+    }
+
+    return {
+      sectionLabel: `${topic.section}.2 Description`,
+      focusName: 'Khái niệm và cách technique hoạt động',
+      readingGuide:
+        'Đọc Description để hiểu technique biểu diễn hoặc xử lý loại thông tin nào, đầu vào quan sát được và loại kết quả mà technique tạo ra.',
+    };
+  }
+
+  return {
+    sectionLabel: topic.section,
+    focusName: 'Khái niệm cốt lõi và cách áp dụng',
+    readingGuide:
+      'Đọc phần định nghĩa, mối quan hệ với các khái niệm khác và ví dụ áp dụng. Với câu tình huống, hãy xác định từ khóa mô tả đúng bản chất chứ không chỉ dựa vào chức danh hoặc công cụ.',
+  };
+}
+
+function buildBabokStudyGuide(question: Question): BabokStudyGuide {
+  const correctAnswer = question.options.find((option) => option.isCorrect);
+  const correctAnswerText = correctAnswer?.text || '';
+  const sourceChapter = detectSourceChapter(question.sourceTitle);
+
+  const ranked = BABOK_TOPICS.map((topic) => ({
+    topic,
+    score: scoreBabokTopic(
+      topic,
+      question.text,
+      correctAnswerText,
+      sourceChapter
+    ),
+  })).sort((left, right) => right.score - left.score);
+
+  let primary = ranked[0]?.topic;
+  const shouldUseChapterFallback =
+    !primary || ranked[0].score <= 0 || Boolean(sourceChapter && ranked[0].score <= 70);
+
+  if (shouldUseChapterFallback) {
+    const fallbackChapter = sourceChapter
+      ? BABOK_CHAPTER_FALLBACKS[sourceChapter]
+      : 'Chapter 2';
+    primary =
+      BABOK_TOPICS.find((topic) => topic.section === fallbackChapter) ||
+      BABOK_TOPICS.find((topic) => topic.section === 'Chapter 2') ||
+      BABOK_TOPICS[0];
+  }
+
+  const related = ranked
+    .filter(
+      (item) =>
+        item.score >= 70 &&
+        item.topic.id !== primary.id &&
+        item.topic.chapter !== primary.chapter
+    )
+    .slice(0, 2)
+    .map((item) => item.topic);
+
+  const focus = inferBabokFocus(question.text, primary);
+  const isNegativeQuestion = /\bnot\b|\bleast\b|\bexcept\b|\bfalse\b|\bincorrect\b/i.test(
+    question.text
+  );
+
+  const answerTakeaway = isNegativeQuestion
+    ? `Đây là câu hỏi loại trừ. Lựa chọn cần xác định là “${correctAnswerText}”. Hãy kiểm tra từng phương án với ${focus.sectionLabel}, đặc biệt xem phương án nào không thuộc hoặc không phù hợp với nội dung BABOK đang hỏi.`
+    : `Điểm chốt cần nhớ là “${correctAnswerText}”. Khi gặp câu tương tự, hãy xác định trước câu hỏi đang kiểm tra ${focus.focusName.toLowerCase()}, rồi đối chiếu với ${focus.sectionLabel} thay vì chọn theo từ khóa quen mắt.`;
+
+  return { primary, related, focus, answerTakeaway };
+}
+
+function babokPdfPage(bookPage: number): number {
+  return bookPage + BABOK_PDF_PAGE_OFFSET;
+}
+
+function babokPdfHref(bookPage: number): string {
+  return `${encodeURI(publicFilePath(BABOK_PDF_FILE_NAME))}#page=${babokPdfPage(
+    bookPage
+  )}`;
+}
+
 
 let translationCacheMemory: Record<string, string> | null = null;
 
@@ -922,6 +1463,111 @@ function LearningNotePanel({
           >
             <RefreshCw className="h-3.5 w-3.5" /> Dịch lại
           </button>
+        </div>
+      )}
+    </section>
+  );
+}
+
+
+function BabokStudyGuidePanel({
+  question,
+  compact = false,
+}: {
+  question: Question;
+  compact?: boolean;
+}) {
+  const guide = buildBabokStudyGuide(question);
+  const { primary, related, focus } = guide;
+  const pdfPage = babokPdfPage(primary.bookPage);
+
+  return (
+    <section
+      className={cn(
+        'mt-4 rounded-2xl border border-violet-300/30 bg-violet-300/[0.075] shadow-inner shadow-violet-950/10',
+        compact ? 'px-4 py-3.5' : 'px-4 py-4 md:px-5'
+      )}
+    >
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+        <div className="min-w-0">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-violet-200/20 bg-violet-200/10 px-2.5 py-1 text-[11px] font-bold uppercase tracking-[0.12em] text-violet-100">
+              <BookOpen className="h-3.5 w-3.5" /> BABOK v3 - Nội dung cần nắm
+            </span>
+            <span className="rounded-full bg-slate-950/50 px-2.5 py-1 text-[11px] font-semibold text-slate-300">
+              {focus.sectionLabel}
+            </span>
+          </div>
+
+          <h3 className="mt-3 text-base font-bold leading-6 text-white">
+            {primary.titleVi}
+          </h3>
+          <p className="mt-0.5 text-xs leading-5 text-violet-100/75">
+            {primary.chapter} → {primary.section} {primary.titleEn}
+          </p>
+        </div>
+
+        <a
+          href={babokPdfHref(primary.bookPage)}
+          target="_blank"
+          rel="noreferrer"
+          className="inline-flex shrink-0 items-center justify-center gap-1.5 rounded-xl border border-violet-200/25 bg-violet-200/10 px-3 py-2 text-xs font-semibold text-violet-100 transition hover:bg-violet-200/20"
+          title={`Mở ${BABOK_PDF_FILE_NAME} tại trang PDF ${pdfPage}`}
+        >
+          Mở BABOK trang {primary.bookPage} <ArrowRight className="h-3.5 w-3.5" />
+        </a>
+      </div>
+
+      <div className="mt-4 grid gap-3 md:grid-cols-2">
+        <div className="rounded-xl border border-white/10 bg-slate-950/35 p-3.5">
+          <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-cyan-200">
+            Tóm tắt nội dung
+          </p>
+          <p className="mt-2 text-[13px] leading-6 text-slate-100">
+            {primary.summaryVi}
+          </p>
+        </div>
+
+        <div className="rounded-xl border border-white/10 bg-slate-950/35 p-3.5">
+          <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-amber-200">
+            Tập trung khi đọc: {focus.focusName}
+          </p>
+          <p className="mt-2 text-[13px] leading-6 text-slate-100">
+            {focus.readingGuide}
+          </p>
+        </div>
+      </div>
+
+      <div className="mt-3 rounded-xl border border-emerald-200/15 bg-emerald-200/[0.055] p-3.5">
+        <p className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.14em] text-emerald-200">
+          <CheckCircle2 className="h-3.5 w-3.5" /> Cách áp dụng vào câu này
+        </p>
+        <p className="mt-2 text-[13px] leading-6 text-slate-100">
+          {guide.answerTakeaway}
+        </p>
+      </div>
+
+      <div className="mt-3 flex flex-col gap-2 border-t border-white/10 pt-3 text-[11px] text-slate-400 sm:flex-row sm:items-center sm:justify-between">
+        <span>
+          Trang in BABOK: {primary.bookPage} · Trang trong file PDF: {pdfPage}
+        </span>
+        <span>File cần đặt trong public/: {BABOK_PDF_FILE_NAME}</span>
+      </div>
+
+      {related.length > 0 && (
+        <div className="mt-3 flex flex-wrap items-center gap-2 text-xs">
+          <span className="text-slate-400">Đọc thêm liên quan:</span>
+          {related.map((topic) => (
+            <a
+              key={topic.id}
+              href={babokPdfHref(topic.bookPage)}
+              target="_blank"
+              rel="noreferrer"
+              className="rounded-lg border border-white/10 bg-white/5 px-2.5 py-1.5 text-slate-200 transition hover:border-violet-200/30 hover:bg-violet-200/10"
+            >
+              {topic.section} {topic.titleEn}
+            </a>
+          ))}
         </div>
       )}
     </section>
@@ -1666,6 +2312,10 @@ export default function QuizLearningApp() {
               })}
             </div>
 
+            {hasAnsweredCurrent && (
+              <BabokStudyGuidePanel question={currentQuestion} />
+            )}
+
             <div className="mt-5 flex items-center justify-between gap-2 border-t border-white/10 pt-4">
               <button
                 onClick={() => goToQuestion(currentIndex - 1)}
@@ -1808,6 +2458,9 @@ export default function QuizLearningApp() {
                         note={learningNotes[question.id]}
                         onRetry={() => void loadLearningNote(question, true)}
                       />
+                    )}
+                    {pickedId && (
+                      <BabokStudyGuidePanel question={question} compact />
                     )}
                   </details>
                 );
