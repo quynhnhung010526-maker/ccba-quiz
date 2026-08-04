@@ -1,61 +1,808 @@
 CCBA Practice - KA 7: Requirements Analysis and Design Definition
 
-Question 1In a short, 3-month project to implement a COTS system, the BA determined that a requirements specification document was not necessary and planned instead to develop use cases to document functional requirements. What is this an example of?A)Determining appropriate requirements analysis and documentation activities =>TrueB)Making assumptions that may prove risky and cause issues in the project at a later timeC)Cutting the wrong corners. Use cases may be used to supplement a more formal specification documentD)Incorrectly utilizing use cases
+Question 1In which of the following situations are scope models particularly helpful?
+A)When describing the entities, classes, or data objects that are relevant to a domain.
+B)When asked for a graphical representation of the Work Breakdown Structure.
+C)When the logic of usage sequences needs to be modeled.
+D)When a boundary of some sort needs to be defined. => true
 
-Question 2Associations (interfaces) between the actor and the use case captured in a use case diagram are shown through:A)ArrowsB)Lines =>TrueC)OvalsD)Stick figures
+Question 2You are reviewing the requirements with your sponsor and customer. While examining the requirements, they note some minor quality problems you need to fix. What task have you just completed?
+A)Validate Requirements
+B)Perform Quality Control
+C)Perform Quality Assurance
+D)Verify Requirements => true
 
-Question 3You just created stakeholder and solution requirements. What task did you just finish?A)Structure RequirementsB)Prioritize requirementsC)Specify and model requirements =>TrueD)Verify requirements
+Question 3Which techniques are used to Validate Requirements?
+A)Acceptance and evaluation criteria; item tracking; reviews. => true
+B)Metrics and key performance indicators; financial analysis; business capability analysis.
+C)Acceptance and evaluation criteria; financial analysis; workshops.
+D)Acceptance and evaluation criteria; metrics and key performance indicators; workshops.
 
-Question 4The project team is in the process of confirming compliance with organizational business analysis performance standards, correct use of modeling notation and completeness within each model, and that items determined to be important are included in the final requirements deliverables. What tool would help in carrying out these activities?A)Control chartB)Item trackingC)Checklist => TrueD)Metrics and key performance indicators (KPIs)
+Question 4The project team is currently working on validating requirements. The following are the names of the stakeholders on the team: Business analyst - Giewel and Gieson; Implementation SME - Cheryl; Project Manager - George; End Users - Jane and Juliet; Customer - Jeremy; Sponsor - Jean. Which stakeholders have the primary responsibility for ensuring the requirements are valid?
+A)Giewel, Gieson, Jeremy, Cheryl, Jean
+B)Giewel, Gieson, Jeremy, Jane, Juliet, Jean. => true
+C)Giewel, Gieson, George, Jane, Juliet, Jean
+D)Giewel, Gieson, Jeremy, Cheryl, George, Jean
 
-Question 5Which of the following is NOT a stated technique for the Define Requirements Architecture task?A)Scope modelingB)InterviewsC)Process modeling. => TrueD)Functional decomposition
+Question 5You just created stakeholder and solution requirements. What task did you just finish?
+A)Structure Requirements
+B)Verify requirements
+C)Specify and model requirements => true
+D)Prioritize requirements
 
-Question 6What is the difference between "associations" and "extensions" in a use case diagram?A)The terms association and extension can be used interchangeably.B)Extensions are between actors and use cases; associations depict one type of dependent relationship between use cases.C)Associations and extensions are terms related to use cases vs. use case diagrams.D)Associations are between actors and use cases; extensions depict one type of dependent relationship between use cases. => True
+Question 6Which knowledge area develops models of the current state of an organization?
+A)Strategy Analysis
+B)Requirements Analysis and Design Definition => true
+C)Specify and Model Requirements
+D)Enterprise Analysis
 
-Question 7Will has been responding to several questions about the solution requirements from confused developers. What is the most likely cause of the confusion?A)The requirements were seemingly ambiguous and so most likely weren't verified. => TrueB)The developers were just assigned to the project and haven't reviewed requirements and design documentation.C)Will neglected to include the developers in modeling efforts so are trying to catch up.D)The requirements were not validated before handing them over for development.
+Question 7Which of the following best describes what is needed in order to specify and model requirements?
+A)Requirements
+B)Modeling tools
+C)A business analyst
+D)Any elicitation results => true
 
-Question 8Susan thinks she is done with her requirements analysis on a project. Her project manager sent her a terse email telling her she is not done yet. He also sent her the business objectives and potential value for the project, and asked her to complete one more important task to ensure the requirements support the business case. What activity does Susan need to complete?A)Obtain approval of the requirements.B)Requirements verification.C)Requirements validation. => TrueD)Identify any missing or incorrect requirements.
+Question 8Which of the following is NOT true about business rules?
+A)Business rules are exclusively expressed and managed through implementation technology for a given solution. => true
+B)Business rules shape day-to-day business behavior.
+C)Business rules guide operational business decision-making.
+D)Business rule changes can be implemented quickly if they are managed by a single enterprise-wide engine.
 
-Question 9The following are guidelines and tools under the Validate Requirements task. Which one is NOT?A)Business objectivesB)Solution scopeC)Potential solution => TrueD)Future state description
+Question 9Once the requirements are verified, what task might a business analyst perform, provided that other inputs required by the task are also available?
+A)Approve requirements => true
+B)Define design options.
+C)Validate requirements
+D)Identify improvement opportunities
 
-Question 10The lead business analyst and her team have completed an event that ensured the requirements and designs specifications and models meet quality standards. They now want to ensure that the stakeholders' desired future state will be achieved. What question would the team be asking?A)Were the right requirements stated? => TrueB)Were the requirements stated right?C)Were the right stakeholders involved?D)Was the right solution built?
+Question 10Which list describes the complete set of tasks in the requirements analysis and design definition knowledge area?
+A)Specify and model requirements, verify requirements, validate requirements, define design options, analyze potential value and recommend solution
+B)Prioritize requirements, specify and model requirements, verify requirements, validate requirements, define design options, analyze potential value and recommend solution
+C)Specify and model requirements, verify requirements, validate requirements, define requirements architecture, assess risks, analyze potential value and recommend solution
+D)Specify and model requirements, verify requirements, validate requirements, define requirements architecture, define design options, analyze potential value and recommend solution => true
 
-Question 11You are a business analyst working on a project with a complex business function. What approach would you use to help identify constituent parts of the complex business function?A)Functional decomposition => TrueB)Work breakdown structureC)Process modelingD)Problem decomposition
+Question 11The lead business analyst planned an event to analyze the potential value for each design option and recommend a solution. What inputs will be needed to accomplish this task?
+A)Risk analysis results, design options
+B)Potential value, risk analysis results, design options
+C)Potential value, design options => true
+D)Potential value, business objectives, design options
 
-Question 12Which of the following describe common non-functional requirement categories?A)Reliability, availability, scalability, traceabilityB)Reliability, readability, scalability, localizationC)Reliability, compatibility, scalability, localization => TrueD)Reliability, compatibility, scalability, dependability
+Question 12What are the three typical components of a user story?
+A)Who? What? When?
+B)Who? What? How?
+C)What? When? Why?
+D)Who? What? Why? => true
 
-Question 13Anna has assembled a team to define design options. What inputs will they need to accomplish this task?A)Traced requirements, change strategy, requirements architectureB)Validated and prioritized requirements, change strategy, requirements architecture => TrueC)Traced requirements, change strategy, enterprise architectureD)Validated and prioritized requirements, change strategy, enterprise architecture
+Question 13Mary is preparing to allocate requirements to solution components and releases to best achieve the objectives and maximize value. What should Mary do?
+A)Ensure her requirements are verified and traced.
+B)Ensure her requirements are validated and prioritized.
+C)Ensure her requirements are designed and approved by the implementation SMEs. => true
+D)Ensure her requirements are verified and tested.
 
-Question 14Which subset of stakeholders are likely to participate in the define design options task?A)Implementation subject matter expert, operational support, supplier => TrueB)Operational support, domain subject matter expert, sponsorC)Operational support, project manager, end userD)Implementation subject matter expert, regulator, domain subject matter expert
+Question 14Which of the following is NOT true about specifying and modeling requirements?
+A)This task can result in requirements or design.
+B)This task includes capturing information about attributes.
+C)The input for this task is solution scope. => true
+D)This task includes capturing information about metadata.
 
-Question 15How can backlog management be helpful when analyzing and recommending a solution?A)It can be used to sequence the potential value => TrueB)It can be used to determine the expected costC)It can be used to determine the expected benefitsD)It can be used to determine potential value
+Question 15What state or status should the requirements be in to serve as an input to the Define Requirements Architecture task?
+A)They can be in any state or status. => true
+B)Approved
+C)Verified
+D)Confirmed
 
-Question 16Non-functional requirements analysis is a stated technique for which of the following tasks in the Requirements Analysis and Design Definition knowledge area?A)Specify and Model Requirements => TrueB)Define Design OptionsC)Prioritize RequirementsD)Verify Requirements
+Question 16Laura, a junior business analyst, has finished detailing a set of requirements using analytical techniques. She now wants to elicit, model, and analyze the design, but she is wondering what techniques she would use for this activity. What would you advise her?
+A)Since the developers and testers will be using her requirements she should collaborate with them to come up with the best techniques to use.
+B)Requirements and designs use the same techniques to specify and model. => true
+C)The business analyst can only specify and model requirements and not designs.
+D)The business analyst does not create designs but reviews them to ensure they align with the requirements. She should therefore package her artifacts, obtain signoff, and pass them on to a design architect.
 
-Question 17Andre is focusing on documenting the needs of the enterprise related to data conversion. What type of requirement is Andre documenting?A)Solution requirementB)Transition requirement => TrueC)Functional requirementD)Non-functional requirement
+Question 17Which of the following statements is TRUE about specifying and modeling requirements?
+A)Different types of requirements might be specified and modeled at the same time. => true
+B)Business requirements must be specified and modeled before any other type of requirements.
+C)Transition requirements are always specified and modeled last.
+D)Only stakeholder requirements and solution requirements can be specified at the same time.
 
-Question 18The project team is currently working on validating requirements. The following are the names of the stakeholders on the team: Business analyst - Giewel and Gieson; Implementation SME - Cheryl; Project Manager - George; End Users - Jane and Juliet; Customer - Jeremy; Sponsor - Jean. Which stakeholders have the primary responsibility for ensuring the requirements are valid?A)Giewel, Gieson, Jeremy, Jane, Juliet, Jean. => TrueB)Giewel, Gieson, Jeremy, Cheryl, JeanC)Giewel, Gieson, Jeremy, Cheryl, George, JeanD)Giewel, Gieson, George, Jane, Juliet, Jean
+Question 18How is a glossary different than a data dictionary?
+A)They are the same and can be used interchangeably depending upon the organization's culture.
+B)A glossary defines key terms relevant to the business domain while a data dictionary standardizes a definition of a data element. => true
+C)A glossary defines all terms used within an initiative while a data dictionary defines only terms relevant to data modeling.
+D)They both define key terms relevant to the solution.
 
-Question 19Define design options is a task in which of the following knowledge areas?A)Requirements analysis and design definition => TrueB)Solution evaluationC)Strategy analysisD)Elicitation and collaboration
+Question 19Padma and her team are ensuring all requirements work in harmony as a single whole that supports overall business objectives and produces meaningful outcome for the stakeholders. What is the purpose of this exercise?
+A)To manage requirements relationships
+B)To harmonize requirements
+C)To define design options
+D)To define requirements architecture => true
 
-Question 20Not every process analyzed will be transformed by a software solution, so processes that are flagged in the design plan as not being a candidate for automation will not undergo further elaboration during the technical design. With that premise, which of the following statements is NOT true?A)The business analyst will have decomposed and modeled the process and identified new procedures.B)The business analyst should refrain from documenting recommendations to transform the process that are outside the scope of software automation. => TrueC)The business analyst should present recommendations to the appropriate project stakeholders to determine if proposed improvements should be considered for implementation.D)The business analyst and the process owner may have determined new manual steps that may streamline and improve the current process.
+Question 20Which one of the following is NOT an element in Analyze Potential Value and Recommend Solution task?
+A)Expected Benefits
+B)Expected Outcome => true
+C)Expected Costs
+D)Determine Value
 
-Question 21Which statement about techniques is the most correct?A)They are prescribed by the BABOK.B)They provide step-by-step instructions on how to accomplish a specific task.C)They provide additional information on ways that a task can be performed. => TrueD)They vary depending upon the perspective from which business analysis is being performed.
+Question 21This model represents "a sequence of actions, events, or a course that may be taken." Which requirements model category is represented by the above statement?
+A)Entity Relationship.
+B)Rationale.
+C)People and Roles.
+D)Activity Flow. => true
 
-Question 22Requirements may be related to each other in several ways when defining the requirements architecture. BAs examine each of these relationships to ensure they satisfy quality criteria. Which of the following is NOT a criterion?A)NecessaryB)Testable => TrueC)UnambiguousD)Correct
+Question 22Which of the following techniques would be best suited to identify how to evaluate the quality of the requirements?
+A)Reviews
+B)Verify requirements
+C)Metrics and key performance indicators (KPIs) => true
+D)Acceptance and evaluation criteria.
 
-Question 23In order to validate requirements, you must first do what?A)Verify requirements.B)Confirm requirements.C)Define design options.D)Specify and model requirements. => True
+Question 23Jonathan is the business analyst on an effort and is validating requirements. Which one of the following activities would Jonathan NOT be performing?
+A)Evaluate Alignment with Solution Scope.
+B)Identify Solution Validation Criteria. => true
+C)Identify Assumptions.
+D)Define Measurable Evaluation Criteria.
 
-Question 24The lead business analyst has assigned you to create a requirements model that represents the characteristics and the exchange of information within an enterprise or a solution. Which requirements model category would you use?A)Data and information => TrueB)Activity flowC)Data modelingD)Data flow diagrams
+Question 24Hae Lin is ensuring that the requirements and designs have been defined correctly and provide the necessary information for further work that will be performed. What task is Hae Lin doing?
+A)Maintain requirements.
+B)Perform quality assurance.
+C)Verify requirements. => true
+D)Validate requirements.
 
-Question 25Specifying and Modeling Requirements is a task in which of the following knowledge areas?A)Elicitation and Collaboration.B)Requirements Analysis and Design Definition. => trueC)Strategy Analysis.D)Solution Evaluation.
+Question 25A junior business analyst is modeling requirements in order to identify and validate inputs and outputs of the solution she is modeling. She approaches James, the senior business analyst, for advice. What modeling technique would James advise the junior business analyst to use?
+A)Process modeling
+B)Prototyping.
+C)Kano analysis
+D)Interface analysis => true
 
-Question 26Which of the following is NOT true about business rules?A)Business rule changes can be implemented quickly if they are managed by a single enterprise-wide engine.B)Business rules shape day-to-day business behavior.C)Business rules guide operational business decision-making.D)Business rules are exclusively expressed and managed through implementation technology for a given solution. => true
+Question 26Sarah is a BA working on enhancements to the organization's Human Resource system. She would like to model an employee's life cycle from the time they are a recruit until they are no longer with the company, along with the triggers that change their status. Which of the following diagrams will best suit her objective?
+A)Use case diagram
+B)Sequence diagram
+C)Process diagram
+D)State diagram => true
 
-Question 27You have been asked to facilitate a session to model requirements. What techniques are you LEAST likely to use?A)Organization modeling, process modeling, data dictionary and glossary.B)Use cases, sequence diagrams, state diagrams.C)Prototyping, data modeling, interface analysis.D)Document analysis, benchmarking, market analysis => True
+Question 27The business analyst has finished an elicitation session and has confirmed the results. What would be a logical next task for the business analyst?
+A)Item tracking
+B)Verify requirements
+C)Specify and model requirements => true
+D)Define assumptions or constraints
 
-Question 28The Specify and Model Requirements task can result in the output of a requirement or a design. What is the difference?A)When the focus is on the need, the output is a design. When the focus is on solution, the output is a requirement.B)They are used interchangeably.C)When the focus is on the need, the output is a requirement. When the focus in on the solution, the output is a design. => TrueD)The BA can only specify and model a design.
+Question 28Which of the following is NOT an input to Define Requirements Architecture Task?
+A)Requirements (any state).
+B)Solution Scope
+C)Define Design Options. => true
+D)Information Management Approach.
 
+Question 29Benchmarking and market analysis is a stated technique for which of the following tasks in the requirements analysis and design definition knowledge area?
+A)Specify and model requirements
+B)Analyze potential value and recommend solution
+C)Define design options => true
+D)Verify requirements
+
+Question 30How is the solution core concept in the Business Analysis Core Concept Model applied in the requirements analysis and design definition knowledge area?
+A)Potential value of the solution options are analyzed and quantified.
+B)The performance of the solution is examined and assessed to see if it is delivering the potential value.
+C)Potential solution options are defined and the one that is most likely to address the need and has the most value is recommended. => true
+D)The circumstances that influence and provide understanding of the change are considered when determine solution performance measures.
+
+Question 31As a senior business analyst you have been approached by a junior business analyst to provide advice on when to use a capability model category. Which of the following is the correct response?
+A)When representing organizations, groups of people, roles, and their relationships within an enterprise and to a solution.
+B)When representing a sequence of actions, events, or a course that may be taken.
+C)When representing the characteristics and the exchange of information within an enterprise or a solution.
+D)When representing features or functions of an enterprise or a solution. => true
+
+Question 32The senior business analyst requested that all requirements be self-contained and capable of being understood independently of other requirements or designs. Which characteristic of requirements and designs is the senior business analyst requesting?
+A)Unambiguous
+B)Complete
+C)Atomic => true
+D)Consistent
+
+Question 33A data dictionary contains two types of data elements. What are they?
+A)Primitive and advanced
+B)Uni-variable and multi-variable
+C)Primitive and composite => true
+D)Simple and complex
+
+Question 34Non-functional requirements analysis is a stated technique for which of the following tasks in the Requirements Analysis and Design Definition knowledge area?
+A)Specify and Model Requirements => true
+B)Verify Requirements
+C)Prioritize Requirements
+D)Define Design Options
+
+Question 35What is the purpose of estimation in determining the potential value for each design option?
+A)To be able to provide some figures to the executives.
+B)To create and estimate the measurements used in defining value.
+C)To forecast and estimate each stakeholder's value in the project.
+D)To forecast the costs and efforts of meeting the requirements. => true
+
+Question 36Which of the following is NOT a stated technique for the Define Requirements Architecture task?
+A)Scope modeling
+B)Interviews
+C)Functional decomposition
+D)Process modeling. => true
+
+Question 37You are a business analyst working on a project with a complex business function. What approach would you use to help identify constituent parts of the complex business function?
+A)Functional decomposition => true
+B)Work breakdown structure
+C)Problem decomposition
+D)Process modeling
+
+Question 38You have been asked to facilitate a session to model requirements. What techniques are you LEAST likely to use?
+A)Organization modeling, process modeling, data dictionary and glossary.
+B)Use cases, sequence diagrams, state diagrams.
+C)Document analysis, benchmarking, market analysis => true
+D)Prototyping, data modeling, interface analysis.
+
+Question 39What are all the inputs to the define requirements architecture task?
+A)Information management system, requirements (any state), solution scope
+B)Information management system, requirements (traced), solution scope
+C)Information management approach, requirements (any state), solution scope => true
+D)Information management approach, requirements (traced), solution scope
+
+Question 40What characteristic of a quality requirement is missing in this requirement: "The call center operator shall be able to view details of a protected household"?
+A)Understandable
+B)Concise
+C)Consistent
+D)Complete => true
+
+Question 41Requirements that don't meet quality standards have likely been evaluated in which task?
+A)Validate requirements
+B)Value requirements
+C)Verify requirements => true
+D)Verify and validate requirements
+
+Question 42The lead business analyst and her team have completed an event that ensured the requirements and designs specifications and models meet quality standards. They now want to ensure that the stakeholders' desired future state will be achieved. What question would the team be asking?
+A)Were the requirements stated right?
+B)Was the right solution built?
+C)Were the right stakeholders involved?
+D)Were the right requirements stated? => true
+
+Question 43Marie is required to show how elements work in harmony with one another to support the business requirements, and to structure the elements in various ways to align the viewpoints of different stakeholders. What techniques would be useful?
+A)Workshops, scope modeling, interviews, organizational modeling, functional decomposition, SWOT analysis, data modeling.
+B)Workshops, interviews, organizational modeling, functional decomposition, interface analysis, data modeling.
+C)Workshops, scope modeling, interviews, organizational modeling, functional decomposition, data modeling. => true
+D)Interface analysis, workshops, interviews, organizational modeling, functional decomposition, acceptance criteria.
+
+Question 44In order to validate requirements, you must first do what?
+A)Verify requirements.
+B)Define design options.
+C)Confirm requirements.
+D)Specify and model requirements. => true
+
+Question 45Which of the following describe common non-functional requirement categories?
+A)Reliability, compatibility, scalability, localization => true
+B)Reliability, readability, scalability, localization
+C)Reliability, compatibility, scalability, dependability
+D)Reliability, availability, scalability, traceability
+
+Question 46Gieson is analyzing and refining the elicitation results into requirements. He wants to use a technique that will help his stakeholders (customers) describe the goal they want to accomplish when using the solution. What technique would Gieson use?
+A)Organizational modeling.
+B)Use cases and scenarios
+C)Scope modeling
+D)User stories => true
+
+Question 47Jennifer who is working on defining design options, identifies that bank managers from various branches have some common needs that can better be met via a single solution, thereby reducing costs. What kind of improvement opportunity is she looking at?
+A)Identify additional capabilities
+B)Improve access to information
+C)Automate the work
+D)Eliminating redundancy => true
+
+Question 48Will has been responding to several questions about the solution requirements from confused developers. What is the most likely cause of the confusion?
+A)The requirements were not validated before handing them over for development.
+B)The requirements were seemingly ambiguous and so most likely weren't verified. => true
+C)Will neglected to include the developers in modeling efforts so are trying to catch up.
+D)The developers were just assigned to the project and haven't reviewed requirements and design documentation.
+
+Question 49What is the purpose of the specify and model requirements task?
+A)To ensure that requirements and designs specifications and models meet quality standards and are usable for the purpose they serve.
+B)To ensure that all requirements and designs align to the business requirements and support the delivery of needed value.
+C)To analyze, synthesize, and refine elicitation results into requirements and designs. => true
+D)To fit the individual models and specifications together to ensure that all of the requirements form a single whole.
+
+Question 50Which subset of stakeholders are likely to participate in the define design options task?
+A)Implementation subject matter expert, regulator, domain subject matter expert
+B)Operational support, project manager, end user
+C)Operational support, domain subject matter expert, sponsor
+D)Implementation subject matter expert, operational support, supplier => true
+
+Question 51How is the core concept of change in the Business Analysis Core Concept Model applied in the requirements analysis and design definition knowledge area?
+A)Elicitation results are transformed into requirements and designs in order to define the change => true
+B)Requirements are transformed into designs through various modeling techniques
+C)Changes to requirements are frozen so they can be effectively modeled and baselined
+D)A change control process is defined
+
+Question 52The following are guidelines and tools under the Validate Requirements task. Which one is NOT?
+A)Potential solution => true
+B)Future state description
+C)Business objectives
+D)Solution scope
+
+Question 53When creating a requirements model, business analysts determine the specific categories and specific models within categories to be used. Which of the following is NOT an example of category?
+A)People and roles.
+B)Cost. => true
+C)Rationale.
+D)Capability.
+
+Question 54Giewel wants to model features of an enterprise or a solution. Which requirement model category would he use?
+A)Activity Flow.
+B)People and Roles.
+C)Rationale.
+D)Capability. => true
+
+Question 55How can backlog management be helpful when analyzing and recommending a solution?
+A)It can be used to determine the expected cost
+B)It can be used to sequence the potential value => true
+C)It can be used to determine the expected benefits
+D)It can be used to determine potential value
+
+Question 56Which of the following is NOT a verification activity?
+A)Checking for correct use of modelling notation, templates, or forms.
+B)Identify and verify assumptions. => true
+C)Checking for completeness within each model.
+D)Checking for compliance with organizational performance standards for business analysis.
+
+Question 57A model is a descriptive and visual way to convey information to a specific audience in order to support analysis, communication, and understanding. What would a business analyst typically model?
+A)Requirements and designs => true
+B)Needs and solutions
+C)Needs and requirements
+D)Requirements and solutions
+
+Question 58Documenting a requirement that describes a customer's interaction with a proposed system to accomplish a goal is best associated with which of the following techniques?
+A)Data flow diagram.
+B)Activity diagram.
+C)User story.
+D)Use case. => true
+
+Question 59What is the purpose of creating user stories when specifying requirements?
+A)To represent the acceptance and evaluation criteria attributes of requirements.
+B)To specify requirements as a brief statement about what people do or need to do when using the solution. => true
+C)To specify a set of interactions between a system and one or more actors.
+D)To prevent scope creep.
+
+Question 60Givan has assembled a team to analyze the potential value of design options and recommend a solution. What must he have obtained first in order to accomplish this task?
+A)Potential value, design options => true
+B)Potential value, change strategy
+C)Design options, solution options
+D)Solution options, prototype
+
+Question 61A viewpoint is a set of conventions that define how requirements will be represented, how these representations will be organized, and how they will be related. Which of the following is NOT an example of a viewpoint?
+A)Data models and information.
+B)Business process models.
+C)Audit and security.
+D)Views. => true
+
+Question 62Which of the following is a well-written requirement?
+A)The call center operator shall be able to view details of a protected household within two seconds of issuing a query. => true
+B)Jean will have the capability of online purchase through the web-business analyses system.
+C)User shall have to register, unregister, and, if possible, de-activate the facility.
+D)After the order is physically shipped, it should be modified to 'Shipped' status.
+
+Question 63Becca is developing a data model that will be used to implement a relational database. What data model would Becca choose?
+A)A logical or physical entity-relationship diagram => true
+B)A conceptual entity-relationship diagram
+C)A conceptual class diagram
+D)A logical or physical class diagram
+
+Question 64Sandy has been hired as the lead business analyst in an ongoing project. The outgoing lead handed her a set of requirements for the initiative that were already documented and modeled. What task might Sandy do next?
+A)Define design options
+B)Verify requirements => true
+C)Accept requirements
+D)Define solution scope
+
+Question 65Generally, when would a business analyst model requirements in a change initiative?
+A)At any point in a change initiative.
+B)After evaluating the solution.
+C)After requirements elicitation. => true
+D)Before requirements elicitation.
+
+Question 66Which of the following statements is NOT true?
+A)One person's designs may be another person's requirements.
+B)The main difference between requirements and designs is in how they are used and by whom.
+C)When the focus of the specifying and modeling activity is on understanding the need, the outputs are referred to as designs. When the focus of the specifying and modeling activity is on a solution, the outputs are referred to as requirements. => true
+D)Requirements and designs may be either high-level or very detailed based upon what is appropriate to those consuming the information.
+
+Question 67The following are some of the factors a business analyst would consider to establish the level of decomposition and the level of detail to be specified while conducting information decomposition. Which is NOT?
+A)Knowledge and understanding of the stakeholders.
+B)Contractual or regulatory obligations.
+C)Schedule and budget allocations. => true
+D)Organizational standards
+
+Question 68In what task are requirements allocated to a solution component or a release?
+A)Verify Requirements.
+B)Analyze Potential Value and Recommend Solution.
+C)Define Design Options. => true
+D)Specify and Model Requirements.
+
+Question 69You have interviewed key stakeholders to uncover their business needs. You become aware of many factors that the stakeholders think are true, but which have not been verified. You decide to document which of the following:
+A)Constraints
+B)Requirements
+C)Assumptions => true
+D)To-be processes
+
+Question 70The number of occurrences of one entity in a data model that are linked to a second entity are called what?
+A)Associations
+B)Attributes
+C)Numeralities
+D)Cardinalities => true
+
+Question 71Your organization has announced an initiative to streamline accounts payable processes across all of its divisions. You are a business analyst assigned to analyze current business processes and recommend one process for all divisions. Which of the following are you LEAST likely to do?
+A)Recommend a new process to increase consistency of behavior.
+B)Increase the complexity of system interfaces. => true
+C)Improve access to information.
+D)Map the current processes in all the divisions to identify and eliminate redundancies.
+
+Question 72The lead business analyst has assigned you to create requirements models that would help the project team understand roles, responsibilities and reporting structures that exist within the organization and align those structures with the organization's goals. Which requirements model category would you use?
+A)Rationale
+B)Stakeholder List, Map, or Personas
+C)People and Roles => true
+D)Organizational Modeling
+
+Question 73What is the difference between "associations" and "extensions" in a use case diagram?
+A)Extensions are between actors and use cases; associations depict one type of dependent relationship between use cases.
+B)Associations and extensions are terms related to use cases vs. use case diagrams.
+C)The terms association and extension can be used interchangeably.
+D)Associations are between actors and use cases; extensions depict one type of dependent relationship between use cases. => true
+
+Question 74The lead business analyst and the project team have come up with three design options that would potentially achieve the desired future state. She needs an expert to provide input about the constraints and cost implications of each option. Who would be the BEST person to provide guidance?
+A)Implementation subject matter expert => true
+B)Operational support
+C)Domain subject matter expert
+D)Supplier
+
+Question 75How does the BABOK define a requirement?
+A)A proposal for doing or achieving something
+B)A usable representation of a solution
+C)A stakeholder expectation
+D)A usable representation of a need => true
+
+Question 76The lead business analyst has engaged you to outline the design possibilities that would satisfy a set of requirements in the project. Which set of activities is the lead business analyst involved in?
+A)Analyzing Current State, Defining Future State, Assessing Risks, Defining Change Strategy.
+B)Defining Solution Approaches, Identifying Improvement Opportunities, Requirements Allocation.
+C)Defining Solution Approaches, Identifying Improvement Opportunities, Requirements Allocation, Describing Design Options. => true
+D)Determining Expected Benefits, Determining Expected Costs, Determining Value, Assess Design Options.
+
+Question 77Early identification and involvement of people, groups, or organizations that may impact or be impacted by a project is critical for the project success. Business analysts may choose to perform this task themselves and then separately package and communicate the requirements to the impacted/impacting people for review. Which task is this?
+A)Define design options
+B)All tasks
+C)Define requirements architecture
+D)Specify and model requirements => true
+
+Question 78Requirements may be related to each other in several ways when defining the requirements architecture. BAs examine each of these relationships to ensure they satisfy quality criteria. Which of the following is NOT a criterion?
+A)Testable => true
+B)Necessary
+C)Unambiguous
+D)Correct
+
+Question 79Elicitation results contain information of different types. Therefore, as part of specifying requirements, they can be categorized into one of the following categories. Which one is NOT one of the BABOK categories?
+A)Solution requirements.
+B)Stakeholder requirements.
+C)Transition requirements.
+D)Technical requirements. => true
+
+Question 80"Atomic" is a characteristic of requirements and design quality. What does it mean?
+A)It contains no extraneous or unnecessary content.
+B)It is self-contained and capable of being understood independently of other requirements or designs.
+C)It is self-contained and capable of being understood independently of other requirements or designs. => true
+D)It is at the level that will guide further work.
+
+Question 81You are a business analyst in Dubai working on a project install enterprise software to a global organization. Your business SMEs work in Asia, Europe, and the Middle East. Your developers are in India. You want to document requirements so that everyone has the same understanding. Which of the following will provide the best clarity?
+A)Creating use case descriptions.
+B)Creating process models. => true
+C)Using formal textual descriptions.
+D)Ensuring that all requirements are documented in a formal requirements specification.
+
+Question 82As a business analyst, you are given the following elicitation information: "The database shall support the generation and control of configuration objects, and the objects are themselves groupings of other objects in the database." Why would decomposing the above information be critical you?
+A)Information decomposition would help identify anything that must change or not change to meet the business need or any missing components. => true
+B)Information decomposition should be avoided as it takes more time and may lead to project delay.
+C)Information decomposition would prove that the business analyst is well experienced and this would give the stakeholders confidence.
+D)Information decomposition does away with all assumptions as it is done on the actual project.
+
+Question 83On a project a business analyst makes sure that requirements models have met the necessary standard of quality so that they can be used effectively to guide further work. What has the business analyst been doing?
+A)Validating the requirement.
+B)Documenting a transition requirement.
+C)Specifying and modeling the requirement.
+D)Verifying the requirement. => true
+
+Question 84Which of the following describes a component of a UML standard activity diagrams?
+A)Decision branches represented by a horizontal bar with multiple paths continuing forward.
+B)Diamonds with multiple exit decision points. => true
+C)Rounded rectangles converging independent flows into a single flow.
+D)Joins represented by a diamond bringing a number of parallel flows into a single flow.
+
+Question 85A senior business analyst was providing advice to a new business analyst and recommended using a matrix for their requirements modeling format. What is the purpose of this type of format?
+A)To create a visual representation of the set of requirements.
+B)To provide an easy way for the business analyst to model the requirements.
+C)To clearly describe the requirements in an active voice.
+D)To convey a set of requirements that have a complex but uniform structure that can be broken down. => true
+
+Question 86Kevin wants to model the rationale or the 'why' of a particular change. Which technique might he use to accomplish this task?
+A)Stakeholder list, map, or Personas.
+B)Scope modeling. => true
+C)User stories.
+D)Process modeling.
+
+Question 87Marie is using different documentation formats to transform elicitation results into requirements and designs in order to define the required change. Which of the following is NOT a true statement about activities she is engaged in?
+A)The business analyst works to produce documentation with sufficient and appropriate details for the developers to design from.
+B)The business analyst works to produce documentation with sufficient and appropriate details for the testers to measure the solution against before it is implemented into a production environment.
+C)The business analyst works to produce documentation with sufficient and appropriate details for the business to define an appropriate method to conduct business analysis activities. => true
+D)The business analyst works to produce documentation with sufficient and appropriate details for the business to verify and validate the requirements.
+
+Question 88Which of the following is NOT an improvement opportunity when defining design options?
+A)Eliminate redundancy
+B)Increase consistency of behavior
+C)Improve access to information
+D)Improve access to stakeholders => true
+
+Question 89Not every process analyzed will be transformed by a software solution, so processes that are flagged in the design plan as not being a candidate for automation will not undergo further elaboration during the technical design. With that premise, which of the following statements is NOT true?
+A)The business analyst will have decomposed and modeled the process and identified new procedures.
+B)The business analyst and the process owner may have determined new manual steps that may streamline and improve the current process.
+C)The business analyst should present recommendations to the appropriate project stakeholders to determine if proposed improvements should be considered for implementation.
+D)The business analyst should refrain from documenting recommendations to transform the process that are outside the scope of software automation. => true
+
+Question 90IDEF, BPMN, and IGOE are types of notations utilized in which of the following models?
+A)State models
+B)Process models => true
+C)Data models
+D)Conceptual models
+
+Question 91Wendy is assessing the merits of the solution approaches for each design option. Which of the following is NOT one of the solution approaches?
+A)Solution components developed => true
+B)Solution components creation
+C)Combination of both creation and purchase
+D)Solution components purchase
+
+Question 92Which of the following is NOT true about a class in a data model?
+A)A class contains operations that describe what can be done with the class
+B)A class has relationships with other classes
+C)A class defines an entity's allowable values => true
+D)A class contains attributes
+
+Question 93Which of the following data models is typically used by implementation subject matter experts to describe how a database is physically organized?
+A)Physical data model => true
+B)Multi-variable data model
+C)Conceptual data model
+D)Logical data model
+
+Question 94Andre is focusing on documenting the needs of the enterprise related to data conversion. What type of requirement is Andre documenting?
+A)Functional requirement
+B)Transition requirement => true
+C)Non-functional requirement
+D)Solution requirement
+
+Question 95The Specify and Model Requirements task can result in the output of a requirement or a design. What is the difference?
+A)When the focus is on the need, the output is a design. When the focus is on solution, the output is a requirement.
+B)The BA can only specify and model a design.
+C)They are used interchangeably.
+D)When the focus is on the need, the output is a requirement. When the focus in on the solution, the output is a design. => true
+
+Question 96Which of the following requirements does NOT meet the characteristics of a quality requirement.
+A)The system shall provide a maintenance function for correcting any missing data.
+B)The system shall display bond prices using 3 decimal places instead of fractions.
+C)Bond prices will be viewable and sort able by maturity date, length of security, yield, and rating.
+D)The system shall read the tracking database and feed the bond prices to the web database using XML. => true
+
+Question 97Which of the following LEAST describes why an activity diagram may be utilized?
+A)An activity diagram utilizes business process model and notation (BPMN) so it can distinguish the activities of different participants in a process with either pools or swim lanes. => true
+B)An activity diagram can elaborate on a single use case.
+C)An activity diagram is effective at showing how to handle a large number of scenarios and parallel branches.
+D)An activity diagram facilitates the identification of potential improvements by highlighting "pain points" in the process structure.
+
+Question 98Which statement about techniques is the most correct?
+A)They provide step-by-step instructions on how to accomplish a specific task.
+B)They vary depending upon the perspective from which business analysis is being performed.
+C)They provide additional information on ways that a task can be performed. => true
+D)They are prescribed by the BABOK.
+
+Question 99The following statements describe how business analysts use requirements architecture. Which one is NOT a correct description?
+A)Business analysts use requirements architecture to ensure every requirement links back to an objective and shows how an objective was met. => true
+B)Business analysts use a requirements architecture to understand which models are appropriate for the domain, solution scope, and audience.
+C)Business analysts use requirements architecture to make trade-off decisions about requirements while considering the overall objectives.
+D)Business analysts use requirements architecture to ensure the requirements work together to achieve the overall objectives.
+
+Question 100Data about data can best be described as what?
+A)Data model
+B)Attributes
+C)Metadata => true
+D)Entities
+
+Question 101Catherine is preparing to specify and model requirements. She starts with conducting a thorough stakeholder analysis to identify stakeholders and analyze their characteristics. What technique is Catherine using?
+A)Stakeholder analysis
+B)Stakeholder list, map, or personas => true
+C)Roles and permissions matrix
+D)Organizational modeling
+
+Question 102Which of the following is the best definition of a "sink" in a data flow diagram?
+A)Any entity that stores data.
+B)An external automated system or any device capable of producing or receiving data.
+C)An external person, organization or automated system capable of producing data.
+D)An external person, organization or automated system receiving the data. => true
+
+Question 103Anna has assembled a team to define design options. What inputs will they need to accomplish this task?
+A)Validated and prioritized requirements, change strategy, requirements architecture => true
+B)Traced requirements, change strategy, enterprise architecture
+C)Traced requirements, change strategy, requirements architecture
+D)Validated and prioritized requirements, change strategy, enterprise architecture
+
+Question 104Anna, a junior business analyst, is seeking your advice on how many models she should use to best meet stakeholders needs in a given context. What would you advise her?
+A)Use the simple models to get the job done easily and quickly.
+B)The business analyst does not make such decisions. Such decisions are made by solution architect and developers only.
+C)Each modeling technique has strengths and weaknesses and provides unique insights into the business domain and so using several of them would complement one another. => true
+D)Using more than one model would create confusion and so should only use one to avoid confusing the stakeholders.
+
+Question 105Carla and her team have identified and defined the potential value for three design options. What is their logical next step?
+A)etermine whether to "make" or "buy."
+B)Model the design options so they are readily understood by the architect and development team.
+C)Analyze each option's potential value and ultimately recommend a solution. => true
+D)Assess potential vendors.
+
+Question 106In many cases, stakeholders have different, conflicting needs and expectations. How would a business analyst help expose these differences and ensure their needs are met?
+A)Through collaboration
+B)Through item tracking
+C)Through specifying and modeling their requirements
+D)Through validation => true
+
+Question 107Associations (interfaces) between the actor and the use case captured in a use case diagram are shown through:
+A)Lines => true
+B)Ovals
+C)Arrows
+D)Stick figures
+
+Question 108XYZ is an new organization that uses agile methodology. The organization is looking for the best solution for project team collaboration and artifacts storage. Marcus has been hired as a business analyst and is tasked with carrying out an analysis between using a Confluence site vs. a SharePoint site. Which of the following is best suited to his needs?
+A)Models
+B)State diagrams
+C)Notations
+D)Matrix => true
+
+Question 109Which of the following best describes some of the characteristics of requirements and designs quality?
+A)Measurable, concise, feasible, unambiguous, prioritized.
+B)Atomic, concise, feasible, unambiguous, estimated.
+C)Atomic, concise, feasible, unambiguous, prioritized. => true
+D)Atomic, concise, feasible, unambiguous, approved.
+
+Question 110Gwen is planning for a workshop to assess design options and recommend a solution. She has scheduled the session and sent out the invitations. Unfortunately, she has gotten several meeting declines. Which of the following limitations is she likely to encounter should she decide to continue with the workshop?
+A)Avoid too many participants that can slow down the workshop process.
+B)Decisions that don't represent the needs of the majority of the stakeholders. => true
+C)Achieve agreement in a relatively short period of time.
+D)Post workshop wrap-up will not need to be done.
+
+Question 111Thomas is the lead business analyst on a project that has complex requirements. To ensure stakeholders understand the requirements and provide input and feedback early in the design process, Thomas recommends to use which of the following techniques?
+A)Organizational modeling.
+B)Prototyping. => true
+C)User stories.
+D)Acceptance and Evaluation Criteria.
+
+Question 112The lead business analyst has assigned you to create a requirements model that represents the characteristics and the exchange of information within an enterprise or a solution. Which requirements model category would you use?
+A)Data and information => true
+B)Data flow diagrams
+C)Activity flow
+D)Data modeling
+
+Question 113Carmen has been hired as the senior business analyst on an ongoing effort. Initial elicitation activities have been done, and she is now determining the best way to transform and represent the elicitation results into requirements in order to define the change. What would Carmen consider when modeling the requirements?
+A)Change, need, and context
+B)Purpose, change, and context
+C)Solution, audience, and value
+D)Context, audience, and purpose => true
+
+Question 114What are the inputs for the verify requirement task?
+A)Requirements (specified and modeled) => true
+B)Requirements in transition
+C)Requirements (signed off)
+D)Requirements (validated)
+
+Question 115You have been assigned to specify requirements as a brief statement about what people do or need to do when using the solution. Which one of the following criteria is NOT part of your activity?
+A)One to two sentence stories that allow the developer to estimate the work required for implementation.
+B)Detailed information in the form of a story that allows the developer to build through several releases. => true
+C)A short description of the solution capability that provides value to the stakeholder.
+D)High-level information that is informal.
+
+Question 116What is the purpose of item tracking when verifying requirements?
+A)Ensure that problems identified are reported to the Help Desk.
+B)Ensure that problems and issues identified during verification are managed and resolved. => true
+C)Ensure that problems or issues identified during verification are escalated to the project manager to track resolution.
+D)Ensure that appropriate checklists are used to resolve the issues or problems by the planned date.
+
+Question 117Joseph is assessing each design option based on the potential value it is expected to deliver and ensuring that it represents the most effective trade-offs. Which of the following would he NOT consider in this activity?
+A)Dependencies between requirements
+B)Constraints on the solution
+C)Available resources
+D)Requirements allocation => true
+
+Question 118Susan thinks she is done with her requirements analysis on a project. Her project manager sent her a terse email telling her she is not done yet. He also sent her the business objectives and potential value for the project, and asked her to complete one more important task to ensure the requirements support the business case. What activity does Susan need to complete?
+A)Requirements verification.
+B)Obtain approval of the requirements.
+C)Identify any missing or incorrect requirements.
+D)Requirements validation. => true
+
+Question 119While analyzing elicitation results and creating representations of those results, which set of activities will a business analyst typically be engaged in?
+A)Modeling requirements, analyzing requirements, defining design options, implementing the appropriate levels of abstraction.
+B)Modeling requirements, analyzing requirements, representing requirements and attributes, implementing the appropriate levels of abstraction. => true
+C)Modeling requirements, analyzing requirements, representing requirements and attributes, analyzing potential value.
+D)Modeling requirements, defining requirements architecture, representing requirements and attributes, implementing the appropriate levels of abstraction.
+
+Question 120Requirements may be modeled using a variety of formats. Which of the following correctly lists the types of requirements formats?
+A)Text, matrices, diagrams. => true
+B)Logical, physical, formal, informal.
+C)Text, matrices, graphical.
+D)Throw-away, evolutionary, functional.
+
+Question 121Genevieve and her team of business analysts are in the process of ensuring that all requirements align to the business need and that the design satisfies the requirements. They find it difficult to validate the design against the requirements. What would be the problem?
+A)The elicitation results must have been gathered by a different business analyst.
+B)This would be as a result of scope creep.
+C)The business analyst did not invite all the downstream stakeholders who would understand design better.
+D)A requirement might be missing or incorrectly specified or the design may not be right. => true
+
+Question 122Define design options is a task in which of the following knowledge areas?
+A)Requirements analysis and design definition => true
+B)Strategy analysis
+C)Elicitation and collaboration
+D)Solution evaluation
+
+Question 123What is business model canvas?
+A)A process that describes the rationale for requirements.
+B)A technique that describes the rationale for requirements. => true
+C)A model that describes requirements in picture form.
+D)A business modeling tool for drawing pictures.
+
+Question 124What is the primary difference between requirements and designs?
+A)It depends how they are being used and by whom. => true
+B)Requirements and designs are synonyms and can be used interchangeably.
+C)Requirements are documented in models at which point they become a design.
+D)Requirements are the responsibility of the BA; designs are the responsibility of design architects.
+
+Question 125Rebecca is structuring the requirements to ensure all requirements form a single whole that supports overall business objectives and produce meaningful outcome for the stakeholders. Which of the following would NOT be a consideration for Rebecca?
+A)Template architectures
+B)Requirements allocation => true
+C)Completeness
+D)Requirements viewpoints and views
+
+Question 126Which of the following stakeholders are included in the task Verify Requirements?
+A)Business analyst; domain subject matter experts; developers; testers.
+B)Business analyst; domain subject matter experts; architects; testers.
+C)All stakeholders. => true
+D)Business analyst; domain subject matter experts; developers; architects.
+
+Question 127Which of the following output describes the requirements and the interrelationships among them, as well as any contextual information that is recorded.
+A)Information management approach.
+B)Requirements architecture. => true
+C)Requirements (Traced).
+D)Information architecture.
+
+Question 128What kind of diagram is used in the specify and model requirements task to show how processes or objects interact during a scenario by showing the information passed between them?
+A)Activity diagram
+B)Process diagram
+C)Sequence diagram => true
+D)Context diagram
+
+Question 129What is the purpose of the information management approach in defining requirements architecture?
+A)Defines how the business analysis information will be stored and accessed. => true
+B)To trace business rules to requirements that they support.
+C)It defines the level of detail at which information should be captured.
+D)Defines the relationships between requirements, designs, and solution components.
+
+Question 130Which of the following subset best describes the characteristics of requirements and designs quality?
+A)Atomic, testable, consistent, defined, complete, understandable
+B)Unambiguous, complete, feasible, standardized, testable
+C)Testable, verified, unambiguous, concise, prioritized
+D)Atomic, testable, consistent, feasible, complete, understandable => true
+
+Question 131Specifying and Modeling Requirements is a task in which of the following knowledge areas?
+A)Strategy Analysis.
+B)Requirements Analysis and Design Definition. => true
+C)Solution Evaluation.
+D)Elicitation and Collaboration.
+
+Question 132The project team is in the process of confirming compliance with organizational business analysis performance standards, correct use of modeling notation and completeness within each model, and that items determined to be important are included in the final requirements deliverables. What tool would help in carrying out these activities?
+A)Checklist => true
+B)Metrics and key performance indicators (KPIs)
+C)Item tracking
+D)Control chart
+
+Question 133You have been asked to facilitate a workshop to help clarify the scope of a solution. Your objective is to:
+A)Complete business architecture for the proposed scope of a solution.
+B)Complete a sequence diagram for all interactions within the scope of the project.
+C)Complete document analysis based on the project scope.
+D)Organize requirements based on the solution components they are related to. => true
+
+Question 134In a short, 3-month project to implement a COTS system, the BA determined that a requirements specification document was not necessary and planned instead to develop use cases to document functional requirements. What is this an example of?
+A)Determining appropriate requirements analysis and documentation activities => true
+B)Incorrectly utilizing use cases
+C)Making assumptions that may prove risky and cause issues in the project at a later time
+D)Cutting the wrong corners. Use cases may be used to supplement a more formal specification document
 Question 29You have been asked to facilitate a workshop to help clarify the scope of a solution. Your objective is to:A)Complete a sequence diagram for all interactions within the scope of the project.B)Complete document analysis based on the project scope.C)Organize requirements based on the solution components they are related to. => TrueD)Complete business architecture for the proposed scope of a solution.
 
 Question 30Data about data can best be described as what?A)Data modelB)AttributesC)Metadata => TrueD)Entities
