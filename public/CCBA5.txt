@@ -137,4 +137,4 @@ Question 67When considering changes or additions to existing requirements, busin
 
 Question 68Anna is holding workshops with stakeholders to evaluate the implications of proposed changes to requirements and designs. During these workshops, several issues and concerns are raised by the stakeholders. Anna is overwhelmed by the many issues being raised and she is wondering how to address all these stakeholders' concerns. What would be your advice to Anna?A)To keep focused on the main agenda and advise the stakeholders their issues will be addressed in the next iteration.B)To use the item tracking technique. => TrueC)Escalate to the project manager.D)To use the issue log technique.
 
-Question You are the business analyst on an effort and one of your stakeholders references the proposed changes to confirm compliance to standards. What type of stakeholder is this?A)SponsorB)Regulator => TrueC)Project managerD)Tester
+Question 69You are the business analyst on an effort and one of your stakeholders references the proposed changes to confirm compliance to standards. What type of stakeholder is this?A)SponsorB)Regulator => TrueC)Project managerD)Tester
