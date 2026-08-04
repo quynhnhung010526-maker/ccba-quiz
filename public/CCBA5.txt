@@ -59,3 +59,52 @@ Question 28Ed is a new business analyst working on the requirements for a large 
 Question 29You are the business analyst for an initiative that has recently experienced changes in key business stakeholders, including governance personnel. Changes in key stakeholders have resulted in numerous change requests for baselined requirements. You are assessing the effect the proposed changes would have on solution components. Which guideline are you employing?A)Solution scope =>TrueB)Governance approachC)Domain knowledgeD)Requirements architecture
 
 Question 30Which of the following criteria are the basis for prioritization of requirements?A)Issues, benefit, cost, dependenciesB)Risk, baseline, cost, dependenciesC)Risk, benefit, cost, dependencies. =>TrueD)Risk, benefit, constraint, dependencies
+
+Question 31If the solution team thinks that the requirements are not represented by the solution, which of the following would help them address their concerns?A)Trace requirements => TrueB)Assess requirements changeC)Prioritize requirementsD)Requirements and designs analysis
+
+Question 32Which factor influences the requirements prioritization process?A)System developmentB)LegalityC)Penalty => TrueD)Project personnel
+
+Question 33Which of the following statements is NOT true about the prioritization of requirements?A)When a requirement is prioritized, it is given greater or lesser priority.B)Priority can refer to the relative value of a requirement, or to the sequence in which it will be implemented.C)Prioritization is an ongoing process, with priorities changing as the context changes.D)Solution scope is not considered when prioritizing requirements. => True
+
+Question 34Larry and Janyce are Enterprise Analysts who have been assigned to a multi-million dollar system integration project that will merge a newly purchased company's system functionality into the current company platform. Because there are two more mergers planned for the near future, Larry and Janyce's manager has asked them to identify and document which requirements could be reused for future mergers and acquisitions. What technique might Janyce use for this task?A)Problem identification, process modeling, and data flow diagrams.B)Functional decomposition, user stories, and structured walk-throughs.C)Document analysis, user stories, and use cases and scenarios. => TrueD)Business rules analysis, data modeling, and Workshops.
+
+Question 35Which of the following statements is true regarding tasks a business analyst may perform while evaluating the necessity for change within an enterprise?A)Tasks a business analyst performs should be completed in an orderly and formal manner.B)The business analyst should perform tasks in the order prescribed by the BABOK in order for organizations to realize value.C)Tasks a business analyst performs may vary in form, order, or importance for various initiatives. => TrueD)The business analyst needs sponsor approval for and stakeholder collaboration on the tasks they deem necessary for various initiatives.
+
+Question 36Which type of relationship between requirements describes when it only makes sense to implement a particular requirement if a related requirement is also implemented?A)ValidateB)EffortC)Necessity => TrueD)Satisfy
+
+Question 37Which of the following roles would be most interested in maintained requirements and why?A)Project managers who will be able to complete projects faster if requirements are properly maintained.B)Implementation SMEs because they will use them to develop regression tests and conduct impact analyses. => TrueC)Sponsors because future projects would be less expensive if requirements could be re-used.D)Other business analysts because future projects may utilize and extend any maintained requirements.
+
+Question 38Traceability is best described by the following statement:A)Traceability requirements supplement business requirements and functional requirements.B)Traceability identifies and documents the lineage of each requirement, including its backward traceability, its forward traceability, and its relationship to other requirements. => TrueC)Traceability is used to obtain metrics by the Change Management Board to approve or deny requests for change.D)Traceability assists in developing the project schedule.
+
+
+Question 39Approval of requirements in your organization that is dispersed internationally is done formally with each stakeholder who has authority. What methods may be used for requirements approval?A)The approval method stated in the governance approach. => TrueB)Face-to-face sign off with the business analyst and project manager is the most formal.C)Written approval is required to ensure compliance with SSIT regulations.D)Formal verbal approval is permissible because of the international nature of the organization.
+
+Question 40What happens to Marisa's requirement tracing efforts when the number of requirements or level of formality increases?A)DecreaseB)Increase => TrueC)Stay the sameD)Go away
+
+Question 41There are several types of relationships that the business analyst considers when defining the traceability approach. What type of the following describes the relationship between a functional requirement and a solution component that is implementing it?A)NecessityB)DependsC)Satisfy => TrueD)Derive
+
+Question 42What are the inputs for approve requirements?A)Verified requirements and designs => TrueB)Requirements and verified designsC)Requirements and designsD)Verified requirements and verified designs
+
+Question 43During the assess requirements changes task, impact analysis is performed to assess or evaluate the effect of a change. Depending on the impact analysis and resolution, various stakeholders may be authorized to do the following to the proposed change. Which one is NOT one of them?A)Approve the proposed changeB)Alter the proposed change => TrueC)Deny the proposed changeD)Defer the proposed change
+
+Question 44Carrie is the business analyst in her organization that has several lines of business. The company is implementing a new solution, one line of business at a time. Carrie is ensuring requirements remain accurate and consistent throughout the change so they are relevant to future endeavors. What task is Carrie executing?A)Assess requirements changesB)Reuse requirementsC)Trace requirementsD)Maintain requirements => True
+
+Question 45The act of relating requirements to other requirements is called?A)Requirements linkageB)Requirements specificityC)Requirements coverageD)Requirements traceability => True
+
+Question 46Which of the following stakeholders are typically involved in reviewing and approving requirements:A)Domain SME, Sponsor, Project ManagerB)Domain SME, End User, SponsorC)Domain SME, Implementation SME, TesterD)Domain SME, Customer, Sponsor => True
+
+Question 47Which of the following is an invalid statement about the approval of requirements?A)Adaptive approaches typically approve requirements just before construction and implementation of a solution begins.B)Project managers obtain approval by reviewing the requirements or changes to requirements with the accountable individuals.=> TrueC)Predictive approaches typically perform approvals at the end of the phase or during planned change control meetings.D)Approval of requirements and designs may be formal or informal.
+
+Question 48To effectively manage requirements throughout all phases of a change initiative, the business analyst will complete which of these tasks:A)Trace requirements, maintain requirements for re-use, prioritize requirements, assess requirements changes, and approve requirements. => TrueB)Trace requirements, maintain requirements for re-use, define requirements architecture, assess requirements changes, and approve requirements.C)Trace requirements, maintain requirements for re-use, prioritize requirements, assess risks, and approve requirements.D)Define the business need, define goals and objectives, validate requirements, define change strategy, and scope the solution space.
+
+Question 49Which of the following stakeholders participate in the prioritization of requirements:A)Domain subject matter expert, implementation subject matter expert, and project teamB)Customer, implementation subject matter expert, sponsor, and project manager => TrueC)Quality assurance subject matter expert, Implementation subject matter expert, and project managerD)Customer, end user, tester, and Project manager
+
+Question 50Susan is in the process of evaluating the implications of proposed changes to requirements and designs. She consults with knowledgeable stakeholders to fully understand the proposed change in relationship to the business. Which guideline is Susan observing?A)Domain knowledgeB)Solution scope => TrueC)Impact analysisD)Requirements architecture
+
+Question 51Which statement best describes why the stakeholder list is important to prioritizing requirements?A)It ensures all stakeholders have been involved in the requirements management plan, which provides the process for prioritization of requirements.B)It provides the organizational structure that will be impacted by the solution.C)It helps the project manager create the meeting invitation for the requirements prioritization meeting.D)It indicates levels of power to determine which stakeholders are needed for prioritization. => True
+
+Question 52You are the business analyst for an on-line billing systems project. You have worked with several stakeholders that need different types of information related to assessing requirements changes. Which stakeholder would care the most about adherence to compliance standards?A)Operational SupportB)Regulator => TrueC)TesterD)Project Manager
+
+Question 53Brad is the business analyst in his small business unit. The organization is undergoing restructuring and introducing changes to the business analysis approach. As part of the structural changes, Brad has been asked to assess each proposed change. In this activity, which of the following is LEAST likely to be a consideration?A)Each proposed change aligns with the business case. => TrueB)Each proposed change aligns with the overall strategy.C)Each proposed change affects value delivered to the business or stakeholder groups.D)Each proposed change impacts the time to deliver or the resources required to deliver the value.
+
+Question 54When are reused requirements first identified?A)Current state => TrueB)Changed stateC)Past stateD)Future state
