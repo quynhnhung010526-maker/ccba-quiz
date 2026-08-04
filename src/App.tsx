@@ -12,6 +12,8 @@ import {
   RotateCcw,
   Search,
   Shuffle,
+  Sun,
+  Moon,
   Trash2,
   Trophy,
   XCircle,
@@ -190,6 +192,124 @@ Question 3What term describes the money and effort already committed to an initi
 
 const ANSWER_LABELS = ['A', 'B', 'C', 'D', 'E', 'F'];
 const TRANSLATION_CACHE_KEY = 'ccba-vi-translation-cache-v1';
+const THEME_STORAGE_KEY = 'ccba-practice-theme-v1';
+
+const LIGHT_THEME_OVERRIDES = `
+  .app-theme.theme-light {
+    background-color: #f1f5f9 !important;
+    color: #0f172a !important;
+    color-scheme: light;
+  }
+
+  .app-theme.theme-dark {
+    color-scheme: dark;
+  }
+
+  .theme-light [class~="bg-gradient-to-br"] {
+    background-image: linear-gradient(to bottom right, #ffffff, #f8fafc, #e2e8f0) !important;
+  }
+
+  .theme-light [class~="bg-slate-950"] {
+    background-color: #f8fafc !important;
+  }
+
+  .theme-light [class~="bg-slate-950/35"],
+  .theme-light [class~="bg-slate-950/45"],
+  .theme-light [class~="bg-slate-950/70"] {
+    background-color: rgba(255, 255, 255, 0.92) !important;
+  }
+
+  .theme-light [class~="bg-slate-900/60"],
+  .theme-light [class~="bg-slate-900/70"],
+  .theme-light [class~="bg-slate-800"] {
+    background-color: #f8fafc !important;
+  }
+
+  .theme-light [class~="bg-white/[0.04]"],
+  .theme-light [class~="bg-white/5"] {
+    background-color: rgba(255, 255, 255, 0.9) !important;
+  }
+
+  .theme-light [class~="bg-white/10"] {
+    background-color: #e2e8f0 !important;
+  }
+
+  .theme-light [class~="text-slate-100"],
+  .theme-light [class~="text-slate-200"] {
+    color: #0f172a !important;
+  }
+
+  .theme-light [class~="text-slate-300"] {
+    color: #334155 !important;
+  }
+
+  .theme-light [class~="text-slate-400"] {
+    color: #475569 !important;
+  }
+
+  .theme-light [class~="text-slate-500"],
+  .theme-light [class~="placeholder:text-slate-500"]::placeholder {
+    color: #64748b !important;
+  }
+
+  .theme-light [class~="text-cyan-100"],
+  .theme-light [class~="text-cyan-200"],
+  .theme-light [class~="text-cyan-300"],
+  .theme-light [class~="text-cyan-300/70"] {
+    color: #0e7490 !important;
+  }
+
+  .theme-light [class~="text-amber-100"],
+  .theme-light [class~="text-amber-200"] {
+    color: #92400e !important;
+  }
+
+  .theme-light [class~="text-rose-100"],
+  .theme-light [class~="text-rose-100/80"],
+  .theme-light [class~="text-rose-200"],
+  .theme-light [class~="text-rose-300"] {
+    color: #be123c !important;
+  }
+
+  .theme-light [class~="text-emerald-200"],
+  .theme-light [class~="text-emerald-300"] {
+    color: #047857 !important;
+  }
+
+  .theme-light [class~="border-white/10"] {
+    border-color: #cbd5e1 !important;
+  }
+
+  .theme-light [class~="hover:border-white/25"]:hover,
+  .theme-light [class~="hover:border-white/30"]:hover {
+    border-color: #94a3b8 !important;
+  }
+
+  .theme-light [class~="hover:bg-white/10"]:hover,
+  .theme-light [class~="hover:bg-white/20"]:hover,
+  .theme-light [class~="hover:bg-white/[0.07]"]:hover {
+    background-color: #e2e8f0 !important;
+  }
+
+  .theme-light [class~="hover:text-white"]:hover {
+    color: #0f172a !important;
+  }
+
+  .theme-light [class~="bg-white"][class~="text-slate-950"] {
+    background-color: #0f172a !important;
+    color: #ffffff !important;
+  }
+
+  .theme-light [class~="bg-white"][class~="text-slate-950"]:hover {
+    background-color: #1e293b !important;
+    color: #ffffff !important;
+  }
+
+  .theme-light input,
+  .theme-light select {
+    color-scheme: light;
+  }
+`;
 
 const KEYWORD_GLOSSARY: Array<{ en: string; vi: string }> = [
   { en: 'business analysis approach', vi: 'phương pháp phân tích nghiệp vụ' },
@@ -2462,6 +2582,37 @@ function BabokStudyGuidePanel({
   );
 }
 
+function ThemeController({
+  isDarkMode,
+  onToggle,
+}: {
+  isDarkMode: boolean;
+  onToggle: () => void;
+}) {
+  return (
+    <>
+      <style>{LIGHT_THEME_OVERRIDES}</style>
+      <button
+        type="button"
+        onClick={onToggle}
+        aria-label={isDarkMode ? 'Chuyển sang chế độ sáng' : 'Chuyển sang chế độ tối'}
+        title={isDarkMode ? 'Chuyển sang chế độ sáng' : 'Chuyển sang chế độ tối'}
+        className={cn(
+          'fixed bottom-4 right-4 z-[100] inline-flex items-center gap-2 rounded-full border px-4 py-2.5 text-sm font-semibold shadow-2xl backdrop-blur transition hover:-translate-y-0.5',
+          isDarkMode
+            ? 'border-white/10 bg-slate-900/90 text-slate-100 hover:bg-slate-800'
+            : 'border-slate-300 bg-white/95 text-slate-800 hover:bg-slate-100'
+        )}
+      >
+        {isDarkMode ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+        <span className="hidden sm:inline">
+          {isDarkMode ? 'Chế độ sáng' : 'Chế độ tối'}
+        </span>
+      </button>
+    </>
+  );
+}
+
 function StatCard({
   icon,
   label,
@@ -2483,6 +2634,15 @@ function StatCard({
 }
 
 export default function QuizLearningApp() {
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
+    if (typeof window === 'undefined') return true;
+
+    try {
+      return window.localStorage.getItem(THEME_STORAGE_KEY) !== 'light';
+    } catch {
+      return true;
+    }
+  });
   const [rawSets, setRawSets] = useState<RawSet[]>([]);
   const [selectedSetId, setSelectedSetId] = useState('');
   const [questionLimit, setQuestionLimit] = useState('all');
@@ -2497,6 +2657,27 @@ export default function QuizLearningApp() {
   const [importStatus, setImportStatus] = useState(
     'Đang tải 9 bộ đề mặc định từ thư mục public...'
   );
+
+  const toggleTheme = () => {
+    setIsDarkMode((current) => {
+      const next = !current;
+      if (typeof window !== 'undefined') {
+        try {
+          window.localStorage.setItem(THEME_STORAGE_KEY, next ? 'dark' : 'light');
+        } catch {
+          // Vẫn đổi giao diện trong phiên hiện tại nếu trình duyệt chặn localStorage.
+        }
+      }
+      return next;
+    });
+  };
+
+  const appThemeClass = (baseClassName: string) =>
+    cn(
+      baseClassName,
+      'app-theme',
+      isDarkMode ? 'theme-dark' : 'theme-light'
+    );
 
   const loadBundledDefaultData = async (statusPrefix?: string) => {
     setIsLoadingDefaults(true);
@@ -2867,7 +3048,8 @@ export default function QuizLearningApp() {
 
   if (isLoadingDefaults) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-slate-950 px-4 text-slate-100">
+      <div className={appThemeClass('flex min-h-screen items-center justify-center bg-slate-950 px-4 text-slate-100')}>
+        <ThemeController isDarkMode={isDarkMode} onToggle={toggleTheme} />
         <div className="max-w-lg rounded-3xl border border-white/10 bg-white/[0.04] p-6 text-center shadow-xl">
           <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-cyan-300/10 text-cyan-100">
             <BookOpen className="h-6 w-6" />
@@ -2881,7 +3063,8 @@ export default function QuizLearningApp() {
 
   if (isLoadingBabokData) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-slate-950 px-4 text-slate-100">
+      <div className={appThemeClass('flex min-h-screen items-center justify-center bg-slate-950 px-4 text-slate-100')}>
+        <ThemeController isDarkMode={isDarkMode} onToggle={toggleTheme} />
         <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-6 text-center">
           <RefreshCw className="mx-auto h-6 w-6 animate-spin text-cyan-200" />
           <p className="mt-3 text-sm text-slate-300">Đang tải dữ liệu BABOK...</p>
@@ -2892,7 +3075,8 @@ export default function QuizLearningApp() {
 
   if (babokDataError) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-slate-950 px-4 text-slate-100">
+      <div className={appThemeClass('flex min-h-screen items-center justify-center bg-slate-950 px-4 text-slate-100')}>
+        <ThemeController isDarkMode={isDarkMode} onToggle={toggleTheme} />
         <div className="max-w-xl rounded-2xl border border-rose-300/30 bg-rose-300/10 p-6">
           <div className="flex items-start gap-3">
             <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-rose-200" />
@@ -2911,7 +3095,8 @@ export default function QuizLearningApp() {
 
   if (!session) {
     return (
-      <div className="min-h-screen bg-slate-950 text-slate-100">
+      <div className={appThemeClass('min-h-screen bg-slate-950 text-slate-100')}>
+        <ThemeController isDarkMode={isDarkMode} onToggle={toggleTheme} />
         <div className="mx-auto max-w-7xl px-4 py-8 md:px-8">
           <section className="overflow-hidden rounded-[2rem] border border-white/10 bg-gradient-to-br from-slate-900 via-slate-900 to-slate-800 p-6 shadow-2xl md:p-10">
             <div className="grid gap-8 lg:grid-cols-[1.35fr_0.85fr] lg:items-center">
@@ -3154,7 +3339,8 @@ export default function QuizLearningApp() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100">
+    <div className={appThemeClass('min-h-screen bg-slate-950 text-slate-100')}>
+      <ThemeController isDarkMode={isDarkMode} onToggle={toggleTheme} />
       <div className="mx-auto max-w-[1880px] px-2.5 py-2 md:px-3">
         <div className="mb-3 flex flex-col gap-2 rounded-2xl border border-white/10 bg-white/[0.04] p-3 sm:flex-row sm:items-center sm:justify-between">
           <div className="min-w-0">
