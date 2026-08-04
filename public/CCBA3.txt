@@ -1,93 +1,655 @@
 CCBA Practice - KA 3: Business Analysis Planning and Monitoring
 
-Question 1Gwen is monitoring and controlling the progress and performance of the business analysis work and planning improvement processes where required. Which of the following guidelines would be beneficial for Gwen in this case?A)Accuracy and completenessB)Legal/regulatory informationC)Business policiesD)Organizational performance standards => True
+Question 1What would the BA typically do first while conducting the identify business analysis performance improvements task?
+A)Identify corrective and/or preventive actions to improve BA performance.
+B)Conduct interviews and workshops to determine stakeholder requirements.
+C)Define what constitutes effective business analysis work. => true
+D)Determine assessment measures.
 
-Question 2Which of the following sets represents key concepts that are needed to understand how to effectively perform the plan business analysis governance task?A)Decision making, change control process, plan prioritization approach, level of abstraction, plan for approvals.B)Organization of business analysis information, change control process, plan prioritization approach, plan for approvals.C)Decision making, change control process, plan prioritization approach, plan for approvals.   => TrueD)Performance analysis, change control process, plan prioritization approach, plan for approvals.
+Question 2As a business analyst, you are in the process of documenting the overall method that will be followed when performing business analysis work on a given initiative. You have considered several possible approaches. You now want to determine the optimal business analysis approach to use for this initiative. Which guideline would you utilize?
+A)Methodologies and frameworks
+B)Expert judgement => true
+C)Business policies
+D)Organizational centers of excellence
 
-Question 3Which of the following approaches is most likely to require formal requirements documentation?A)AdaptiveB)AgileC)Value-drivenD)Predictive => True
+Question 3Akira is closely managing particular stakeholders who can impose their own requirements for how business analysis information should be managed during the governance process. Which stakeholders are they?
+A)Regulators
+B)Sponsors => true
+C)Project managers
+D)Domain subject matter experts
 
-Question 4In which artifact would the proposed approaches to address issues be found?A)Business analysis performance assessment =>TrueB)Item trackingC)Information management approachD)Business analysis issue log
+Question 4You are a business analyst working on a data strategy effort for your organization. You want to minimize your up-front uncertainty and maximize your control over the business analysis activities on the effort. What business analysis approach would best fit this effort?
+A)Adaptive approach
+B)Analytical approach
+C)Change-driven approach
+D)Predictive approach => true
 
-Question 5Which of the following are NOT types of estimation?A)Summation and Delphi => TrueB)Top-down and DelphiC)Top-down and parametricD)Rolling wave and ROM
+Question 5Which of the following are NOT types of estimation?
+A)Top-down and parametric
+B)Rolling wave and ROM
+C)Top-down and Delphi
+D)Summation and Delphi => true
 
-Question 6Adam has been asked to step in and help with an initiative that is having some problems. He has found that the decision makers lack important information needed for decision making. It is not clear how requirements and designs are integrated with other information for long-term use, and stakeholders do not understand what is expected of them or what they can expect from the business analyst. Worse still, it is very difficult to measure and assess how well the business analysis work is being done. What would be the root cause of these problems?A)The initiative is using an adaptive approach that focuses on rapid delivery with a higher degree of uncertainty.B)It is very likely that the business analyst on the initiative lacks certification in business analysis as a professional.C)Key planning and monitoring tasks that produce key guidelines for other tasks were not carried out. =>TrueD)The initiative has no subject matter expert (SME) and most of the team members are new.
+Question 6Which statement about business analysis performance assessments is NOT true?
+A)Performance measurements used in assessments may be both qualitative and quantitative.
+B)Performance assessments should include the root cause analysis associated with the variance between actual and planned results.
+C)Assessments should contain standardized performance measurements. => true
+D)Assessment reports can be informal and verbal or can include formal documentation.
 
-Question 7Piper is the business analyst for an initiative. The organization is undergoing restructuring and introducing changes to the existing business analysis approach. She has been asked to assess each proposed change. The results of her assessment must support the decision-making and change control approaches defined by which of the following tasks?A)Plan business analysis governance => TrueB)Business analysis performance assessmentC)Approve changesD)Assess requirements changes
+Question 7Sheryl is a BA who is finding it difficult to determine how to effectively communicate and collaborate given the diversity of each stakeholder group. What task will Sheryl need to complete?
+A)Perform stakeholder analysis
+B)Plan business analysis approach
+C)Conduct workshops to elicit stakeholder communication requirements
+D)Plan stakeholder engagement => true
 
-Question 8Which of the following is false regarding the analysis of results as part of the identify business analysis performance improvements task?A)The business analysis deliverables are compared against the set of defined measures.B)Data included in performance metrics is always collected by the business analyst. =>TrueC)The business analysis process is compared against the set of defined measures.D)Performance may be determined from the point of view of the stakeholders who are the recipients of the business analysis work.
+Question 8As soon as you were assigned as the BA to an initiative, you were advised to begin planning the governance approach to define how decisions will be made about requirements and designs. What would you expect to have available to you in order to create this plan?
+A)The current state description and lessons learned documentation from previous, similar projects
+B)The business analysis approach and the stakeholder engagement approach => true
+C)Business policies and legal/regulatory information
+D)Business policies and the current state description
 
-Question 9What does the Business Analysis Body of Knowledge contain?A)The definitive sequence of tasks that business analysts perform to properly analyze or evaluate the necessity of a change to reach business objectives.B)The sum of knowledge within the profession of Business Analysis and what is considered currently accepted practice. => TrueC)The standards and methodologies to which all business analysts should adhere.D)Best practices in the industry.
+Question 9Which guideline or tool would help in defining the limits within which decisions must be made?
+A)Legal/regulatory information
+B)Business policies => true
+C)Current state description
+D)Business analysis performance assessment
 
-Question 10You are in the initial phase of a project and the project manager has not been assigned. You have been asked to provide a quantitative assessment of the likely costs for resources required for the project. Which of the following techniques would be BEST to use?A)Rough Order of Magnitude (ROM) =>TrueB)Evaluation criteriaC)DelphiD)Parametric estimation
+Question 10Which of the following guidelines/tools is used for improved assessment of stakeholder impact and the development of more effective stakeholder engagement strategies?
+A)Change strategy => true
+B)Methodologies and frameworks
+C)Business analysis performance assessment
+D)Business policies
 
-Question 11You have been hired as a BA on a two year project. Information is gathered through team interaction and feedback, with rapid delivery of business value in short iterations. What approach is the project using?A)Adaptive =>TrueB)PredictiveC)Plan-drivenD)Waterfall
+Question 11Which of the following is false regarding the analysis of results as part of the identify business analysis performance improvements task?
+A)Data included in performance metrics is always collected by the business analyst. => true
+B)The business analysis deliverables are compared against the set of defined measures.
+C)Performance may be determined from the point of view of the stakeholders who are the recipients of the business analysis work.
+D)The business analysis process is compared against the set of defined measures.
 
-Question 12Why is it important for a business analyst to understand roles and responsibilities of the stakeholders within the organization?A)To understand how the stakeholders will contribute to the initiative. =>TrueB)To understand stakeholders' attitudes and manage them.C)To help with the development of the RACI matrix.D)To categorize stakeholders in the power/interest grid.
+Question 12Guidelines and tools included in the plan stakeholder engagement task include which of the following?
+A)Business Analysis Performance Assessment, Change Strategy, Current State Description => true
+B)Business analysis performance assessment, business policies, current state description
+C)Business analysis performance assessment, expert judgement, methodologies and frameworks
+D)Business analysis performance assessment, change strategy, stakeholder engagement approach
 
-Question 13Dustin is a BA who has just completed defining an appropriate method to conduct business analysis activities when a stakeholder raises concerns about how decisions will be made. In response to the disgruntled stakeholder, Dustin wants to solidify how decisions will be made about requirements, including reviews, change control, and prioritization. However, you remind him he has to complete one more task before he can start this activity. What would that task be?A)Root cause analysisB)Plan stakeholder engagement =>TrueC)Plan business analysis approachD)Decision analysis
+Question 13Which of the following would you consider when searching for external stakeholders?
+A)Project charter
+B)Stakeholders' influence
+C)Shareholders => true
+D)End users
 
-Question 14Stakeholders' attitudes can positively or negatively impact a change. It is therefore very important for the business analyst to develop and document a plan on how to effectively engage with each key stakeholder group. Which of the following work products would help document the plans?A)Power/interest gridB)Stakeholder communications planC)Online communities and wikisD)Stakeholder collaboration plan =>True
+Question 14Georgio wants to interact with the groups of stakeholders to gain more information about them. What would you advise him to do?
+A)Hold workshops => true
+B)Organize lunch and learn meetings
+C)Develop a survey/questionnaire with open-ended questions
+D)Develop a survey/questionnaire with close-ended questions
 
-Question 15Which deliverable is the main output of the plan stakeholder engagement task?A)Stakeholder analysisB)Stakeholder engagement approach =>TrueC)The communication approach to be utilized with identified stakeholdersD)Stakeholder register
+Question 15You are developing an approach for how business artifacts will be stored, accessed, and shared. Which set of stakeholders would you involve in this task?
+A)Domain subject matter expert, tester, regulator.
+B)Project manager, domain subject matter expert, regulator, sponsor.
+C)Sponsor, domain subject matter expert, regulator, customer.
+D)Domain subject matter expert, regulator, sponsor. => true
 
-Question 16Which of the following statements is accurate about the plan business analysis information management task?A)The purpose of this task is to ensure that requirements are accurate and current throughout the life cycle and facilitate reuse where appropriate.B)Requirements that are potential candidates for long-term use are those an organization must meet on an ongoing basis. =>TrueC)The tool that is chosen to manage information only needs to store the requirements and designs.D)Information management entails identifying characteristics about the information that must be reused.
+Question 16Missy is a business analyst working for InfoTech Company. The organization's standards require that she gives a weekly business analysis status report. Missy is now in the process of determining who will need to receive the weekly status report. Which knowledge area is Missy working within?
+A)Requirement management and communication
+B)Communicate business analysis information
+C)Requirements life cycle management
+D)Business analysis planning and monitoring => true
 
-Question 17Which of the following lists represents inputs required in the task charged with developing an approach for how business artifacts will be stored, accessed, and shared?A)Governance approach, stakeholder engagement approach, needs, business analysis approach.B)Governance approach, stakeholder engagement approach, business analysis approach. =>TrueC)Governance approach, stakeholder engagement approach, business analysis approach, requirements(Validated).D)Performance objectives (external), governance approach, stakeholder engagement approach, business analysis approach.
+Question 17Stakeholders' attitudes can positively or negatively impact a change. It is therefore very important for the business analyst to develop and document a plan on how to effectively engage with each key stakeholder group. Which of the following work products would help document the plans?
+A)Stakeholder communications plan
+B)Power/interest grid
+C)Online communities and wikis
+D)Stakeholder collaboration plan => true
 
-Question 18XYZ is a new organization that uses agile methodology. The organization is looking for an easy way to share business analysis information. The stakeholders decide on a whiteboard. Is this a viable solution?A)Yes; a whiteboard is a viable information management tool. =>TrueB)Yes; stakeholders involved in the project are in the best position to determine how to share business analysis information.C)No; information management tools must enable the reuse of business analysis information.D)No; the information shared on whiteboards can be too easily altered or erased and so is too risky.
+Question 18In order to assess business analysis work and plan for improvements where required, it is important to consider the benefits obtained and assess whether the cost, time, and resource investments are justifiable. What assessment measure does this describe?
+A)Timeliness
+B)Strategic
+C)Significance => true
+D)Effectiveness
 
-Question 19You have been hired as the senior business analyst on a project that will span three years. You discover that solution definitions have been defined and tasks are performed in specific phases. What approach is the project using?A)AgileB)Waterfall =>TrueC)ScrumD)Extreme programming
+Question 19Plan for requirements reuse is an element of which of the following tasks?
+A)Plan business analysis information management => true
+B)Plan traceability approach
+C)Business analysis planning and monitoring
+D)Plan business analysis approach
 
-Question 20Which of the following statements is associated with a predictive approach?A)Formal documentation is often produced after the solution is implemented to facilitate knowledge transfer.B)This approach tends to be preferred when taking an exploratory approach.C)Requirements are oftentimes limited to a prioritized list.D)This approach tends to be preferred when requirements can be effectively defined prior to implementation. => True
+Question 20Many planning methods fit somewhere along a continuum between __________ and _________ approaches. Which of the following best completes the statement above?
+A)Predictive; value-driven
+B)Predictive; adaptive => true
+C)Plan-driven; change-driven
+D)Event-driven; date-driven
 
-Question 21Sheryl is a BA who is finding it difficult to determine how to effectively communicate and collaborate given the diversity of each stakeholder group. What task will Sheryl need to complete?A)Plan stakeholder engagement =>TrueB)Plan business analysis approachC)Perform stakeholder analysisD)Conduct workshops to elicit stakeholder communication requirements
+Question 21Sameera has been engaged as a Business Analyst on the railway track design project for monorail in Toronto, Canada. She is currently planning for the approaches she will take to take to perform various business analysis activities. What is key driving factor when considering the business analysis approach selection?
+A)Business need for the project => true
+B)Stakeholders preferred approach
+C)Organizational Standards for business analysis
+D)Project specific standards for business analysis
 
-Question 22Nick has just finished a report that showed some issues in the business analysis work for his current project. Specifically, there were several variances from what he expected, and he needs to address the issues. What should Nick do to address the variances?A)Identify the root cause of variances from the expected performance and apply proposed approaches to address the issues. =>TrueB)Update the business analysis approach for the project to correct the problems identified.C)Report the variance to the stakeholders as business analysts are to be transparent and communicate any issues to stakeholders to avoid negative impact on the project.D)Document findings as lessons learned so that the issue is not repeated in the future projects.
+Question 22Which of the following statements accurately describes stakeholders who would be engaged in the plan stakeholder engagement task?
+A)Both customers and end-users are sources of external stakeholders.
+B)A customer is a source of external stakeholders while an end-user is a source of internal stakeholders. => true
+C)A supplier is a source of internal stakeholders while a customer is a source of external stakeholders.
+D)A supplier is a source of internal stakeholders while an end-user is a source of external stakeholders.
 
-Question 23Before any business analysis performance changes are implemented, who should be consulted to assess how they might impact the initiative?A)Domain subject matter expertsB)Implementation subject matter expertsC)SponsorD)Project manager =>True
+Question 23The purpose of the task identify business analysis performance improvements is to assess business analysis work and plan process improvements. Appropriate performance measures will help the business analyst determine when problems are occurring. These measures may be both quantitative and qualitative. Which of the following best describes why a business analyst may prefer quantitative over qualitative measures?
+A)Quantitative measures are easier to determine than qualitative measures.
+B)Qualitative measures are subjective and can be heavily influenced by the stakeholder's attitudes, perceptions, and other subjective criteria. => true
+C)Quantitative measures are more dependable than qualitative measures.
+D)Quantitative measures save on time compared to qualitative measures.
 
-Question 24You are a Business Analyst of a construction project. The Project Management team is currently engaged in a meeting to decide whether the work related to building two swimming pools in a posh residential complex area will be managed in-house or outsourced to a preferred vendor. Based on this decision, you may need to change your plan of carrying out your business analysis activities in this project. In which of the following tasks are you currently engaged?A)Plan business analysis governanceB)Plan business analysis approach =>TrueC)Analyze current stateD)Prepare for elicitation
+Question 24Which of the following is an input to the plan business analysis approach task?
+A)Requirements
+B)Needs => true
+C)Designs
+D)Solution scope
 
-Question 25The results of stakeholder analysis should be consulted and updated on a regular basis as stakeholders may change or new stakeholders may be identified throughout the project. However, one task should be complete before embarking on this task. Which task should be completed first?A)Needs must be definedB)Plan business analysis approach =>TrueC)Business caseD)Project charter
+Question 25At what point in the project timeline would the BA typically modify the business analysis plans?
+A)After performance metrics have been collected and analyzed => true
+B)After the initial risk assessment but before the division of work strategy
+C)When requested to do so by the project manager
+D)After each stakeholder interview
 
-Question 26Business analysis performance assessments help identify opportunities for future improvement. For maximum benefit, when should performance analysis occur?A)Throughout the life cycle of an initiative =>TrueB)During retrospectivesC)At the beginning of every sprintD)When carrying out closing processes
+Question 26You are developing an approach for how business analysis artifacts will be stored, accessed, and shared. Which of the following would be helpful to know in developing an approach?
+A)Business policies
+B)Legal/regulatory information
+C)SharePoint
+D)Information management tools => true
 
-Question 27As soon as you were assigned as the BA to an initiative, you were advised to begin planning the governance approach to define how decisions will be made about requirements and designs. What would you expect to have available to you in order to create this plan?A)Business policies and legal/regulatory informationB)The current state description and lessons learned documentation from previous, similar projectsC)The business analysis approach and the stakeholder engagement approach =>TrueD)Business policies and the current state description
+Question 27Planning stakeholder engagement, in normal circumstances, is a task carried out by the business analyst. This task may be shared with which other project team member?
+A)Sponsor
+B)Project manager => true
+C)Peers
+D)Business subject matter expert
 
-Question 28A business analyst is defining how decisions about requirements and designs will be made. Which of the following techniques could be used to generate a list of potential approvers?A)Decision modelingB)Document analysisC)Brainstorming =>TrueD)Mind mapping
+Question 28Does the predictive or adaptive planning approach place more emphasis on requirements prioritization?
+A)Adaptive => true
+B)Both approaches place equal emphasis on requirements prioritization.
+C)Predictive
+D)Prioritization of requirements is low priority for both approaches.
 
-Question 29Which of the following lists contain valid requirements attributes?A)Performance, interface, quality glossaryB)Author, source, class, complexityC)Unambiguous, testable, complete, understandableD)Priority, source, status, urgency => True
+Question 29While carrying out the identify business analysis performance improvements task, which of the following are some possible assessment measures?
+A)Accuracy and completeness, knowledge, efficiency, organizational support, significance, strategic, timeliness.
+B)Accuracy and completeness, knowledge, effectiveness, organizational support, significance, strategic, stability.
+C)Accuracy and completeness, knowledge, effectiveness, organizational standards, significance, strategic, timeliness.
+D)Accuracy and completeness, knowledge, effectiveness, organizational support, significance, strategic, timeliness. => true
 
-Question 30Stakeholder management includes the process required to identify the people, groups, or organizations that could impact or be impacted by the initiative. Which set of stakeholders accurately represents those that would be involved in the business analysis planning and monitoring knowledge area?A)Domain subject matter expert, project manager, regulator, sponsor, customer, end user, supplier. =>TrueB)Domain subject matter expert, tester, project manager, regulator, sponsor, customer, end user, supplier.C)Project manager, regulator, sponsor, customer, end user, supplier, domain subject matter expert, operational support.D)Domain subject matter expert, project manager, supplier, regulator, sponsor, customer, end user, implementation subject matter expert.
+Question 30Shirin has been engaged as a Business Analyst in an IT transformation project. While discussing the stakeholder analysis and engagement approach with the Project Manager, they have informed Shirin that since the vendor for this project is using a fixed-price model, the vendor team will be reluctant to do extra work if there is any scope creep during the execution of this project. As a Business Analyst what should Shirin do as a immediate next step?
+A)Understand the vendor's pricing model and note that any scope creep on the project will be a risk and must be managed as such. => true
+B)Plan to elicit scope and requirements early to avoid any scope creep.
+C)Suggest that the Project Manager review the vendor's pricing model and ask the vendor to change their pricing model to avoid the risk of scope creep.
+D)Have a discussion with the Sponsor about the vendor's pricing model and the potential scope creep risk.
 
-Question 31Sameera has been engaged as a Business Analyst on the railway track design project for monorail in Toronto, Canada. She is currently planning for the approaches she will take to take to perform various business analysis activities. What is key driving factor when considering the business analysis approach selection?A)Business need for the project => TrueB)Stakeholders preferred approachC)Organizational Standards for business analysisD)Project specific standards for business analysis
+Question 31When conducting a thorough stakeholder analysis, the following resources may be required to be successful. Which of the following is least likely resource to be used?
+A)Current state description
+B)Business policies => true
+C)Business analysis performance assessment
+D)Change strategy
 
-Question 32Which of the following outputs will identify the stakeholders who will be responsible for setting priorities?A)Business analysis performance strategyB)Governance approach => TrueC)Information management approachD)Stakeholder engagement approach
+Question 32All of the following are elements contained within the plan business analysis information management task EXCEPT:
+A)Plan traceability approach
+B)Requirements attributes
+C)Plan for requirements reuse
+D)Plan prioritization approach => true
 
-Question 33Which business analysis stakeholder role is involved in all tasks performed to organize and coordinate the efforts of business analyst and stakeholders?A)Project managerB)SupplierC)Domain subject matter expert => TrueD)Regulator
+Question 33You are a business analyst on an initiative during which an analysis of the business analysis performance has just been completed. Which of the following actions would you take depending on the analysis results?
+A)Preventive, corrective, or leverage
+B)Avoid, transfer, or mitigate
+C)Preventive, corrective, or improvement => true
+D)Transfer, mitigate, or accept
 
-Question 34Which of the following is included within the business analysis approach?A)Corrective and preventive actionsB)WorkshopsC)The timing and the sequence of the business analysis work =>TrueD)Methodologies and frameworks
+Question 34What is included in the output of the plan stakeholder engagement task in business analysis planning and monitoring?
+A)Stakeholder communication needs
+B)Business analysis approach
+C)Collaboration and communication approaches the business analyst will use in the project => true
+D)Lessons learned
 
-Question 35All of the following are elements contained within the plan business analysis information management task EXCEPT:A)Plan traceability approachB)Requirements attributesC)Plan for requirements reuseD)Plan prioritization approach => True
+Question 35The performance of all business analysis activities are directed by which of the following documents?
+A)Business analysis body of knowledge (BABOK)
+B)Business analysis approach => true
+C)Information management approach
+D)Governance approach
 
-Question 36Shirin has been engaged as a Business Analyst in an IT transformation project. While discussing the stakeholder analysis and engagement approach with the Project Manager, they have informed Shirin that since the vendor for this project is using a fixed-price model, the vendor team will be reluctant to do extra work if there is any scope creep during the execution of this project. As a Business Analyst what should Shirin do as a immediate next step?A)Understand the vendor's pricing model and note that any scope creep on the project will be a risk and must be managed as such. => TrueB)Plan to elicit scope and requirements early to avoid any scope creep.C)Suggest that the Project Manager review the vendor's pricing model and ask the vendor to change their pricing model to avoid the risk of scope creep.D)Have a discussion with the Sponsor about the vendor's pricing model and the potential scope creep risk.
+Question 36Why is it important for a business analyst to understand roles and responsibilities of the stakeholders within the organization?
+A)To categorize stakeholders in the power/interest grid.
+B)To help with the development of the RACI matrix.
+C)To understand how the stakeholders will contribute to the initiative. => true
+D)To understand stakeholders' attitudes and manage them.
 
-Question 38Akira is closely managing particular stakeholders who can impose their own requirements for how business analysis information should be managed during the governance process. Which stakeholders are they?A)RegulatorsB)Sponsors => TrueC)Project managersD)Domain subject matter experts
+Question 37Rohan has been working as a Business Analyst on a City Transportation project. He has recently identified a list of stakeholders who are directly and indirectly impacted by the change or who can influence the project. Rohan now wants to identify where and how each stakeholder will contribute to the initiative. What next step should Rohan take to obtain this information?
+A)Study the Organizational Chart thoroughly to gain insight as to how the stakeholders fit into the organization.
+B)Obtain additional information about the roles of each identified stakeholder on the list. => true
+C)Collect the contact details of each stakeholder so that he can reach out to them to learn more about them.
+D)Observe the stakeholders to see if they have positive or negative attitude towards this project.
 
-Question 39Assessing stakeholder attitudes about the project is important. Which of the following best describes the factors to consider?A)Attitude toward the objective of the initiative, their job, and the organizationB)Attitude toward the business goals, objective of the initiative, business analysis in general, project sponsor and other stakeholders => TrueC)Attitude toward business analysis, project methodology, the sponsor, and project managerD)Attitude towards collaboration, teamwork, and other stakeholders, and their job
+Question 38Gil has been identified as a key stakeholder in a project. His absence when determining the appropriate method to conduct business analysis activities could be considered a source of risk. The approach taken may also depend on his availability. What type of stakeholder is Gil?
+A)Tester
+B)Implementation subject matter expert
+C)Domain subject matter expert => true
+D)Sponsor
 
-Question 40In order to assess business analysis work and plan for improvements where required, it is important to consider the benefits obtained and assess whether the cost, time, and resource investments are justifiable. What assessment measure does this describe?A)TimelinessB)StrategicC)Significance => TrueD)Effectiveness
+Question 39You have been hired as the senior business analyst on a project that will span three years. You discover that solution definitions have been defined and tasks are performed in specific phases. What approach is the project using?
+A)Waterfall => true
+B)Agile
+C)Extreme programming
+D)Scrum
 
-Question 41Many planning methods fit somewhere along a continuum between __________ and _________ approaches. Which of the following best completes the statement above?A)Predictive; value-drivenB)Predictive; adaptive => TrueC)Plan-driven; change-drivenD)Event-driven; date-driven
+Question 40A Business Analyst is in the initial phase of an IT change initiative in a Bank. As part of the business analysis planning process, the analyst is planning for stakeholder engagement. Under what conditions should the Business Analyst consider revising the stakeholder collaboration plan and updating it if needed?
+A)All of the options => true
+B)When there is a change in organizational structure that impacts the stakeholders
+C)At the start of new phase in the project
+D)When a new stakeholder is identified or if the importance of a stakeholder has changed
 
-Question 42In order to plan the most effective business analysis approach, the BA must take into consideration which of the following?A)Available metadataB)Outputs from the business analysis performance assessment => TrueC)The amount of time the BA has allocated to the initiativeD)Information management tools
+Question 41Vasavi has been contracted as the lead business analyst on a new initiative. She wants to create an internal stakeholder list. What would be a good starting point?
+A)Project management office
+B)Existing business processes => true
+C)Governing bodies that may influence the project
+D)Existing vendor or supplier contracts that may be in place
 
-Question 43A Business Analyst is in the initial phase of an IT change initiative in a Bank. As part of the business analysis planning process, the analyst is planning for stakeholder engagement. Under what conditions should the Business Analyst consider revising the stakeholder collaboration plan and updating it if needed?A)All of the options => TrueB)When there is a change in organizational structure that impacts the stakeholdersC)At the start of new phase in the projectD)When a new stakeholder is identified or if the importance of a stakeholder has changed
+Question 42Which of the following best describes the inputs for the plan business analysis information management task?
+A)Business policies, business analysis approach, governance approach
+B)Business analysis approach, stakeholder engagement approach, governance approach => true
+C)Information management tools, business analysis approach, governance approach
+D)Information management tools, business policies, business analysis approach
 
-Question 44As a business analyst, you are in the process of documenting the overall method that will be followed when performing business analysis work on a given initiative. You have considered several possible approaches. You now want to determine the optimal business analysis approach to use for this initiative. Which guideline would you utilize?A)Methodologies and frameworksB)Expert judgement => TrueC)Business policiesD)Organizational centers of excellence
+Question 43Which of the following statements is accurate about adaptive approaches?
+A)In an adaptive approach, mandatory requirements are often limited to a prioritized requirements list. => true
+B)In an adaptive approach, planning may be done, but it is not essential.
+C)In an adaptive approach, tasks are performed in specific phases.
+D)Adaptive approaches typically call for formal documentations and representations.
 
-Question 45For any change, BAs need to create and foster trusting working relationships with stakeholders. How can we best do that?A)Learn which stakeholders have negative attitudes toward the change.B)Identify levels of decision-making authority regarding the processes affected by the change.C)Use organizational modeling to understand the relationships stakeholders have with each other.D)Understand the influence structures and channels among stakeholders. => True
+Question 44Regarding the element stakeholder communication needs, the business analyst must consider the __________ of stakeholders.
+A)Elemental attitude
+B)Multi-location distribution
+C)Geographic location => true
+D)Primary language
 
-Question 46Which of the following best describes the inputs for the plan business analysis information management task?A)Business policies, business analysis approach, governance approachB)Business analysis approach, stakeholder engagement approach, governance approach => TrueC)Information management tools, business analysis approach, governance approachD)Information management tools, business policies, business analysis approach
+Question 45Approval of requirements and designs may be formal or informal. Which of the following tasks defines how approval and prioritization decisions are made?
+A)Plan business analysis approach
+B)Plan business analysis information management
+C)Plan business analysis governance => true
+D)Approve requirements
 
-Question 47Which of the following lists represents inputs required in the task charged with developing an approach for how business artifacts will be stored, accessed, and shared?A)Governance approach, stakeholder engagement approach, business analysis approach. => TrueB)Governance approach, stakeholder engagement approach, needs, business analysis approach.C)Governance approach, stakeholder engagement approach, business analysis approach, requirements(Validated).D)Performance objectives (external), governance approach, stakeholder engagement approach, business analysis approach.
+Question 46An architect is invited into a meeting to share her knowledge as input into the decision-making process. What role was the architect asked to play in the decision-making process?
+A)Approver of decisions
+B)Reviewer of information
+C)Participant in the discussion
+D)Subject matter expert (SME) => true
+
+Question 47Which type of models can be used to define and document the business analysis approach?
+A)Data
+B)Process => true
+C)Scope
+D)Object
+
+Question 48Elements included in the identify business analysis performance improvements task include which of the following?
+A)Performance analysis, assessment measures, variance analysis, recommend actions for improvement
+B)Performance reporting, assessment measures, analyze results, recommend actions for improvement
+C)Performance reporting, assessment measures, variance analysis, recommend actions for improvement
+D)Performance analysis, assessment measures, analyze results, recommend actions for improvement => true
+
+Question 49As a business analyst, you have just finished assessing the business analysis work and have prepared a performance improvement plan. In which of the following outputs will the details be captured?
+A)Business analysis performance strategy
+B)Business analysis performance assessment => true
+C)Planning and monitoring
+D)Assessment measures
+
+Question 50Which of the following outputs will identify the stakeholders who will be responsible for setting priorities?
+A)Business analysis performance strategy
+B)Governance approach => true
+C)Information management approach
+D)Stakeholder engagement approach
+
+Question 51A business analyst intern wants to be able to make trade-offs between requirements, identify stakeholders affected by potential changes, and understand the effect of a proposed change. Where would you advise the intern to look for this information?
+A)Repository
+B)Requirements attributes => true
+C)Business policies document
+D)Traceability document
+
+Question 52Assessing stakeholder attitudes about the project is important. Which of the following best describes the factors to consider?
+A)Attitude toward the objective of the initiative, their job, and the organization
+B)Attitude toward the business goals, objective of the initiative, business analysis in general, project sponsor and other stakeholders => true
+C)Attitude toward business analysis, project methodology, the sponsor, and project manager
+D)Attitude towards collaboration, teamwork, and other stakeholders, and their job
+
+Question 53Piper is the business analyst for an initiative. The organization is undergoing restructuring and introducing changes to the existing business analysis approach. She has been asked to assess each proposed change. The results of her assessment must support the decision-making and change control approaches defined by which of the following tasks?
+A)Assess requirements changes
+B)Plan business analysis governance => true
+C)Approve changes
+D)Business analysis performance assessment
+
+Question 54Which of the following statements accurately describes stakeholder attitudes?
+A)Knowing how a stakeholder perceives the initiative enables the business analyst to plan for collaboration and engagement with that stakeholder. => true
+B)Stakeholder attitudes are identified within the stakeholder engagement element.
+C)Business analysts perform stakeholder analysis to identify stakeholders with negative attitudes as they pose a risk to the success of business analysis work.
+D)Stakeholder attitudes typically impact a change negatively.
+
+Question 55Which of the following is NOT a component of the risk analysis and management technique?
+A)Impact of a risk
+B)Risk response plan
+C)Likelihood of occurrence
+D)Ease of detectibility of a risk => true
+
+Question 56Nick reported on the results of the analysis and identified any necessary preventive, corrective, and developmental actions. Why is that important?
+A)Once potential performance improvements are identified, they become guidelines for the next time a task is executed. => true
+B)The potential improvements will be used in the post implementation review.
+C)The potential improvements will form part of organizational process assets (OPAs).
+D)To keep a record for reference as inputs into the next performance review.
+
+Question 57Elements included in the plan business analysis approach task include which of the following?
+A)Communication needs, planning approach, formality and level of detail of deliverables, business analysis activities, timing of business analysis work, complexity and risk, acceptance.
+B)Planning approach, formality and level of detail of deliverables, business analysis activities, timing of business analysis work, complexity and risk, acceptance. => true
+C)Planning approach, formality and level of detail of deliverables, business analysis activities, timing of business analysis work, complexity and risk, acceptance, attitudes.
+D)Planning approach, perform stakeholder analysis, business analysis activities, timing of business analysis work, complexity and risk, acceptance.
+
+Question 58You are the business analyst on an initiative. Which of the following would you consider when determining the optimal approach for conducting business analysis activities?
+A)Complexity and risk => true
+B)Geographic and cultural considerations
+C)Number of business areas affected
+D)Size of the change
+
+Question 59The tasks in business analysis planning and monitoring (BAPM) include which of the following?
+A)Plan business analysis approach, plan stakeholder engagement, plan business analysis governance, plan business analysis information management, identify business analysis performance improvements. => true
+B)Plan business analysis approach, plan stakeholder engagement, plan business analysis governance, plan business analysis communication, identify business analysis performance improvements.
+C)Plan business analysis approach, plan stakeholder engagement, plan requirements management process, plan business analysis information management, identify business analysis performance improvements.
+D)Plan business analysis approach, plan stakeholder engagement, plan business analysis governance, plan business analysis information management.
+
+Question 60You have been hired as the business analyst for an initiative. The project manager informs you that your first task is to figure out what needs to be done, how you will go about doing it, as well as exactly who needs to be involved with the work and how involved they should be. Which deliverable will you provide to the project manager as a result of these activities?
+A)Requirement management approach
+B)Governance approach
+C)Business analysis approach => true
+D)Information management approach
+
+Question 61Ryan is a business analyst working on an IT transformation project related to risk data consolidation. He has identified the business analysis activities required to complete each deliverable, the sequence of those activities, and the tasks related to each activity. Half-way into the planning of these activities, Ryan is faced multiple challenges which the organization had experienced on a past project. How could Ryan have saved himself from facing similar challenges?
+A)Ryan should have reviewed lesson-learned documents to understand the organizations previous experiences with planning. => true
+B)Ryan should have conducted interviews with other business analysts to get their suggestions and validate his plan.
+C)Ryan should have worked with his Project Manager to help identify the types of activities the business analyst should perform.
+D)Ryan should have reviewed the various organizational asset documents available to provide him with better planning information.
+
+Question 62What is the purpose of conducting a thorough stakeholder analysis?
+A)To create a stakeholder register.
+B)Will be required when documenting stakeholder engagement package.
+C)Stakeholder analysis is an input into stakeholder management.
+D)To plan, establish, and maintain an effective working relationship with the stakeholders. => true
+
+Question 63Which business analysis stakeholder role is involved in all tasks performed to organize and coordinate the efforts of business analyst and stakeholders?
+A)Project manager
+B)Supplier
+C)Domain subject matter expert => true
+D)Regulator
+
+Question 64Paige works in the IT department for a financial institution. She may be needed to provide approval for aspects of the business analysis approach, especially in organizations where the business analysis process is audited. She may also require that specific stakeholder representatives or groups be involved in the business analysis activities. What type of stakeholder is Paige?
+A)Sponsor
+B)Regulator => true
+C)Project manager
+D)Executive board
+
+Question 65XYZ is a new organization that uses agile methodology. The organization is looking for an easy way to share business analysis information. The stakeholders decide on a whiteboard. Is this a viable solution?
+A)Yes; stakeholders involved in the project are in the best position to determine how to share business analysis information.
+B)No; the information shared on whiteboards can be too easily altered or erased and so is too risky.
+C)Yes; a whiteboard is a viable information management tool. => true
+D)No; information management tools must enable the reuse of business analysis information.
+
+Question 66Which of the following lists contain valid requirements attributes?
+A)Priority, source, status, urgency => true
+B)Performance, interface, quality glossary
+C)Author, source, class, complexity
+D)Unambiguous, testable, complete, understandable
+
+Question 67You are a Business Analyst of a construction project. The Project Management team is currently engaged in a meeting to decide whether the work related to building two swimming pools in a posh residential complex area will be managed in-house or outsourced to a preferred vendor. Based on this decision, you may need to change your plan of carrying out your business analysis activities in this project. In which of the following tasks are you currently engaged?
+A)Analyze current state
+B)Prepare for elicitation
+C)Plan business analysis governance
+D)Plan business analysis approach => true
+
+Question 68Business analysis performance assessments help identify opportunities for future improvement. For maximum benefit, when should performance analysis occur?
+A)Throughout the life cycle of an initiative => true
+B)During retrospectives
+C)At the beginning of every sprint
+D)When carrying out closing processes
+
+Question 69Whitney is a BA working to identify quantitative and qualitative measures in order to identify performance improvements related to her business analysis work. Identifying quantitative measures was relatively easy; qualitative measures are proving to be more difficult. You are a senior BA assigned as Whitney's mentor; which of the following measures do you suggest?
+A)Accurate estimates related to work products
+B)Delivery dates of work products
+C)Effectiveness of work products => true
+D)Frequency of changes to work products
+
+Question 70Which statement best describes the plan business analysis approach task?
+A)Identifying the activities required to complete each deliverable and then breaking each activity into tasks.
+B)Ensuring the governance process, approvals, and prioritization of requirements and design are in place.
+C)The timing and sequencing of the work, the deliverables that will be produced, techniques and tools that may be utilized and guidelines that may be followed.
+D)Planning analysis work from selection of a methodology to use, to planning the individual activities, tasks and deliverables. => true
+
+Question 71Which of the following is included within the business analysis approach?
+A)Corrective and preventive actions
+B)Workshops
+C)The timing and the sequence of the business analysis work => true
+D)Methodologies and frameworks
+
+Question 72You are the lead business analyst working on an initiative to construct a chemical plant. You have identified, analyzed, and evaluated over 20 risks regarding the proposed solution. The sponsor has reiterated that the risk of an incorrect implementation is unacceptably high for this initiative. What approach would best serve the initiative?
+A)Predictive approach => true
+B)Detailed planning approach
+C)Plan-driven approach
+D)Adaptive approach
+
+Question 73Guidelines and tools included in the plan business analysis governance task include which of the following?
+A)Business analysis performance assessment, business policies, change strategy, current state description, legal/regulatory information.
+B)Business analysis performance assessment, business policies, current state description.
+C)Business analysis performance assessment, change strategy, current state description, legal/regulatory information.
+D)Business analysis performance assessment, business policies, current state description, legal/regulatory information. => true
+
+Question 74Nick has just finished a report that showed some issues in the business analysis work for his current project. Specifically, there were several variances from what he expected, and he needs to address the issues. What should Nick do to address the variances?
+A)Report the variance to the stakeholders as business analysts are to be transparent and communicate any issues to stakeholders to avoid negative impact on the project.
+B)Identify the root cause of variances from the expected performance and apply proposed approaches to address the issues. => true
+C)Document findings as lessons learned so that the issue is not repeated in the future projects.
+D)Update the business analysis approach for the project to correct the problems identified.
+
+Question 75Before any business analysis performance changes are implemented, who should be consulted to assess how they might impact the initiative?
+A)Domain subject matter experts
+B)Project manager => true
+C)Sponsor
+D)Implementation subject matter experts
+
+Question 76You are conducting a thorough stakeholder analysis to analyze and understand their needs. Which of the following factors would you consider?
+A)Perform stakeholder analysis, define stakeholder governance, stakeholder communication needs.
+B)Perform stakeholder analysis, define stakeholder collaboration, business needs.
+C)Perform stakeholder analysis, define stakeholder collaboration, stakeholder communication needs. => true
+D)Perform stakeholder analysis, define stakeholder collaboration, define stakeholder authority level.
+
+Question 77You are in the initial phase of a project and the project manager has not been assigned. You have been asked to provide a quantitative assessment of the likely costs for resources required for the project. Which of the following techniques would be BEST to use?
+A)Parametric estimation
+B)Rough Order of Magnitude (ROM) => true
+C)Evaluation criteria
+D)Delphi
+
+Question 78Which of the following sets represents key concepts that are needed to understand how to effectively perform the plan business analysis governance task?
+A)Decision making, change control process, plan prioritization approach, level of abstraction, plan for approvals.
+B)Decision making, change control process, plan prioritization approach, plan for approvals. => true
+C)Performance analysis, change control process, plan prioritization approach, plan for approvals.
+D)Organization of business analysis information, change control process, plan prioritization approach, plan for approvals.
+
+Question 79Which of the following guidelines/tools provides results of previous evaluations that should be reviewed and incorporated into all planning approaches?
+A)Methodologies and frameworks
+B)Business policies
+C)Expert judgment
+D)Business analysis performance assessment => true
+
+Question 80Stakeholder management includes the process required to identify the people, groups, or organizations that could impact or be impacted by the initiative. Which set of stakeholders accurately represents those that would be involved in the business analysis planning and monitoring knowledge area?
+A)Domain subject matter expert, tester, project manager, regulator, sponsor, customer, end user, supplier.
+B)Domain subject matter expert, project manager, regulator, sponsor, customer, end user, supplier. => true
+C)Project manager, regulator, sponsor, customer, end user, supplier, domain subject matter expert, operational support.
+D)Domain subject matter expert, project manager, supplier, regulator, sponsor, customer, end user, implementation subject matter expert.
+
+Question 81A business analyst wants to assess the business analysis work and plan improvement processes where necessary. Which task should be completed before attempting this activity?
+A)Plan business analysis information management
+B)Plan business analysis governance
+C)Performance analysis
+D)Plan business analysis approach => true
+
+Question 82You have just completed a thorough stakeholder analysis during which you identified all the stakeholders that will be directly or indirectly impacted by the current initiative you are working on. What would be the output of this analysis?
+A)Stakeholder register
+B)RACI matrix
+C)Stakeholder management plan
+D)Stakeholder engagement approach => true
+
+Question 83Which of the following approaches is most likely to require formal requirements documentation?
+A)Adaptive
+B)Agile
+C)Value-driven
+D)Predictive => true
+
+Question 84What would the BA typically do first while conducting the identify business analysis performance improvements task?
+A)Identify corrective and/or preventive actions to improve BA performance.
+B)Define what constitutes effective business analysis work. => true
+C)Conduct interviews and workshops to determine stakeholder requirements.
+D)Determine assessment measures.
+
+Question 85When should the timing of business analysis work be identified?
+A)After resource leveling to ensure required resources will be available.
+B)When planning the overall business analysis approach. => true
+C)At the point when estimates are needed to realize efficiencies from just-in-time planning.
+D)After the business analysis approach document is approved and the development of a detailed plan can begin.
+
+Question 86As a business analyst, the types of activities that you will perform are documented in the business analysis approach. The prescribed activities may be influenced by which one of the following?
+A)Techniques used
+B)Organization's methodologies => true
+C)Business analyst knowledge
+D)Stakeholders
+
+Question 87You have been hired as a BA on a two year project. Information is gathered through team interaction and feedback, with rapid delivery of business value in short iterations. What approach is the project using?
+A)Predictive
+B)Adaptive => true
+C)Plan-driven
+D)Waterfall
+
+Question 88Gwen is monitoring and controlling the progress and performance of the business analysis work and planning improvement processes where required. Which of the following guidelines would be beneficial for Gwen in this case?
+A)Organizational performance standards => true
+B)Business policies
+C)Accuracy and completeness
+D)Legal/regulatory information
+
+Question 89For any change, BAs need to create and foster trusting working relationships with stakeholders. How can we best do that?
+A)Learn which stakeholders have negative attitudes toward the change.
+B)Identify levels of decision-making authority regarding the processes affected by the change.
+C)Use organizational modeling to understand the relationships stakeholders have with each other.
+D)Understand the influence structures and channels among stakeholders. => true
+
+Question 90Adam has been asked to step in and help with an initiative that is having some problems. He has found that the decision makers lack important information needed for decision making. It is not clear how requirements and designs are integrated with other information for long-term use, and stakeholders do not understand what is expected of them or what they can expect from the business analyst. Worse still, it is very difficult to measure and assess how well the business analysis work is being done. What would be the root cause of these problems?
+A)It is very likely that the business analyst on the initiative lacks certification in business analysis as a professional.
+B)Key planning and monitoring tasks that produce key guidelines for other tasks were not carried out. => true
+C)The initiative has no subject matter expert (SME) and most of the team members are new.
+D)The initiative is using an adaptive approach that focuses on rapid delivery with a higher degree of uncertainty.
+
+Question 91In order to plan the most effective business analysis approach, the BA must take into consideration which of the following?
+A)Available metadata
+B)Outputs from the business analysis performance assessment => true
+C)The amount of time the BA has allocated to the initiative
+D)Information management tools
+
+Question 92Vicky has been engaged as a Senior Business Analyst of the gas supply utility project under Government of New Zealand. As the key stakeholders are mostly from government sectors, Vicky knows he will face tough time in engaging with multiple stakeholders during the projects and the availability of stakeholders at different stages of business analysis and the project will be the key challenge. Considering only this factor, which business analysis approach would Vicky find most suitable?
+A)An adaptive approach for business analysis
+B)Stakeholders preferred approach for business analysis
+C)A predictive approach for business analysis => true
+D)Organizational Standards for business analysis
+
+Question 93The results of stakeholder analysis should be consulted and updated on a regular basis as stakeholders may change or new stakeholders may be identified throughout the project. However, one task should be complete before embarking on this task. Which task should be completed first?
+A)Needs must be defined
+B)Business case
+C)Plan business analysis approach => true
+D)Project charter
+
+Question 94Grant has just completed defining a governance process when a stakeholder who has been declining meeting invitations to define the process voiced some concerns to the sponsor regarding the team's decisions. The raised concerns have resulted in more issues and the stakeholders cannot come to a consensus. What consideration would help resolve this deadlock?
+A)Change control process
+B)Plan for approvals
+C)Decision making => true
+D)Plan prioritization approach
+
+Question 95Which of the following statements best describes an adaptive planning approach?
+A)Adaptive approaches do not require documentation.
+B)Formal documentation is produced before the solution is developed and implemented.
+C)Adaptive approaches focus on rapid delivery of business value in short iterations. => true
+D)Most business analysis work occurs at the beginning of the project or during one specific project phase.
+
+Question 96Dustin is a BA who has just completed defining an appropriate method to conduct business analysis activities when a stakeholder raises concerns about how decisions will be made. In response to the disgruntled stakeholder, Dustin wants to solidify how decisions will be made about requirements, including reviews, change control, and prioritization. However, you remind him he has to complete one more task before he can start this activity. What would that task be?
+A)Root cause analysis
+B)Plan stakeholder engagement => true
+C)Decision analysis
+D)Plan business analysis approach
+
+Question 97Which of the following statements best describes the purpose of the plan business analysis governance task?
+A)The purpose is to align with the project management governance approach.
+B)The purpose is to provide oversight to business analysis activities and results.
+C)The primary purpose is to provide inputs into the business analysis performance assessment report.
+D)The purpose is to define how decisions are made about requirements and designs, including reviews, change control, approvals, and prioritization. => true
+
+Question 98Which of the following statements is accurate about the plan business analysis information management task?
+A)Requirements that are potential candidates for long-term use are those an organization must meet on an ongoing basis. => true
+B)The purpose of this task is to ensure that requirements are accurate and current throughout the life cycle and facilitate reuse where appropriate.
+C)Information management entails identifying characteristics about the information that must be reused.
+D)The tool that is chosen to manage information only needs to store the requirements and designs.
+
+Question 99Which deliverable is the main output of the plan stakeholder engagement task?
+A)Stakeholder register
+B)The communication approach to be utilized with identified stakeholders
+C)Stakeholder engagement approach => true
+D)Stakeholder analysis
+
+Question 100A business analyst is defining how decisions about requirements and designs will be made. Which of the following techniques could be used to generate a list of potential approvers?
+A)Mind mapping
+B)Brainstorming => true
+C)Decision modeling
+D)Document analysis
+
+Question 101The primary purpose of this task is to develop an approach for how business analysis information will be stored and accessed. BABOK 3.4.1
+A)Plan business analysis information management => true
+B)Plan business analysis governance
+C)Plan business analysis approach
+D)Plan business analysis data management process
+
+Question 102In which artifact would the proposed approaches to address issues be found?
+A)Item tracking
+B)Business analysis performance assessment => true
+C)Information management approach
+D)Business analysis issue log
+
+Question 103When identifying business analysis performance improvements, the business analysis process and deliverables are compared against a set of defined measures. Which statement is accurate about these measures?
+A)Performance measures may be determined from the point of view of the stakeholders who are recipients of the business analysis work. => true
+B)These measures are defined by organizational standards and therefore they are already in existence and should not be altered.
+C)Only stakeholders listed in the BA plan may have input in assessing the value of the business analysis work.
+D)The center of excellence, not the personnel manager, makes and determines these measures.
+
+Question 104What does the Business Analysis Body of Knowledge contain?
+A)The standards and methodologies to which all business analysts should adhere.
+B)Best practices in the industry.
+C)The definitive sequence of tasks that business analysts perform to properly analyze or evaluate the necessity of a change to reach business objectives.
+D)The sum of knowledge within the profession of Business Analysis and what is considered currently accepted practice. => true
+
+Question 105Which of the following statements is associated with a predictive approach?
+A)This approach tends to be preferred when taking an exploratory approach.
+B)Formal documentation is often produced after the solution is implemented to facilitate knowledge transfer.
+C)Requirements are oftentimes limited to a prioritized list.
+D)This approach tends to be preferred when requirements can be effectively defined prior to implementation. => true
+
+Question 106All of the following are approaches for dealing with risks EXCEPT for which of the following?
+A)Avoid
+B)Mitigate
+C)Transcend => true
+D)Accept
+
+Question 107Why is it important for a BA to identify and understand stakeholders' attitudes towards the project?
+A)To know if stakeholders are for or against the initiative
+B)To know how stakeholders will contribute to the initiative
+C)To categorize stakeholders in the power/interest grid
+D)To understand stakeholder needs and specifically plan how to collaborate and engage with the stakeholders => true
+
+Question 108Which of the following lists represents inputs required in the task charged with developing an approach for how business artifacts will be stored, accessed, and shared?
+A)Governance approach, stakeholder engagement approach, business analysis approach. => true
+B)Governance approach, stakeholder engagement approach, needs, business analysis approach.
+C)Governance approach, stakeholder engagement approach, business analysis approach, requirements(Validated).
+D)Performance objectives (external), governance approach, stakeholder engagement approach, business analysis approach.
+
+Question 109What are the input(s) to the plan business analysis governance task?
+A)Business analysis approach and performance objectives (external)
+B)Needs
+C)Needs and business analysis approach
+D)Business analysis approach and stakeholder engagement approach => true
