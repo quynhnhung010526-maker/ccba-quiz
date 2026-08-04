@@ -1,61 +1,553 @@
 CCBA Practice - KA 6: Strategy Analysis
 
-Question 1What is the purpose of considering organizational culture while performing strategy analysis tasks?A)Because it will provide a capability-centric view of the organization as input to a gap analysis between the current and desired future state.B)Because it will provide a process-centric view of the organization as input to a gap analysis between the current and desired future state.C)Because shared beliefs drive actions taken by an organization.D)To identify if cultural changes are required to achieve future goals. => True
+Question 1Joy is a business analyst and is working with her project manager on a project to automate a manual process. They are working together on a work breakdown structure (WBS) to break down which type of scope?
+A)Product scope.
+B)Process scope.
+C)Solution scope.
+D)Project scope. => true
 
-Question 2As a BA with some expertise in business process re-engineering, you would like to capture the current business process flows for a business unit within the company before a software automation project is undertaken. But, the sponsor says there is not enough time. How would you present your reasons?A)Documenting current processes will help uncover the steps in the current process that need to change before the software can deliver forecasted value. =>TrueB)Documenting current processes will ensure stakeholder groups have not been overlooked.C)Process modeling now will most likely save rework in the future.D)Business process engineering is a well-established technique for uncovering inefficiencies and advocating change within an organization.
+Question 2Which of the following statements best describes a common test for assessing business objectives?
+A)Specific, measurable, achievable, relevant, time-bounded. => true
+B)Specific, manageable, achievable, relevant, time-bounded.
+C)Specific, measurable, achievable, relevant, testable.
+D)Specific, measurable, achievable, realistic, time-bounded.
 
-Question 3Derek and his team are brainstorming alternative approaches to a defined change. What task is Derek performing?A)Define future stateB)Develop recommendationC)Concept modelingD)Define change strategy =>True
+Question 3Tony has listed a risk on the BA risk register that states, "The off-the-shelf solution will not interface with the existing accounting system without significant customization." Team members have asked him to remove it from the register. Why?
+A)Because it is a solution risk that will be addressed by the delivery team.
+B)Because the team has determined a solution.
+C)Because the statement is not a risk. => true
+D)Because it is a design risk and should be addressed by the solution architect.
 
-Question 4Julie is a BA working to help a business owner clarify the business need. The business owner wants to undertake an initiative to eliminate waste throughout her division. She says that such an initiative, which will be comprised of multiple projects, will have the benefits of improved safety, reduced time to deliver the organization's product, and increased customer satisfaction. The listed benefits are another way of articulating which of the following?A)Business objectivesB)Future state descriptionC)Desired outcomes =>TrueD)The business opportunity
+Question 4How much detail should the solution scope contain?
+A)The solution scope should be described in just enough detail to ensure the stakeholders understand what value will be delivered. => true
+B)The solution scope should be described in enough detail to effectively address the anticipated concerns of all key stakeholders, thus ensuring buy-in.
+C)The solution scope should describe the boundaries of the solution.
+D)The solution scope should be described in enough detail to allocate resources to the project.
 
-Question 5Ginger is a BA working in the investment area in a large financial institution. A new regulation has been passed that will force a change in the related business process as well as the associated software. The business area Ginger has been working with does not understand why Ginger does not simply ask the IT area to make a change in the software since the change is a result of a mandate. She replies that first she needs to understand the business need. Why?A)Understanding the business need will ensure the most cost-effective and viable way to fulfill the new regulatory requirement will be identified. => TRUEB)Ginger needs the information for the business case, no matter how self-evident it appears.C)Ginger wants to ensure documentation is robust, aligns to best practice, and "auditable" for the regulators.D)She needs to understand what the business is trying to achieve through the changes.
+Question 5Which of the following techniques can be used to help define the solution scope?
+A)Cost-benefit analysis
+B)Root cause analysis
+C)Functional decomposition => true
+D)Work breakdown structure
 
-Question 6Which of the following is NOT an element of business cases?A)Desired outcomes.B)Need assessment.C)Assess alternatives.D)Business plan. =>True
+Question 6Which of the following will NOT occur in strategy analysis?
+A)Determine the business architecture => true
+B)Document risk analysis results
+C)Determine the solution scope
+D)Perform a gap analysis
 
-Question 7Business analysts assist in planning the timing of the implementation to ensure all parties understand the impact on the organization and to ensure minimal disruption. Which of the following factors do NOT guide implementation?A)Ability of the organization to absorb the changeB)Project approach =>TrueC)Training schedulesD)Resource constraints
+Question 7Policies, budget, time, and resource availability are all types of __________________ ?
+A)Capabilities
+B)Resources
+C)Constraints => true
+D)Risks
 
-Question 8Which of the following are tasks within the strategy analysis knowledge area?A)Define current state, define future state, analyze risks, define solution strategyB)Define current state, define future state, assess risks, define change strategyC)Analyze current state, define future state, assess risks, define solution strategyD)Analyze current state, define future state, assess risks, define change strategy =>True
+Question 8Kate is studying an enterprise's current key metrics and performance indicators, IT systems, organization charts, business architecture, and policies. What sort of initiative is Kate most likely working on?
+A)A system integration initiative.
+B)There is not enough information in the scenario to infer what type of project Kate is working on.
+C)A process improvement initiative. => true
+D)An organizational change initiative.
 
-Question 9Susan is a business analyst who is creating a process map of the current product changeover process on a manufacturing line. The sponsor advises her not to waste time on the current process because "everybody knows it doesn't work!" Instead, he counsels her to research a best practice and train everyone on it as quickly as possible. What is Susan's best course of action?A)Agree with the sponsor to minimize conflict but continue process mapping as a tool to use in analysis of the current state.B)Respectfully explain that the current process will be documented and analyzed just to the point of identifying what exactly will need to change so the effects of the change can be assessed. =>TrueC)Agree that in this situation it makes sense to research best practice and implement it as soon as possible to maximize business value.D)Susan should quickly develop a cost/benefit analysis of pursuing her current course of action to demonstrate the overall value to her sponsor.
+Question 9Jessica is the lead business analyst for a major upgrade of enterprise resource planning (ERP) software for her company. She is concerned about the risks associated with achieving the future state that the sponsor wants for the enterprise. Besides the sponsor, which of the following stakeholders would be sensible to invite to the meeting?
+A)Customers
+B)End-users
+C)Business analysts
+D)Suppliers => true
 
-Question 10When analyzing the current state of an organization, a business analyst may perform a cultural assessment. Which of the following is NOT true regarding the value of a cultural assessment?A)A cultural assessment will identify which processes and tools are sufficient enough to support the new solution. =>TrueB)A cultural assessment will ascertain whether or not stakeholders believe change is necessary.C)A cultural assessment will identify if cultural changes are required to achieve goals.D)A cultural assessment will ascertain whether or not stakeholders view the current state as satisfactory.
+Question 10William conducted a brainstorming session with several key stakeholders to generate potential solutions. They identified several possible ways to satisfy the business objectives of an organization. How will William ultimately determine which solution options to seriously consider?
+A)He could use the Delphi technique to objectively prioritize the list of options.
+B)In part, he will calculate the opportunity cost of each option. => true
+C)He would ask the team to prioritize the options based upon their collective expertise.
+D)Initially, he will discuss the options at a high level with the sponsor in order to determine which options to pursue further.
 
-Question 11Peggy is applying her findings of the gap analysis to the solution scope and change strategy. What should she keep in mind during this exercise?A)That the gap analysis findings may have to be allocated to various releases defined in the project scope.B)The most timely way to acquire new capabilities so the business can realize value as quickly as possible.C)That the same techniques should be used to describe the current and future states to simplify the comparison.D)The findings must be applied to both the transition and future states. =>True
+Question 11Which of the following is an output of the define change strategy task?
+A)Solution scope => true
+B)Alternatives analysis
+C)Risk analysis results
+D)Potential value
 
-Question 12Elizabeth is working on a complex government-regulated project where a great deal of uncertainty exists because of unknown requirements that do not show up in the government file specification. How might Elizabeth and other stakeholders identify potential negative impacts to value?A)There isn't enough information in the government's specification to identify potential negative value impacts.B)Utilize lessons learned from past projects and expert judgment from pertinent stakeholders. =>TrueC)Perform document analysis.D)Schedule an interview with relevant government personnel to obtain more specific information.
+Question 12You have been instructed to compare your organizational practices against the best-in-class practices at other companies. What do you need to perform?
+A)A benchmark study => true
+B)A focus group
+C)Market analysis
+D)A feasibility study
 
-Question 13Rhonda is a BA reviewing the issues that surfaced on a similar project to the one she is currently assigned to that was closed two years ago. What would be the value in reviewing past issues from similar projects?A)Reviewing past issues could help identify risks for the current project. =>TrueB)Reviewing past issues will help Rhonda understand which stakeholder groups were impacted and so will assist in stakeholder identification.C)Reviewing past issues and their fixes could help establish the amount of money needed for the contingency reserves.D)Reviewing past issues could help identify the fix so the team won't have to recreate the wheel.
+Question 13Which techniques might you use during the assess risks task?
+A)Brainstorming, benchmarking, lessons learned
+B)Brainstorming, root cause analysis, variance analysis
+C)Brainstorming, financial analysis, lessons learned => true
+D)Brainstorming, functional decomposition, root cause analysis
 
-Question 14Which of the following techniques can be used to help define the solution scope?A)Root cause analysisB)Work breakdown structureC)Functional decomposition =>TrueD)Cost-benefit analysis
+Question 14Which task in the strategy analysis knowledge area uses business requirements as its sole input?
+A)Define future state => true
+B)Assess risks
+C)Define change strategy
+D)Validate requirements
 
-Question 15Your team is writing a business case and is having trouble agreeing on the business need. High level requirements have been elicited and a preferred solution identified, but the stakeholders are still conflicted about the business need. Which statement best describes the situation?A)Eliciting of requirements did not include the project sponsor.B)The team members are representing varying perspectives.C)Business needs were probably initially expressed along with a presumed solution. =>TrueD)The enterprise culture just isn't ready for a formal business analysis approach. An organizational assessment should be conducted.
+Question 15Which of the following statements is NOT a desired business outcome?
+A)Reduce waste.
+B)Increase customer satisfaction.
+C)Improve profitability by increasing sales or reducing cost.
+D)Upgrade the CRM solution to the latest release. => true
 
-Question 16According to the BABOK, what is business analysis?A)A set of stakeholder needs that are elicited, analyzed, structured, and specified for use in the design or implementation of a solution.B)The practice of enabling change in an enterprise by defining needs and recommending solutions that deliver value to stakeholders. =>TrueC)A collection of pre-project or early project activities and approaches for capturing the necessary view of the business to provide context to requirements and functional design work for a given initiative and/or for long-term planning.D)The process of eliciting, documenting, and managing requirements throughout the life cycle of a project.
+Question 16In order to confidently analyze the current state of an enterprise, what must the BA utilize as an input?
+A)Interview and workshop transcripts
+B)Confirmed elicitation results => true
+C)Unconfirmed elicitation results
+D)Elicitation activity plan
 
-Question 17Which of the following are quantitative benefits that might be included in a business case?A)Reduced inventory from having more accurate counts and through auto-replenishment. =>TrueB)Improved communication between order-entry and warehouse staff.C)Reduced defects as a result of using use cases on the project.D)Improved customer satisfaction as a result of better web site navigation.
+Question 17ROI is a key component of any form of financial analysis contained within a business case. What does it stand for?
+A)Return on intelligence
+B)Return on investment => true
+C)Return on information
+D)Return on interest
 
-Question 18You are in a meeting with key executives from around the company discussing long term, ongoing conditions the organization is striving to achieve. What is being discussed at this meeting?A)Business valuesB)Business synergyC)Business measurementsD)Organizational strategy =>True
+Question 18The business analyst has completed the identification and definition of why a change to a system is required. The business analyst has also identified new capabilities that the current system cannot perform and are required by the enterprise to achieve the business need. Risks have been identified and assessed. What is the business analyst's next step?
+A)Determine the organizational impacts.
+B)Determine the business process gaps.
+C)Determine the change strategy. => true
+D)Determine architectural gaps.
 
-Question 19Consider a scenario in which a sponsor has initiated an effort to purchase and install a COTS (commercial off-the-shelf) package. You discover that no other analysis work has been performed. What is the first thing you do?A)Perform a gap analysis to ensure capabilities exist in the current state organization to support the COTS solution.B)Define the business need that the COTS package is intended to address. =>TrueC)Determine if and how the COTS package meets the business need.D)Determine the approach to implementing the COTS solution.
+Question 19Kathy is analyzing the current state and working with her team and stakeholders to identify and define why a requested change is needed. What is the output of the task Kathy is working on?
+A)Elicitation results (confirmed)
+B)Business goals
+C)Business requirements => true
+D)Stakeholder engagement approach
 
-Question 20As a BA you are called upon to participate in a strategic workshop to identify change strategies. What will be your most likely role in the discussion?A)Facilitator =>TrueB)Decision makerC)InfluencerD)Arbitrator
+Question 20Rachel was just hired as a BA from an organization where she was instrumental in the identification and deployment of a particular Customer Relationship Management system and has a strong relationship with the vendor. The new organization is facing similar challenges as her previous employer and has asked her to accept the role of a BA on an initiative to address those challenges. She respectfully declined the role. Why is that?
+A)She signed a non-compete agreement with her previous employer.
+B)She is concerned that this may represent a conflict of interest.
+C)She is concerned that her previous experience may result in a sub-optimal recommendation. => true
+D)She would like to work on something new to assist in career development.
 
-Question 21Which of the following are tasks within the strategy analysis knowledge area?A)Analyze current state, define future state, assess risks, define solution strategyB)Define current state, define future state, analyze risks, define solution strategyC)Analyze current state, define future state, assess risks, define change strategy =>TrueD)Define current state, define future state, assess risks, define change strategy
+Question 21The business analyst is working with stakeholders and the project team to evaluate and rule out options not believed viable. What is the ultimate output that the business analyst is trying to produce?
+A)Future state description
+B)Gap analysis
+C)Change strategy
+D)Solution scope => true
 
-Question 22Which of the following will NOT occur in strategy analysis?A)Determine the solution scopeB)Determine the business architecture =>TrueC)Document risk analysis resultsD)Perform a gap analysis
+Question 22An organization seeks to increase employee satisfaction within the next year. What is this an example of?
+A)Business goal => true
+B)Potential value
+C)Business requirement
+D)Business objective
 
-Question 23Which of the following are outputs of the define future state task?A)Business goals and objectives, capability analysis, potential valueB)Business objectives, future state description, potential value =>TrueC)Business goals and objectives, future state description, potential valueD)Business objectives, capability analysis, potential value
+Question 23Functional decomposition can be used by a BA to analyze which type of scope?
+A)Process scope.
+B)Product scope. => true
+C)Project scope.
+D)Organizational scope.
 
-Question 24How does a business analyst decide if a change strategy is needed?A)When the organization needs to create missing or improve existing capabilities in order to achieve the future state. =>TrueB)When the business analyst determines a change strategy would help the enterprise transition to its future state.C)When an organization is moving from a current to future state.D)When the organization needs to create missing capabilities to achieve the future state.
+Question 24What the purpose of benchmarking and market analysis?
+A)To acquire information in order to support the various decision-making processes within an organization.
+B)To improve interrelationships and mutual understanding among organizations in the same industry.
+C)To compare organizational practices against the best-in-class practices.
+D)To improve organizational operations, increase customer satisfaction, and increase value to stakeholders. => true
 
-Question 25Sofia is a BA who has just helped a business owner define a business need relating to a new service that her company wants to offer. The company is expecting this new service to increase revenues, increase market share, and reduce customer complaints. She, along with key stakeholders, have generated alternative change strategies related to the new service and are completing business cases to support a recommendation. Sofia realizes that she has no idea of the potential business and technical ramifications or magnitude of the effort. She realizes she needs to step back and complete which task/element/technique next?A)Sofia and her team need to assess risks. =>TrueB)Sofia and her team need to analyze constraints, assumptions, and dependencies associated with their recommended solution.C)Sofia and her team need to define the potential negative impact to value of the recommended solution.D)Sofia and her team need to identify risks.
+Question 25What is the purpose of a focus group?
+A)A quantitative means to elicit ideas and opinions about a specific product, service, or opportunity through a research.
+B)A means to collaborate and build a strong and cohesive team in order to satisfy stakeholders needs.
+C)A means to elicit ideas and opinions about a specific product, service, or opportunity in an interactive group environment. => true
+D)A means to elicit information by viewing and understanding activities and their context.
 
-Question 26A growing financial institution is seeking innovative and state-of-the-art solutions that will produce sustainable competitive advantage over its competitors and provide customers with a legendary experience. Which technique is the institution LEAST likely to use in understanding the product that would serve this purpose?A)Benchmarking and market analysis. =>TrueB)Brainstorming.C)Document analysis.D)Lessons learned.
+Question 26Derek and his team are brainstorming alternative approaches to a defined change. What task is Derek performing?
+A)Concept modeling
+B)Define future state
+C)Define change strategy => true
+D)Develop recommendation
 
-Question 27When analyzing the current state, business analysts should identify external influences that might be acting as constraints, dependencies, or drivers. Which of the following does NOT represent an external influence?A)CompetitorsB)CustomersC)Microeconomic factors =>TrueD)Suppliers
+Question 27Farouk is a business analyst working with a business owner to define the business requirements related to a new opportunity in his organization. He works in a company that produces bathroom fixtures. The company is known not only for high-end fixtures that are sold world-wide, but for its outstanding customer service. What factors will Farouk consider in order to document business requirements?
+A)Farouk needs to understand the cost of doing nothing; in other words, not pursuing the opportunity.
+B)Farouk needs a thorough understanding of the opportunity and possible benefits given organizational constraints. => true
+C)Farouk will focus on understanding why the change is needed along with expected benefits from pursuing the opportunity.
+D)The underlying source of the opportunity and the associated risks and their costs.
 
-Question 28Joy is a business analyst and is working with her project manager on a project to automate a manual process. They are working together on a work breakdown structure (WBS) to break down which type of scope?A)Product scope.B)Project scope. =>TrueC)Process scope.D)Solution scope.
+Question 28Consider a scenario in which a sponsor has initiated an effort to purchase and install a COTS (commercial off-the-shelf) package. You discover that no other analysis work has been performed. What is the first thing you do?
+A)Determine if and how the COTS package meets the business need.
+B)Determine the approach to implementing the COTS solution.
+C)Perform a gap analysis to ensure capabilities exist in the current state organization to support the COTS solution.
+D)Define the business need that the COTS package is intended to address. => true
 
-Question 29Why is it important for business analysts to familiarize themselves with relevant business policies while analyzing the current state?A)Policies describe the organization's governance structure which is important for the BA to thoroughly understand to align to the requirements of the enterprise.B)Policies will provide the BA insight with how existing work is performed.C)Policies contain decision-making roles and responsibilities.D)Policies contain constraints within which potential solutions must be developed. =>True
+Question 29You are in a meeting with key executives from around the company discussing long term, ongoing conditions the organization is striving to achieve. What is being discussed at this meeting?
+A)Business measurements
+B)Business synergy
+C)Organizational strategy => true
+D)Business values
 
-Question 30ROI takes into consideration the cost of the investment and the forecasted benefits of the change. Cameron is meeting with stakeholders to understand what the training costs will be for the recommended solution. What is Cameron trying to understand?A)The total cost of ownership for the solution =>TrueB)The ratio of costs to benefitsC)Timeline for getting end-users up to speed with how to use the solutionD)Value realization
+Question 30Gracie owns a small office building. She recently changed cleaning services to reduce expenses. During the first week of the new service, she discovered that the change resulted in a change in the frequency of cleaning the bathrooms, as well as a change in the way tenants handled their trash. Since making the change, Gracie has received more complaints about the new cleaning service than she had the prior three months total. What techniques might have helped Gracie with this change?
+A)Developing business goals and objectives.
+B)Performing a SWOT analysis and creating a scorecard.
+C)Identifying what would make the future state acceptable and creating a business case.
+D)Identifying what would make the future state acceptable and then assessing the potential value offered by vendors in relationship to that criteria. => true
+
+Question 31Rhonda is a BA reviewing the issues that surfaced on a similar project to the one she is currently assigned to that was closed two years ago. What would be the value in reviewing past issues from similar projects?
+A)Reviewing past issues will help Rhonda understand which stakeholder groups were impacted and so will assist in stakeholder identification.
+B)Reviewing past issues could help identify risks for the current project. => true
+C)Reviewing past issues could help identify the fix so the team won't have to recreate the wheel.
+D)Reviewing past issues and their fixes could help establish the amount of money needed for the contingency reserves.
+
+Question 32if anything
+A)in the environment changed to understand the cause for the marked improvement.",Double check the year-to-date results to ensure data precision and integrity.,"Before determining how to continue => true
+B)Miriam has to discern what
+C)if anything
+D)changed in the environment and if whatever changed will significantly modify the current state definition and/or analysis activities. BABOK 6.1.2",3
+
+Question 33Which document provides stakeholders with an understanding of what new capabilities will be delivered in the change initiative?
+A)Solution scope => true
+B)Solution approach
+C)Solution option
+D)Project vision
+
+Question 34Which of the following are tasks within the strategy analysis knowledge area?
+A)Define current state, define future state, assess risks, define change strategy
+B)Analyze current state, define future state, assess risks, define solution strategy
+C)Analyze current state, define future state, assess risks, define change strategy => true
+D)Define current state, define future state, analyze risks, define solution strategy
+
+Question 35In what situation would a feasibility analysis be MOST useful?
+A)Migrating critical applications to a cloud environment. => true
+B)Resolving a business problem.
+C)Buying a COTS package.
+D)When a sponsor places constraints on a solution option.
+
+Question 36Which of the following are tasks within the strategy analysis knowledge area?
+A)Define current state, define future state, assess risks, define change strategy
+B)Analyze current state, define future state, assess risks, define solution strategy
+C)Analyze current state, define future state, assess risks, define change strategy => true
+D)Define current state, define future state, analyze risks, define solution strategy
+
+Question 37When executing the task of assessing risks, which of the following are inputs?
+A)Confirmed elicitation results, prioritized designs, prioritized requirements, business objectives, potential value => true
+B)Business goals, confirmed elicitation results, prioritized designs, prioritized requirements, business objectives
+C)Business goals, stated elicitation results, prioritized designs, prioritized requirements, business objectives
+D)Stated elicitation results, prioritized designs, prioritized requirements, business objectives, potential value
+
+Question 38Which of the following are tasks within the strategy analysis knowledge area?
+A)Define current state, define future state, analyze risks, define solution strategy
+B)Analyze current state, define future state, assess risks, define change strategy => true
+C)Define current state, define future state, assess risks, define change strategy
+D)Analyze current state, define future state, assess risks, define solution strategy
+
+Question 39Sam's recommendation was unanimously approved by the steering team. What really sold decision makers were the forecasted benefits of the future state he modeled with incredible detail. How will Sam utilize that forecasted potential value in the business analysis process?
+A)Sam will define metrics and key performance indicators from which to measure solution performance once the future state is implemented.
+B)Sam assessed and reported the potential value in order to drive consensus among decision makers. Since consensus was reached, the primary purpose of the forecasted benefits has been fulfilled.
+C)Sam will ensure that all requirements and designs support the delivery of forecasted benefits. => true
+D)Sam will ensure that requirements and designs meet quality standards and are usable for the purpose they serve.
+
+Question 40When should strategy analysis be performed?
+A)Before requirements are elicited for any given change
+B)Anytime it makes sense to do so
+C)Prior to planning the business analysis approach
+D)When a business need is identified => true
+
+Question 41ROI takes into consideration the cost of the investment and the forecasted benefits of the change. Cameron is meeting with stakeholders to understand what the training costs will be for the recommended solution. What is Cameron trying to understand?
+A)The total cost of ownership for the solution => true
+B)The ratio of costs to benefits
+C)Value realization
+D)Timeline for getting end-users up to speed with how to use the solution
+
+Question 42Financial resources, patents, reputation, and brand names are all examples of which of the following elements?
+A)Business architecture
+B)Macroeconomic factors
+C)Internal assets => true
+D)Capabilities
+
+Question 43Why is it important for business analysts to familiarize themselves with relevant business policies while analyzing the current state?
+A)Policies describe the organization's governance structure which is important for the BA to thoroughly understand to align to the requirements of the enterprise.
+B)Policies will provide the BA insight with how existing work is performed.
+C)Policies contain constraints within which potential solutions must be developed. => true
+D)Policies contain decision-making roles and responsibilities.
+
+Question 44Liz conducted focus groups with dissatisfied customers to identify the root cause(s) of declining customer satisfaction scores, researched cost-effective solutions, performed a detailed cost/benefit analysis for each option, and presented a recommendation to the Director of Support Services in a business case. Liz was incredibly proud of her work. The director and other key stakeholders were not impressed and deferred her recommendation. What is the most likely reason for the lack of support for Liz's recommendation?
+A)Liz conducted the work on her own and failed to collaborate with stakeholders. => true
+B)The director didn't support the financial assumptions in the analysis and so had little faith in the overall cost/benefit analysis.
+C)Liz failed to use multiple elicitation techniques so decision-makers were hesitant to believe the identified root cause(s).
+D)Liz presented her work to a key stakeholder vs. the decision-maker (sponsor).
+
+Question 45James is exploring various strategies to transform the enterprise from its current to their desired future state. How many business cases might James develop in support of his final recommendation?
+A)One business case per change strategy. => true
+B)One business case for each alternative solution that was considered.
+C)One business case for the final recommendation.
+D)It depends upon the culture of the organization.
+
+Question 46Which of the following are quantitative benefits that might be included in a business case?
+A)Reduced inventory from having more accurate counts and through auto-replenishment. => true
+B)Reduced defects as a result of using use cases on the project.
+C)Improved customer satisfaction as a result of better web site navigation.
+D)Improved communication between order-entry and warehouse staff.
+
+Question 47Clara is a new BA on an initiative. Tomas, the BA who defined the business need and the future state, was transferred to the company's headquarters. The instructions he left Clara were to look at the existing capabilities related to the business need and desired outcomes, and figure out what was needed to realize the future state. Clara was unsure of what capabilities meant, thinking that they were system features. Tomas coached her that capabilities could include:
+A)Functions, processes, locations => true
+B)Functions, processes, products
+C)Functions, processes, and solution scope
+D)Lines of service, processes, products
+
+Question 48Which of the following statements best describes the role of the Domain SME in defining the change strategy?
+A)Ensures adherence to various regulations.
+B)Develops the financial analysis for strategy selection. => true
+C)Authorizes and ensures funding for solution delivery.
+D)Ensures the change will function within acceptable parameters.
+
+Question 49Jasmine has gained consensus on the business requirements for a new initiative. What did those business requirements include?
+A)The problem, opportunity, or constraint that has been defined through analyzing the current state. => true
+B)The problem, opportunity, assumptions, and constraints that have been defined through analyzing the current state.
+C)The problem, opportunity, and high level desired business outcomes that have been defined through analyzing the current state.
+D)The problem or opportunity that has been defined through analyzing the current state.
+
+Question 50Sean, a BA, is working with a business owner to clarify the organization's business objectives. The business owner keeps talking about the current situation and a new project to automate a cumbersome business process. Sean tries to bring her back to the business objectives. Finally the business owner says that she has three business objectives: increase employee satisfaction, improve revenues by increasing sales, and comply with new regulations. Sean is not comfortable with these business objectives. Why?
+A)They do not state the business benefits.
+B)They do not state the business problem or opportunity.
+C)They are stated but not confirmed.
+D)They are not measurable. => true
+
+Question 51A growing financial institution is seeking innovative and state-of-the-art solutions that will produce sustainable competitive advantage over its competitors and provide customers with a legendary experience. Which technique is the institution LEAST likely to use in understanding the product that would serve this purpose?
+A)Benchmarking and market analysis. => true
+B)Brainstorming.
+C)Lessons learned.
+D)Document analysis.
+
+Question 52Which of the following is NOT a direct input in the define change strategy task?
+A)Solution recommendations => true
+B)Future state description
+C)Risk analysis results
+D)Stakeholder engagement approach
+
+Question 53Mary is a business analyst who has collaborated with stakeholders and successfully identified the primary root cause related to the business need. To fix the problem, she and her team have generated several alternative solutions including the forecasted financial costs and benefits associated with each option. However, the decision-maker still is not sold. What might be missing from Mary's presentation?
+A)The root cause so the alternative solutions are lacking context.
+B)The costs and benefits associated with doing nothing. => true
+C)Net present value and internal rate of return.
+D)The business need so they know what problem they are trying to solve.
+
+Question 54According to the BABOK, what is business analysis?
+A)A collection of pre-project or early project activities and approaches for capturing the necessary view of the business to provide context to requirements and functional design work for a given initiative and/or for long-term planning.
+B)The practice of enabling change in an enterprise by defining needs and recommending solutions that deliver value to stakeholders. => true
+C)The process of eliciting, documenting, and managing requirements throughout the life cycle of a project.
+D)A set of stakeholder needs that are elicited, analyzed, structured, and specified for use in the design or implementation of a solution.
+
+Question 55When analyzing the current state, business analysts should identify external influences that might be acting as constraints, dependencies, or drivers. Which of the following does NOT represent an external influence?
+A)Suppliers
+B)Microeconomic factors => true
+C)Customers
+D)Competitors
+
+Question 56What is the purpose of considering organizational culture while performing strategy analysis tasks?
+A)Because it will provide a capability-centric view of the organization as input to a gap analysis between the current and desired future state.
+B)Because shared beliefs drive actions taken by an organization.
+C)To identify if cultural changes are required to achieve future goals. => true
+D)Because it will provide a process-centric view of the organization as input to a gap analysis between the current and desired future state.
+
+Question 57Which of the following best identifies the method and life cycle by which a solution may be delivered?
+A)Solution scope
+B)Transition states and release planning => true
+C)Enterprise architecture
+D)Change strategy
+
+Question 58As part of identifying and understanding an organization's business rules, Dakota has created and plans to present a class diagram to business stakeholders to validate her findings. She received significant pushback from the stakeholders saying the model was "too technical." What could Dakota create that might be more business-friendly?
+A)Concept model. => true
+B)A state diagram.
+C)Data model.
+D)A PowerPoint presentation bulleting the business rules.
+
+Question 59How would utilizing decision analysis in the development of a business case prove beneficial?
+A)The decision models included would prevent the team from having to recreate the wheel.
+B)Used to assess potential risks that may impact the solution and the costs and benefits associated with it.
+C)Compares the costs of implementing a solution against the benefits to be gained given identified risks. => true
+D)Assists in estimating cost projections for the technology and new processes required to support the new solution.
+
+Question 60Which of the following are tasks within the strategy analysis knowledge area?
+A)Analyze current state, define future state, assess risks, define change strategy => true
+B)Define current state, define future state, analyze risks, define solution strategy
+C)Analyze current state, define future state, assess risks, define solution strategy
+D)Define current state, define future state, assess risks, define change strategy
+
+Question 61You have been hired on as the business analyst on the process improvement project. You have constructed process models of the current state, and are now assessing the process for its efficiency and effectiveness. The project manager has asked you to provide a one-page picture of all the steps involved in the end-to-end process, including both value-adding and non-value-adding elements. What process analysis method would be helpful to achieve your goal use?
+A)Value stream mapping (VSM). => true
+B)Conceptual data modal.
+C)SIPOC.
+D)Agile.
+
+Question 62Which of the following is NOT a term used to describe a stakeholder's risk attitude?
+A)Neutrality
+B)Risk-aversion
+C)Risk threshold => true
+D)Risk-seeking
+
+Question 63Susan is a business analyst who is creating a process map of the current product changeover process on a manufacturing line. The sponsor advises her not to waste time on the current process because "everybody knows it doesn't work!" Instead, he counsels her to research a best practice and train everyone on it as quickly as possible. What is Susan's best course of action?
+A)Susan should quickly develop a cost/benefit analysis of pursuing her current course of action to demonstrate the overall value to her sponsor.
+B)Agree with the sponsor to minimize conflict but continue process mapping as a tool to use in analysis of the current state.
+C)Agree that in this situation it makes sense to research best practice and implement it as soon as possible to maximize business value.
+D)Respectfully explain that the current process will be documented and analyzed just to the point of identifying what exactly will need to change so the effects of the change can be assessed. => true
+
+Question 64Business analysts analyze the enterprise to assess its capacity to make the change and to sustain the change in the future state. What is this element called?
+A)Enterprise capacity assessment
+B)Organizational readiness assessment
+C)Organizational capacity assessment
+D)Enterprise readiness assessment => true
+
+Question 65As a BA assigned to improve an enterprise process to realize efficiency gains, which of the following analytic techniques would provide the most value?
+A)Value stream mapping
+B)SIPOC
+C)RACI matrix
+D)Activity diagrams => true
+
+Question 66As a BA you are called upon to participate in a strategic workshop to identify change strategies. What will be your most likely role in the discussion?
+A)Facilitator => true
+B)Influencer
+C)Decision maker
+D)Arbitrator
+
+Question 67How would a SWOT analysis be beneficial to the business case?
+A)Establishes key metrics to ensure the project performance goals are being met.
+B)Provides side-by-side comparison of the various change strategies. => true
+C)Forecasts the size of the investment required to deploy and operate the proposed solution.
+D)Provides a vendor assessment for the purchasing or outsourcing of the solution to ensure the right vendor is selected.
+
+Question 68Where does strategy analysis fall on the value spectrum?
+A)Strategy analysis focuses on potential value, designing that value, and delivering actualized value.
+B)Strategy analysis focuses on potential value, defining that value, and delivering actualized value.
+C)Strategy analysis focuses on defining value for the organization.
+D)Strategy analysis focuses on potential value. => true
+
+Question 69How does a business analyst decide if a change strategy is needed?
+A)When an organization is moving from a current to future state.
+B)When the organization needs to create missing or improve existing capabilities in order to achieve the future state. => true
+C)When the organization needs to create missing capabilities to achieve the future state.
+D)When the business analyst determines a change strategy would help the enterprise transition to its future state.
+
+Question 70Which of the following is NOT an element of business cases?
+A)Desired outcomes.
+B)Need assessment.
+C)Business plan. => true
+D)Assess alternatives.
+
+Question 71Ryan is a BA working on gathering information for a business case. He is using benchmarking studies of the competition. He has determined that the potential risks associated with implementation are roughly the same as the expected value. Which of the following would Ryan most likely recommend?
+A)Pursue the change and its potential benefits regardless of the risk level.
+B)Seek ways to increase solution value that will outweigh the risks. => true
+C)Recommend the organization not pursue the change.
+D)Pursue the change and invest in some risk mitigation.
+
+Question 72Your assignment over the past few weeks has been to research off-the-shelf software vendors who might be invited to bid on a request for proposal (RFP). The executive team is very near to making a decision whether to go forward with the project. However, you have recently uncovered a new constraint associated with the technical architecture that precludes an off-the-shelf solution. What deliverable might be most significantly impacted by your discovery at this stage of the project?
+A)Work division strategy.
+B)Enterprise architecture framework.
+C)Business case. => true
+D)Requirements baseline.
+
+Question 73Marc and his team are working to complete a gap analysis in order to write a business case to obtain funding for an initiative. The future state is defined and risks have been identified and assessed. Before long, the team realizes they are missing a key input to complete the analysis. What is it?
+A)The change strategy
+B)Transition requirements
+C)A comparison of requirements from key stakeholders
+D)The definition of the current state => true
+
+Question 74Which of the following is NOT a way to document a change strategy?
+A)Product roadmap
+B)Business case
+C)Project charter => true
+D)Strategic plan
+
+Question 75Julie is a BA working to help a business owner clarify the business need. The business owner wants to undertake an initiative to eliminate waste throughout her division. She says that such an initiative, which will be comprised of multiple projects, will have the benefits of improved safety, reduced time to deliver the organization's product, and increased customer satisfaction. The listed benefits are another way of articulating which of the following?
+A)Business objectives
+B)Future state description
+C)Desired outcomes => true
+D)The business opportunity
+
+Question 76Which of the following types of risk tolerance would be most likely to need a risk mitigation strategy?
+A)Risk-seeking
+B)Risk averse => true
+C)Risk transferring
+D)Neutrality
+
+Question 77Sofia is a BA who has just helped a business owner define a business need relating to a new service that her company wants to offer. The company is expecting this new service to increase revenues, increase market share, and reduce customer complaints. She, along with key stakeholders, have generated alternative change strategies related to the new service and are completing business cases to support a recommendation. Sofia realizes that she has no idea of the potential business and technical ramifications or magnitude of the effort. She realizes she needs to step back and complete which task/element/technique next?
+A)Sofia and her team need to identify risks.
+B)Sofia and her team need to assess risks. => true
+C)Sofia and her team need to analyze constraints, assumptions, and dependencies associated with their recommended solution.
+D)Sofia and her team need to define the potential negative impact to value of the recommended solution.
+
+Question 78Moira is a BA facilitating a discussion with stakeholders regarding the implementation strategy for a solution. The sponsor is pressuring the team to implement the solution by year end; their busiest time of year with the holidays. She ensures the conversation takes into consideration which of the following critical factors?
+A)Ability to train end-users by year end given the fact that it is their busiest time of the year.
+B)Key stakeholder requirements.
+C)Minimal disruption to business activities and related organizational impacts. => true
+D)Availability of the delivery team due to the holidays and resources' vacation schedules.
+
+Question 79Your team is writing a business case and is having trouble agreeing on the business need. High level requirements have been elicited and a preferred solution identified, but the stakeholders are still conflicted about the business need. Which statement best describes the situation?
+A)Business needs were probably initially expressed along with a presumed solution. => true
+B)The enterprise culture just isn't ready for a formal business analysis approach. An organizational assessment should be conducted.
+C)The team members are representing varying perspectives.
+D)Eliciting of requirements did not include the project sponsor.
+
+Question 80As a BA with some expertise in business process re-engineering, you would like to capture the current business process flows for a business unit within the company before a software automation project is undertaken. But, the sponsor says there is not enough time. How would you present your reasons?
+A)Business process engineering is a well-established technique for uncovering inefficiencies and advocating change within an organization.
+B)Documenting current processes will ensure stakeholder groups have not been overlooked.
+C)Documenting current processes will help uncover the steps in the current process that need to change before the software can deliver forecasted value. => true
+D)Process modeling now will most likely save rework in the future.
+
+Question 81When analyzing the current state of an organization, a business analyst may perform a cultural assessment. Which of the following is NOT true regarding the value of a cultural assessment?
+A)A cultural assessment will ascertain whether or not stakeholders believe change is necessary.
+B)A cultural assessment will identify if cultural changes are required to achieve goals.
+C)A cultural assessment will ascertain whether or not stakeholders view the current state as satisfactory.
+D)A cultural assessment will identify which processes and tools are sufficient enough to support the new solution. => true
+
+Question 82What is the best description of the strategy analysis knowledge area?
+A)Strategy analysis consists of the collection of pre-project activities for capturing future views of the business to provide context for Elicitation.
+B)The strategy analysis knowledge area begins when a business need is identified, analyzes the current state, and enables the enterprise to effectively address that need by defining the future and transition states. => true
+C)Strategy analysis begins when a business need is identified and ends when projects are initiated.
+D)Strategy analysis focuses on understanding the current state and identifying obstacles keeping the organization from reaching its goals.
+
+Question 83Peggy is applying her findings of the gap analysis to the solution scope and change strategy. What should she keep in mind during this exercise?
+A)The most timely way to acquire new capabilities so the business can realize value as quickly as possible.
+B)The findings must be applied to both the transition and future states. => true
+C)That the gap analysis findings may have to be allocated to various releases defined in the project scope.
+D)That the same techniques should be used to describe the current and future states to simplify the comparison.
+
+Question 84Elizabeth is working on a complex government-regulated project where a great deal of uncertainty exists because of unknown requirements that do not show up in the government file specification. How might Elizabeth and other stakeholders identify potential negative impacts to value?
+A)There isn't enough information in the government's specification to identify potential negative value impacts.
+B)Schedule an interview with relevant government personnel to obtain more specific information.
+C)Perform document analysis.
+D)Utilize lessons learned from past projects and expert judgment from pertinent stakeholders. => true
+
+Question 85Lydia is a BA working in a financial institution. The organization has not had success implementing commercial software. Every time a package has been bought, it seems to cause more trouble than it's worth with customization requirements, trouble with interfaces, etc. Lydia is torn between recommending a commercial software package and building the software. What technique/tool will best help her with this analysis?
+A)Decision model.
+B)Decision tree. => true
+C)A business case.
+D)Business capability analysis.
+
+Question 86Sangreeta is a BA assigned to the R&D function of a cell phone manufacturing company. The developers would like to obtain funding to create a phone battery that will automatically charge itself whenever it detects a wireless connection. Sangreeta has been charged with writing the business case to obtain funding for this exciting new venture. She has all the information she needs about the limitations of the current technology and the angst it causes customers who desire a longer battery life. She wants to ensure that she fully understands this opportunity. In order to do so, what might be her course of action?
+A)Sangreeta could survey customers who have submitted complaints regarding the current battery life in order to understand a viable price point for the battery.
+B)Write a business case using different scenarios in order to quantify benefits using a pessimistic, optimistic, and most likely view of sales velocity.
+C)Understand the size of the market, and gain competitive intelligence to hopefully understand potential price points for the battery. => true
+D)Sangreeta could conduct focus groups with representatives of the target market to understand what they would pay for the battery.
+
+Question 87Business analysts assist in planning the timing of the implementation to ensure all parties understand the impact on the organization and to ensure minimal disruption. Which of the following factors do NOT guide implementation?
+A)Ability of the organization to absorb the change
+B)Training schedules
+C)Resource constraints
+D)Project approach => true
+
+Question 88For which of the following tasks or elements would it be most appropriate to generate alternative approaches during strategy analysis?
+A)Acceptance and evaluation criteria
+B)Scope of the solution space
+C)Define change strategy => true
+D)Determine implementation approach
+
+Question 89Which of the following are outputs of the define future state task?
+A)Business goals and objectives, future state description, potential value
+B)Business objectives, future state description, potential value => true
+C)Business objectives, capability analysis, potential value
+D)Business goals and objectives, capability analysis, potential value
+
+Question 90Sonja is formulating a proposed change approach for her bank which wants to enable customers to apply for new accounts using a web site. The bank currently has limited web functionality and only permits new accounts to be opened at a branch. She is deciding which factors to include in her analysis. Which of the following factors should Sonja consider?
+A)Business rules that apply to the opening of new accounts.
+B)Risks involved with allowing new account applications through a web site.
+C)Alternative strategies for delivering the needed capabilities.
+D)Knowledge and skills of developers who could build new web pages. => true
+
+Question 91Ginger is a BA working in the investment area in a large financial institution. A new regulation has been passed that will force a change in the related business process as well as the associated software. The business area Ginger has been working with does not understand why Ginger does not simply ask the IT area to make a change in the software since the change is a result of a mandate. She replies that first she needs to understand the business need. Why?
+A)Ginger needs the information for the business case, no matter how self-evident it appears.
+B)She needs to understand what the business is trying to achieve through the changes.
+C)Ginger wants to ensure documentation is robust, aligns to best practice, and "auditable" for the regulators.
+D)Understanding the business need will ensure the most cost-effective and viable way to fulfill the new regulatory requirement will be identified. => true
+
+Question 92You have encountered a huge mental block in determining solution options for your project and the project implementation date just got moved up. You need options and you need them fast. Which of the following will best help you?
+A)Brainstorming => true
+B)Benchmarking
+C)Focus group
+D)Business Cases
