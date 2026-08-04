@@ -108,3 +108,30 @@ Question 52You are the business analyst for an on-line billing systems project. 
 Question 53Brad is the business analyst in his small business unit. The organization is undergoing restructuring and introducing changes to the business analysis approach. As part of the structural changes, Brad has been asked to assess each proposed change. In this activity, which of the following is LEAST likely to be a consideration?A)Each proposed change aligns with the business case. => TrueB)Each proposed change aligns with the overall strategy.C)Each proposed change affects value delivered to the business or stakeholder groups.D)Each proposed change impacts the time to deliver or the resources required to deliver the value.
 
 Question 54When are reused requirements first identified?A)Current state => TrueB)Changed stateC)Past stateD)Future state
+
+Question 55Maritza is a business analyst on a data strategy effort. Artifacts such as business models and business maps are created, reviewed, and approved individually without having to wait for the entire package. Which approach is being employed for this effort?A)Strategic approachB)Adaptive approach => TrueC)Analytical approachD)Predictive
+
+Question 56To maintain stakeholder support for the solution, consensus among stakeholders is usually sought prior to requesting approval of requirements. Which of the following stakeholders would you most closely work with to play an active role in reviewing and approving requirements and designs to ensure needs are met?A)Customer => TrueB)TesterC)RegulatorD)Consultant
+
+Question 57Prioritization is a critical exercise that seeks to ensure the maximum value is achieved from a change. As a business analyst, you might engage the following stakeholders to verify that the prioritized requirements will deliver value from a customer or end-user perspective. Which stakeholder are you LEAST likely to engage?A)SponsorB)Implementation subject matter expert => C)CustomerD)End user
+
+Question 58Adam is the lead business analyst in a data strategy initiative. The stakeholders on this initiative are having a difficult time coming to a consensus for one of the requirements, and hence there is a high probability that this requirement will change. He decides to give it a lower priority in order to minimize unanticipated rework and wasted effort. What ranking factor is Adam employing?A)Stability => TrueB)RiskC)Regulatory complianceD)Continual prioritization
+
+Question 59Which of the following is NOT an input into the assess requirement changes task?A)Proposed ChangeB)RequirementsC)Requirements and designs change assessment => TrueD)Designs
+
+Question 60What is the purpose of prioritizing requirements?A)To determine which requirements carry the most risk.B)To determine which requirements should be completed first.C)To ensure requirements align to one another and manage the effects of any proposed change.D)To rank requirements in the order of relative importance. => True
+
+Question 61The purpose of prioritizing requirements is to rank requirements in the order of relative importance. Which of the following can be the location where the prioritization is maintained?A)Backlog => TrueB)Decision registerC)Meeting minutesD)Repository
+
+Question 62Requirements change assessment is an output of which of the following tasks?A)Assess capability gapsB)Assess requirements changes => TrueC)Approve requirementsD)Requirements change assessment
+
+Question 63Nate is the senior business analyst for the NRO Company. He is working with Rod on completing the requirements prioritization of all the identified requirements. Why would Rod and Nate complete requirements prioritization?A)To determine which requirements should be completed first. => TrueB)To determine who created what requirement based on their position in the organization.C)To determine which requirements carry the most risk.D)To determine which requirements could be changed.
+
+Question 64When can a requirement be prioritized?A)Only during the prioritization of requirementsB)At any time in its life cycle => TrueC)Only if documented constraints and assumptions require it to be prioritizedD)During the prioritize requirements and allocate requirements tasks
+
+Question 65As the business analysis activity advances during an initiative, major budgetary constraints suddenly arise. The sponsor asks the team to focus their effort only on the most critical requirements. What should the Business Analyst do?A)Validate RequirementsB)Verify RequirementsC)Organize RequirementsD)Prioritize Requirements => True
+
+Question 66Stefan works at an IT shop in Vienna. He is in charge of identifying and managing risks associated with solution design, development, delivery, implementation, operation and sustainment. What type of stakeholder is Stefan?A)Domain SMEB)RegulatorC)Project manager => TrueD)Sponsor
+
+Question 67When considering changes or additions to existing requirements, business analysts assess the impact of the proposed change by considering several aspects, among them being what will be gained by accepting the change. What aspect is this?A)ScheduleB)ImpactC)UrgencyD)Benefit => True
+
