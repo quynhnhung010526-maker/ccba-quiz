@@ -1,61 +1,457 @@
 CCBA Practice - KA 8: Solution Evaluation
 
-Question 1After solution performance measures are defined, who is responsible to decide which measures are used to evaluating the solution performance?A)The business analyst.B)Project manager.C)The sponsor.D)Any stakeholder with decision-making authority. => True
+Question 1For the stakeholders that support analyzing performance metrics, which one can identify risks, and provide insights into the data and potential value of a solution?
+A)Domain subject matter expert
+B)Project manager
+C)Data analyst
+D)Sponsor => true
 
-Question 2Susan has just completed reviewing identified problems in a solution component. In completing her review, what goal is Susan looking to achieve?A)Determine the severity of the problems, the risks and limitations to the solution and the probability that the problem will reoccur.B)Assess the impact that the problems may have on the operation of the organization or the ability of the solution to deliver its potential value. => TrueC)Determine the impact on the business operations, whether the problem is apt to reoccur, and whether the organization can absorb the needed changes.D)Assess whether the organization can absorb the impact of the problem, as well as the risks to the the solution.
+Question 2You are a BA trying to understand how the organization's structure will be impacted by a solution. What do you need to assess?
+A)Formal reporting structures.
+B)Formal and informal relationships. => true
+C)Alliances and matrix-reporting.
+D)The organizational hierarchy.
 
-Question 3An IT organization recently introduced significant process changes for two teams in the areas of Change Management and Release and Deployment Management. It is critical that these two teams work closely together in the future state but they currently report to different directors who don't see eye-to-eye. This is causing process breakdowns between the teams. This is an example of which of the following?A)How value realization can be impacted by informal alliances.B)How value realization can be impacted by interpersonal conflict. => TrueC)How value realization can be impacted by power struggles.D)How value realization can be impacted by an organization's structure.
+Question 3After a long and challenging project, Roger has to determine if an enterprise is able to adapt to or effectively use the solution. What does Roger need to do in order to accomplish his goal?
+A)Assess the enterprise structure
+B)Conduct a cultural assessment
+C)Perform stakeholder impact analysis
+D)Conduct an operational assessment => true
 
-Question 4An organization has delayed replacing the operating system for employees' computers for years due to the costs associated with the change. Microsoft stopped supporting the operating system and employee productivity has suffered as repairs are delayed, if they happen at all. A BA recommends that the operating system be retired and replaced with the latest and greatest. Which of the following financial factors carried the most weight in the recommendation?A)Sunk costB)Necessity => TrueC)Ongoing cost vs initial investmentD)Opportunity cost
+Question 4What output has a business analyst developed when they can provide a description of the current limitations of the enterprise, including how the solution performance is impacting the enterprise?
+A)Risk analysis results
+B)Solution limitation
+C)Item tracking
+D)Enterprise limitation => true
 
-Question 5What are the inputs to the Solution Evaluation knowledge area?A)Implemented solution (external), current state description, business objectives, potential value. => TrueB)Solution performance measures, enterprise limitations, solution limitations, recommended actionsC)Implemented solution (external), future state description, business objectives, realized value.D)Implemented solution (external), recommend actions, potential value, solution performance analysis
+Question 5You have worked on a project to implement a new system. When the system was first deployed, it seemed to be performing well. However, as transactions increased over a six-month period, the application slowed to a level deemed unacceptable by the end-users. You have been asked to evaluate this performance. In order to get to the bottom of this, what do you need to have access to?
+A)An assessment of the solution performance.
+B)The current state description, the implemented solution, and solution performance analysis.
+C)The implemented solution and the results of the solution performance analysis. => true
+D)The implemented solution and business objectives.
 
-Question 6Which input describes the value that may be realized by implementing the proposed future state? It can be used as a benchmark against which solution performance can be evaluated.A)Solution performance measuresB)Relationship managementC)Potential Value => TrueD)Business objectives
+Question 6What are the guidelines and tools that are used to support analyzing performance measures?
+A)Project strategy, implementation scope, risk mitigation response, and performance analysis metrics.
+B)Acceptance and evaluation criteria, metrics and key performance measures, data mining, and root cause analysis.
+C)Solution performance analysis, solution performance measures, solution limitations, and recommended actions.
+D)Change strategy, future state description, risk analysis results, and solution scope. => true
 
-Question 7The leaders of a retail store employing approximately 100 floor personnel have been hearing more complaints from employees during the last three months about difficult co-workers, not enough vacation time, scheduling policies, etc. In addition, three valuable employees have given their notice during the last two months. Raja has been asked to evaluate employee satisfaction. The organization has no current performance measures in place.A)What is the biggest benefit the chosen technique from the previous question would provide?B)It would allow Raja to ascertain if the information elicited from the focus group was representative of all personnel.C)It would provide a quantitative baseline from which to measure improvement. => TrueD)It would provide a qualitative baseline from which to measure improvement.
+Question 7What are the inputs to the Solution Evaluation knowledge area?
+A)Implemented solution (external), future state description, business objectives, realized value.
+B)Implemented solution (external), recommend actions, potential value, solution performance analysis
+C)Implemented solution (external), current state description, business objectives, potential value. => true
+D)Solution performance measures, enterprise limitations, solution limitations, recommended actions
 
-Question 8Lucas is a BA on a high profile project. He has determined that that the solution is consistently or repeatedly producing ineffective outputs. What should Lucas do in order to address the source of the problem?A)Cultural assessmentB)Problem analysis => TrueC)Impact assessmentD)Business rules analysis
+Question 8What is the difference between the roles of a tester and the BA regarding the evaluation of solutions?
+A)The tester is typically responsible for identifying solution problems during a change vs. assessing an existing solution outside of a change. => true
+B)The BA and tester are both typically responsible for identifying solution problems during a change and the BA is responsible for assessing an existing solution outside of a change.
+C)They are interchangeable; they need to negotiate roles and responsibilities on a case-by-case basis.
+D)The BABOK doesn't suggest a delineation of responsibilities between these two roles for solution evaluation.
 
-Question 9Which stakeholders are identified for assessing enterprise limitations of an existing solution.A)Regulator, sponsor, project manager, domain subject matter expert.B)End user, project manager, regulator, customerC)Customer, sponsor, implementation subject matter expert, business architectD)Customer, sponsor, domain subject matter expert, regulator => True
+Question 9A solution architect has a paper prototype of the system for which you are the BA. She asks you to evaluate the solution to ensure it meets the defined measurements before she passes it on to the developers as she is going on vacation and won't be available for rework. How do you respond?
+A)You advise that your first evaluation is scheduled after development and will let her know the results.
+B)You advise her to talk to quality assurance as they will be conducting the tests.
+C)You trace the requirements to her design to provide confidence that the system will work.
+D)You suggest she build a working prototype for evaluation purposes before development. => true
 
-Question 10Peter and his team have defined desired performance measures to assess the performance of a solution. Many of these measures are new to the organization. What is Peter's next step?A)Trace the performance measures to business objectives.B)Ensure that the enterprise has methods in place to capture the measurements. => trueC)Assign ownership of, and determine the frequency of, measurements.D)Gain approval for the new measures.
+Question 10Maurice is defining performance measures for a new solution with his team. They are reviewing the change strategy, future state description, solution scope, and requirements. What state do the requirements have to be in for the team to consider them viable inputs to the process?
+A)Traced
+B)Unconfirmed
+C)Confirmed
+D)Validated => true
 
-Question 11Sierra discovered that an internal audit team performed audits the last calendar week of each month. The organization operates at a frenetic pace the last week of the month to meet production goals. What might Sierra further investigate as a concern?A)Perhaps the fact that audits are completed each month is too often; perhaps bi-monthly or quarterly makes more sense.B)Why the "frenetic" pace can't be spaced out across the month given the production goal.C)Perhaps the timing of the audits may have a negative impact on the outcome. => TrueD)Perhaps the entire facility doesn't need to be audited each month and that a sample of departments would be sufficient.
+Question 11If the performance measures defined to evaluate the effectiveness of a solution are not sufficient to help stakeholders determine solution value, what actions should a business analyst take to address the situation?
+A)Conduct change control and create high level estimates.
+B)Revisit the business objectives.
+C)Consider the time period used.
+D)Collect more measurements or treat the lack of measures as a solution risk. => true
 
-Question 12Phil is a BA on a project and is planning activities to evaluate the solution. The project is planned to have a total of four releases approximately four to six months apart. Each release builds upon the functionality in the prior release. When should Phil plan the assessments?A)During each proof of concept, before delivery, and after deployment. => TrueB)When there is indication that the solution isn't delivering expected value once deployed.C)It depends; whenever warranted or Phil believes evaluation would lend value.D)When it would add value but minimally after each release.
+Question 12A business analyst is conducting analysis to understand the factors that create differences between potential value and actual value of a solution, and to recommend a course of action to align them. What would the result of her efforts generate?
+A)Recommended actions to increase solution value => true
+B)Decision analysis
+C)Solution limitations
+D)Enterprise limitations
 
-Question 13Roberto is a BA working on a process improvement project. He has completed an assessment right before the new processes were scheduled to be fully deployed. The assessment concluded that a great deal of work will need to be done in order for the stakeholder groups he's been working with to effectively use the processes. He has found that no new policies have been issued, no procedures have been written, and little training has been done. What type of assessment was Roberto doing?A)Cultural assessmentB)Stakeholder impact analysisC)Technical assessmentD)Operational assessment => True
+Question 13Luis has been asked to complete a post-implementation evaluation of a new, automated system that was recently installed. After reviewing the project and the actual performance statistics, he saw that actual performance was better than the metrics that had been defined, yet there were frequent complaints from end-users and management about its usefulness. His final recommendation was that the system be eliminated. Which of the following might have prompted the recommendation?
+A)The original cost/benefit analysis completed during project initiation was faulty in that forecasted benefits were inflated.
+B)Although the performance was actually better than the defined performance metrics for the solution, the end-users complained about the new business process that was put in place in conjunction with the new system.
+C)Although the performance was actually better than the defined performance metrics for the solution, many of the stakeholders complained about the slow system response time.
+D)Although the performance was actually better than the defined performance metrics for the solution, the solution may not have addressed the business need for which the project was undertaken and was redundant. => true
 
-Question 14A business analyst is conducting analysis to understand the factors that create differences between potential value and actual value of a solution, and to recommend a course of action to align them. What would the result of her efforts generate?A)Solution limitationsB)Enterprise limitationsC)Recommended actions to increase solution value => trueD)Decision analysis
+Question 14Which inputs would be leveraged by the business analyst to support measuring solution performance ?
+A)Implemented solution (external), business objectives. => true
+B)Current state description.
+C)Budget and timeline.
+D)Implemented solution (internal), business objectives.
 
-Question 15Anu is an experienced business analyst who is working on a project where senior management are looking for her input on the replacement of an existing solution. She has identified the fact that the solution has reached the end of its life. What recommendation should Anu make to senior management?A)Identify additional capabilitiesB)Reduce complexity of interfacesC)Make organizational changesD)Retire the solution => true
+Question 15Which stakeholders are identified for assessing enterprise limitations of an existing solution.
+A)Regulator, sponsor, project manager, domain subject matter expert.
+B)Customer, sponsor, implementation subject matter expert, business architect
+C)End user, project manager, regulator, customer
+D)Customer, sponsor, domain subject matter expert, regulator => true
 
-Question 16Steven works at an IT shop in North Carolina as a business analyst. He is in charge of determining what cultural changes are required to better realize value from an existing solution. What is the key action he is accomplishing for the organization?A)Performing impact analysisB)Eliminating risksC)Performing cultural assessment => TrueD)Conducting needs analysis
+Question 16Jake is evaluating an existing solution. He determines that the existing metrics can't be considered quality indicators and recommends modifications. He adds in his report that he does, however, consider them valid. What could lead Jake to his conclusion?
+A)Existing indicators can't be considered reliable because they aren't collected frequently enough. => true
+B)There seemingly aren't "key" performance indicators which every solution is required to have.
+C)The environment has changed and so the existing indicators aren't reliable.
+D)Stakeholder expectations have changed and so the existing indicators aren't reliable.
 
-Question 17You are assessing the effectiveness of a new governance structure that was just put in place as part of a portfolio management program. One of the complaints from stakeholders is that decisions take too long to make. You discover that approvals involve review from three decision-making bodies that meet monthly before obtaining final approval from the sponsor and portfolio manager. You submit a recommendation to simplify this process by eliminating some of the back and forth. How would this recommendation be categorized?A)Reducing complexity of interfaces. => TrueB)Making organizational changes.C)Identifying additional capabilities.D)Avoiding waste.
+Question 17Which tool used to support assessing enterprise limitations is defined as follows: "Boundaries of the proposed new, removed, or modified components of the enterprise, as well as the potential value expected from the future state"?
+A)Future state descriptions => true
+B)Solution scope
+C)Current state description
+D)Risk analysis results
 
-Question 18Val is a BA who has been asked to evaluate a software solution which supports vital business functions. When the software doesn't perform, employees can't perform! Val discovers after analyzing three months worth of recent data that the software's transacting ability deteriorates noticeably around lunch time and significantly every Thursday about 4 pm. What has Val discovered?A)A trend => TrueB)A patternC)A themeD)A variance
+Question 18Katelyn is a BA who has recommended that she perform an enterprise cultural assessment to understand why stakeholders aren't using a new solution to the extent forecasted. Which of the following is the best way to define enterprise culture?
+A)They are the deeply rooted beliefs, values, actions, and norms shared by members of an enterprise.
+B)They are the deeply rooted beliefs, values, and norms shared by members of an enterprise. => true
+C)They are the deeply rooted beliefs, values, actions, thoughts, and norms shared by members of an enterprise.
+D)They are the deeply rooted beliefs, values, thoughts, and norms shared by members of an enterprise.
 
-Question 19The corporate office of a financial services company recently locked into a new one-year health care plan, that while saving the organization a substantial amount of money for the year, significantly changed the terms of the employees' health care plans. That change was found to be the reason for a recent decrease in employee satisfaction. Upon discovery that the change in the health care plan caused lower employee satisfaction and considering all other factors, the BA recommended that the organization "do nothing." Was this the right recommendation?A)No; there is always something you can do.B)No; the BA should recommend a way to enhance it to increase solution value.C)Yes; it is not feasible or even possible to change it. => TrueD)No; the BA should recommend retiring the solution and introducing another that better meets employees' needs.
+Question 19Ed is working on making recommendations to increase value of a solution. He has discovered that different stakeholder groups may have common needs that can be met with a single solution. What recommendation is the best option for Ed?
+A)Identify additional capabilities
+B)Eliminate redundancy => true
+C)Retire the solution
+D)Avoid waste
 
-Question 20Jenna is defining performance measures for a solution. The sponsor can define business goals but Jenna is insistent upon understanding business objectives. Why are business objectives that important when defining performance measures?A)Jenna doesn't need business objectives to define performance measures; business goals will suffice.B)It is important for the BA to understand what the organization is trying to achieve.C)Business objectives are important for a BA to understand so they have context.D)Objectives provide a benchmark against which solution performance can be assessed. => True
+Question 20Cheryl has just completed her analysis of a solution's performance measures that she collected to determine the value the solution provides to the enterprise. What will she do next?
+A)Determine if the solution aligns with the goals and objectives.
+B)Assess the solution limitations and identify the causes for the limitations. => true
+C)Create key performance indicators.
+D)Determine if the measures are qualitative or quantitative.
 
-Question 21Brenda has completed her assessment of the solution limitations and the enterprise limitations following analysis of performance measures. What Guidelines and Tools will she use in her next task?A)Business objectives, current state description, solution scope => TrueB)Current state description, solution scope, change strategyC)Business objective, change strategy, solution scopeD)Business objectives, current state description
+Question 21In order to obtain ISO certification, an organization created a Problem Management team. The team doesn't appear to be fitting in. Which of the following would be helpful regarding the assessment of this solution?
+A)Organizational structure changes and stakeholder impact analysis.
+B)Organizational structure changes, stakeholder impact analysis, and operational assessment.
+C)Enterprise culture assessment, organizational structure changes, operational assessment.
+D)Enterprise culture assessment, stakeholder impact analysis, organizational structure changes, operational assessment. => true
 
-Question 22For the stakeholders that support analyzing performance metrics, which one can identify risks, and provide insights into the data and potential value of a solution?A)Data analystB)Domain subject matter expertC)Sponsor => TrueD)Project manager
+Question 22Hutchinson Flooring set a goal to become ISO certified within two years. Todd is a BA tasked with assessing the performance of a set of IT processes to determine if this goal is "doable." The scope is defined. What should Todd do next?
+A)Visit other certified organizations to observe their processes firsthand.
+B)Benchmark against other certified organizations.
+C)Obtain the imposed measurements from ISO for the targeted processes. => true
+D)Do research on ISO to understand the certifying organization and the process of certification.
 
-Question 23A new system that was implemented recently is not performing as well as it did when it was first deployed. The system is currently performing at a level deemed unacceptable. To assess the solution, what might you do?A)Identify business analysis performance issues that might contribute to declining value.B)Validate the requirements to ensure they delivered business value and support the organization's goals and objectives.C)Perform a SWOT analysis to understand organizational factors contributing to the solution's failure to deliver value.D)Perform a problem analysis to get to the reason for declining value. => True
+Question 23An organization purchased a new project management system three years ago. While the system has several bells and whistles, the organization has been using it primarily as a project repository and time tracking system. The CIO golfs with another project management vendor and has learned of a new system that sounds awesome! David has been assigned as the BA to assess the new solution based on stakeholder needs. What might be his recommendation?
+A)To retire the current solution and purchase the new.
+B)To utilize the additional functionality of the current system, thereby fully utilizing the in-place system and eliminating the need for further investment.
+C)To address the organizational change aspects of the proposed change proactively, as getting people to use the current system took over a year.
+D)To review and compare the two systems to objectively make a decision regarding replacement based upon stakeholders' perception of value of the various features and functions of each system. => true
 
-Question 24Brenda is developing a plan to measure solution performance. In addition to the measures themselves, what other considerations are part of the plan?A)Frequency and timing, currency, data collection tool.B)Volume or sample size, frequency and timing, currency. => TrueC)Volume or sample size, frequency and timing, data collection tool.D)Volume or sample size, currency.
+Question 24Brenda is developing a plan to measure solution performance. In addition to the measures themselves, what other considerations are part of the plan?
+A)Frequency and timing, currency, data collection tool.
+B)Volume or sample size, frequency and timing, currency. => true
+C)Volume or sample size, currency.
+D)Volume or sample size, frequency and timing, data collection tool.
 
-Question 25What is the purpose of analyzing performance measures?A)Provide insights into the performance of a solution in relation to the value it brings. => TrueB)Assist in developing the project schedule once it has been determined that changes are required.C)Provide understanding of the performance of the solution in order to pass potential audits.D)Prepare clients for upcoming changes based on results of measuring a solution's performance.
+Question 25What are ALL of the core concepts used in Solution Evaluation?
+A)Change, need, solution, context, validation, stakeholders.
+B)Evaluation context, change, solution, stakeholders, value, need, validation, analysis.
+C)Comparison, analysis, evaluation context, stakeholders, validation, need.
+D)Change, need, solution, context, value, stakeholders. => true
 
-Question 26What are the guidelines and tools used to assess solution limitations?A)Impact assessment, component dependency identification, and problem investigationB)Solution performance analysis, implemented solution, and solution limitationC)Change strategy, risk analysis results, and solution scope => trueD)Interviews, decision analysis, and root cause analysis
+Question 26Which guideline and tools are leveraged to support assessing solution limitations?
+A)Solution scope decomposition, risk mitigation analysis, and change management
+B)Change strategy, risk mitigation results, solution scope implementation
+C)Risk analysis results, future state description, and solution scope
+D)Change strategy, risk analysis results, and solution scope => true
 
-Question 27What term describes the money and effort already committed to an initiative?A)Opportunity costB)Additional costC)Net present valueD)Sunk cost => True
+Question 27Which task of solution evaluation is responsible for identifying the root causes for under-performing and ineffective solutions and solution components.
+A)Assess solution limitations => true
+B)Asses enterprise limitations
+C)Financial analysis
+D)Measure solution performance
 
-Question 28Just prior to the launch of a new system, Heidi is hearing a fair amount of grumbling from end-users about the solution. Heidi recommends delaying the deployment of the system until she can perform an enterprise culture assessment. The sponsor initially rejects that recommendation. What rationale might convince the sponsor to delay deployment?A)It will allow the BA to identify which processes and tools within the enterprise will support the solution.B)The assessment will reveal how widespread and deep the grumblings are so that communications can be targeted in a way so that stakeholders will accept the solution. => trueC)The assessment will help the sponsor understand how various stakeholder groups will be impacted so that needs can be proactively addressed, thus paving the way to faster acceptance of the solution.D)The assessment will save money in the long run.
+Question 28What are the three major considerations that a business analyst must consider when conducting stakeholder impact analysis on a solution?
+A)Policies, capabilities, and risk tolerance
+B)Understanding, perception, and awareness
+C)Functions, locations, and concerns => true
+D)Necessity, opportunity, cost, and sunk cost
 
-Question 29Which task of solution evaluation identifies root causes and describes how enterprise factors limit the solution's value realization?A)Assess enterprise limitations => trueB)Assess solution limitationsC)Analyze potential value and recommend solutionD)Measure solution performance
+Question 29Carl is a new BA who is anxious to align his activities to best practices and is trying to decide if the tasks in Strategy Analysis or Solution Evaluation knowledge area should be used for his current assignment. They appear to be so similar. He asks his BA coach how to discern which to use. Which of the following pieces of guidance is the most straightforward?
+A)Take a look at the tasks, and then score your current assignment against those tasks. Use decision analysis.
+B)If an actual solution exists, Solution Evaluation is probably more pertinent. => true
+C)Use whatever you believe will provide the most value to your current assignment.
+D)Well, that depends. Is your focus on a business problem or opportunity or on a solution that is either deployed, about to be deployed, or deployed as a pilot?
 
-Question 30Ben isn't sure that the data generated by the performance measures is accurate so he is hesitant to take further action. What could Ben do to understand if he can rely on the data generated by performance measures?A)Monitor the data for another month to see if the same results continue to be generated.B)Analyze the source of the data to ensure source integrity.C)Test the results to see if they can be repeated and reproduced. => TrueD)Analyze the data from several different aspects to ensure data integrity.
+Question 30What term describes the money and effort already committed to an initiative?
+A)Opportunity cost
+B)Additional cost
+C)Sunk cost => true
+D)Net present value
+
+Question 31A project team is piloting a new set of processes before full deployment. Barry is a BA who is evaluating the solution in terms of delivered value. He finds that stakeholders aren't engaging in the new processes and have instead reverted to the "old way" of doing things. What should Barry recommend?
+A)Conduct more training as stakeholders probably don't understand the new processes.
+B)There's not enough information provided for a specific recommendation. => true
+C)Conduct coaching and mentoring as a way to focus stakeholders on the new processes.
+D)Create incentives so that stakeholders are more motivated to leave the "old ways" behind.
+
+Question 32When analyzing performance data, business analysts consider the time period when the data was collected to guard against what?
+A)An incorrect benchmark
+B)Anomalies and skewed trends => true
+C)Solution scope changes
+D)Performance variances
+
+Question 33What are the guidelines and tools used to assess solution limitations?
+A)Solution performance analysis, implemented solution, and solution limitation
+B)Interviews, decision analysis, and root cause analysis
+C)Impact assessment, component dependency identification, and problem investigation
+D)Change strategy, risk analysis results, and solution scope => true
+
+Question 34Roberto is a BA working on a process improvement project. He has completed an assessment right before the new processes were scheduled to be fully deployed. The assessment concluded that a great deal of work will need to be done in order for the stakeholder groups he's been working with to effectively use the processes. He has found that no new policies have been issued, no procedures have been written, and little training has been done. What type of assessment was Roberto doing?
+A)Cultural assessment
+B)Stakeholder impact analysis
+C)Operational assessment => true
+D)Technical assessment
+
+Question 35The sponsor believes that cultural assessments are of little value. What would be a compelling way to state the case for their need?
+A)It is the most cost-effective way to develop a communication plan that will ensure awareness and understanding of the solution.
+B)A cultural assessment will determine if the existing organization is capable of accepting a solution.
+C)It will judge the organization's ability and willingness to adapt to cultural changes required for stakeholders to readily adopt solutions.
+D)A cultural assessment will determine if the existing organization is capable of accepting a solution. If cultural changes are needed, it will judge the organization's ability and willingness to adapt to those changes. => true
+
+Question 36In order to evaluate solution performance, a BA must have which of the following available?
+A)Business objectives and identified defects of the solution.
+B)Business objectives and designed solution.
+C)A working solution and business objectives. => true
+D)Constructed solution and identified defects.
+
+Question 37Anu is an experienced business analyst who is working on a project where senior management are looking for her input on the replacement of an existing solution. She has identified the fact that the solution has reached the end of its life. What recommendation should Anu make to senior management?
+A)Reduce complexity of interfaces
+B)Identify additional capabilities
+C)Make organizational changes
+D)Retire the solution => true
+
+Question 38Phil is a BA on a project and is planning activities to evaluate the solution. The project is planned to have a total of four releases approximately four to six months apart. Each release builds upon the functionality in the prior release. When should Phil plan the assessments?
+A)When it would add value but minimally after each release.
+B)It depends; whenever warranted or Phil believes evaluation would lend value.
+C)During each proof of concept, before delivery, and after deployment. => true
+D)When there is indication that the solution isn't delivering expected value once deployed.
+
+Question 39What are the guidelines and tools that are used for the Recommend Actions to Increase Solution Value task?
+A)Business objectives, change strategy, and risk analysis results
+B)Current state description and solution scope
+C)Decision analysis, organization modelling, and risk analysis and management
+D)Business objectives, current state description, and solution scope => true
+
+Question 40You are assessing the effectiveness of a new governance structure that was just put in place as part of a portfolio management program. One of the complaints from stakeholders is that decisions take too long to make. You discover that approvals involve review from three decision-making bodies that meet monthly before obtaining final approval from the sponsor and portfolio manager. You submit a recommendation to simplify this process by eliminating some of the back and forth. How would this recommendation be categorized?
+A)Reducing complexity of interfaces. => true
+B)Making organizational changes.
+C)Identifying additional capabilities.
+D)Avoiding waste.
+
+Question 41The corporate office of a financial services company recently locked into a new one-year health care plan, that while saving the organization a substantial amount of money for the year, significantly changed the terms of the employees' health care plans. That change was found to be the reason for a recent decrease in employee satisfaction. Upon discovery that the change in the health care plan caused lower employee satisfaction and considering all other factors, the BA recommended that the organization "do nothing." Was this the right recommendation?
+A)No; the BA should recommend a way to enhance it to increase solution value.
+B)No; the BA should recommend retiring the solution and introducing another that better meets employees' needs.
+C)Yes; it is not feasible or even possible to change it. => true
+D)No; there is always something you can do.
+
+Question 42What should NOT be considered when evaluating whether or not a solution should be retired or replaced?
+A)Sunk cost => true
+B)Opportunity cost
+C)Necessity
+D)Future investment required
+
+Question 43Deima is a BA assigned to the evaluation of a solution that isn't delivering value to the level forecasted during the project. She has gone into the project archives and is reviewing all available project documentation. Why is she doing that?
+A)She is working to understand the potential value of the solution. => true
+B)She is trying to familiarize herself with the stakeholders impacted by the solution.
+C)She is reviewing the project objectives to better understand what the solution was supposed to achieve.
+D)She is primarily concerned with the solution requirements to ensure current performance measures are relevant.
+
+Question 44To which task is assess solution limitations closely linked, including the fact that it can actually be performed concurrently?
+A)Risk analysis and management
+B)Assess stakeholders
+C)Assess enterprise limitations => true
+D)Conduct elicitation
+
+Question 45Kay is a BA measuring the performance of a solution. Complaints about the solution have been increasing from end-users. She went into the project archives to obtain how the original stakeholders defined acceptable performance. Those criteria didn't seem to be the cause of the complaints however. Among other things, stakeholders weren't happy with the overall maintainability of the solution. What else could assist Kay in her analysis?
+A)Understanding how the original project objectives mapped to the business objectives at the time. Perhaps the business changed and the solution is no longer viable.
+B)Functional requirements.
+C)Understanding how the original stakeholders defined the expected characteristics of the solution. => true
+D)Stakeholder requirements.
+
+Question 46Lucas is a BA who is assessing a seemingly under-performing solution. What sorts of things can Lucas do to gain a thorough understanding of the potential value that was expected for this solution?
+A)Lucas can understand the potential value the solution by measuring its current performance.
+B)Lucas can assess the solution within the context of the enterprise's goals and objectives and key performance indicators. => true
+C)Lucas can evaluate and understand the potential value of this solution by comparing key performance indicators of similar solutions.
+D)Lucas can ensure performance measures are asking the "right" things in the "right" way with the "right" frequency.
+
+Question 47Val is a BA who has been asked to evaluate a software solution which supports vital business functions. When the software doesn't perform, employees can't perform! Val discovers after analyzing three months worth of recent data that the software's transacting ability deteriorates noticeably around lunch time and significantly every Thursday about 4 pm. What has Val discovered?
+A)A trend => true
+B)A pattern
+C)A variance
+D)A theme
+
+Question 48Which of the following are the inputs for the Measure Solution Performance task?
+A)Solution performance measures
+B)Validation of implemented solution
+C)Current state description, business objectives, potential value
+D)Business objectives, implemented solution => true
+
+Question 49A new system that was implemented recently is not performing as well as it did when it was first deployed. The system is currently performing at a level deemed unacceptable. To assess the solution, what might you do?
+A)Perform a SWOT analysis to understand organizational factors contributing to the solution's failure to deliver value.
+B)Identify business analysis performance issues that might contribute to declining value.
+C)Perform a problem analysis to get to the reason for declining value. => true
+D)Validate the requirements to ensure they delivered business value and support the organization's goals and objectives.
+
+Question 50When would the techniques of process modeling, observation, workshops, document analysis, and organizational modeling have the most value when assessing enterprise-related obstacles to realizing solution value?
+A)Enterprise Culture Assessment.
+B)Stakeholder Impact Analysis. => true
+C)Assess Enterprise Limitations.
+D)Assess Solution Limitations.
+
+Question 51How can a BA meaningfully determine the value of a solution?
+A)By performing a financial analysis to ensure the benefit continues to outweigh the cost.
+B)By defining solution performance measures.
+C)By gaining a thorough understanding of the potential value that stakeholders hope to achieve with the solution. => true
+D)By thoroughly analyzing the "voice of the data."
+
+Question 52Raul has conducted the analysis required to document the current limitations of the solution including constraints and defects. What outcome is he looking to achieve by executing this action?
+A)Change strategy
+B)Solution performance measures
+C)Solution limitation => true
+D)Solution performance analysis
+
+Question 53What is the purpose of analyzing performance measures?
+A)Provide understanding of the performance of the solution in order to pass potential audits.
+B)Assist in developing the project schedule once it has been determined that changes are required.
+C)Provide insights into the performance of a solution in relation to the value it brings. => true
+D)Prepare clients for upcoming changes based on results of measuring a solution's performance.
+
+Question 54An organization has sunk $50,000 into a piece of equipment for required repairs. It has broken down once again and the new fix is estimated to cost $20,000. Team members are clamoring to buy new equipment but the boss said, "I've already put $50,000 into this thing, what's $20,000 more at this point?" As the team's BA, how do you contribute to the conversation?
+A)Agree with the team; who wants to lose $50,000?
+B)Conduct a financial analysis excluding the $50,000.
+C)Conduct a financial analysis including the $50,000.
+D)The $50,000 is "water under the bridge" and though tempting, it shouldn't be used when considering future action. => true
+
+Question 55Lucas is a BA on a high profile project. He has determined that that the solution is consistently or repeatedly producing ineffective outputs. What should Lucas do in order to address the source of the problem?
+A)Business rules analysis
+B)Impact assessment
+C)Cultural assessment
+D)Problem analysis => true
+
+Question 56An organization's strategic vendor is having a year-end sales promotion on new software. The CIO is getting mixed opinions from his team and has asked Amy who is a BA to objectively assess both the in-place and new software and provide a recommendation. Amy finds that the functionality that would lend immediate value to the organization is basically the same. What might Amy do as a next step in her assessment?
+A)Submit a recommendation that supports the status quo since little to no value would be realized.
+B)Complete a decision matrix to support her contention that the features are basically the same.
+C)Explore how the additional capabilities in the new software could add future value. => true
+D)Complete a financial analysis to support how the cost would exceed the benefits.
+
+Question 57Harold has documented how factors external to the solution are restricting value realization. What task is he performing?
+A)Assess enterprise limitations => true
+B)Assess solution limitations
+C)Measure solution performance
+D)Analyzing performance measures
+
+Question 58Who are the stakeholders that contribute to measuring solution performance?
+A)UI expert, developer, regulator, documentation subject matter expert, supervisor, tester.
+B)Customer, domain subject matter expert, project manager, sponsor, regulator. => true
+C)Supervisor, director, end user, domain subject matter expert, customer, sponsor, developer.
+D)Domain subject matter expert, documentation subject matter expert, regulator, sponsor, user experience expert
+
+Question 59Sierra discovered that an internal audit team performed audits the last calendar week of each month. The organization operates at a frenetic pace the last week of the month to meet production goals. What might Sierra further investigate as a concern?
+A)Perhaps the fact that audits are completed each month is too often; perhaps bi-monthly or quarterly makes more sense.
+B)Perhaps the timing of the audits may have a negative impact on the outcome. => true
+C)Perhaps the entire facility doesn't need to be audited each month and that a sample of departments would be sufficient.
+D)Why the "frenetic" pace can't be spaced out across the month given the production goal.
+
+Question 60How should solution options that offer potential capabilities above and beyond those identified in the original business case be handled?
+A)Ignored. These were not part of the original business case and are not relevant to the proposed solution.
+B)Ignored. The term for these capabilities is 'gold plating.'
+C)Documented and stored in a way that is easily accessed for similar initiatives.
+D)Identified even when not deemed immediately useful, if the organization anticipates using them in the future. => true
+
+Question 61Ben isn't sure that the data generated by the performance measures is accurate so he is hesitant to take further action. What could Ben do to understand if he can rely on the data generated by performance measures?
+A)Monitor the data for another month to see if the same results continue to be generated.
+B)Analyze the data from several different aspects to ensure data integrity.
+C)Test the results to see if they can be repeated and reproduced. => true
+D)Analyze the source of the data to ensure source integrity.
+
+Question 62Steven works at an IT shop in North Carolina as a business analyst. He is in charge of determining what cultural changes are required to better realize value from an existing solution. What is the key action he is accomplishing for the organization?
+A)Eliminating risks
+B)Performing cultural assessment => true
+C)Conducting needs analysis
+D)Performing impact analysis
+
+Question 63Finn is a BA working on a newly implemented logistics process for a package supply company. He began gathering performance metrics on such things as how long the process took vs. how long to get output from one area to another, defects in the output, duplicate steps, number of complaints, etc. The department supervisor complained to Finn that gathering these statistics was a waste of time. She said she would rather he spend his time gathering requirements for automation to support the process. What rationale does Finn offer for his activities?
+A)The gathered measurements will support the automation project.
+B)The information is needed as inputs into a SWOT analysis for the new automation project.
+C)He needs to keep an eye out for defects so he can address them in a timely way to ensure customer satisfaction.
+D)He is working to understand and validate the value that was delivered by the implemented solution. => true
+
+Question 64What factor can be assessed through key performance indicators (KPIs) aligned with enterprise measures, goals, and objectives for a project, process performance targets, or tests for a software application?
+A)Solution acceptance
+B)Context
+C)Solution implementation
+D)Performance => true
+
+Question 65A COO favors the purchase of a new, expensive system to take advantage of the vendor's year-end sales promotion. The organization isn't fully utilizing the current system and the BA recommends that the organization instead utilizes those capabilities. The COO isn't convinced, defers the recommendation, and asks the BA to keep working on it. What is the next logical step for the BA to take?
+A)Recommend taking advantage of the year-end sale given the fact that the COO obviously wants to go in that direction.
+B)Negotiate decision criteria and ask the COO to assign weights to that criteria, then objectively score both systems. => true
+C)Perform a financial analysis given the new equipment is expensive.
+D)Negotiate decision criteria and objectively score both systems.
+
+Question 66Susan has just completed reviewing identified problems in a solution component. In completing her review, what goal is Susan looking to achieve?
+A)Determine the impact on the business operations, whether the problem is apt to reoccur, and whether the organization can absorb the needed changes.
+B)Determine the severity of the problems, the risks and limitations to the solution and the probability that the problem will reoccur.
+C)Assess the impact that the problems may have on the operation of the organization or the ability of the solution to deliver its potential value. => true
+D)Assess whether the organization can absorb the impact of the problem, as well as the risks to the the solution.
+
+Question 67Peter and his team have defined desired performance measures to assess the performance of a solution. Many of these measures are new to the organization. What is Peter's next step?
+A)Assign ownership of, and determine the frequency of, measurements.
+B)Ensure that the enterprise has methods in place to capture the measurements. => true
+C)Trace the performance measures to business objectives.
+D)Gain approval for the new measures.
+
+Question 68An organization has delayed replacing the operating system for employees' computers for years due to the costs associated with the change. Microsoft stopped supporting the operating system and employee productivity has suffered as repairs are delayed, if they happen at all. A BA recommends that the operating system be retired and replaced with the latest and greatest. Which of the following financial factors carried the most weight in the recommendation?
+A)Necessity => true
+B)Ongoing cost vs initial investment
+C)Opportunity cost
+D)Sunk cost
+
+Question 69Just prior to the launch of a new system, Heidi is hearing a fair amount of grumbling from end-users about the solution. Heidi recommends delaying the deployment of the system until she can perform an enterprise culture assessment. The sponsor initially rejects that recommendation. What rationale might convince the sponsor to delay deployment?
+A)The assessment will reveal how widespread and deep the grumblings are so that communications can be targeted in a way so that stakeholders will accept the solution. => true
+B)The assessment will save money in the long run.
+C)The assessment will help the sponsor understand how various stakeholder groups will be impacted so that needs can be proactively addressed, thus paving the way to faster acceptance of the solution.
+D)It will allow the BA to identify which processes and tools within the enterprise will support the solution.
+
+Question 70After solution performance measures are defined, who is responsible to decide which measures are used to evaluating the solution performance?
+A)The sponsor.
+B)Any stakeholder with decision-making authority. => true
+C)Project manager.
+D)The business analyst.
+
+Question 71Which input describes the value that may be realized by implementing the proposed future state? It can be used as a benchmark against which solution performance can be evaluated.
+A)Potential Value => true
+B)Solution performance measures
+C)Business objectives
+D)Relationship management
+
+Question 72Which task of solution evaluation identifies root causes and describes how enterprise factors limit the solution's value realization?
+A)Analyze potential value and recommend solution
+B)Measure solution performance
+C)Assess solution limitations
+D)Assess enterprise limitations => true
+
+Question 73The leaders of a retail store employing approximately 100 floor personnel have been hearing more complaints from employees during the last three months about difficult co-workers, not enough vacation time, scheduling policies, etc. In addition, three valuable employees have given their notice during the last two months. Raja has been asked to evaluate employee satisfaction. The organization has no current performance measures in place.
+A)What is the biggest benefit the chosen technique from the previous question would provide?
+B)It would provide a quantitative baseline from which to measure improvement. => true
+C)It would provide a qualitative baseline from which to measure improvement.
+D)It would allow Raja to ascertain if the information elicited from the focus group was representative of all personnel.
+
+Question 74An IT organization recently introduced significant process changes for two teams in the areas of Change Management and Release and Deployment Management. It is critical that these two teams work closely together in the future state but they currently report to different directors who don't see eye-to-eye. This is causing process breakdowns between the teams. This is an example of which of the following?
+A)How value realization can be impacted by interpersonal conflict. => true
+B)How value realization can be impacted by power struggles.
+C)How value realization can be impacted by an organization's structure.
+D)How value realization can be impacted by informal alliances.
+
+Question 75Jenna is defining performance measures for a solution. The sponsor can define business goals but Jenna is insistent upon understanding business objectives. Why are business objectives that important when defining performance measures?
+A)Business objectives are important for a BA to understand so they have context.
+B)Jenna doesn't need business objectives to define performance measures; business goals will suffice.
+C)It is important for the BA to understand what the organization is trying to achieve.
+D)Objectives provide a benchmark against which solution performance can be assessed. => true
+
+Question 76Brenda has completed her assessment of the solution limitations and the enterprise limitations following analysis of performance measures. What Guidelines and Tools will she use in her next task?
+A)Business objectives, current state description
+B)Current state description, solution scope, change strategy
+C)Business objectives, current state description, solution scope => true
+D)Business objective, change strategy, solution scope
