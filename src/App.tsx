@@ -43,6 +43,7 @@ type Question = {
   id: string;
   sourceSetId: string;
   sourceTitle: string;
+  sourceFileName: string;
   originalNumber: number;
   text: string;
   options: Option[];
@@ -453,7 +454,7 @@ async function loadBabokPublicData(): Promise<void> {
 
   BABOK_TOPICS = sectionsData.topics;
   BABOK_SECTION_BOOK_PAGES = sectionsData.sectionBookPages || {};
-  BABOK_KA_QUESTION_ROUTES = questionMapData || {};
+  BABOK_QUESTION_ROUTES = questionMapData || {};
 }
 
 function createBabokTopic(
@@ -581,7 +582,7 @@ const BABOK_ROUTING_HINTS: Array<{
 ];
 
 
-let BABOK_KA_QUESTION_ROUTES: Record<string, Record<number, string>> = {};
+let BABOK_QUESTION_ROUTES: Record<string, Record<number, string>> = {};
 
 let BABOK_SECTION_BOOK_PAGES: Record<string, number> = {};
 
@@ -601,12 +602,30 @@ function baseTopicSectionForRoute(routeSection: string): string {
   return `Chapter ${numericParts[1]}`;
 }
 
+function detectQuestionSetKey(question: Question): string | null {
+  // question-babok-map.json được tổ chức theo BỘ CÂU HỎI (1..9),
+  // không phải theo số Chapter/Knowledge Area của BABOK.
+  // Ưu tiên fileName vì vẫn hoạt động khi người dùng import lại các file CCBA*.txt.
+  const fileMatch = question.sourceFileName.match(/(?:^|[^a-z0-9])ccba\s*0?([1-9])(?:[^0-9]|$)/i);
+  if (fileMatch) return fileMatch[1];
+
+  // Các bộ mặc định dùng id default-1 ... default-9.
+  const defaultIdMatch = question.sourceSetId.match(/^default-([1-9])$/i);
+  if (defaultIdMatch) return defaultIdMatch[1];
+
+  // Fallback cho trường hợp title được đặt theo dạng "Bộ 1" / "Set 1".
+  const titleMatch = question.sourceTitle.match(/\b(?:bộ|bo|set)\s*0?([1-9])\b/i);
+  if (titleMatch) return titleMatch[1];
+
+  return null;
+}
+
 function knownQuestionRoute(question: Question): string | null {
-  const sourceChapter = detectSourceChapter(question.sourceTitle);
-  if (!sourceChapter) return null;
+  const questionSetKey = detectQuestionSetKey(question);
+  if (!questionSetKey) return null;
 
   return (
-    BABOK_KA_QUESTION_ROUTES[sourceChapter]?.[question.originalNumber] || null
+    BABOK_QUESTION_ROUTES[questionSetKey]?.[question.originalNumber] || null
   );
 }
 
@@ -971,7 +990,9 @@ function getFocusEnglishLabel(focus: BabokFocus): string {
 
   if (/\.1\b/.test(section)) return 'Purpose';
   if (/\.2\b/.test(section)) return 'Description';
-  if (/\.3\b/.test(section)) return 'Inputs';
+  if (/\.3\b/.test(section)) {
+    return /10\./.test(section) ? 'Elements' : 'Inputs';
+  }
   if (/\.4\b/.test(section)) {
     return /10\./.test(section) ? 'Usage Considerations' : 'Elements';
   }
@@ -1841,6 +1862,7 @@ function parseQuestionBlock(
     id: `${set.id}-q${originalNumber}`,
     sourceSetId: set.id,
     sourceTitle: set.title,
+    sourceFileName: set.fileName,
     originalNumber,
     text: selected.questionText,
     options: selected.options,
