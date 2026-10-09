@@ -163,12 +163,13 @@ type ExcelMemory = {
   source: string;
 };
 type ExcelDictionaryTerm = { en: string; vi: string };
-type ExcelTask = { section: string; name: string; purpose: string; source: string; keyLearning?: PracticalKeyInsight };
+type ExcelTask = { section: string; name: string; purpose: string; elements?: string; inputs?: string; outputs?: string; source: string; keyLearning?: PracticalKeyInsight };
 type ExcelKnowledge = {
   techniques: ExcelTechnique[];
   memorize: ExcelMemory[];
   dictionary: ExcelDictionaryTerm[];
   tasks: ExcelTask[];
+  comparison?: Array<{name:string;when:string;people?:string;preparation?:string;result?:string;source:string}>;
 };
 
 const STORAGE_VERSION = 2;
@@ -2975,6 +2976,141 @@ function buildPracticalKeyInsight(
     specific: true,
   });
 
+  // Excel KA Detail_PA · 5.1: Relationship types: Derive / Depends (Necessity, Effort) / Satisfy / Validate.
+  if (includesAnswer(/\bnecessity\b/) && includesQuestion(/only makes sense|if a related|related requirement.*implemented|cannot.*unless/)) {
+    return insight(
+      '[[only makes sense]] (chỉ có ý nghĩa) khi một [[related requirement]] (yêu cầu liên quan) được triển khai.',
+      '[[Depends – Necessity]] = chỉ triển khai requirement A có ý nghĩa nếu requirement B cũng được triển khai; thuộc các kiểu [[traceability relationships]].',
+      '[[Effort]] = có B thì việc làm A dễ hơn, nhưng A vẫn có thể làm riêng; [[Necessity]] = A chỉ có ý nghĩa khi B tồn tại.'
+    );
+  }
+  if (includesAnswer(/\beffort\b/) && includesQuestion(/easier|depends|implement|related requirement/)) {
+    return insight(
+      '[[easier to implement]] (dễ triển khai hơn) khi có requirement khác.',
+      '[[Depends – Effort]] = một yêu cầu có thể triển khai dễ hơn nếu yêu cầu liên quan được triển khai trước.',
+      '[[Necessity]] = yêu cầu chỉ có ý nghĩa nếu yêu cầu liên quan được làm; [[Effort]] = dễ làm hơn, không nhất thiết là bắt buộc.'
+    );
+  }
+  if (includesAnswer(/\bderive\b/) && includesQuestion(/derived|from another requirement|level of abstraction|trac/)) {
+    return insight(
+      '[[derived from]] = được suy ra từ yêu cầu khác, thường khác [[level of abstraction]] (mức khái quát).',
+      '[[Derive]] = liên hệ yêu cầu mức cao với yêu cầu mức thấp được suy ra từ nó.',
+      '[[Depends]] = phụ thuộc để triển khai; [[Derive]] = nguồn gốc hình thành yêu cầu.'
+    );
+  }
+  if (includesAnswer(/\bvalidate\b/) && includesQuestion(/test case|traceability|relationship between a requirement|fulfills/)) {
+    return insight(
+      '[[test case]] (ca kiểm thử) kiểm tra solution có đáp ứng [[requirement]] hay không.',
+      'Quan hệ [[Validate]] trong traceability nối requirement với test case / phần tử dùng để xác nhận yêu cầu được đáp ứng.',
+      '[[Satisfy]] = solution component thực hiện requirement; [[Validate]] = test case xác nhận requirement đã được thực hiện.'
+    );
+  }
+  if (includesAnswer(/\bsatisfy\b/) && includesQuestion(/implementation element|solution component|implementing|traceability/)) {
+    return insight(
+      '[[implementation element]] (thành phần triển khai) đang [[satisfying requirements]] (đáp ứng yêu cầu).',
+      '[[Satisfy]] = mối quan hệ giữa một component được triển khai và requirement mà component đó đáp ứng.',
+      '[[Validate]] nối yêu cầu với kiểm thử; [[Satisfy]] nối yêu cầu với phần thực thi.'
+    );
+  }
+  if (includesAnswer(/benefit.*penalty.*cost.*risk.*dependenc/i) && includesQuestion(/factor|prioritization|prioritize/)) {
+    return insight(
+      '[[factors]] (tiêu chí) ảnh hưởng tới [[requirements prioritization]] (ưu tiên yêu cầu) → hỏi danh sách đầy đủ.',
+      'Excel KA Detail_PA · [[5.3]]: 8 yếu tố [[Benefit]] (lợi ích), [[Penalty]] (hệ quả không làm), [[Cost]], [[Risk]], [[Dependencies]], [[Time Sensitivity]], [[Stability]], [[Regulatory/Policy Compliance]].',
+      '[[Urgency]] được nhắc ở phần attributes, nhưng không thay một trong tám yếu tố [[Basis for Prioritization]] của mục 5.3.4.'
+    );
+  }
+  if (includesAnswer(/\bpenalt(?:y|ies)\b/) && includesQuestion(/regulation|compliance|fine|non.compliance|consequen|not implement/)) {
+    return insight(
+      '[[penalties]] (hậu quả/phạt), [[regulatory compliance]] (tuân thủ quy định) hoặc hệ quả nếu không triển khai.',
+      '[[Penalty]] là chi phí/hậu quả do **không thực hiện** yêu cầu; Excel KA Detail_PA · 5.3 nhấn mạnh không chỉ là tiền phạt mà cả tác động tiêu cực cho khách hàng.',
+      '[[Risk]] = khả năng yêu cầu không tạo được giá trị hoặc không thể thực hiện; [[Penalty]] = hậu quả của việc bỏ qua yêu cầu.'
+    );
+  }
+  if (includesAnswer(/collaborative.*research.*experiments?/i) && includesQuestion(/types? of elicitation|common types?/)) {
+    return insight(
+      '[[three common types of elicitation]] = hỏi chính xác 3 nhóm hình thức khai thác thông tin.',
+      'Excel Học thuộc · 4.2: [[Collaborative]] = trao đổi trực tiếp; [[Research]] = đọc/phân tích tài liệu, dữ liệu; [[Experiments]] = thử nghiệm mới biết kết quả.',
+      '[[Observation / Interviews / Focus Groups]] là **kỹ thuật** có thể áp dụng, không phải tên đầy đủ của 3 **nhóm elicitation**.'
+    );
+  }
+  if (includesAnswer(/specify.*verify.*validate.*architecture.*design.*solution/i) && includesQuestion(/complete set of tasks|tasks in the requirements analysis|knowledge area/)) {
+    return insight(
+      '[[complete set of tasks]] (đủ danh sách task) thuộc [[Requirements Analysis and Design Definition]].',
+      'BABOK Chapter 7 có 6 task: [[7.1 Specify and Model]], [[7.2 Verify]], [[7.3 Validate]], [[7.4 Requirements Architecture]], [[7.5 Design Options]], [[7.6 Analyze Potential Value and Recommend Solution]].',
+      '[[Prioritize Requirements]] thuộc KA 5; [[Assess Risks]] thuộc KA 6. Đừng lấy chúng thay cho một task của KA 7.'
+    );
+  }
+  // Quy tắc học thuộc từ Excel: Học thuộc · 7.2.4 (đặc tính của requirements).
+  if (includesAnswer(/\batomic\b/) && includesQuestion(/self.contain|independent|independently|other requirements/)) {
+    return insight(
+      '[[self-contained]] = tự đầy đủ; [[independently]] = hiểu độc lập, không cần đọc yêu cầu khác.',
+      '[[Atomic]] là một đặc tính chất lượng của requirement: mỗi yêu cầu chứa một ý độc lập, có thể hiểu riêng. Excel Học thuộc · 7.2.4.',
+      '[[Complete]] = đủ thông tin để tiếp tục công việc; [[Atomic]] = tự đứng độc lập. Đề nhấn mạnh hiểu độc lập → [[Atomic]].'
+    );
+  }
+  if (includesAnswer(/\bcomplete\b/) && includesQuestion(/missing|enough|detail|further work|additional information|not provide|not specify/)) {
+    return insight(
+      '[[enough detail]] (đủ chi tiết), [[missing]] (thiếu) hoặc không đủ để thực hiện bước tiếp theo.',
+      '[[Complete]] = có đủ nội dung và mức chi tiết để công việc tiếp tục. Excel Học thuộc · 7.2.4.',
+      '[[Unambiguous]] = không thể hiểu theo nhiều nghĩa; [[Atomic]] = hiểu độc lập; [[Complete]] = không thiếu thông tin cần thiết.'
+    );
+  }
+  if (includesAnswer(/\bunambiguous\b/) && includesQuestion(/ambigu|interpret|confus|unclear|different meaning/)) {
+    return insight(
+      '[[ambiguous]] (mơ hồ), [[interpret]] (diễn giải) hoặc nhiều bên hiểu một yêu cầu khác nhau.',
+      '[[Unambiguous]] = yêu cầu được diễn đạt rõ, có thể xác định solution có đáp ứng hay không. Excel Học thuộc · 7.2.4.',
+      '[[Consistent]] = không mâu thuẫn với yêu cầu khác; [[Unambiguous]] = bản thân câu yêu cầu không đa nghĩa.'
+    );
+  }
+  if (includesAnswer(/\btestable\b/) && includesQuestion(/test|verify|measure|fulfilled/)) {
+    return insight(
+      '[[verify]] (kiểm tra) liệu yêu cầu đã được [[fulfilled]] (đáp ứng) hay chưa.',
+      '[[Testable]] = có cách đánh giá/kiểm thử xác nhận requirement được thực hiện. Excel Học thuộc · 7.2.4.',
+      '[[Feasible]] = có thể thực hiện với ngân sách/thời gian/rủi ro; [[Testable]] = có thể kiểm tra đã đáp ứng.'
+    );
+  }
+  if (includesAnswer(/\bmaintain requirements\b|\breusable\b/) && includesQuestion(/long.term|reuse|other initiative|preserve|current|reusable/)) {
+    return insight(
+      '[[long-term use]] (dùng dài hạn), [[reuse]] (sử dụng lại) hoặc duy trì nguồn gốc/ý nghĩa của requirements.',
+      '[[Maintain Requirements]] = giữ requirement đúng, cập nhật và dễ truy cập để tái sử dụng. Excel Học thuộc: yêu cầu tái sử dụng phải được đặt tên, định nghĩa và lưu giữ rõ ràng.',
+      '[[Trace Requirements]] = liên kết nguồn gốc & tác động; [[Maintain Requirements]] = giữ yêu cầu có thể tái sử dụng theo thời gian.'
+    );
+  }
+  if (includesAnswer(/\bgoals?\b|\bbusiness goal\b/) && includesQuestion(/long.term|ongoing|qualitative|state or condition/)) {
+    return insight(
+      '[[longer-term]] (dài hạn), [[ongoing]] (liên tục), [[qualitative]] (định tính).',
+      '[[Business Goal]] = hướng lớn, kết quả mong muốn có tính dài hạn/định tính; từ goal mới cụ thể hóa thành [[SMART objective]] có thể đo.',
+      '[[Objective]] phải cụ thể/đo lường được, không chỉ là một mong muốn dài hạn.'
+    );
+  }
+  if (includesAnswer(/\bstakeholder engagement\b/) && includesQuestion(/willingness|encourage|work towards a common goal/)) {
+    return insight(
+      '[[willingness]] (sẵn lòng) + [[engage]] (tham gia/cộng tác) cùng business analyst.',
+      '[[Stakeholder Engagement]] (kết quả của Manage Stakeholder Collaboration) là stakeholder sẵn sàng phối hợp khi cần; khác tài liệu kế hoạch [[Stakeholder Engagement Approach]].',
+      '[[Stakeholder Engagement Approach]] = kế hoạch phối hợp (output của Plan Stakeholder Engagement); [[Stakeholder Engagement]] = sự tham gia thực tế.'
+    );
+  }
+  if (includesAnswer(/\bresearch\b/) && includesQuestion(/historical data|trend|studying|material|documents|sources/)) {
+    return insight(
+      '[[historical data]] (dữ liệu quá khứ), [[identify trends]] (tìm xu hướng), [[studying information]] (nghiên cứu nguồn).',
+      '[[Research]] là một trong ba loại [[elicitation]]: phân tích nguồn dữ liệu/tài liệu; không cần trực tiếp tương tác stakeholder trong mỗi hoạt động.',
+      '[[Collaborative]] = tương tác trực tiếp; [[Experiments]] = phải thử nghiệm kiểm soát mới khám phá được thông tin.'
+    );
+  }
+  if (includesAnswer(/\bdata dictionary\b/) && includesQuestion(/data element|standardiz|data definition|business vs.*tech|technical/)) {
+    return insight(
+      '[[data elements]] (phần tử dữ liệu), [[standardize]] (chuẩn hóa định nghĩa dữ liệu) hoặc dữ liệu giữa business và IT.',
+      '[[Data Dictionary]] = định nghĩa nhất quán từng data element (có thể primitive / composite). Đây là kiến thức trong Excel · Học thuộc / Techniques Detail.',
+      '[[Glossary]] = giải nghĩa thuật ngữ nghiệp vụ; [[Data Dictionary]] = định nghĩa phần tử dữ liệu, kiểu dữ liệu/thuộc tính cụ thể.'
+    );
+  }
+  if (includesAnswer(/\brequirements attributes?\b/) && includesQuestion(/source|priority|complex|owner|status|last modified|additional information/)) {
+    return insight(
+      'Gặp [[source]] (nguồn), [[priority]] (ưu tiên), [[complexity]] (độ phức tạp) đi kèm từng yêu cầu.',
+      '[[Requirements Attributes]] = thông tin mô tả/metadata giúp quản lý requirement; Excel Học thuộc có mẹo [[CARAS SOUPS]] cho các thuộc tính.',
+      '[[Requirement]] = nội dung nhu cầu cần đáp ứng; [[Attribute]] = thông tin quản trị của requirement, không phải yêu cầu mới.'
+    );
+  }
   if (includesAnswer(/\bstability\b/) && includesQuestion(/not final|further analysis|may change|likely to change|not stable/)) {
     return insight(
       'Gặp [[not finalized]] (chưa chốt) + [[further analysis]] (cần phân tích thêm) ⇒ yêu cầu dễ thay đổi.',
@@ -3132,8 +3268,8 @@ function buildPracticalKeyInsight(
   if (includesAnswer(/assess enterprise limitations|enterprise limitations?/) && includesQuestion(/enterprise|organization|outside|culture|structure/)) {
     return insight(
       'Gặp [[enterprise]] (tổ chức), [[culture]] (văn hóa), [[organizational structure]] (cơ cấu), cản trở dùng giải pháp.',
-      '[[Enterprise Limitations]] = giới hạn **bên ngoài bản thân giải pháp** khiến tổ chức chưa nhận đủ giá trị.',
-      '[[Solution Limitations]] = vấn đề **bên trong giải pháp**; [[Enterprise Limitations]] = vấn đề về tổ chức, quy trình, văn hóa.',
+      '[[Enterprise Limitations]] = giới hạn bên ngoài bản thân giải pháp khiến tổ chức chưa nhận đủ giá trị.',
+      '[[Solution Limitations]] = vấn đề bên trong giải pháp; [[Enterprise Limitations]] = vấn đề về tổ chức, quy trình, văn hóa.',
     );
   }
   if (includesAnswer(/assess solution limitations|solution limitations?/) && includesQuestion(/under.perform|solution|root cause|defect/)) {
@@ -3160,7 +3296,7 @@ function buildPracticalKeyInsight(
   if (includesAnswer(/\btransition requirements\b/) && includesQuestion(/training|data conversion|transition|temporary/)) {
     return insight(
       'Gặp [[training]] (đào tạo), [[data conversion]] (chuyển đổi dữ liệu) hoặc nhu cầu chỉ có lúc chuyển sang hệ thống mới.',
-      '[[Transition Requirements]] = yêu cầu **tạm thời**, chỉ cần để chuyển từ [[current state]] sang [[future state]].',
+      '[[Transition Requirements]] = yêu cầu tạm thời, chỉ cần để chuyển từ [[current state]] sang [[future state]].',
       '[[Solution Requirements]] là khả năng/chất lượng của giải pháp khi vận hành lâu dài, không chỉ giai đoạn chuyển đổi.',
     );
   }
@@ -3219,6 +3355,224 @@ function matchExcelMemory(question: Question, section: string, kb?: ExcelKnowled
   return rated.length && rated[0].score >= 4 ? rated[0].memo : undefined;
 }
 
+
+/** Chỉ tính câu phủ định khi "NOT/EXCEPT/LEAST" là yêu cầu chọn ngoại lệ.
+ * "not finalized" ở trong tình huống KHÔNG phải câu hỏi loại trừ. */
+function isNegativeExamQuestion(q: string): boolean {
+  const firstQuestion = q.slice(0, 220);
+  return /\bexcept\b|\bleast\s+(?:likely|appropriate|suitable)|\bwhich\b.{0,75}\b(?:is|are|does|do|would|could|will)\s+not\b|\bwhat\b.{0,75}\b(?:is|are|does|do|would|could|will)\s+not\b|\bstatement\b.{0,100}\bfalse\b|\bincorrect\s+(?:statement|option)/i.test(firstQuestion);
+}
+
+/** Chỉ đưa lên màn hình KEY thực sự có trong câu (không hiện cụm từ không xuất hiện). */
+const QUESTION_KEY_PHRASES: Array<[RegExp, string]> = [
+  [/\bnot finalized\b/i,'chưa được chốt'],
+  [/\bonly makes sense\b/i,'chỉ có ý nghĩa khi điều kiện được thỏa'],
+  [/\brelated requirement\b/i,'yêu cầu liên quan'],
+  [/\brequirements prioritization\b/i,'xếp ưu tiên yêu cầu'],
+  [/\btypical factors\b/i,'các tiêu chí thường dùng'],
+  [/\bthree common types of elicitation\b/i,'ba nhóm hình thức khai thác thông tin'],
+  [/\bcomplete set of tasks\b/i,'đầy đủ các nhiệm vụ'],
+  [/\btest case\b/i,'ca kiểm thử'],
+  [/\bregulatory (?:or policy )?compliance\b/i,'tuân thủ quy định/chính sách'],
+
+  [/\brequires? further analysis\b/i,'còn cần phân tích thêm'],
+  [/\bself.contained\b/i,'tự đầy đủ / độc lập'],
+  [/\bunderstood independently\b/i,'có thể hiểu độc lập'],
+  [/\bquality standards?\b/i,'tiêu chuẩn chất lượng'],
+  [/\bdefined correctly\b/i,'định nghĩa/đặc tả đúng'],
+  [/\bbusiness (?:needs?|value)\b/i,'nhu cầu / giá trị kinh doanh'],
+  [/\bfuture state\b/i,'trạng thái tương lai'],
+  [/\bcurrent state\b/i,'trạng thái hiện tại'],
+  [/\bshort iterations?\b/i,'vòng lặp ngắn'],
+  [/\brapid delivery\b/i,'cung cấp giá trị nhanh'],
+  [/\bup.front uncertainty\b/i,'bất định ngay từ đầu'],
+  [/\bformal documentation\b/i,'tài liệu chính thức'],
+  [/\bspecific phases?\b/i,'giai đoạn cụ thể'],
+  [/\bapproval authority\b/i,'thẩm quyền phê duyệt'],
+  [/\bwho (?:has|holds) (?:the )?authority\b/i,'ai có thẩm quyền'],
+  [/\bdecision.making authority\b/i,'thẩm quyền quyết định'],
+  [/\bchange control\b/i,'kiểm soát thay đổi'],
+  [/\bstakeholder engagement\b/i,'sự gắn kết bên liên quan'],
+  [/\bsource information\b/i,'thông tin từ nguồn'],
+  [/\baccurac(?:y|ies)\b/i,'độ chính xác'],
+  [/\bconsisten(?:t|cy)\b/i,'nhất quán'],
+  [/\b elicitation results?\b/i,'kết quả khai thác thông tin'],
+  [/\binput(?:s)? (?:to|for|of)\b/i,'đầu vào cho task'],
+  [/\boutput(?:s)? (?:of|for|from)\b/i,'đầu ra của task'],
+  [/\btechniques? (?:for|used|would)\b/i,'kỹ thuật cần dùng'],
+  [/\bmost (?:appropriate|suitable|likely)\b/i,'phù hợp nhất / khả năng cao nhất'],
+  [/\bwhich (?:task|knowledge area)\b/i,'xác định task / knowledge area'],
+  [/\bwhat (?:task|term)\b/i,'xác định task / thuật ngữ'],
+  [/\bprimary purpose\b/i,'mục đích chính'],
+  [/\bbest suited\b/i,'phù hợp nhất'],
+  [/\brisk tolerance\b/i,'mức chịu rủi ro'],
+  [/\bunder.performing\b/i,'hoạt động kém'],
+  [/\broot causes?\b/i,'nguyên nhân gốc'],
+  [/\bexisting solution\b/i,'giải pháp hiện có'],
+  [/\bimplemented solution\b/i,'giải pháp đã triển khai'],
+  [/\bpotential value\b/i,'giá trị tiềm năng'],
+  [/\bactual value\b/i,'giá trị thực tế'],
+  [/\bboundar(?:y|ies)\b/i,'ranh giới'],
+  [/\bdependencies\b/i,'phụ thuộc'],
+  [/\bbackward traceability\b/i,'truy vết ngược'],
+  [/\bforward traceability\b/i,'truy vết xuôi'],
+  [/\bimpact analysis\b/i,'phân tích tác động'],
+  [/\blong.term\b/i,'dài hạn'],
+  [/\bongoing\b/i,'liên tục'],
+  [/\bqualitative\b/i,'định tính'],
+  [/\bquantitative\b/i,'định lượng'],
+  [/\bhistorical data\b/i,'dữ liệu lịch sử'],
+  [/\bidentify trends?\b/i,'tìm xu hướng'],
+  [/\binteract\b/i,'tương tác'],
+  [/\binformation passed\b/i,'thông tin được trao đổi'],
+  [/\blife cycle\b/i,'vòng đời'],
+  [/\btrigger\b/i,'điều kiện/sự kiện kích hoạt'],
+  [/\bcomplex (?:business )?function\b/i,'chức năng phức tạp'],
+  [/\bconstituent parts?\b/i,'các bộ phận cấu thành'],
+  [/\bdata element\b/i,'phần tử dữ liệu'],
+  [/\btraining\b/i,'đào tạo'],
+  [/\bdata conversion\b/i,'chuyển đổi dữ liệu'],
+  [/\btime.bound(?:ed)?\b/i,'có thời hạn'],
+  [/\bmeasurable\b/i,'đo lường được'],
+];
+
+function detectQuestionKeyEvidence(questionText: string, limit = 3): string[] {
+  const found: Array<{index:number; end:number; key:string; vi:string}> = [];
+  for (const [rx, vi] of QUESTION_KEY_PHRASES) {
+    const match = rx.exec(questionText);
+    if (match) found.push({ index: match.index, end: match.index + match[0].length, key:match[0].trim(), vi });
+  }
+  const selected: typeof found = [];
+  for(const item of found.sort((a,b) => (b.end-b.index)-(a.end-a.index))) {
+    if (selected.some(x => item.index < x.end && item.end > x.index)) continue;
+    selected.push(item);
+  }
+  return selected.sort((a,b)=>a.index-b.index).slice(0,limit).map(x => `[[${x.key}]] (${x.vi})`);
+}
+
+function contextualQuestionExcerpt(questionText: string): string {
+  const compact=questionText.replace(/\s+/g,' ').trim();
+  const after = compact.match(/\b(?:when|where|if|because|in order to|so that|with a view to)\b.{16,95}/i);
+  if(after){
+    const piece=after[0].replace(/[?.,;].*$/,'').trim();
+    return `Đề mô tả [[${piece}]] → cần hiểu ý tình huống trước khi chọn.`;
+  }
+  const last = compact.slice(-102).replace(/^[^ ]+ /,'').replace(/\?$/,'').trim();
+  return `Đề hỏi [[${last}]]; chú ý chính xác điều kiện được hỏi.`;
+}
+
+function matchExcelTaskByName(answer: string, kb?: ExcelKnowledge | null): ExcelTask | undefined {
+  if (!kb || !answer || answer.length > 95) return undefined;
+  const normalize=(x:string)=>x.toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
+  const normalized=normalize(answer);
+  return kb.tasks.find(task => {
+    const name=normalize(task.name.replace(/^\d+\.\d+\s+/,''));
+    return name.length>10 && (normalized===name || normalized.startsWith(name+' '));
+  });
+}
+
+function taskFieldRelevantToQuestion(questionText: string): 'inputs' | 'outputs' | 'elements' | 'purpose' {
+  if (/\binput[s]?\b|\bprerequisite[s]?\b|\bneeded to (?:begin|perform)\b/i.test(questionText)) return 'inputs';
+  if (/\boutput[s]?\b|\bdeliverable\b|\bresult (?:of|from) (?:the|this) task\b/i.test(questionText)) return 'outputs';
+  if (/\belements?\b|\bcomponent[s]?\b|\bfactor[s]?\b/i.test(questionText)) return 'elements';
+  return 'purpose';
+}
+
+function extractExcelLineMatchingAnswer(text: string, answer: string): string | undefined {
+  if (!text || answer.length > 125) return undefined;
+  const terms = answer.toLowerCase().replace(/[^a-z0-9 ]/g,' ').split(/\s+/)
+    .filter(x=>x.length>3 && !['which','would','about','their','there','that','with','this','from','following','business','analysis','requirements','information','stakeholder'].includes(x));
+  if(!terms.length) return undefined;
+  const lines = text.split(/\n|(?=\b\d+\.\s)/).map(x=>x.trim()).filter(x=>x.length>9 && x.length<400);
+  const scored = lines.map(line=>({line, count:terms.filter(t=>new RegExp(`\\b${t}\\b`,'i').test(line)).length}))
+    .sort((a,b)=>b.count-a.count);
+  const best=scored[0];
+  if(!best || best.count<Math.min(2,terms.length)) return undefined;
+  return best.line.replace(/^[-+•\s]+/,'').slice(0,220);
+}
+
+/** Chỉ gắn dòng Excel khi khớp nội dung câu hỏi/đáp án, tránh gắn ghi chú lạc đề. */
+function buildFocusedExcelInsight(
+  question:Question, guide:BabokStudyGuide, kb:ExcelKnowledge | null | undefined,
+  basic:PracticalKeyInsight
+): {insight:PracticalKeyInsight; source?:string; verified:boolean} {
+  const answer=question.options.find(x=>x.isCorrect)?.text || '';
+  const answerCue=answer.length>80 ? 'nhóm kiến thức trong đáp án đúng' : answer;
+  const evidence=detectQuestionKeyEvidence(question.text);
+  const task=matchExcelTaskByName(answer,kb) || matchExcelTask(guide.focus.sectionLabel,kb);
+  const technique=matchExcelTechnique(question,kb);
+  const field=taskFieldRelevantToQuestion(question.text);
+  const candidates: Array<{line:string;source:string;kind:string}> = [];
+  const memo=matchExcelMemory(question,guide.focus.sectionLabel,kb);
+  if(memo){
+    const line=extractExcelLineMatchingAnswer(memo.note,answer);
+    if(line) candidates.push({line,source:memo.source,kind:'Học thuộc'});
+  }
+  if (task){
+    const line=extractExcelLineMatchingAnswer(task[field] || '',answer);
+    if(line) candidates.push({line,source:task.source,kind:field});
+  }
+  if(technique){
+    const line=extractExcelLineMatchingAnswer(technique.purpose,answer);
+    if(line) candidates.push({line,source:technique.source,kind:'Purpose'});
+  }
+  const concrete = candidates[0];
+  const contrastOption = (question.options || []).filter(x=>!x.isCorrect && x.text.length<=75).map(option=>{
+    const anotherTask=matchExcelTaskByName(option.text,kb);
+    const anotherTech=kb?.techniques.find(t=>t.name.toLowerCase().replace(/[^a-z]/g,' ')===option.text.toLowerCase().replace(/[^a-z]/g,' '));
+    const rule=anotherTask?.keyLearning?.principle || anotherTech?.keyLearning?.principle;
+    return rule ? {label:option.text,rule} : null;
+  }).find(Boolean);
+  const normalizeCompare = (x:string) => x.toLowerCase().replace(/[^a-z]/g,'').replace('brainstoming','brainstorming').replace('workshop','workshop').replace('surveyandquestions','surveyorquestionnaire');
+  const answerComparison = kb?.comparison?.find(item => normalizeCompare(item.name) === normalizeCompare(answer));
+  const wrongComparison = kb?.comparison?.find(item => question.options.some(option =>
+    !option.isCorrect && normalizeCompare(option.text) === normalizeCompare(item.name)
+  ));
+  const compareText = answerComparison && wrongComparison && !isNegativeExamQuestion(question.text)
+    ? `Theo Excel [[Compare_Simi_Tẹc]]: [[${answerComparison.name}]] dùng khi ${showExcelNote(answerComparison.when,115)}; còn [[${wrongComparison.name}]] dùng khi ${showExcelNote(wrongComparison.when,115)}. Hỏi mục đích cụ thể để phân biệt.`
+    : undefined;
+  const selectedContrast = compareText || (contrastOption && !isNegativeExamQuestion(question.text)
+    ? `Đề cũng có [[${contrastOption.label}]]: ${contrastOption.rule} So sánh đúng mục đích/đầu ra với [[${answer}]].`
+    : basic.specific ? basic.contrast
+    : technique?.keyLearning?.contrast || task?.keyLearning?.contrast || 'Chưa có đối chiếu đủ cụ thể giữa các phương án trong Excel; không suy đoán chỉ vì giống từ khóa.');
+  let principle=basic.principle;
+  let source: string | undefined;
+  if(concrete){
+    // Kết luận bằng tiếng Việt từ quy tắc đã biên tập; trích đúng mẩu Excel gắn với đáp án.
+    const groundedLine=showExcelNote(concrete.line,answer.length>75 ? 98 : 140);
+    const vietRule=basic.specific ? basic.principle : task?.keyLearning?.principle || technique?.keyLearning?.principle || '';
+    principle=answer.length>75 && basic.specific
+      ? vietRule
+      : `${vietRule ? `${vietRule} ` : ''}Ghi nhớ theo Excel: [[${answerCue}]] — ${groundedLine}`;
+    source=concrete.source;
+  } else if (technique?.keyLearning && !basic.specific) {
+    principle=technique.keyLearning.principle;
+    source=technique.source;
+  } else if(task?.keyLearning && !basic.specific) {
+    principle=task.keyLearning.principle;
+    source=task.source;
+  }
+  // Không tự biến một ghi chú tổng quát thành lời giải được kiểm chứng cho mọi câu.
+  if(!source && !basic.specific) {
+    return {
+      insight:{
+        clue:evidence.length ? `Trong đề: ${evidence.join(' + ')}. Đối chiếu ý hỏi với [[${answerCue}]].` : `${contextualQuestionExcerpt(question.text)} Đáp án nguồn: [[${answerCue}]].`,
+        principle:task?.keyLearning?.principle || `Excel/PDF chưa có ghi chú đủ cụ thể đã đối chiếu cho câu này; cần xem đúng BABOK ${guide.focus.sectionLabel}, không suy ra từ tên đáp án.`,
+        contrast:'Chưa đủ bằng chứng trong ghi chú Excel để phân biệt chắc chắn các phương án gây nhiễu của riêng câu này; không dùng mẹo đoán.',
+        specific:false
+      }, verified:false
+    };
+  }
+  return {
+    insight:{
+      clue:evidence.length ? `Trong đề có ${evidence.join(' + ')} → liên hệ [[${answerCue}]].` : basic.specific ? basic.clue : `${contextualQuestionExcerpt(question.text)} Đáp án nguồn: [[${answer}]].`,
+      principle,
+      contrast:selectedContrast,
+      specific: Boolean(concrete || basic.specific || technique?.keyLearning)
+    }, source, verified:Boolean(concrete || basic.specific)
+  };
+}
+
 function showExcelNote(text: string, max = 250): string {
   const compact = text.replace(/\s+/g, ' ').replace(/^[-•\s]+/, '').trim();
   if (compact.length <= max) return compact;
@@ -3239,14 +3593,9 @@ function BabokStudyGuidePanel({
   const guide = buildBabokStudyGuide(question);
   const memory = buildMinimalBabokMemory(question, guide, note);
   const technicalExcel = matchExcelTechnique(question, excelKnowledge);
-  const taskExcel = matchExcelTask(guide.focus.sectionLabel, excelKnowledge);
   const basicInsight = buildPracticalKeyInsight(question, guide);
-  const practical = technicalExcel?.keyLearning || (basicInsight.specific ? basicInsight : {
-    ...basicInsight,
-    principle: taskExcel?.keyLearning?.principle || basicInsight.principle,
-    contrast: taskExcel?.keyLearning?.contrast || basicInsight.contrast,
-  });
-  const excelMemory = matchExcelMemory(question, guide.focus.sectionLabel, excelKnowledge);
+  const contextual = buildFocusedExcelInsight(question,guide,excelKnowledge,basicInsight);
+  const practical = contextual.insight;
   const excelWords = (excelKnowledge?.dictionary || [])
     .filter((item) => item.en && item.vi && new RegExp(`\\b${item.en.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i').test(question.text))
     .slice(0, 2);
@@ -3256,7 +3605,7 @@ function BabokStudyGuidePanel({
   const keywordPairs = extractLearningKeywords(question.text, '')
     .filter((item) => item.appearsInQuestion && Boolean(item.vi))
     .slice(0, 3);
-  const isNegative = /\b(not|least|except|false|incorrect)\b/i.test(question.text);
+  const isNegative = isNegativeExamQuestion(question.text);
 
   return (
     <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04]">
@@ -3307,18 +3656,11 @@ function BabokStudyGuidePanel({
             <span className="font-semibold text-slate-100">Dễ nhầm: </span>
             {emphasizeBilingualKeys(practical.contrast)}
           </p>
-          {(excelMemory || technicalExcel || taskExcel) && (
-            <p className="border-t border-white/10 pt-2 text-slate-300">
-              <span className="font-semibold text-violet-200">Từ Excel bạn ghi chú: </span>
-              {excelMemory
-                ? showExcelNote(excelMemory.note)
-                : technicalExcel
-                ? showExcelNote(technicalExcel.purpose, 200)
-                : showExcelNote(taskExcel?.purpose || '', 190)}
-              <span className="ml-1 text-[11px] text-slate-500">
-                ({excelMemory?.source || technicalExcel?.source || taskExcel?.source})
-              </span>
-            </p>
+          {contextual.source && (
+            <p className="text-[11px] text-violet-200/90">Nguồn ghi nhớ: {contextual.source}</p>
+          )}
+          {!contextual.verified && (
+            <p className="text-[11px] text-amber-200/90">Gợi ý theo phạm vi task; câu này chưa có lời giải KEY riêng được xác minh từ ghi chú Excel.</p>
           )}
         </div>
       </div>
@@ -3413,6 +3755,17 @@ export default function QuizLearningApp() {
     Record<string, { status: 'loading' | 'ready' | 'error'; text: string }>
   >({});
   const questionPaneRef = React.useRef<HTMLElement>(null);
+  const questionNavRef = React.useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const nav = questionNavRef.current;
+    const selected = nav?.querySelector<HTMLButtonElement>(`button[data-question-index="${currentIndex}"]`);
+    if (nav && selected) {
+      const offset = selected.offsetTop - nav.offsetTop;
+      if (offset < nav.scrollTop || offset + selected.offsetHeight > nav.scrollTop + nav.clientHeight) {
+        nav.scrollTop = Math.max(0, offset - nav.clientHeight / 2);
+      }
+    }
+  }, [currentIndex,session?.setId]);
   const [hasSavedData, setHasSavedData] = useState(false);
   const [isLoadingDefaults, setIsLoadingDefaults] = useState(true);
   const [isLoadingBabokData, setIsLoadingBabokData] = useState(true);
@@ -4243,6 +4596,40 @@ if (
             </button>
           </div>
         </div>
+
+        <nav aria-label="Bản đồ câu hỏi: chọn số để mở câu, màu thể hiện đúng sai chưa làm" className="mb-3 rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2">
+          <div className="mb-2 flex flex-wrap items-center justify-between gap-2 text-[11px]">
+            <strong className="text-slate-200">Tình trạng từng câu · Bấm số để xem lại</strong>
+            <div className="flex items-center gap-3 text-slate-300">
+              <span><span className="text-emerald-300">●</span> Đúng</span>
+              <span><span className="text-rose-300">●</span> Sai</span>
+              <span><span className="text-slate-500">●</span> Chưa làm</span>
+              <span className="text-cyan-300">▢ Đang xem</span>
+            </div>
+          </div>
+          <div ref={questionNavRef} className="grid max-h-[90px] grid-cols-10 gap-1 overflow-y-auto pr-1 sm:grid-cols-[repeat(15,minmax(0,1fr))] lg:grid-cols-[repeat(20,minmax(0,1fr))]">
+            {session.questions.map((q,index) => {
+              const picked = session.answers[q.id];
+              const isRight = Boolean(q.options.find(option => option.id === picked)?.isCorrect);
+              const status = !picked ? 'Chưa làm' : isRight ? 'Đúng' : 'Sai';
+              return (
+                <button key={q.id} type="button" data-question-index={index}
+                  onClick={() => goToQuestion(index)}
+                  title={`Câu ${index+1} (câu gốc ${q.originalNumber}): ${status}`}
+                  aria-label={`Mở câu ${index+1}: ${status}`}
+                  aria-current={currentIndex===index ? 'step' : undefined}
+                  className={cn(
+                    'h-7 min-w-0 rounded-md border text-[11px] font-semibold transition hover:brightness-125',
+                    !picked && 'border-white/10 bg-slate-700/60 text-slate-200',
+                    picked && isRight && 'border-emerald-500/50 bg-emerald-500/25 text-emerald-100',
+                    picked && !isRight && 'border-rose-500/50 bg-rose-500/25 text-rose-100',
+                    currentIndex===index && 'ring-2 ring-cyan-300 ring-offset-1 ring-offset-slate-950'
+                  )}
+                >{index+1}</button>
+              );
+            })}
+          </div>
+        </nav>
 
         <div className="grid gap-3 lg:grid-cols-[minmax(0,55fr)_minmax(0,45fr)] lg:items-start">
           <main ref={questionPaneRef} className="min-w-0 rounded-2xl border border-white/10 bg-white/[0.04] p-4 shadow-xl md:p-5 lg:h-[calc(100vh-116px)] lg:overflow-y-auto">
