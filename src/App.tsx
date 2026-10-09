@@ -1256,13 +1256,8 @@ function babokPdfPublicUrl(): string {
 
 
 function babokPdfViewerUrl(pdfPage: number): string {
-  const baseUrl = (import.meta.env.BASE_URL || '/').replace(/\/$/, '');
-
-  const pdfFile = babokPdfPublicUrl();
-
-  return `${baseUrl}/pdfjs/web/viewer.html?file=${encodeURIComponent(
-    pdfFile
-  )}#page=${pdfPage}&zoom=page-width&pagemode=bookmarks`;
+function babokPdfHref(bookPage: number): string {
+  return `${babokPdfPublicUrl()}#page=${babokPdfPage(bookPage)}`;
 }
 
 function babokPdfHref(bookPage: number): string {
