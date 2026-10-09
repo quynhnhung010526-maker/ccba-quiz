@@ -45,6 +45,7 @@ type Question = {
   sourceTitle: string;
   sourceFileName: string;
   originalNumber: number;
+  sourceOrdinal: number;
   text: string;
   options: Option[];
 };
@@ -415,8 +416,8 @@ const ENGLISH_STOP_WORDS = new Set([
 // Cấu trúc cần có: public/BABOK v3 (1).pdf
 // Không import PDF vào component và không cần tải PDF qua giao diện ứng dụng.
 const BABOK_PDF_PUBLIC_FILE = 'BABOK v3 (1).pdf';
-// Trang in số 1 của BABOK nằm ở trang PDF số 11, do đó chênh lệch là 10 trang.
-const BABOK_PDF_PAGE_OFFSET = 10;
+// PDF Study Notes (107 trang): bookPage trong JSON lưu TRANG PDF, không phải trang BABOK gốc.
+const BABOK_PDF_PAGE_OFFSET = 0;
 
 
 // Hai file dữ liệu BABOK đặt trong thư mục public/.
@@ -445,7 +446,7 @@ async function loadBabokPublicData(): Promise<void> {
   const sectionsData = (await sectionsResponse.json()) as BabokSectionsPublicData;
   const questionMapData = (await questionMapResponse.json()) as Record<
     string,
-    Record<number, string>
+    Record<string, string>
   >;
 
   if (!Array.isArray(sectionsData.topics)) {
@@ -582,7 +583,7 @@ const BABOK_ROUTING_HINTS: Array<{
 ];
 
 
-let BABOK_QUESTION_ROUTES: Record<string, Record<number, string>> = {};
+let BABOK_QUESTION_ROUTES: Record<string, Record<string, string>> = {};
 
 let BABOK_SECTION_BOOK_PAGES: Record<string, number> = {};
 
@@ -624,9 +625,9 @@ function knownQuestionRoute(question: Question): string | null {
   const questionSetKey = detectQuestionSetKey(question);
   if (!questionSetKey) return null;
 
-  return (
-    BABOK_QUESTION_ROUTES[questionSetKey]?.[question.originalNumber] || null
-  );
+  const routes = BABOK_QUESTION_ROUTES[questionSetKey];
+  // Khi file có các Question 29/30 trùng số, khóa @<thứ tự câu> được ưu tiên.
+  return routes?.[`@${question.sourceOrdinal}`] || routes?.[String(question.originalNumber)] || null;
 }
 
 function isSpecificBabokAlias(alias: string): boolean {
@@ -1767,7 +1768,9 @@ function findAllLabelIndexes(content: string, label: string): number[] {
   while (searchFrom < content.length) {
     const found = content.indexOf(token, searchFrom);
     if (found === -1) break;
-    indexes.push(found);
+    // (SME) / (BA) là viết tắt trong nội dung, không phải nhãn đáp án E) / A).
+    const preceding = content.slice(Math.max(0, found - 8), found);
+    if (!/\([A-Za-z]{1,5}$/.test(preceding)) indexes.push(found);
     searchFrom = found + token.length;
   }
 
@@ -1791,7 +1794,8 @@ function findOptionPositionCandidates(content: string): OptionPosition[][] {
 
     let searchFrom = bIndex + 2;
     labels.slice(2).forEach((label) => {
-      const nextIndex = content.indexOf(`${label})`, searchFrom);
+      const nextIndex = findAllLabelIndexes(content, label)
+        .find((index) => index >= searchFrom) ?? -1;
       if (nextIndex === -1) return;
       positions.push({ index: nextIndex, label });
       searchFrom = nextIndex + 2;
@@ -1827,7 +1831,7 @@ function parseQuestionBlock(
         const parsed = stripCorrectMarker(withoutHeader.slice(start, end));
 
         return {
-          id: `${set.id}-q${originalNumber}-${position.label}`,
+          id: `${set.id}-q${originalNumber}-i${fallbackIndex}-${position.label}`,
           originalLabel: position.label,
           text: parsed.text,
           isCorrect: parsed.isCorrect,
@@ -1856,11 +1860,12 @@ function parseQuestionBlock(
   if (!selected) return null;
 
   return {
-    id: `${set.id}-q${originalNumber}`,
+    id: `${set.id}-q${originalNumber}-i${fallbackIndex}`,
     sourceSetId: set.id,
     sourceTitle: set.title,
     sourceFileName: set.fileName,
     originalNumber,
+    sourceOrdinal: fallbackIndex + 1,
     text: selected.questionText,
     options: selected.options,
   };
@@ -2343,20 +2348,19 @@ function getRequirementsArchitectureBookPage(
 ): number {
   switch (pattern) {
     case 'viewpoints':
-      return 149;
-    case 'completeness':
-      return 150;
-    case 'relationship-quality':
-      return 151;
-    case 'techniques':
-    case 'output':
-      return 152;
     case 'traceability':
     case 'inputs':
     case 'purpose':
     case 'general':
+      return 74;
+    case 'completeness':
+    case 'relationship-quality':
+      return 75;
+    case 'techniques':
+    case 'output':
+      return 76;
     default:
-      return 148;
+      return 74;
   }
 }
 
@@ -2846,48 +2850,34 @@ function BabokPdfCanvas({
       <div className="flex flex-wrap items-center gap-1.5 border-b border-slate-300 bg-slate-100 p-2 text-xs">
         <button type="button" onClick={() => setShowOutline((value) => !value)}
           className="rounded border border-slate-300 px-2 py-1">☰ Mục lục</button>
-        <button type="button" disabled={currentPage <= 1}
-          onClick={() => scrollToPage(currentPage - 1)}
+        <button type="button" disabled={!pdf || currentPage <= 1} onClick={() => scrollToPage(currentPage - 1)}
           className="rounded border border-slate-300 px-2 py-1 disabled:opacity-40">‹</button>
         <input type="number" min={1} max={pdf?.numPages} value={pageInput}
-          onChange={(event) => setPageInput(event.target.value)}
-          onKeyDown={(event) => {
-            if (event.key === 'Enter') scrollToPage(Number(pageInput));
-          }}
-          onBlur={() => {
-            if (Number.isFinite(Number(pageInput)) && Number(pageInput) >= 1)
-              scrollToPage(Number(pageInput));
-            else setPageInput(String(currentPage));
-          }}
+          aria-label="Trang PDF" onChange={(event) => setPageInput(event.target.value)}
+          onKeyDown={(event) => { if (event.key === 'Enter') scrollToPage(Number(pageInput)); }}
+          onBlur={() => { const n = Number(pageInput); if (Number.isInteger(n) && n >= 1) scrollToPage(n); else setPageInput(String(currentPage)); }}
           className="w-12 rounded border border-slate-300 bg-white px-1 py-1 text-center text-xs" />
         <span>/ {pdf?.numPages ?? '...'}</span>
-        <button type="button" disabled={!pdf || currentPage >= pdf.numPages}
-          onClick={() => scrollToPage(currentPage + 1)}
+        <button type="button" disabled={!pdf || currentPage >= pdf.numPages} onClick={() => scrollToPage(currentPage + 1)}
           className="rounded border border-slate-300 px-2 py-1 disabled:opacity-40">›</button>
         <button type="button" onClick={() => setZoom((z) => Math.max(0.5, +(z - 0.2).toFixed(2)))}
           className="rounded border border-slate-300 px-2 py-1">−</button>
         <span>{Math.round(zoom * 100)}%</span>
         <button type="button" onClick={() => setZoom((z) => Math.min(2, +(z + 0.2).toFixed(2)))}
           className="rounded border border-slate-300 px-2 py-1">+</button>
-        <button type="button" onClick={() => setZoom(1)}
-          className="rounded border border-slate-300 px-2 py-1">Vừa trang</button>
-        <a href={babokPdfPublicUrl()} download
-          className="rounded border border-slate-300 px-2 py-1">Tải PDF</a>
+        <form onSubmit={(event) => { event.preventDefault(); void findInPdf(); }} className="flex min-w-[120px] flex-1 items-center gap-1">
+          <input value={search} onChange={(event) => setSearch(event.target.value)}
+            placeholder="Tìm trong sách" aria-label="Tìm nội dung trong PDF"
+            className="min-w-0 w-full rounded border border-slate-300 bg-white px-2 py-1 text-xs" />
+          <button type="submit" disabled={!pdf || !search.trim()} className="rounded bg-slate-700 px-2 py-1 text-white disabled:opacity-40">Tìm</button>
+        </form>
         <a href={babokPdfPublicUrl()} target="_blank" rel="noreferrer"
-          className="rounded border border-slate-300 px-2 py-1">Mở PDF gốc / In</a>
+          className="rounded border border-slate-300 px-2 py-1">PDF gốc</a>
       </div>
-      <form onSubmit={(event) => { event.preventDefault(); void findInPdf(); }}
-        className="flex items-center gap-2 border-b border-slate-200 bg-slate-50 px-2 py-1.5">
-        <input value={search} onChange={(event) => setSearch(event.target.value)}
-          placeholder="Tìm nội dung trong PDF" aria-label="Tìm nội dung PDF"
-          className="min-w-0 flex-1 rounded border border-slate-300 bg-white px-2 py-1 text-xs" />
-        <button type="submit" disabled={!pdf || !search.trim()}
-          className="rounded bg-slate-700 px-2 py-1 text-xs text-white disabled:opacity-40">Tìm</button>
-      </form>
       {searchStatus && <p className="bg-slate-50 px-2 py-1 text-[11px] text-slate-600">{searchStatus}</p>}
       <div className="flex min-h-0 w-full overflow-hidden">
         {showOutline && (
-          <aside className="max-h-[520px] w-44 shrink-0 overflow-auto border-r border-slate-200 bg-white sm:w-52 lg:max-h-[calc(100vh-320px)]">
+          <aside className="max-h-[370px] w-36 shrink-0 overflow-auto border-r border-slate-200 bg-white sm:w-44 lg:max-h-[calc(100vh-450px)]">
             {outline.length ? renderOutline(outline) : (
               <p className="p-3 text-xs text-slate-500">File PDF chưa có bookmark/mục lục.</p>
             )}
@@ -2897,7 +2887,7 @@ function BabokPdfCanvas({
           <div ref={scrollRef} onScroll={handleScroll}
             className={fullScreen
               ? 'h-[calc(100vh-170px)] overflow-auto bg-slate-300'
-              : 'h-[520px] overflow-auto bg-slate-300 lg:h-[calc(100vh-335px)] lg:min-h-[520px] xl:h-[calc(100vh-310px)]'}
+              : 'h-[370px] overflow-auto bg-slate-300 lg:h-[calc(100vh-450px)] lg:min-h-[280px]'}
             style={{ overscrollBehavior: 'contain' }}>
             {error && <p className="p-3 text-sm text-red-700">Lỗi PDF: {error}</p>}
             {!pdf && !error && <p className="p-3 text-sm">Đang tải sách BABOK...</p>}
@@ -2926,118 +2916,79 @@ function BabokPdfCanvas({
 function BabokStudyGuidePanel({
   question,
   note,
-  compact = false,
 }: {
   question: Question;
   note?: LearningNote;
   selectedOptionId?: string;
-  compact?: boolean;
 }) {
   const guide = buildBabokStudyGuide(question);
   const memory = buildMinimalBabokMemory(question, guide, note);
-const pdfPage = babokPdfPage(memory.bookPage);
-const pdfHref = babokPdfHref(memory.bookPage);
-  const [showVietnameseSummary, setShowVietnameseSummary] = useState(false);
-
-  useEffect(() => {
-    setShowVietnameseSummary(false);
-  }, [question.id]);
-
-  if (compact) {
-    return (
-      <section className="mt-3 rounded-xl border border-cyan-300/20 bg-slate-950/35 px-3 py-2.5 text-[11px]">
-        <div className="flex flex-wrap items-center justify-between gap-2">
-          <p className="min-w-0 font-semibold text-slate-200">
-            <span className="text-cyan-200">BABOK {memory.section}</span>
-            {' · '}
-            {memory.title}
-            {' · '}trang {memory.bookPage}
-          </p>
-          <a
-            href={pdfHref}
-            target="_blank"
-            rel="noreferrer"
-            className="shrink-0 rounded-md border border-white/10 px-2 py-1 font-semibold text-cyan-200 transition hover:bg-white/10"
-          >
-            Xem đúng trang PDF
-          </a>
-        </div>
-      </section>
-    );
-  }
+  const pdfPage = babokPdfPage(memory.bookPage);
+  const pdfHref = babokPdfHref(memory.bookPage);
+  const correct = question.options.find((option) => option.isCorrect);
+  const keywordPairs = extractLearningKeywords(question.text, correct?.text || '')
+    .filter((item) => item.appearsInQuestion && Boolean(item.vi))
+    .slice(0, 3);
+  const isNegative = /\b(not|least|except|false|incorrect)\b/i.test(question.text);
 
   return (
-    <section className="overflow-hidden rounded-2xl border border-cyan-300/25 bg-slate-950/45 shadow-xl">
-      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 px-3 py-2.5 md:px-4">
-        <div className="min-w-0">
-          <p className="flex items-center gap-1.5 text-xs font-bold text-cyan-100">
-            <BookOpen className="h-4 w-4 shrink-0" />
-            Phần BABOK liên quan
+    <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04]">
+      <div className="space-y-2.5 border-b border-white/10 px-4 py-3.5">
+        <h3 className="text-sm font-bold text-cyan-100">KEY cần nhớ</h3>
+        {keywordPairs.length > 0 ? (
+          <p className="text-sm leading-6 text-slate-200">
+            {keywordPairs.map((item, index) => (
+              <React.Fragment key={item.en}>
+                {index > 0 ? <span className="text-slate-500"> · </span> : null}
+                <strong className="text-cyan-200">{item.en}</strong>{' '}
+                <span className="text-slate-400">({item.vi})</span>
+              </React.Fragment>
+            ))}
           </p>
-          <p className="mt-1 truncate text-[11px] text-slate-300 md:text-xs">
-            {memory.section} · {memory.title} · trang sách {memory.bookPage} ·
-            trang PDF {pdfPage}
-          </p>
-        </div>
-        <a
-          href={pdfHref}
-          target="_blank"
-          rel="noreferrer"
-          className="shrink-0 rounded-lg border border-white/10 bg-white/5 px-2.5 py-1.5 text-[10px] font-semibold text-cyan-200 transition hover:bg-white/10"
-        >
-          Mở toàn màn hình
-        </a>
-      </div>
-
-      <div className="border-b border-white/10 bg-cyan-300/[0.05] px-3 py-3 md:px-4">
-        <div className="flex items-start justify-between gap-3">
-          <div className="min-w-0">
-            <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-cyan-300">
-              Tóm tắt để trả lời
-            </p>
-            <p className="mt-1.5 text-sm font-medium leading-5 text-slate-100">
-              {memory.rememberEn}
-            </p>
-          </div>
-
-          <button
-            type="button"
-            onClick={() => setShowVietnameseSummary((current) => !current)}
-            className="shrink-0 rounded-lg border border-white/10 bg-white/5 px-2.5 py-1.5 text-[10px] font-semibold text-cyan-200 transition hover:bg-white/10"
-          >
-            {showVietnameseSummary ? 'Ẩn bản dịch' : 'Dịch tiếng Việt'}
-          </button>
-        </div>
-
-        {showVietnameseSummary && (
-          <p className="mt-2 border-t border-white/10 pt-2 text-xs leading-5 text-slate-300">
-            {memory.rememberVi}
+        ) : (
+          <p className="text-sm text-slate-300">
+            <strong className="text-cyan-200">{memory.keyEn}</strong>
           </p>
         )}
-
-        <p className="mt-2 text-[11px] leading-4 text-slate-400">
-          <span className="font-semibold text-slate-300">Key English:</span>{' '}
-          {memory.keyEn}
+        <p className="text-sm leading-6 text-slate-100">
+          <span className="font-semibold text-emerald-200">Đáp án đúng:</span>{' '}
+          {correct?.text || 'Chưa có đáp án trong dữ liệu'}
+          {note?.status === 'ready' && note.correctAnswerVi && (
+            <span className="block text-slate-300">{note.correctAnswerVi}</span>
+          )}
+        </p>
+        {note?.status === 'loading' && (
+          <p className="text-xs text-slate-400">Đang dịch nghĩa đáp án...</p>
+        )}
+        {note?.status === 'error' && (
+          <p className="text-xs text-amber-200">Chưa dịch được đáp án. Nội dung tiếng Anh vẫn có thể ôn tập.</p>
+        )}
+        <p className="text-xs leading-5 text-slate-300">
+          <span className="font-semibold text-slate-100">Cách nhận diện:</span>{' '}
+          {isNegative ? 'Đây là câu hỏi loại trừ (NOT / EXCEPT / LEAST). ' : ''}
+          {guide.memoryRule.vi}
+        </p>
+        <p className="text-xs leading-5 text-slate-400">
+          <span className="font-semibold text-slate-200">Kiến thức nền:</span>{' '}
+          {guide.primary.summaryVi}
         </p>
       </div>
-
-     <BabokPdfCanvas
-  key={`${question.id}-${pdfPage}`}
-  pageNumber={pdfPage}
-/>
-
-      <div className="border-t border-white/10 px-3 py-2 text-[10px] text-slate-400 md:px-4">
-        Trình duyệt không hiển thị PDF?{' '}
-        <a
-          href={pdfHref}
-          target="_blank"
-          rel="noreferrer"
-          className="font-semibold text-cyan-200 hover:text-cyan-100"
-        >
-          Bấm để mở đúng trang.
+      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 px-4 py-2.5">
+        <div className="min-w-0">
+          <p className="text-xs font-semibold text-slate-100">
+            BABOK {memory.section} · {memory.title}
+          </p>
+          <p className="mt-0.5 text-[11px] text-slate-400">
+            PDF trang {pdfPage} · Vị trí tham khảo, cần đối chiếu nội dung câu hỏi
+          </p>
+        </div>
+        <a href={pdfHref} target="_blank" rel="noreferrer"
+          className="shrink-0 text-xs font-semibold text-cyan-200 hover:underline">
+          Toàn màn hình ↗
         </a>
       </div>
-    </section>
+      <BabokPdfCanvas key={`${question.id}-${pdfPage}`} pageNumber={pdfPage} />
+    </div>
   );
 }
 
@@ -3109,6 +3060,10 @@ export default function QuizLearningApp() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [session, setSession] = useState<QuizSession | null>(null);
   const [learningNotes, setLearningNotes] = useState<Record<string, LearningNote>>({});
+  const [questionTranslations, setQuestionTranslations] = useState<
+    Record<string, { status: 'loading' | 'ready' | 'error'; text: string }>
+  >({});
+  const questionPaneRef = React.useRef<HTMLElement>(null);
   const [hasSavedData, setHasSavedData] = useState(false);
   const [isLoadingDefaults, setIsLoadingDefaults] = useState(true);
   const [isLoadingBabokData, setIsLoadingBabokData] = useState(true);
@@ -3475,6 +3430,31 @@ export default function QuizLearningApp() {
     }
   };
 
+  const translateQuestionOnly = async (question: Question) => {
+    const stored = questionTranslations[question.id];
+    if (stored?.status === 'ready' || stored?.status === 'loading') return;
+
+    setQuestionTranslations((current) => ({
+      ...current,
+      [question.id]: { status: 'loading', text: '' },
+    }));
+    try {
+      const text = await translateEnglishToVietnamese(question.text);
+      setQuestionTranslations((current) => ({
+        ...current,
+        [question.id]: { status: 'ready', text },
+      }));
+    } catch {
+      setQuestionTranslations((current) => ({
+        ...current,
+        [question.id]: {
+          status: 'error',
+          text: 'Chưa dịch được câu hỏi. Bạn vẫn có thể làm bài bằng tiếng Anh.',
+        },
+      }));
+    }
+  };
+
   const selectAnswer = (questionId: string, optionId: string) => {
     if (!session || session.answers[questionId]) return;
 
@@ -3829,6 +3809,7 @@ if (
     );
 
     setCurrentIndex(safeIndex);
+    questionPaneRef.current?.scrollTo({ top: 0, behavior: 'auto' });
     scrollToPageTop();
   };
 
@@ -3848,11 +3829,30 @@ if (
               {session.setTitle}
             </h1>
             <p className="mt-0.5 text-xs text-slate-400">
-              Đã chọn {answeredCount}/{session.questions.length} câu · Tiến độ {progress}%
+              Câu {currentIndex + 1}/{session.questions.length} · Đã làm {answeredCount}/{session.questions.length} · Tiến độ {progress}%
             </p>
           </div>
 
-          <div className="flex shrink-0 flex-wrap gap-2">
+          <div className="flex shrink-0 flex-wrap items-center gap-2">
+            <label className="sr-only" htmlFor="ccba-jump-question">Chọn câu hỏi</label>
+            <select
+              id="ccba-jump-question"
+              value={currentIndex}
+              onChange={(event) => goToQuestion(Number(event.target.value))}
+              className="max-w-[150px] rounded-xl border border-white/10 bg-slate-900 px-2.5 py-2 text-xs text-slate-100"
+            >
+              {session.questions.map((question, index) => {
+                const picked = session.answers[question.id];
+                const correct = question.options.find((option) => option.id === picked)?.isCorrect;
+                const mark = !picked ? '—' : correct ? '✓' : '✕';
+                return <option key={question.id} value={index}>Câu {index + 1} {mark}</option>;
+              })}
+            </select>
+            {session.submitted && (
+              <span className="text-xs font-semibold text-emerald-200">
+                Đúng {score.correct}/{score.total} · {score.percent}%
+              </span>
+            )}
             <button
               onClick={() => startQuiz(session.setId)}
               className="inline-flex items-center gap-1.5 rounded-xl border border-white/10 px-3 py-2 text-xs font-semibold text-slate-200 transition hover:bg-white/10"
@@ -3869,30 +3869,8 @@ if (
           </div>
         </div>
 
-        {session.submitted && (
-          <section className="mb-3 flex flex-col gap-2 rounded-2xl border border-cyan-300/20 bg-cyan-300/10 p-3 shadow-xl sm:flex-row sm:items-center sm:justify-between">
-            <div>
-              <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-cyan-100">
-                Kết quả
-              </p>
-              <h2 className="text-xl font-bold">
-                {score.correct}/{score.total} câu đúng · {score.percent}%
-              </h2>
-              <p className="text-xs text-slate-300">
-                Còn {score.unanswered} câu chưa chọn.
-              </p>
-            </div>
-            <button
-              onClick={() => startQuiz(session.setId)}
-              className="rounded-xl bg-white px-3 py-2 text-xs font-semibold text-slate-950 transition hover:bg-cyan-100"
-            >
-              Làm lại bộ này
-            </button>
-          </section>
-        )}
-
-        <div className="grid gap-3 lg:grid-cols-[minmax(0,1.65fr)_minmax(330px,0.95fr)_210px] lg:items-start xl:grid-cols-[minmax(0,1.8fr)_minmax(380px,1fr)_220px]">
-          <main className="rounded-2xl border border-white/10 bg-white/[0.04] p-4 shadow-xl md:p-6">
+        <div className="grid gap-3 lg:grid-cols-[minmax(0,55fr)_minmax(0,45fr)] lg:items-start">
+          <main ref={questionPaneRef} className="min-w-0 rounded-2xl border border-white/10 bg-white/[0.04] p-4 shadow-xl md:p-5 lg:h-[calc(100vh-116px)] lg:overflow-y-auto">
             <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-2">
               <div>
                 <p className="text-xs font-semibold text-slate-300">
@@ -3922,11 +3900,33 @@ if (
                 : currentQuestion.text}
             </h2>
 
-            {hasAnsweredCurrent && currentLearningNote && (
-              <LearningNotePanel
-                note={currentLearningNote}
-                onRetry={() => void loadLearningNote(currentQuestion, true)}
-              />
+            {!hasAnsweredCurrent && !session.submitted && (
+              <div className="mt-2">
+                <button
+                  type="button"
+                  onClick={() => void translateQuestionOnly(currentQuestion)}
+                  disabled={questionTranslations[currentQuestion.id]?.status === 'loading'}
+                  className="text-xs font-medium text-cyan-200 hover:underline disabled:opacity-50"
+                >
+                  {questionTranslations[currentQuestion.id]?.status === 'loading'
+                    ? 'Đang dịch câu hỏi...'
+                    : questionTranslations[currentQuestion.id]?.status === 'ready'
+                    ? 'Đã dịch câu hỏi'
+                    : 'Dịch câu hỏi sang tiếng Việt'}
+                </button>
+                {questionTranslations[currentQuestion.id]?.text && (
+                  <p className="mt-2 text-sm leading-6 text-slate-300">
+                    {questionTranslations[currentQuestion.id].text}
+                  </p>
+                )}
+              </div>
+            )}
+
+            {(hasAnsweredCurrent || session.submitted) && currentLearningNote?.status === 'ready' && (
+              <p className="mt-3 text-sm leading-6 text-slate-300">
+                <span className="font-semibold text-cyan-200">Dịch:</span>{' '}
+                {currentLearningNote.questionVi}
+              </p>
             )}
 
             <div className="mt-5 grid gap-2.5">
@@ -3998,9 +3998,7 @@ if (
               >
                 Câu trước
               </button>
-              <div className="hidden text-center text-[11px] text-slate-500 sm:block">
-                Đáp án được xáo trộn riêng cho lượt làm bài
-              </div>
+              <span className="text-[11px] text-slate-400">{answeredCount}/{session.questions.length} đã làm</span>
               <button
                 onClick={() => goToQuestion(currentIndex + 1)}
                 disabled={currentIndex === session.questions.length - 1}
@@ -4011,164 +4009,23 @@ if (
             </div>
           </main>
 
-          <section className="min-w-0 lg:sticky lg:top-3 lg:max-h-[calc(100vh-24px)]">
-            {hasAnsweredCurrent ? (
+          <section className="min-w-0 lg:h-[calc(100vh-116px)] lg:overflow-y-auto">
+            {(hasAnsweredCurrent || session.submitted) ? (
               <BabokStudyGuidePanel
                 question={currentQuestion}
                 note={currentLearningNote}
                 selectedOptionId={currentPickedId}
               />
             ) : (
-              <div className="flex min-h-[360px] items-center justify-center rounded-2xl border border-cyan-300/20 bg-white/[0.04] p-5 text-center shadow-xl lg:min-h-[calc(100vh-145px)]">
-                <div>
-                  <BookOpen className="mx-auto h-8 w-8 text-cyan-300/70" />
-                  <h3 className="mt-3 text-sm font-semibold text-slate-200">
-                    Tóm tắt và BABOK
-                  </h3>
-                  <p className="mt-1.5 text-xs leading-5 text-slate-400">
-                    Chọn một đáp án để hiện phần tóm tắt và đúng trang PDF liên quan.
-                  </p>
-                </div>
+              <div className="rounded-2xl border border-white/10 bg-white/[0.04] px-5 py-6 text-sm text-slate-400">
+                Sau khi chọn đáp án, KEY cần nhớ và trang BABOK liên quan sẽ hiển thị tại đây.
               </div>
             )}
           </section>
 
-          <aside className="rounded-2xl border border-white/10 bg-white/[0.04] p-3 shadow-xl lg:sticky lg:top-3 lg:h-fit">
-            <h3 className="text-sm font-semibold">Theo dõi tiến độ</h3>
-            <div className="mt-2 grid max-h-[calc(100vh-245px)] grid-cols-5 gap-1.5 overflow-auto pr-1">
-              {session.questions.map((question, index) => {
-                const picked = session.answers[question.id];
-                const correct = question.options.find(
-                  (option) => option.id === picked
-                )?.isCorrect;
-                return (
-                  <button
-                    key={question.id}
-                    onClick={() => goToQuestion(index)}
-                    className={cn(
-                      'h-8 rounded-lg text-xs font-semibold transition',
-                      index === currentIndex && 'ring-2 ring-cyan-300',
-                      !session.submitted &&
-                        picked &&
-                        correct &&
-                        'bg-emerald-300 text-emerald-950',
-                      !session.submitted &&
-                        picked &&
-                        !correct &&
-                        'bg-rose-300 text-rose-950',
-                      !session.submitted &&
-                        !picked &&
-                        'bg-white/10 text-slate-300 hover:bg-white/20',
-                      session.submitted &&
-                        correct &&
-                        'bg-emerald-300 text-emerald-950',
-                      session.submitted &&
-                        picked &&
-                        !correct &&
-                        'bg-rose-300 text-rose-950',
-                      session.submitted &&
-                        !picked &&
-                        'bg-slate-800 text-slate-400'
-                    )}
-                  >
-                    {index + 1}
-                  </button>
-                );
-              })}
-            </div>
-            <div className="mt-3 flex flex-wrap gap-x-3 gap-y-1 text-[11px] text-slate-400 lg:block lg:space-y-1.5">
-              <p>
-                <span className="inline-block h-2.5 w-2.5 rounded bg-white/10 align-middle" />{' '}
-                Chưa làm
-              </p>
-              <p>
-                <span className="inline-block h-2.5 w-2.5 rounded bg-emerald-300 align-middle" />{' '}
-                Đúng
-              </p>
-              <p>
-                <span className="inline-block h-2.5 w-2.5 rounded bg-rose-300 align-middle" />{' '}
-                Sai
-              </p>
-            </div>
-          </aside>
+
         </div>
 
-        {session.submitted && (
-          <section className="mt-6 rounded-3xl border border-white/10 bg-white/[0.04] p-5 shadow-xl md:p-7">
-            <h2 className="text-2xl font-bold">Rà soát đáp án</h2>
-            <div className="mt-5 space-y-4">
-              {session.questions.map((question, index) => {
-                const pickedId = session.answers[question.id];
-                const picked = question.options.find(
-                  (option) => option.id === pickedId
-                );
-                const correct = question.options.find(
-                  (option) => option.isCorrect
-                );
-                const isCorrect = Boolean(picked?.isCorrect);
-
-                return (
-                  <details
-                    key={question.id}
-                    className="rounded-2xl border border-white/10 bg-slate-900/60 p-4"
-                    open={!isCorrect}
-                  >
-                    <summary className="cursor-pointer list-none">
-                      <div className="flex items-start gap-3">
-                        {isCorrect ? (
-                          <CheckCircle2 className="mt-1 h-5 w-5 shrink-0 text-emerald-300" />
-                        ) : (
-                          <XCircle className="mt-1 h-5 w-5 shrink-0 text-rose-300" />
-                        )}
-                        <div>
-                          <p className="font-semibold leading-7">
-                            Câu {index + 1}: {question.text}
-                          </p>
-                          <p className="mt-1 text-sm text-slate-400">
-                            Nguồn: {question.sourceTitle} · Câu gốc{' '}
-                            {question.originalNumber}
-                          </p>
-                        </div>
-                      </div>
-                    </summary>
-                    <div className="mt-4 rounded-2xl bg-white/5 p-4 text-sm leading-7">
-                      <p>
-                        Đáp án bạn chọn:{' '}
-                        <span
-                          className={
-                            isCorrect ? 'text-emerald-300' : 'text-rose-300'
-                          }
-                        >
-                          {picked?.text || 'Chưa chọn'}
-                        </span>
-                      </p>
-                      <p>
-                        Đáp án đúng:{' '}
-                        <span className="text-emerald-300">
-                          {correct?.text}
-                        </span>
-                      </p>
-                    </div>
-                    {pickedId && learningNotes[question.id] && (
-                      <LearningNotePanel
-                        note={learningNotes[question.id]}
-                        onRetry={() => void loadLearningNote(question, true)}
-                      />
-                    )}
-                    {pickedId && (
-                      <BabokStudyGuidePanel
-                        question={question}
-                        note={learningNotes[question.id]}
-                        selectedOptionId={pickedId}
-                        compact
-                      />
-                    )}
-                  </details>
-                );
-              })}
-            </div>
-          </section>
-        )}
       </div>
     </div>
   );
