@@ -1259,9 +1259,8 @@ function babokPdfHref(bookPage: number): string {
 }
 
 function babokPdfEmbedHref(bookPage: number): string {
-  return `${babokPdfPublicUrl()}#page=${babokPdfPage(
-    bookPage
-  )}&zoom=page-width&navpanes=0`;
+  const pdfPage = babokPdfPage(bookPage);
+  return `${babokPdfPublicUrl()}#page=${pdfPage}`;
 }
 
 function getBabokBookPageRange(topic: BabokTopic): { start: number; end: number } {
@@ -2581,13 +2580,17 @@ function BabokStudyGuidePanel({
         </p>
       </div>
 
-      <iframe
-        key={`${question.id}-${pdfPage}`}
-        src={pdfEmbedHref}
-        title={`BABOK ${memory.section} - ${memory.title}`}
-        loading="lazy"
-        className="h-[520px] w-full bg-white lg:h-[calc(100vh-285px)] lg:min-h-[520px] xl:h-[calc(100vh-260px)]"
-      />
+      <object
+  key={`${question.id}-${pdfPage}`}
+  data={pdfEmbedHref}
+  type="application/pdf"
+  aria-label={`BABOK ${memory.section} - ${memory.title}`}
+  className="h-[520px] w-full bg-white lg:h-[calc(100vh-285px)] lg:min-h-[520px] xl:h-[calc(100vh-260px)]"
+>
+  <a href={pdfHref} target="_blank" rel="noopener noreferrer">
+    Mở BABOK tại trang PDF {pdfPage}
+  </a>
+</object>
 
       <div className="border-t border-white/10 px-3 py-2 text-[10px] text-slate-400 md:px-4">
         Trình duyệt không hiển thị PDF?{' '}
