@@ -1,0 +1,1625 @@
+{
+  "sourceWorkbook": "Bảng tổng hợp BABOK do người học cung cấp",
+  "sheets": [
+    "Học thuộc",
+    "Techniques Detail",
+    "KA Detail_PA",
+    "Compare_Simi_Tẹc",
+    "Dictionary",
+    "PROB_SIMU"
+  ],
+  "dictionary": [
+    {
+      "en": "rigour",
+      "vi": "nghiêm ngặt",
+      "source": "Dictionary · dòng 2"
+    },
+    {
+      "en": "adequate",
+      "vi": "đầy đủ",
+      "source": "Dictionary · dòng 3"
+    },
+    {
+      "en": "incorporate",
+      "vi": "kết hợp",
+      "source": "Dictionary · dòng 4"
+    },
+    {
+      "en": "leverage",
+      "vi": "tận dụng",
+      "source": "Dictionary · dòng 5"
+    },
+    {
+      "en": "impose",
+      "vi": "áp dặt",
+      "source": "Dictionary · dòng 6"
+    },
+    {
+      "en": "associate",
+      "vi": "liên kết",
+      "source": "Dictionary · dòng 7"
+    },
+    {
+      "en": "constitutes",
+      "vi": "tạo thành",
+      "source": "Dictionary · dòng 8"
+    },
+    {
+      "en": "perception",
+      "vi": "nhận thức",
+      "source": "Dictionary · dòng 9"
+    },
+    {
+      "en": "witness",
+      "vi": "chứng kiến",
+      "source": "Dictionary · dòng 10"
+    },
+    {
+      "en": "impede",
+      "vi": "cản trở",
+      "source": "Dictionary · dòng 11"
+    },
+    {
+      "en": "stray",
+      "vi": "lạc",
+      "source": "Dictionary · dòng 12"
+    },
+    {
+      "en": "intend",
+      "vi": "dự định",
+      "source": "Dictionary · dòng 13"
+    },
+    {
+      "en": "oral",
+      "vi": "bằng miệng",
+      "source": "Dictionary · dòng 14"
+    },
+    {
+      "en": "proceed",
+      "vi": "tiến hành",
+      "source": "Dictionary · dòng 15"
+    },
+    {
+      "en": "conformance",
+      "vi": "Tuân thủ",
+      "source": "Dictionary · dòng 16"
+    },
+    {
+      "en": "detrimental",
+      "vi": "bất lợi",
+      "source": "Dictionary · dòng 17"
+    },
+    {
+      "en": "diverted",
+      "vi": "chuyển hướng",
+      "source": "Dictionary · dòng 18"
+    },
+    {
+      "en": "retain",
+      "vi": "giữ",
+      "source": "Dictionary · dòng 20"
+    },
+    {
+      "en": "likelihood",
+      "vi": "khả năng xảy ra",
+      "source": "Dictionary · dòng 21"
+    },
+    {
+      "en": "stability",
+      "vi": "sự ổn định",
+      "source": "Dictionary · dòng 22"
+    },
+    {
+      "en": "precedence",
+      "vi": "quyền ưu tiên",
+      "source": "Dictionary · dòng 23"
+    },
+    {
+      "en": "shift",
+      "vi": "thay đổi",
+      "source": "Dictionary · dòng 24"
+    },
+    {
+      "en": "expertise",
+      "vi": "chuyên môn",
+      "source": "Dictionary · dòng 25"
+    },
+    {
+      "en": "sought",
+      "vi": "tìm ra",
+      "source": "Dictionary · dòng 27"
+    },
+    {
+      "en": "trigger",
+      "vi": "kích hoạt",
+      "source": "Dictionary · dòng 28"
+    },
+    {
+      "en": "articulate",
+      "vi": "nói rõ",
+      "source": "Dictionary · dòng 29"
+    },
+    {
+      "en": "buried",
+      "vi": "Cất sâu",
+      "source": "Dictionary · dòng 30"
+    },
+    {
+      "en": "presume",
+      "vi": "phỏng đoán",
+      "source": "Dictionary · dòng 31"
+    },
+    {
+      "en": "adverse",
+      "vi": "bất lợi",
+      "source": "Dictionary · dòng 32"
+    },
+    {
+      "en": "aid or limit",
+      "vi": "hỗ trợ hoăc hạn chế",
+      "source": "Dictionary · dòng 33"
+    },
+    {
+      "en": "norm",
+      "vi": "quy tắc",
+      "source": "Dictionary · dòng 34"
+    },
+    {
+      "en": "infrastructure",
+      "vi": "cơ sở hạ tầng",
+      "source": "Dictionary · dòng 35"
+    },
+    {
+      "en": "macroeconomic environment",
+      "vi": "vĩ mô",
+      "source": "Dictionary · dòng 36"
+    },
+    {
+      "en": "inflation",
+      "vi": "lạm phát",
+      "source": "Dictionary · dòng 37"
+    },
+    {
+      "en": "implicitly or explicitly",
+      "vi": "ngầm hiểu hoặc rõ ràng",
+      "source": "Dictionary · dòng 38"
+    },
+    {
+      "en": "commitments",
+      "vi": "cam két",
+      "source": "Dictionary · dòng 39"
+    },
+    {
+      "en": "adequately",
+      "vi": "đầy đủ",
+      "source": "Dictionary · dòng 40"
+    },
+    {
+      "en": "cohesive",
+      "vi": "gắn kết",
+      "source": "Dictionary · dòng 41"
+    },
+    {
+      "en": "convey",
+      "vi": "truyền tải",
+      "source": "Dictionary · dòng 42"
+    },
+    {
+      "en": "excessive",
+      "vi": "quá",
+      "source": "Dictionary · dòng 43"
+    }
+  ],
+  "memorize": [
+    {
+      "section": "3.3.4.2",
+      "note": "Change request/ Quy trình thay đổi\n- Cost and time estimates\n- Benefits: include both financial benefits and tactical benefits (scope, time, cost, quality, and resources).\n- Risks\n- Priority\n- Course(s) of action (đường lối hành động): assessment of the components, identify alternative courses, SH recommended ==> make a choice best serve\nthe needs / Đánh giá các yếu tố bên trên, xác định vài hướng đi thay thế, recommend của SH, và quyết định 1 lựa chọn phù hợp",
+      "mnemonic": "",
+      "source": "Học thuộc · dòng 3"
+    },
+    {
+      "section": "3.4.4.6",
+      "note": "Requirements Attributes\n- Absolute reference: ID định danh (unique identifier) \n- Author: tác giả\n- Complexity\n- Ownership: người sở hữu\n- Priority\n- Risks\n- Source\n- Stability: độ ổn định\n- Status: proposed, accepted, verified, postponed, cancelled, or implemented.\n- Urgency: khẩn ==> khác Priority ở Time (deadline implement)",
+      "mnemonic": "(CARAS SOUPS): Complexity •\nAbsolute Reference • Risks • Author • Source • Status •\nOwnership • Urgency • Priority • Stability",
+      "source": "Học thuộc · dòng 4"
+    },
+    {
+      "section": "3.5.4.2",
+      "note": "Qualitative measures \n- Accuracy and Completeness: correct and relevant when delivered\n- Knowledge: BA skills and/or experience.\n- Effectiveness: easy to use as standalone deliverables \n- Organizational Support: adequate (đầy đủ) resources available.\n- Significance (quan trọng): benefit, assess whether the cost, time, and resource investments were justified for the value they delivered/ đánh giá nguồn lực bỏ ra có tương xứng với giá trị thu được không\n- Strategic: business objectives were met, problems were solved, and improvements were achieved.\n- Timeliness (kịp thời): evaluate whether BA delivered the work on time per stakeholder expectations and schedule/ đánh giá bàn giao đầu ra có đúng KH ko",
+      "mnemonic": "",
+      "source": "Học thuộc · dòng 5"
+    },
+    {
+      "section": "3.5.4.4",
+      "note": "Recommend Actions for Improvement\n- Preventive: reduces the probability of an event with a negative impact.\n- Corrective: establishes ways to reduce the negative impact.\n- Improvement: establishes ways to increase the probability or impact with a positive impact.",
+      "mnemonic": "",
+      "source": "Học thuộc · dòng 6"
+    },
+    {
+      "section": "4.1.4.2",
+      "note": "Elicitation Techniques: depend on cost and time constraints, the types and access of BA infor sources, the culture of the organization, and\nthe desired outcomes, the needs of the SH, their availability, and their location (co-located or dispersed).",
+      "mnemonic": "",
+      "source": "Học thuộc · dòng 7"
+    },
+    {
+      "section": "4.2.2.2",
+      "note": "Types of elicitation:\n- Collaborative: direct interaction with SH.\n- Research: studying materials or sources- not directly known by SH, include data analysis of historical data to identify trends or\npast results.\n- Experiments: sort of controlled test, observational studies,\nproofs of concept, and prototypes.",
+      "mnemonic": "",
+      "source": "Học thuộc · dòng 8"
+    },
+    {
+      "section": "4.2.6",
+      "note": "Techniques\n• Benchmarking and Market Analysis: used as a source of business analysis\ninformation by comparing a specific process, system, product, service, or\nstructure with some external baseline, such as a similar organization or baseline\nprovided by an industry association. Market analysis is used to determine what\ncustomers want and what competitors provide.\n• Brainstorming: used to generate many ideas from a group of stakeholders in a\nshort period, and to organize and prioritize those ideas.\n Business Rules Analysis: used to identify the rules that govern decisions in an\norganization and that define, constrain, or enable organizational operations.\n• Collaborative Games: used to develop a better understanding of a problem or\nto stimulate creative solutions.\n• Concept Modelling: used to identify key terms and ideas of importance and\ndefine the relationships between them.\n• Data Mining: used to identify relevant information and patterns.\n• Data Modelling: used to understand entity relationships during elicitation.\n• Document Analysis: used to review existing systems, contracts, business\nprocedures and policies, standards, and regulations.\n• Focus Groups: used to identify and understand ideas and attitudes from a\ngroup.\n• Interface Analysis: used to understand the interaction, and characteristics of\nthat interaction, between two entities, such as two systems, two organizations",
+      "mnemonic": "",
+      "source": "Học thuộc · dòng 9"
+    },
+    {
+      "section": "4.3.6",
+      "note": "- Document Analysis: confirm elicitation results vs source information or other existing documents.\n- Interviews: confirm BA infor and to confirm integration of that information is correct.\n- Reviews: confirm a set of elicitation results, informal or formal \n- Workshops: conduct reviews of the drafted elicitation results using any\nlevel of formality. A predetermined agenda, scripts, or scenario tests may be\nused to walk through the elicitation results, and feedback is requested from the\nparticipants and recorded.",
+      "mnemonic": "",
+      "source": "Học thuộc · dòng 10"
+    },
+    {
+      "section": "4.4.4",
+      "note": "Forms for BA information packages:\n- Formal Documentation: organization template (text, matrices, or diagrams) stable, easy to use, long-term record \n- Informal Documentation: text, diagrams, or matrices \n- Presentations: a high-level overview appropriate for understanding\ngoals of a change, functions of a solution, or information to support\ndecision making.",
+      "mnemonic": "",
+      "source": "Học thuộc · dòng 11"
+    },
+    {
+      "section": "4.4.4.2",
+      "note": "Communication platforms include:\n- Group collaboration: communicate to a group of relevant stakeholders at the same time. It allows immediate discussion\nabout the information and related issues.\n- Individual collaboration: communicate to a single stakeholder at a time/ gain individual understanding of the\ninformation when a group setting is not feasible, most productive, or going to yield the best results.\n- E-mail or other non-verbal methods: used to communicate the package when there is a high maturity level of information that will need little or no\nverbal explanation to support it.",
+      "mnemonic": "",
+      "source": "Học thuộc · dòng 12"
+    },
+    {
+      "section": "7.1.4",
+      "note": "1. modelling formats:\n- Matrices: \n + complex but uniform structure\n + used for data dictionaries, requirements traceability, or for gap analysis. \n + prioritizing requirements and recording other requirements attributes and metadata.\n- Diagrams: \n + visual, often pictorial, representation.\n + depict complexity in a way that would be difficult to do with words.\n + define boundaries for business domains, to categorize and create hierarchies of items, and to show components of objects such as\ndata and their relationships.\nModel categories can include:\n• People and Roles: models represent organizations, groups of people, roles, and their relationships \n+ Organizational Modelling, Roles and Permissions Matrix and Stakeholder List, Map, or Personas.\n• Rationale: ‘why’ of a change.\n+ Decision Modelling, Scope Modelling, Business Model Canvas, Root Cause Analysis, and Business Rules Analysis.\n• Activity Flow: a sequence of actions, events, or a course\n+ Process Modelling, Use Cases and Scenarios, and User Stories.\n• Capability: features or functions of an enterprise or a solution. \n+ Business Capability Analysis, Functional Decomposition, and Prototyping.\n• Data and Information: characteristics and the exchange of information within an enterprise or a solution. \n+ Data Dictionary, Data Flow Diagrams, Data Modelling, Glossary, State Modelling, and Interface Analysis.",
+      "mnemonic": "",
+      "source": "Học thuộc · dòng 13"
+    },
+    {
+      "section": "7.2.4",
+      "note": "Characteristics of Requirements\n- Atomic: self-contained and capable of being understood independently/ hiểu độc lập\n- Complete: enough to guide further work and at the appropriate level of detail for work to continue. \n- Consistent/ nhất quán: not conflicting with other requirements.\n- Concise/ ngắn gọn, ko dư thừa: contains no extraneous and unnecessary content./ \n- Feasible: reasonable and possible within the agreed-upon risk, schedule, and budget, or considered feasible enough to investigate further through\nexperiments or prototypes./ khả thi\n- Unambiguous: the requirement must be clearly stated in such a way to\nmake it clear whether a solution does or does not meet the associated\nneed.\n- Testable: able to verify that the requirement or design has been fulfilled.\nAcceptable levels of verifying fulfillment depend on the level of abstraction\nof the requirement or design.\n- Prioritized: ranked, grouped, or negotiated in terms of importance and\nvalue against all other requirements.\n- Understandable: represented using common terminology of the audience",
+      "mnemonic": "",
+      "source": "Học thuộc · dòng 14"
+    },
+    {
+      "section": "",
+      "note": "non-functional requirements :\n• Availability\n• Compatibility: tương thích\n• Functionality: chức năng \n• Maintainability: dễ bảo trì.\n• Performance Efficiency: hiệu năng\n• Portability: chuyển đổi sang hệ thống/ môi trường khác\n• Reliability: ability of a solution or component to perform its required functions under stated conditions for a specified period of time\n• Scalability khả năng phát triển: degree with which a solution is able to grow or evolve to handle increased amounts of work.\n• Security: bảo mật\n• Usability: dễ hiểu\n• Certification: tiêu chuẩn\n• Compliance: tuân thủ theo điều khoản /// regulatory, financial, or legal constraints \n• Localization: (bản địa) requirements dealing with local languages, laws, currencies, cultures, spellings, and other characteristics of users, which requires\nattention to the context.\n• Service Level Agreements: SLA\n• Extensibility: mở rộng thêm tính năng",
+      "mnemonic": "",
+      "source": "Học thuộc · dòng 15"
+    },
+    {
+      "section": "7.5.4",
+      "note": "Improvement Opportunities\n- Increase Efficiencies:\n- Improve Access to Information: \n- Identify Additional Capabilities:",
+      "mnemonic": "",
+      "source": "Học thuộc · dòng 16"
+    },
+    {
+      "section": "7.4",
+      "note": "Traceability ensures that every requirement links back to an objective and shows how an objective was met. \nRequirements architecture ensure that the requirements collectively support one another to fully achieve the objectives.",
+      "mnemonic": "",
+      "source": "Học thuộc · dòng 19"
+    },
+    {
+      "section": "7.1",
+      "note": "Data dictionary: Data Elements; Primitive Data Elements; Composite Elements",
+      "mnemonic": "Từ điển dữ liệu: Các yếu tố dữ liệu; Các yếu tố dữ liệu nguyên thủy; Các yếu tố tổng hợp",
+      "source": "Học thuộc · dòng 20"
+    },
+    {
+      "section": "",
+      "note": "extensibility: mở rộng vè giải pháp tính năng",
+      "mnemonic": "",
+      "source": "Học thuộc · dòng 23"
+    },
+    {
+      "section": "",
+      "note": "scalability: mở rộng vè hiệu năng",
+      "mnemonic": "",
+      "source": "Học thuộc · dòng 24"
+    },
+    {
+      "section": "",
+      "note": "performance: đảm bảo về hiệu năng",
+      "mnemonic": "",
+      "source": "Học thuộc · dòng 25"
+    },
+    {
+      "section": "5.2",
+      "note": "requirements to be reused they must be clearly named, defined, and stored in a repository",
+      "mnemonic": "",
+      "source": "Học thuộc · dòng 32"
+    },
+    {
+      "section": "",
+      "note": "Problem analysis - Problem statement: Phân tích nguyên nhân vấn đề",
+      "mnemonic": "",
+      "source": "Học thuộc · dòng 36"
+    },
+    {
+      "section": "6.1",
+      "note": "various stakeholder points of view ==> Root cause analysis ==. ptichs nguyên nhân === xđ business need",
+      "mnemonic": "",
+      "source": "Học thuộc · dòng 38"
+    },
+    {
+      "section": "",
+      "note": "Xác định Need -> Current State -> Business Req",
+      "mnemonic": "",
+      "source": "Học thuộc · dòng 40"
+    },
+    {
+      "section": "6.4",
+      "note": "Nếu suggest 1 cái COTS solution -> xác định nó có align with Business Req không",
+      "mnemonic": "",
+      "source": "Học thuộc · dòng 41"
+    },
+    {
+      "section": "",
+      "note": "prevent jumping to a solution ==> Leadership and influencing.",
+      "mnemonic": "",
+      "source": "Học thuộc · dòng 42"
+    },
+    {
+      "section": "",
+      "note": "jumping to a solution”==> Đánhg giá xem đã có need chưa",
+      "mnemonic": "",
+      "source": "Học thuộc · dòng 43"
+    },
+    {
+      "section": "",
+      "note": "Hours per module",
+      "mnemonic": "",
+      "source": "Học thuộc · dòng 44"
+    },
+    {
+      "section": "",
+      "note": "Accurate history ==> accurate parameters\nIt is important that the organization uses its own history to calibrate any parametric model, since the attribute values reflect the skills and abilities of both its staff and the processes used to do work.\"",
+      "mnemonic": "",
+      "source": "Học thuộc · dòng 45"
+    },
+    {
+      "section": "",
+      "note": "technique of risk analysis (10.38) including identification, analysis, evaluation, and treatment.",
+      "mnemonic": "",
+      "source": "Học thuộc · dòng 46"
+    },
+    {
+      "section": "7.1",
+      "note": "Glossary is the basis (Lead the way to ) for developing a concept model, data model, and data dictionary",
+      "mnemonic": "",
+      "source": "Học thuộc · dòng 48"
+    },
+    {
+      "section": "",
+      "note": "Concept model: glossary + rule (BUSINESS DEFINITIONS + BUSINESS RULES)",
+      "mnemonic": "",
+      "source": "Học thuộc · dòng 49"
+    },
+    {
+      "section": "",
+      "note": "SIPOC is useful for understanding high-level parts of a business process",
+      "mnemonic": "",
+      "source": "Học thuộc · dòng 50"
+    },
+    {
+      "section": "",
+      "note": "Activity Diagrams are most useful to visually illustrate A use case ==> 1 usecase",
+      "mnemonic": "",
+      "source": "Học thuộc · dòng 51"
+    },
+    {
+      "section": "",
+      "note": "Swimlane Diagram: multiple actors in a process.",
+      "mnemonic": "",
+      "source": "Học thuộc · dòng 52"
+    },
+    {
+      "section": "",
+      "note": "Use cases: interactions directly between the new system and the actors. Swim lanes: interactions were directly between actors.",
+      "mnemonic": "",
+      "source": "Học thuộc · dòng 53"
+    },
+    {
+      "section": "",
+      "note": "Recommend Action -> Encourage stakeholders to work towards the common goal of increased profitability.",
+      "mnemonic": "",
+      "source": "Học thuộc · dòng 54"
+    },
+    {
+      "section": "",
+      "note": ". Saying we need\" to do something, does not make it a need, but instead presents a solution. \"",
+      "mnemonic": "",
+      "source": "Học thuộc · dòng 55"
+    },
+    {
+      "section": "",
+      "note": "Decision tree: A decision tree is a method of assessing the preferred outcome where multiple sources of uncertainty may exist.” ==> complex",
+      "mnemonic": "",
+      "source": "Học thuộc · dòng 57"
+    },
+    {
+      "section": "",
+      "note": "Decision table: contain one or more condition columns that map to specific data elements, as well as one or more action or outcome columns.",
+      "mnemonic": "",
+      "source": "Học thuộc · dòng 58"
+    },
+    {
+      "section": "6.2",
+      "note": "Business goals are broad states or conditions that organizations strive to achieve, often stated qualitatively.",
+      "mnemonic": "",
+      "source": "Học thuộc · dòng 59"
+    },
+    {
+      "section": "6.2",
+      "note": "Business requirements are related to business goals and objectives given they are “statements of goals, objectives, and outcomes that describe why a change has been initiated.”",
+      "mnemonic": "",
+      "source": "Học thuộc · dòng 60"
+    },
+    {
+      "section": "",
+      "note": "repository : a method to store the project requirements including those under development, under review, and the requirements which have been approved.",
+      "mnemonic": "",
+      "source": "Học thuộc · dòng 61"
+    },
+    {
+      "section": "5.4",
+      "note": "When do change requests generally increase in a project?\n Towards the end of the project.",
+      "mnemonic": "",
+      "source": "Học thuộc · dòng 63"
+    },
+    {
+      "section": "",
+      "note": "the project manager is responsible\nfor the project scope,",
+      "mnemonic": "",
+      "source": "Học thuộc · dòng 64"
+    },
+    {
+      "section": "",
+      "note": "management horizon: point in time for the solution to break even on cost and begin earning a profit.",
+      "mnemonic": "",
+      "source": "Học thuộc · dòng 65"
+    },
+    {
+      "section": "",
+      "note": "prioritize the requirements with maximum risks first so that if the project fails, there is little loss of capital in the project implementation.==> . Business or technical risk",
+      "mnemonic": "",
+      "source": "Học thuộc · dòng 66"
+    },
+    {
+      "section": "",
+      "note": "Some of the requirements in the solution must be completed because of laws and regulations in your industry. Management would like you, the business analyst, to rank the requirements according to the relevant laws.\nWhat type of requirements prioritization is management having you complete?\nA. Regulatory ranking ==> Regulatory or Policy Compliance",
+      "mnemonic": "",
+      "source": "Học thuộc · dòng 68"
+    },
+    {
+      "section": "",
+      "note": "cope creep?\nA. The scope grows slightly larger as more requirements, often unneeded, are added to the scope",
+      "mnemonic": "",
+      "source": "Học thuộc · dòng 70"
+    },
+    {
+      "section": "",
+      "note": "Work product (business analysis): A document or collection of notes or diagrams used by the business analyst during the requirements development process.(page 456 babok3).\nRequirements documentation is not a document use during requirements development process. It's an output, It can't be an input. Answer is A",
+      "mnemonic": "",
+      "source": "Học thuộc · dòng 71"
+    },
+    {
+      "section": "",
+      "note": "N SH ==> communication channels: N * (N-1)/2",
+      "mnemonic": "",
+      "source": "Học thuộc · dòng 73"
+    },
+    {
+      "section": "",
+      "note": "When is stakeholder analysis performed?\nC. As soon as a business need is identified.",
+      "mnemonic": "",
+      "source": "Học thuộc · dòng 75"
+    },
+    {
+      "section": "",
+      "note": "compare : Benchmarking",
+      "mnemonic": "",
+      "source": "Học thuộc · dòng 77"
+    },
+    {
+      "section": "",
+      "note": "Horizontal prototype: mock-up, how the website will look, some idea of the functionality of the website, and some basic graphics and colors",
+      "mnemonic": "",
+      "source": "Học thuộc · dòng 78"
+    },
+    {
+      "section": "",
+      "note": "Visual: learning through the presentation of pictures, photographs,\ndiagrams, models, and videos. Babok 9.1.3.2\n• Auditory: learning through verbal and written language and text.\n• Kinesthetic: learning by doing",
+      "mnemonic": "",
+      "source": "Học thuộc · dòng 80"
+    },
+    {
+      "section": "4.2",
+      "note": "Focus groups has participants willing to offer both insights and perspectives on specific topics and listen to other participant opinion typically last for 1 to 2 hours with 6-12 attendees \nworkshop is for carefully selected key stakeholders and SMEs for a short intensive period (typically 1 or a few days)",
+      "mnemonic": "",
+      "source": "Học thuộc · dòng 82"
+    },
+    {
+      "section": "",
+      "note": "procurement document: văn bản đấu thầu = Invitation for bid (mời thầu)",
+      "mnemonic": "",
+      "source": "Học thuộc · dòng 84"
+    },
+    {
+      "section": "",
+      "note": "Pareto chart: quality control tool to show categories of defects",
+      "mnemonic": "",
+      "source": "Học thuộc · dòng 85"
+    },
+    {
+      "section": "",
+      "note": "\"Effectively resolving conflict\" is listed as one of the effectiveness measures of teamwork.",
+      "mnemonic": "",
+      "source": "Học thuộc · dòng 87"
+    },
+    {
+      "section": "",
+      "note": "Behavioral rules (also known as an Operative rules",
+      "mnemonic": "",
+      "source": "Học thuộc · dòng 88"
+    }
+  ],
+  "techniques": [
+    {
+      "name": "Acceptance  and Evaluation Criteria",
+      "codeInWorkbook": "10.1",
+      "purpose": "AC: To define the requirements, outcomes, or conditions that must be met in order for a solution to be considered acceptable to key stakeholders\nEC: the measures used to assess a set of\nrequirements in order to choose between multiple solutions.",
+      "elements": "1. Value Attributes\n- Cost \n- Performance\n- Usability\n- Functionality\n2. Assessment\n- Testability\n- Measures",
+      "usage": "",
+      "source": "Techniques Detail · dòng 2",
+      "keyLearning": {
+        "clue": "[[acceptance / criteria / conditions]] (chấp nhận / tiêu chí / điều kiện)",
+        "principle": "[[Acceptance & Evaluation Criteria]] = xác định điều kiện cần thỏa và cơ sở đánh giá một yêu cầu/giải pháp.",
+        "contrast": "[[KPI]] đo hiệu suất; [[Acceptance Criteria]] đặt điều kiện chấp nhận."
+      }
+    },
+    {
+      "name": "Backlog Management",
+      "codeInWorkbook": "10.2",
+      "purpose": "to record, track, and prioritize remaining work items.",
+      "elements": "1. Items in the Backlog \n• use cases,\n• user stories,\n• functional requirements,\n• non-functional requirements,\n• designs,\n• customer orders,\n• risk items,\n• change requests,\n• defects,\n• planned rework,\n• maintenance,\n• conducting a presentation, or\n• completing a document.\n2. Prioritization\n- A multi-phased prioritization approach can also be used\n- categoy such as high, medium, or low. \n3. Estimation\n- Items near the top of the backlog in more detail, accurate estimate on size and complexity\n- Feedback from the production process about the cost and effort to complete earlier items can be used to refine the estimates of items still in the b",
+      "usage": "",
+      "source": "Techniques Detail · dòng 3"
+    },
+    {
+      "name": "Balanced Scorecard",
+      "codeInWorkbook": "10.3",
+      "purpose": "to manage performance in any business model, organizational structure, or business process.\nDescription:\nis a strategic planning and management tool used to measure organizational performance beyond the traditional financial measures\n- The balanced scorecard is composed of four dimensions:\n• Learning and Growth,\n• Business Process,\n• Customer, and\n• Financial.",
+      "elements": "1. Learning and Growth Dimension\n- measures regarding employee training and learning, product and service innovation, and corporate culture\n2. Business Process Dimension\n- metrics that indicate how well the enterprise is operating and if their products meet customer needs.\n3. Customer Dimension\n- metrics on customer focus, satisfaction and delivery of value\n4. Financial Dimension\n- what is financially necessary to realize the strategy: financial measures indicate profitability, revenue growth, and added economic value.\n5. Measures or Indicators\n- two basic types of measures or indicators: lagging & leading indicators.",
+      "usage": "",
+      "source": "Techniques Detail · dòng 4"
+    },
+    {
+      "name": "Benchmarking and Market Analysis",
+      "codeInWorkbook": "10.4",
+      "purpose": "- to improve organizational operations, increase customer satisfaction, and increase value to stakeholders\nDescription:\n- Benchmark studies are conducted to compare organizational practices against\nthe best-in-class practices\n- Market analysis involves researching customers in order to determine the\nproducts and services that they need or want, the factors that influence their\ndecisions to purchase, and the competitors that exist in the market.",
+      "elements": "1. Benchmarking\n• identifying the areas to be studied,\n• identifying enterprises that are leaders in the sector (including competitors),\n• conducting a survey of selected enterprises to understand their practices,\n• using a Request for Information (RFI) to gather information about\ncapabilities,\n• arranging visits to best-in-class organizations,\n• determining gaps between current and best practices, and\n• developing a project proposal to implement best practices.\n2. Market Analysis\n• identify customers and understand their preferences,\n• identify opportunities that may increase value to stakeholders,\n• identify competitors and investigate thei",
+      "usage": "",
+      "source": "Techniques Detail · dòng 5",
+      "keyLearning": {
+        "clue": "[[best-in-class / compare]] (so với điển hình tốt nhất/đối chiếu)",
+        "principle": "[[Benchmarking]] = so sánh hoạt động hoặc kết quả với bên dẫn đầu để tìm cơ hội cải tiến.",
+        "contrast": "[[Market Analysis]] xem diễn biến thị trường; Benchmarking tập trung chuẩn đối chiếu."
+      }
+    },
+    {
+      "name": "Brainstorming",
+      "codeInWorkbook": "10.5",
+      "purpose": "- to foster creative thinking about a problem\n- to produce numerous new ideas\n- Brainstorming works by focusing on a topic or problem and then coming up with\nmany possible solutions to it",
+      "elements": "- Steps:\n 1. Preparation: Define Area of Interest, Determine Time Limit, Identify Participants, Establish Evaluation Criteria\n 2. Session: Share Ideas, Record Ideas, Build on each others ideas, Elicit as many ieads as possible\n3. Wrap-up: Discuss and Evaluate, Create List, Rate Ideas, Distribute Final List",
+      "usage": "",
+      "source": "Techniques Detail · dòng 6",
+      "keyLearning": {
+        "clue": "[[ideas / many options]] (nhiều ý tưởng) + chưa cần đánh giá đúng sai",
+        "principle": "[[Brainstorming]] = phát sinh càng nhiều ý tưởng càng tốt, tạm hoãn [[judgement]] (phán xét).",
+        "contrast": "[[Focus Group]] nghe cảm nhận người tham gia; [[Workshop]] cùng làm việc để đạt mục tiêu cụ thể."
+      }
+    },
+    {
+      "name": "Business Capability Analysis",
+      "codeInWorkbook": "10.6",
+      "purpose": "- provides a framework for scoping and planning by generating a shared understanding of outcomes, identifying alignment with strategy, and providing a scope and prioritization filter.",
+      "elements": "1. Capabilities\n2. Using Capabilities\n3. Performance Expectations\n4. Risk Model\n5. Strategic Planning\n6. Capability Maps",
+      "usage": "",
+      "source": "Techniques Detail · dòng 7"
+    },
+    {
+      "name": "Business Cases",
+      "codeInWorkbook": "10.7",
+      "purpose": "- justification for a course of action based on the benefits\nDescription:\n- captures the rationale for undertaking a change.\n- formal or informal fom\nA business case is used to:\n• define the need,\n• determine the desired outcomes,\n• assess constraints, assumptions, and risks, and\n• recommend a solution.",
+      "elements": "1. Need Assessment\n2. Desired Outcomes\n3. Assess Alternative\n4. Recommended Solution",
+      "usage": "",
+      "source": "Techniques Detail · dòng 8"
+    },
+    {
+      "name": "Business Model Canvas",
+      "codeInWorkbook": "10.8",
+      "purpose": "- to describes how an enterprise creates, delivers, and captures value for and from its customers.\nDescription:\n- A business model canvas is comprised of nine building blocks that describe how\nan organization intends to deliver value:\n• Key Partnerships,\n• Key Activities,\n• Key Resources,\n• Value Proposition,\n• Customer Relationships,\n• Channels,\n• Customer Segments,\n• Cost Structure, and\n• Revenue Streams.",
+      "elements": "1. Key Partnerships\n2. Key Activities,\n3. Key Resources,\n4. Value Proposition,\n5. Customer Relationships,\n6. Channels,\n7. Customer Segments,\n8. Cost Structure, and\n9. Revenue Streams.",
+      "usage": "",
+      "source": "Techniques Detail · dòng 9"
+    },
+    {
+      "name": "Business Rules Analysis",
+      "codeInWorkbook": "10.9",
+      "purpose": "to identify, express, validate, refine, and organize the rules that shape day-to-day business behaviour and guide operational\nbusiness decision making.\nDescription:\n- operating principles or self-imposed constraints \n- is a specific, testable directive\n- must be practicable and is always under the control of the business.",
+      "elements": "1. Definitional Rules: \n- Shape concepts, or produce knowledge or information\n- Represent operational knowledge of the organization\n- Definitional rules cannot be violated but they can be misapplied\n2. Behavioral Rules\n- people rules–even if the behaviour is automated\n- serve to shape (govern) day-to-day business activity\n- by placing some obligation or prohibition on conduct, action, practice, or procedure",
+      "usage": "",
+      "source": "Techniques Detail · dòng 10"
+    },
+    {
+      "name": "Collaborative Games",
+      "codeInWorkbook": "10.1",
+      "purpose": "to encourage participants in an elicitation activity to collaborate in building a joint understanding of a problem or a solution.\nDescription:\n- A set of structured games that help participants share their knowledge and experience on a given topic.\n- Each game has its own rules and generally involves some type of visual and tactile components. \nEx: Product box, Affinity mapping, fishbowl",
+      "elements": "1. Game purpose\n2. Process: \n- Step 1: Opening\n- Step 2: Exploration\n- Step 3: Closing\n3. Outcome",
+      "usage": "",
+      "source": "Techniques Detail · dòng 11",
+      "keyLearning": {
+        "clue": "[[engage stakeholders]] (thu hút bên liên quan) thông qua [[game]] (trò chơi)",
+        "principle": "[[Collaborative Games]] = dùng trò chơi có quy tắc để chia sẻ hiểu biết, tăng tương tác và khám phá giá trị.",
+        "contrast": "Không đồng nhất trò chơi hợp tác với [[Brainstorming]] tự do nêu ý tưởng."
+      }
+    },
+    {
+      "name": "Concept Modelling",
+      "codeInWorkbook": "10.11",
+      "purpose": "to organize the business vocabulary needed to consistently and thoroughly communicate the knowledge of a domain\nDescription:\n- starts with a glossary\n- then terms\n=> to support the expression of natural language statements, and supply their semantics.",
+      "elements": "1. Noun concepts: \nProvide a core information of domain\n2. Verb concepts:\nProvide basic structural connections between noun concepts. Can be derived, inferred, or computed by definitional business rules.\n3. Other connections: \ncategorization, classification, whole-part (partitive) connections, and roles.",
+      "usage": "",
+      "source": "Techniques Detail · dòng 12"
+    },
+    {
+      "name": "Data Dictionary",
+      "codeInWorkbook": "10.12",
+      "purpose": "to standardize a definition of a data element and enable a common interpretation of data elements.\nDescription:\n- to document standard definitions of data elements, their meanings, and allowable values. \n- referred to as metadata repositorie\n- often used in conjunction with an entity relationship diagram",
+      "elements": "1. Data elements\n- description of the data element\n- standard definitions of data elements, their meanings, and allowable values.\n- definitions of each primitive data element and their combination.\n2. Primitive data elements include:\n- Name: \n- Aliases\n- Values/meanings\n- Description\n3. Composite data elements include\n- Sequences\n- Repetitions\n- Optional elements",
+      "usage": "",
+      "source": "Techniques Detail · dòng 13",
+      "keyLearning": {
+        "clue": "[[data element / primitive / composite]] (trường dữ liệu / đơn / ghép)",
+        "principle": "[[Data Dictionary]] = thống nhất định nghĩa từng trường dữ liệu và đặc tính để tránh hiểu sai giữa các nhóm.",
+        "contrast": "[[Glossary]] giải nghĩa thuật ngữ nghiệp vụ; Data Dictionary định nghĩa dữ liệu cụ thể."
+      }
+    },
+    {
+      "name": "Data Flow Diagrams",
+      "codeInWorkbook": "10.13",
+      "purpose": "to show where data comes from, which activities process the data, and if the output results are stored or utilized by another activity or external entity",
+      "elements": "1. Externals (Entity, Source, Sink)\n2. Data Flow\n3. Process\n4. Data source",
+      "usage": "",
+      "source": "Techniques Detail · dòng 14",
+      "keyLearning": {
+        "clue": "[[data input / processed / stored / output]] (dữ liệu vào/xử lý/lưu/ra)",
+        "principle": "[[Data Flow Diagram]] = mô tả đường đi của dữ liệu qua tiến trình, nguồn và nơi lưu trữ.",
+        "contrast": "[[Sequence Diagram]] mô tả tương tác theo thời gian; [[Process Model]] mô tả luồng việc."
+      }
+    },
+    {
+      "name": "Data Mining",
+      "codeInWorkbook": "10.14",
+      "purpose": "to improve decision making by finding useful patterns and insights from data.\nDescription:\n- The results are generally mathematical models or equations\n- Data mining is a general term that covers descriptive, diagnostic, and predictive\ntechniques:",
+      "elements": "1. Requirements Elicitation\n2. Data Preparation: Analytical Dataset\n3. Data analysis\n4. Modelling Techniques\n5. Deployment",
+      "usage": "",
+      "source": "Techniques Detail · dòng 15"
+    },
+    {
+      "name": "Data Modelling",
+      "codeInWorkbook": "10.15",
+      "purpose": "describes the entities, classes or data objects relevant to a domain, the attributes and relationships\nDescription:\n- several variations of data models:\n + Conceptual data model\n + Logical data model\n + Physical data model",
+      "elements": "1. Entity or Class\n2. Attribute\n3. Relationship or Association\n4. Diagrams\n5. Metadata",
+      "usage": "",
+      "source": "Techniques Detail · dòng 16"
+    },
+    {
+      "name": "Decision Analysis",
+      "codeInWorkbook": "10.16",
+      "purpose": "assesses a problem and possible decisions in order to determine the value of alternate outcomes under conditions of uncertainty.\nDescription:\n- Decision analysis approaches use the following activities:\n1. Define Problem Statement\n2. Define Alternatives\n3. Evaluate Alternatives\n4. Choose Alternative to Implement\n5. Implement Choice",
+      "elements": "1. Components of Decision Analysis\n2. Decision Matrices\n3. Decision Trees\n4. Trade-offs",
+      "usage": "",
+      "source": "Techniques Detail · dòng 17",
+      "keyLearning": {
+        "clue": "[[alternatives / uncertainty / trade-off]] (phương án / bất định / đánh đổi)",
+        "principle": "[[Decision Analysis]] = so sánh các phương án và giá trị kết quả trong điều kiện không chắc chắn.",
+        "contrast": "[[Decision Modelling]] biểu diễn logic để quyết định lặp lại được nhất quán."
+      }
+    },
+    {
+      "name": "Decision Modelling",
+      "codeInWorkbook": "10.17",
+      "purpose": "shows how repeatable business decisions are made.",
+      "elements": "1 Types of Models and Notations\n- Decision Tables\n- Decision Trees\n- Decision Requirements Diagrams",
+      "usage": "",
+      "source": "Techniques Detail · dòng 18"
+    },
+    {
+      "name": "Document Analysis",
+      "codeInWorkbook": "10.18",
+      "purpose": "to elicit business analysis information, including contextual understanding and requirements, by examining available materials that describe either the business environment or existing organizational assets",
+      "elements": "1. Preparation\n2. Document Review and Analysis\n3. Record Findings",
+      "usage": "",
+      "source": "Techniques Detail · dòng 19",
+      "keyLearning": {
+        "clue": "[[existing documents / historical records]] (tài liệu có sẵn / hồ sơ lịch sử)",
+        "principle": "[[Document Analysis]] = khai thác thông tin từ tài liệu hiện có; cũng hữu ích khi xác nhận thông tin đã elicitation.",
+        "contrast": "[[Interviews]] lấy thông tin từ người; Document Analysis lấy từ tài liệu."
+      }
+    },
+    {
+      "name": "Estimation",
+      "codeInWorkbook": "10.19",
+      "purpose": "to forecast the cost and effort involved in pursuing a course of action.",
+      "elements": "1. Methods:\n- Top-down\n- Bottom-up\n- Parametric Estimation\n- Rough Order of Magnitude (ROM)\n- Rolling Wave\n- Delphi\n- PERT\n2. Accuracy of the Estimate\n3. Source of Information:\n- Analogous Situations\n- Organization History\n- Expert Judgment\n4. Precision and Reliability of Estimates\n5. Contributors to Estimates",
+      "usage": "",
+      "source": "Techniques Detail · dòng 20"
+    },
+    {
+      "name": "Finanacial Analysis",
+      "codeInWorkbook": "10.2",
+      "purpose": "to understand the financial aspects of an investment, a solution, or a solution approach.",
+      "elements": "1. Cost of the Change\n2. Total Cost of Ownership (TCO)\n3. Value Realization\n4. Cost-Benefit Analysis\n5. Financial Calculations\n- Return on Investment\n- Discount Rate\n- Present Value\n- Net Present Value\n- Internal Rate of Return\n- Payback Period",
+      "usage": "",
+      "source": "Techniques Detail · dòng 21"
+    },
+    {
+      "name": "Focus Groups",
+      "codeInWorkbook": "10.21",
+      "purpose": "to elicit ideas and opinions about a specific product, service, or opportunity in an interactive group environment. \nDescription:\n- is composed of pre-qualified participants whose objective is to discuss and comment on a topic within a context. \n- A focus group is a form of qualitative research.\n- often used in marketing and new product creation efforts",
+      "elements": "1 Focus Group Objective\n2 Focus Group Plan\n3 Participants\n4 Discussion Guide\n5 Assign a Moderator and Recorder\n6 Conduct the Focus Group\n7 After the Focus Group",
+      "usage": "",
+      "source": "Techniques Detail · dòng 22",
+      "keyLearning": {
+        "clue": "[[opinions / perceptions]] (ý kiến, cảm nhận) về sản phẩm, dịch vụ hoặc cơ hội",
+        "principle": "[[Focus Group]] = nhóm thảo luận có [[moderator]] (người điều phối), khai thác góc nhìn về một chủ đề.",
+        "contrast": "[[Brainstorming]] ưu tiên ý tưởng mới; [[Survey]] hỏi nhiều người theo bộ câu hỏi."
+      }
+    },
+    {
+      "name": "Functional Decomposition",
+      "codeInWorkbook": "10.22",
+      "purpose": "to helps manage complexity and reduce uncertainty by breaking down processes, systems, functional areas, or deliverables into their simpler constituent parts and allowing each part to be analyzed independently\nDescription:\n- approaches the analysis of complex systems andconcepts by considering them as a set of collaborating or related functions, effects, and components. \n- The depth of decomposition may vary depending on the nature of components and objectives",
+      "elements": "1 Decomposition Objectives\n- Measuring and Managing\n- Designing\n- Analyzing\n- Estimating and Forecasting\n- Reusing\n- Optimization\n- Substitution\n- Encapsulation\n2 Subjects of Decomposition\n- Functional decomposition applies to a wide variety of versatile subjects, such as:\n + Business Outcomes\n + Work to be Done\n + Business Process\n + Function\n + Business Unit\n + Solution Component\n + Activity\n + Products and Services\n + Decisions\n3 Level of Decomposition\n4 Representation of Decomposition Results\n + Tree diagrams\n + Nested diagrams\n + Use Case diagrams\n + Flow diagrams\n + State Transition diagrams\n + Cause-Effect diagrams\n + Decision Trees\n +",
+      "usage": "",
+      "source": "Techniques Detail · dòng 23",
+      "keyLearning": {
+        "clue": "[[break down complex functions]] (chia nhỏ chức năng phức tạp)",
+        "principle": "[[Functional Decomposition]] = phân rã một chức năng/năng lực lớn thành phần nhỏ để dễ phân tích.",
+        "contrast": "[[WBS]] chia nhỏ công việc dự án; Functional Decomposition chia nhỏ chức năng nghiệp vụ."
+      }
+    },
+    {
+      "name": "Glossary",
+      "codeInWorkbook": "10.23",
+      "purpose": "defines key terms relevant to a business domain.\nDescription:\n- used to provide a common understanding of terms that are used by stakeholders\n- A list of terms and established definitions provides a common language that can be used to communicate and exchange ideas\n- A glossary is organized and continuously accessible to all stakeholders",
+      "elements": "A glossary is a list of terms in a particular domain with definitions for those terms\nand their common synonyms.\nA term is included in the glossary when:\n• the term is unique to a domain,\n• there are multiple definitions for the term,\n• the definition implied is outside of the term's common use, or\n• there is a reasonable chance of misunderstanding.\nConsider the following when developing a glossary:\n• definitions should be clear, concise, and brief,\n• acronyms should be spelled out if used in a definition,\n• stakeholders should have easy and reliable access to glossaries, and\n• the editing of a glossary should be limited to specific stakehold",
+      "usage": "",
+      "source": "Techniques Detail · dòng 24",
+      "keyLearning": {
+        "clue": "[[business terminology]] (thuật ngữ nghiệp vụ chung)",
+        "principle": "[[Glossary]] = định nghĩa các thuật ngữ trong một miền nghiệp vụ để mọi người cùng hiểu.",
+        "contrast": "[[Data Dictionary]] chuyên mô tả các trường/đặc điểm dữ liệu."
+      }
+    },
+    {
+      "name": "Interface Analysis",
+      "codeInWorkbook": "10.24",
+      "purpose": "is used to identify where, what, why, when, how, and for whom information is exchanged between solution components or across solution boundaries\nDescription:\n- An interface is a connection between two components or solutions. \n- Interface types include:\n• user interfaces, including human users directly interacting with the solution\nwithin the organization,\n• people external to the solution such as stakeholders or regulators,\n• business processes,\n• data interfaces between systems,\n• application programming interfaces (APIs), and\n• any hardware devices.",
+      "elements": "1 Preparing for Identification\n2 Conduct Interface Identification\n3 Define Interfaces",
+      "usage": "",
+      "source": "Techniques Detail · dòng 25",
+      "keyLearning": {
+        "clue": "[[interface / exchange information]] (giao diện / trao đổi thông tin)",
+        "principle": "[[Interface Analysis]] = xác định thông tin trao đổi giữa các bộ phận/hệ thống tại điểm giao tiếp.",
+        "contrast": "[[Data Modelling]] mô tả cấu trúc dữ liệu; Interface Analysis tập trung chỗ trao đổi."
+      }
+    },
+    {
+      "name": "Interviews",
+      "codeInWorkbook": "10.25",
+      "purpose": "a systematic approach designed to elicit business analysis information from a person or group of people by talking to the interviewee(s)\n- for establishing relationships and building trust between business analysts and stakeholders \nDescription:\n- One-on-one interviews are the most common. In a group interview (with more than one interviewee in attendance), the interviewer is careful to elicit responses from each participant.\n- two basic types of interviews: \n + Structured Interview\n + Unstructured Interview\n- Successful interviewing depends on factors such as:\n• level of understanding of the ",
+      "elements": "1 Interview Goal\nbusiness analysts consider:\n• the overall purpose of performing a set of interviews, based on a business\nneed, and\n• the individual goals for each interview, based on what the interviewee can\nprovide.\n2. Potential Interviewees\n3. Interview Questions\n- the interview goals, such as:\n• collecting data,\n• researching the stakeholder’s view of the change or proposed solution,\n• developing a proposed solution, or\n• building rapport with or support for the proposed solution from the\ninterviewee.\n- Open-ended questions are used to elicit a dialogue or series of steps and cannot be answered in a yes or no fashion, to\nallow the intervi",
+      "usage": "",
+      "source": "Techniques Detail · dòng 26",
+      "keyLearning": {
+        "clue": "[[talking directly]] (trao đổi trực tiếp), [[one-to-one]] (một-một)",
+        "principle": "[[Interview]] = BA đặt câu hỏi, khai thác thông tin trực tiếp từ cá nhân/nhóm nhỏ.",
+        "contrast": "[[Survey]] phù hợp nhiều người, ít tương tác; [[Workshop]] cùng thảo luận nhiều stakeholder."
+      }
+    },
+    {
+      "name": "Item Tracking",
+      "codeInWorkbook": "10.26",
+      "purpose": "used to capture and assign responsibility for issues and stakeholder concerns that pose an impact to the solution\nDescription:\n- to address stakeholder concerns. \n- identify such item types as actions, assumptions, constraints, dependencies, defects, enhancements, and issues",
+      "elements": "1 Item Record:\n- Item Identifier\n- Summary\n- Category\n- Type\n- Date Identified\n- Identified By\n- Impact\n- Priority\n- Resolution Date\n- Owner\n- Resolver\n- Agreed Strategy\n- Status\n- Resolution Updates\n- Escalation Matrix\n2.Item Management\n3 Metrics",
+      "usage": "",
+      "source": "Techniques Detail · dòng 27"
+    },
+    {
+      "name": "Lessons Learned",
+      "codeInWorkbook": "10.27",
+      "purpose": "to compile and document successes, opportunities for improvement, failures, and recommendations for\nimproving the performance of future projects or project phases.\nDescription:\n- A lessons learned session (also known as a retrospective)\n- No standard process",
+      "elements": "Sessions can include a review of:\n• business analysis activities or deliverables,\n• the final solution, service, or product,\n• automation or technology that was introduced or eliminated,\n• impact to organizational processes,\n• performance expectations and results,\n• positive or negative variances,\n• root causes impacting performance results, and\n• recommendations for behavioural approaches.",
+      "usage": "",
+      "source": "Techniques Detail · dòng 28"
+    },
+    {
+      "name": "Metrics and Key Performance Indicators (KPIs)",
+      "codeInWorkbook": "10.28",
+      "purpose": "to measure the performance of solutions, solution components, and other matters of interest to stakeholders.\nDescription:\n- A metric is a quantifiable level of an indicator that an organization uses to measure progress towards some type of achievement.\n- A key performance indicator (KPI) is one that measures progress towards a strategic goal or objective.\nNote:\n- assist in the \"how\" to evaluate the quality of requirements",
+      "elements": "1 Indicators\nA good indicator has six characteristics:\n• Clear: precise and unambiguous.\n• Relevant: appropriate to the concern.Metrics and Key Performance Indicators (KPIs) \n• Economical: available at reasonable cost.\n• Adequate: provides a sufficient basis on which to assess performance.\n• Quantifiable: can be independently validated.\n• Trustworthy and Credible: based on evidence and research\n2 Metrics\n- A target metric is the objective to be reached within a specified period.\n- A metric can be a specific point, a threshold, or a range.\n3 Structure\n- There are three key factors in assessing the quality of indicators and their metrics:\nrelia",
+      "usage": "",
+      "source": "Techniques Detail · dòng 29",
+      "keyLearning": {
+        "clue": "[[measure / performance / indicators]] (đo lường/hiệu suất/chỉ số)",
+        "principle": "[[Metrics & KPIs]] = chỉ số phản ánh hiệu quả theo mục tiêu đã định, cần nhất quán cách tính và thời điểm thu thập.",
+        "contrast": "[[Acceptance Criteria]] đặt tiêu chuẩn để chấp nhận; KPI đo thực tế vận hành."
+      }
+    },
+    {
+      "name": "Mind Mapping",
+      "codeInWorkbook": "10.29",
+      "purpose": "used to articulate and capture thoughts, ideas, and information.\nDescription:\n- use images, words, colour, andMind Mapping connected relationships to apply structure and logic to thoughts, ideas, and information\n- A mind map has a central main idea supported by secondary ideas (or topics), followed by as many layers of ideas (or sub-topics)\n- No standardized format",
+      "elements": "1 Main Topic\n2. Topics\n3. Sub-topics\n4. Branches\n5. Keywords \n6. Colors\n7. Images",
+      "usage": "",
+      "source": "Techniques Detail · dòng 30"
+    },
+    {
+      "name": "Non-Functional Requirements Analysis",
+      "codeInWorkbook": "10.3",
+      "purpose": "examines the requirements for a solution that define how well the functional requirements must perform.\n- to judge the operation of a system rather than specific behaviours (which are referred to as the functional requirements)\nDescription:\n- Non-functional requirements (also known as quality attributes or quality of service requirements)\n- generally expressed in textual formats as declarative statements or in matrices.",
+      "elements": "1. Category:\n• Availability\n• Compatibility\n• Functionality\n• Maintainability\n• Performance Efficiency\n• Portability\n• Reliability\n• Scalability\n• Security\n• Usability\n• Certification\n• Compliance\n• Localization\n• Service Level Agreements\n• Extensibility\n2. Measurement of Non-Functional Requirements\n- nonfunctional requirements must be quantified whenever possible\n- Measurement of the other categories of non-functional requirements is guided by\nthe source of the requirement.\n3. Context of Non-Functional Requirements\n- Context is dynamic by nature and non-functional requirements may need to be adjusted or removed outright\n=> BAs consider the r",
+      "usage": "",
+      "source": "Techniques Detail · dòng 31",
+      "keyLearning": {
+        "clue": "[[performance / security / scalability / availability]] (hiệu năng/bảo mật/mở rộng/sẵn sàng)",
+        "principle": "[[Non-functional Requirements]] = nêu mức chất lượng và điều kiện vận hành của giải pháp.",
+        "contrast": "[[Functional Requirements]] là hệ thống làm gì; [[Non-functional]] là làm tốt đến mức nào."
+      }
+    },
+    {
+      "name": "Observation",
+      "codeInWorkbook": "10.31",
+      "purpose": "to elicit information by viewing and understanding activities and their context\n- as a basis for \n + identifying needs and opportunities,\n + understanding a business process, \n + setting performance standards, \n + evaluating solution performance, or \n + supporting training and development\nDescription:\n- There are two basic approaches for observation:\n + Active/Noticeable: while observing an activity the observer asks any questions as they arise\n + Passive/Unnoticeable: during the activity the observer does not interrupt the work. Any concerns are raised once the observation is over",
+      "elements": "1 Observation Objectives: establishes a defined purpose of the observation session\n• understanding the activity and its elements such as tasks, tools, events, and\ninteractions,\n• identifying opportunities for improvement,\n• establishing performance metrics, or\n• assessing solutions and validating assumptions.\n2 Prepare for Observation\n- planning the observation approach\n- deciding who should be viewed performing which activities at what times. \n3 Conduct the Observation Session\n4 Confirm and Present Observation Results",
+      "usage": "",
+      "source": "Techniques Detail · dòng 32"
+    },
+    {
+      "name": "Organization Modelling",
+      "codeInWorkbook": "10.32",
+      "purpose": "to describe the roles, responsibilities, and reporting structures that exist within an organization and to align those structures with the organization's goals.",
+      "elements": "1 Types of Organizational Models\nThere are three pre-eminent organizational models:\n- Functionally-oriented\n- Market-oriented\n- Matrix model\n2. Roles\n3. Interfaces\n4. Organizational Charts\n5. Influencers",
+      "usage": "",
+      "source": "Techniques Detail · dòng 33"
+    },
+    {
+      "name": "Prioritization",
+      "codeInWorkbook": "10.33",
+      "purpose": "provides a framework for business analysts to facilitate stakeholder decisions and to understand the relative importance of business analysis information.\nDescription:\n- The importance may be based on value, risk, difficulty of implementation, or other criteria. \n- to determine which business analysis information should be targeted for further analysis, which requirements should be implemented first, or how much time or detail should be allocated to the requirements.",
+      "elements": "Prioritization is classified into one of four approaches:\n• Grouping: BA information classified high, medium, low priority\n• Ranking: BA information ordered from most to least important\n• Time boxing/Budgeting: BA information based on allocation of a fixed resource (time or money)\n• Negotiation: Stakeholder consensus on requirements to be prioritized",
+      "usage": "",
+      "source": "Techniques Detail · dòng 34"
+    },
+    {
+      "name": "Process Analysis",
+      "codeInWorkbook": "10.34",
+      "purpose": "to assess a process for its efficiency and effectiveness, and recommend improvements.\nDescription:\n- Process analysis is used for various purposes including:\n• recommending a more efficient or effective process,\n• determining the gaps between the current and future state of a process,\n• understanding factors to be included in a contract negotiation,\n• understanding how data and technology are used in a process, and\n• analyzing the impact of a pending change to a process\nCommon changes made to processes in order to improve them include:\n• reducing the time required to complete a task or tasks i",
+      "elements": "1 Identify Gaps and Areas to Improve\n- Provide analysis scope\n- business analysts:\n• identify gaps between the current and desired future state,\n• identify what gaps and areas are value and non-value added,\n• understand pain points and the challenges of the process from multiple\npoints of view,\n• understand opportunities to improve the process from multiple points of\nview,\n• align the gaps and areas to improve with the strategic direction of the\norganization, and\n• understand the relationship of the gaps and areas to improve to changes in\nthe enterprise.\n2 Identify Root Cause\n3 Generate and Evaluate Options\n4 Common Methods\n- SIPOC (in Six Si",
+      "usage": "",
+      "source": "Techniques Detail · dòng 35",
+      "keyLearning": {
+        "clue": "[[efficiency / effectiveness / improve process]] (hiệu quả/cải tiến quy trình)",
+        "principle": "[[Process Analysis]] = đánh giá quy trình hiện tại để tìm điểm nghẽn, lãng phí và cải tiến.",
+        "contrast": "[[Process Modelling]] mô tả quy trình; [[Process Analysis]] đánh giá quy trình."
+      }
+    },
+    {
+      "name": "Process Modelling",
+      "codeInWorkbook": "10.35",
+      "purpose": "to show how work is carried out and is a foundation for process analysis.\nDescription:\n- describe the sequential flow of work or activities\n- Process modelling can be done at different level:\n + High level (enterprise or context): Provide a high level overview of the process and its relationship to other processes.\n + Medium-level (operational):Provides more activity detail as well as identifying exception and alternative paths.\n + Low-level (system): Most detailed level, provides the basic for simulation or execution of the process.",
+      "elements": "1 Types of Process Models and Notations\nThe most commonly used notations include the following:\nFlowcharts and Value Stream Mapping (VSM), Data Flow diagrams and Unified Modelling Language™ (UML®)\ndiagrams, Business Process Model and Notation (BPMN), Integrated DEFinition (IDEF) notation and Input, Guide, Output,\nEnabler (IGOE) diagrams, SIPOC and Value Stream Analysis\n- Process models contain some or all of the following key elements:Activity, Event, Directional Flow, Decision Point, Link, Role\n- Flowchart, Business process model and notation (BPMN), Activity diagram.",
+      "usage": "",
+      "source": "Techniques Detail · dòng 36",
+      "keyLearning": {
+        "clue": "[[sequence of activities / workflow]] (trình tự công việc)",
+        "principle": "[[Process Modelling]] = mô tả các bước công việc, luồng xử lý và bàn giao để thấy quy trình vận hành.",
+        "contrast": "[[Data Flow]] là đường đi của dữ liệu; [[Process Model]] là luồng hoạt động."
+      }
+    },
+    {
+      "name": "Prototyping",
+      "codeInWorkbook": "10.36",
+      "purpose": "to elicit and validate stakeholder needs through an iterative process that creates a model or design of requirements. \nDescription:\n- is a proven method for product design\n- Prototypes can be non-working models, working representations, or digital depictions of a solution or a proposed product",
+      "elements": "1 Prototyping Approach:\n- Throw - away: prototypes are generated with simple tools (such as paper and pencil, a whiteboard, or software) to serve the goal of uncovering and clarifying requirements\n- Evolutionary or Functional: requires a specialized prototyping tool or language\n2 Prototyping Examples:\n+ Form of prototyping:\n- Proof of Principle or Proof of Concept\n- Form Study Prototype\n- Usability Prototype\n- Visual Prototype\n- Functional Prototype\n3 Prototyping Methods\nStoryboarding\nPaper Prototyping\nWorkflow Modelling\nSimulation",
+      "usage": "",
+      "source": "Techniques Detail · dòng 37",
+      "keyLearning": {
+        "clue": "[[early feedback]] (phản hồi sớm), [[mock-up]] (bản mẫu), [[iterative]] (lặp)",
+        "principle": "[[Prototyping]] = tạo mô hình thử nghiệm để kiểm tra/khai thác nhu cầu stakeholder trước khi hoàn thiện giải pháp.",
+        "contrast": "[[Proof of Concept]] nhấn mạnh tính khả thi của ý tưởng/công nghệ; Prototype có thể nhấn mạnh trải nghiệm."
+      }
+    },
+    {
+      "name": "Reviews",
+      "codeInWorkbook": "10.37",
+      "purpose": "to evaluate the content of a work product.\nDescription:\n- review is focused on a work product, not the skills or actions of the participants.\n- 3 types of reviews:\n• Objectives: defining the purpose of the review.\n• Techniques: identifying either a formal or informal way to perform the\nreview.\n• Participants: identifying who should take part in the review activity.\n- includes the business analyst as a participant\n- Reviews can include:\n• an overview of the work product and review objectives,\n• checklists and reference materials that can be used by reviewers,\n• reviewing the work product and do",
+      "elements": "1. Objectives\nObjectives may include one or more goals, for example:\n• to remove defects,\n• to ensure conformance to specifications or standards,\n• to ensure the work product is complete and correct,\n• to establish consensus on an approach or solution,\n• to answer a question, resolve an issue, or explore alternatives,\n• to educate reviewers about the work product, and\n• to measure work product quality\n2. Techniques\n- can be formal or informal.\n- The following techniques:\n + Inspection\n + Formal Walkthrough (also known as Team Review)\n + Single Issue Review (also known as Technical Review)\n + Informal Walkthrough\n + Desk Check\n + Pass Around\n ",
+      "usage": "",
+      "source": "Techniques Detail · dòng 38"
+    },
+    {
+      "name": "Risk Analysis and Management",
+      "codeInWorkbook": "10.38",
+      "purpose": "identifies areas of uncertainty that could negatively affect value, analyzes and evaluates those uncertainties, and develops and manages ways of dealing with the risks.\nDescription:\n- Risk analysis and management involves identifying, analyzing, and evaluating risks\n- Risk management is an ongoing activity",
+      "elements": "1 Risk Identification\n2 Analysis\n3 Evaluation\n4 Treatment\n- Posible approaches (MATA-I mnemonic):\n+ Mitigate\n+ Avoid\n+ Transer\n+ Accept\n+ Increase",
+      "usage": "",
+      "source": "Techniques Detail · dòng 39",
+      "keyLearning": {
+        "clue": "[[uncertainty / likelihood / impact]] (bất định / xác suất / tác động)",
+        "principle": "[[Risk Analysis]] = xác định rủi ro và xem xác suất, hệ quả với giá trị để chọn ứng phó.",
+        "contrast": "[[Root Cause Analysis]] tìm nguyên nhân gốc của vấn đề, không chỉ rủi ro tiềm ẩn."
+      }
+    },
+    {
+      "name": "Roles and Permissions Matrix",
+      "codeInWorkbook": "10.39",
+      "purpose": "to ensure coverage of activities by denoting responsibility, to identify roles, to discover missing roles, and to communicate results of a planned change\nDescription:\n- identifying roles, associating these with solution activities, and then denoting authorities who can perform these activities\n- A role is a label for a group of individuals who share common functions.",
+      "elements": "1 Identifying Roles\n2 Identifying Activities\n- Initiative level roles and responsibilities may be identified in a RACI (Responsible, Accountable, Consulted, Informed) matrix.\n- Specific information technology system roles and responsibilities may be identified in a CRUD (Create, Read, Update, and Delete) matrix\n3 Identifying Authorities\n4 Refinements\nDelegations: reassign authorities of one individual to another on a short term of permanent basis. \nInheritances: assign authority by an organizational level and the assignment pertains only to users at that organizational level or any subsidiary organizational unit levels.",
+      "usage": "",
+      "source": "Techniques Detail · dòng 40"
+    },
+    {
+      "name": "Root Cause Analysis",
+      "codeInWorkbook": "10.4",
+      "purpose": "to identify and evaluate the underlying causes of a problem.\nDescription: \n- Root cause analysis can be used for:\n• Reactive Analysis: identifying the root cause(s) of an occurring problem\nfor corrective action, or\n• Proactive Analysis: identifying potential problem areas for preventive\naction.\n- Root cause analysis uses four main activities:\n+ Problem Statement Definition\n+ Data Collection\n+ Cause Identification\n+ Action Identification",
+      "elements": "1 The Fishbone Diagram (Ishikawa/Cause and Effect diagram)\n2 The Five Whys",
+      "usage": "",
+      "source": "Techniques Detail · dòng 41",
+      "keyLearning": {
+        "clue": "[[underlying cause / why]] (nguyên nhân sâu xa, vì sao)",
+        "principle": "[[Root Cause Analysis]] = tìm nguyên nhân gốc thay vì chỉ xử lý biểu hiện của vấn đề.",
+        "contrast": "[[Risk Analysis]] phân tích điều có thể xảy ra; [[Root Cause]] tìm nguyên nhân của vấn đề."
+      }
+    },
+    {
+      "name": "Scope Modelling",
+      "codeInWorkbook": "10.41",
+      "purpose": "the nature of one or more limits or boundaries and place elements inside or outside those boundaries\nDescription:\n- used to describe the boundaries of control, change, a solution, or a need\n- display: in-scope (Functional decomposition), out-of-scope (context diagram) , both (venn diagram or use case model)\n- Scope models provide the basis for understanding the boundaries of: Scope Control, Scope of Need, Scope of Solution, Scope of Change",
+      "elements": "1 Objectives\n2 Scope of Change and Context\n3 Level of Detail\n4 Relationships\n5 Assumptions\n6 Scope Modelling Results",
+      "usage": "",
+      "source": "Techniques Detail · dòng 42",
+      "keyLearning": {
+        "clue": "[[boundary / in-scope / out-of-scope]] (ranh giới/trong-ngoài phạm vi)",
+        "principle": "[[Scope Modelling]] = xác định giới hạn và các thành phần nằm trong/ngoài phạm vi.",
+        "contrast": "[[Process Modelling]] mô tả trình tự công việc; [[Data Modelling]] mô tả cấu trúc dữ liệu."
+      }
+    },
+    {
+      "name": "Sequence Diagrams",
+      "codeInWorkbook": "10.42",
+      "purpose": "- to model the logic of usage scenarios by showing the information passed between objects in the system through the execution of the scenario.\n- Use standard notation defined by UML specification",
+      "elements": "1 Lifeline\n- The lifespan of an object during a particular scen\n.2 Activation box\n- The period of time in which an operation is executed\n.3 Message\n- The interaction between 2 objects\n- Types of messages:\n + Synchronous call: the message flow is sequential, the sending object must wait until a reply is received\n + Asynchronous call: a flow that allows the sending object to continue processing as other objectives are working. A sender can only receive one reply at a time",
+      "usage": "",
+      "source": "Techniques Detail · dòng 43",
+      "keyLearning": {
+        "clue": "[[interactions / messages / scenario]] (tương tác/thông điệp/kịch bản)",
+        "principle": "[[Sequence Diagram]] = các đối tượng trao đổi thông tin theo thứ tự thời gian trong một kịch bản.",
+        "contrast": "[[State Model]] xem trạng thái thay đổi; [[Sequence]] xem luồng thông điệp."
+      }
+    },
+    {
+      "name": "Stakeholder List, Map, or Personas",
+      "codeInWorkbook": "10.43",
+      "purpose": "- assist the business analyst in analyzing stakeholders and their characteristics.\n- ensuring that the business analyst identifies all possible sources of requirements and that the stakeholder is fully understood so decisions made regarding stakeholder engagement, collaboration, and communication are the best choices for the stakeholder and for the success of the initiative.",
+      "elements": ".1 Stakeholder Lists\n- Generating a list of sh: brainstorming + interviewing\n.2 Stakeholder Map\n- Depict the relationship of sh to one another and to the solution \n- 2 common maps:\n + Stakeholder Matrix: maps sh's level of influence against sh interest\n + Onion Diagram: identify how involved shs are in the solution\n.3 Responsibility (RACI) Matrix\n- Responsible - person performing the work\n- Accountable - person ultimately accountable for the work \n- Consulted - sh asked to provide info or their opinion (two-way communication)\n- Informed - sh kept up to date on task (one-way communication)\n.4 Personas\n- Exemplify a typical user may interact wi",
+      "usage": "",
+      "source": "Techniques Detail · dòng 44",
+      "keyLearning": {
+        "clue": "[[stakeholder characteristics / roles / influence]] (đặc điểm/vai trò/ảnh hưởng)",
+        "principle": "[[Stakeholder List / Map / Personas]] = nhận diện ai tham gia, vai trò, mức ảnh hưởng, nhu cầu và quan hệ với thay đổi.",
+        "contrast": "[[Organizational Modelling]] thiên về cơ cấu/quyền hạn trong tổ chức."
+      }
+    },
+    {
+      "name": "State Modelling",
+      "codeInWorkbook": "10.44",
+      "purpose": "- to describe and analyze the different possible states of an entity within a system, how that entity changes from one state to another, and what can happen to the entity when it is in each state.\nDescription:\n- An entity is an object or concept within a system. An entity may be used in several processes. The life cycle of every entity has a beginning and an end.\n- A state model (or a state transition model)\n- Apply to complex entities w. multiple states or \"life cycles\"",
+      "elements": "\".1 State\n- Conditions/statuses that an entity/object of a class can occupy\n.2 State transition\n- An event or trigger that causes an entity to move from one state to another. Transitions may be conditional, automatic, or recursive\n.3 State Diagram\n- The life cycle of one entity\n.4 State tables\n- A 2 dimentinal matrix showing the states and the transitions between them\"",
+      "usage": "",
+      "source": "Techniques Detail · dòng 45",
+      "keyLearning": {
+        "clue": "[[states / status / triggers]] (trạng thái / sự kiện đổi trạng thái)",
+        "principle": "[[State Modelling]] = cho thấy một đối tượng đang ở trạng thái nào và điều kiện khiến trạng thái đổi.",
+        "contrast": "[[Process Model]] xem chuỗi công việc; [[State]] xem vòng đời một đối tượng."
+      }
+    },
+    {
+      "name": "Survey or Questionnaire",
+      "codeInWorkbook": "10.45",
+      "purpose": "- to elicit business analysis information—including information about customers, products, work practices, and attitudes—from a group of people in a structured way and in a relatively short period of time.\nDescription:\n- two types of questions used in a survey or questionnaire: Close - Ended, Open - Ended",
+      "elements": "\".1 Prepare\n- Define objectives, \n- Define target survey group, \n- Choose appropriate survey or questionnaire type, \n- Define sample group, \n- Select distribution and collection methods\n- Set the target level and timeline for response\n- Determine if S/Q should be supported with individual interviews\n- Write the survey questions\n- Test the survey or questionnaire\n.2 Distribute survey/questionnaire\n.3 Document the results\"",
+      "usage": "",
+      "source": "Techniques Detail · dòng 46",
+      "keyLearning": {
+        "clue": "[[large number of people]] (nhiều người), [[standard questions]] (câu hỏi chuẩn)",
+        "principle": "[[Survey / Questionnaire]] = thu thập thông tin từ nhiều người; [[closed-ended]] (câu hỏi đóng) thuận lợi cho dữ liệu định lượng.",
+        "contrast": "[[Interview]] cho phép hỏi sâu, làm rõ trực tiếp; [[Focus Group]] khai thác ý kiến nhóm."
+      }
+    },
+    {
+      "name": "SWOT Analysis",
+      "codeInWorkbook": "10.46",
+      "purpose": "- To evaluate an organization's strengths, weaknesses, opportunities, and threats to both internal and external conditions",
+      "elements": "SWOT is an acronym for Strengths, Weaknesses, Opportunities, and Threats:",
+      "usage": "",
+      "source": "Techniques Detail · dòng 47"
+    },
+    {
+      "name": "Use Cases and Scenarios",
+      "codeInWorkbook": "10.47",
+      "purpose": "-describe how a person or system interacts with the solution being modelled to achieve a goal.\nDescription:\n- A use case describes the possible outcomes of an attempt to accomplish a particular goal that the solution will support; are written\nfrom the point of view of the actor\n- A scenario describes just one way that an actor can accomplish a particular goal; are written as a series of steps performed by actors or by the solution\nthat enable an actor to achieve a goal\n- A use case describes several scenarios.",
+      "elements": "\".1 Use case diagram\n- Depict the scope of the solution by showing interactions between actors & use cases, and the relationship between the use cases\n + Relationship (association) - relationship between actors\n + Extend - extends the functionality of a use case. The extending use case is independent of the base use case it is extending. Extended relationships can show an alternative flow that has been added to an existing use case for convenience\n + Include - provides access to shared functionality in a separate use case. Use cases are dependent upon any included use cases referenced\n.2 Use case description\n- Factors included\n + Name: unique",
+      "usage": "",
+      "source": "Techniques Detail · dòng 48",
+      "keyLearning": {
+        "clue": "[[actor / system interaction / goal]] (tác nhân / tương tác / mục tiêu)",
+        "principle": "[[Use Cases & Scenarios]] = diễn tả cách tác nhân sử dụng hệ thống để đạt mục tiêu.",
+        "contrast": "[[User Story]] phát biểu ngắn ai cần gì vì sao; Use Case thể hiện chuỗi tương tác."
+      }
+    },
+    {
+      "name": "User Stories",
+      "codeInWorkbook": "10.48",
+      "purpose": "- represents a small, concise statement of functionality or quality needed to deliver value to a specific stakeholder",
+      "elements": ".1 Title (optional)\n- Describe the activity, V-N\n.2 Statement of value\n- Brief description of (1) role, (2) goal, (3) the value or benefit expected\n- There is no mandatory structure\n.3 Conversation\n- Explore & Understand feature described & value delivered\n.4 Acceptance criteria\n- Define the boundaries of the user story\n- Help the team know what they should deliver that is valuable to the sh",
+      "usage": "",
+      "source": "Techniques Detail · dòng 49",
+      "keyLearning": {
+        "clue": "[[As a / I want / so that]] (là ai / muốn gì / để làm gì)",
+        "principle": "[[User Story]] = nhu cầu ngắn gọn theo [[who / what / why]], hướng tới giá trị cho stakeholder.",
+        "contrast": "[[Use Case]] chi tiết hóa các tương tác giữa actor và solution."
+      }
+    },
+    {
+      "name": "Vendor Assessment",
+      "codeInWorkbook": "10.49",
+      "purpose": "- to assess the ability of a vendor to meet commitments regarding the delivery and the consistent provision of a product or service.",
+      "elements": "\".1 Knowledge & expertise\n.2 Licensing & pricing models\n.3 Vendor market position\n.4 Terms & conditions\n.5 Vendor experience, reputation, and stability\"",
+      "usage": "",
+      "source": "Techniques Detail · dòng 50",
+      "keyLearning": {
+        "clue": "[[vendor / supplier / commitments]] (nhà cung cấp / cam kết)",
+        "principle": "[[Vendor Assessment]] = đánh giá khả năng vendor thực hiện và duy trì sản phẩm/dịch vụ theo cam kết.",
+        "contrast": "[[Benchmarking]] so sánh chuẩn thực hành; Vendor Assessment ra quyết định về nhà cung cấp."
+      }
+    },
+    {
+      "name": "Workshops",
+      "codeInWorkbook": "10.5",
+      "purpose": "bring stakeholders together in order to collaborate on achieving a predefined goal\nDescription:\n- Workshops generally include:\n• a representative group of stakeholders,\n• a defined goal,\n• interactive and collaborative work,\n• a defined work product, and\n• a facilitator\n- The workshop is ideally facilitated by an experienced, neutral facilitator; and a scribe documents the decisions reached and any outstanding issues.\n- A BA may play the role of a facilitator, scribe, or participant.",
+      "elements": "1 Prepare for the Workshop\n• define the purpose and desired outcomes,\n• identify key stakeholders to participate,\n• identify the facilitator and scribe,\n• create the agenda,\n• determine how the outputs will be captured,\n• schedule the session and invite the participants,\n• arrange room logistics and equipment,\n• send the agenda and other materials in advance to prepare the attendees\nand increase productivity at the meeting, and\n• if appropriate, conduct pre-workshop interviews with participants\n2. Workshop Roles: Sponsor, Facilitator, Scribe, Timekeeper, Participants (key stakeholders and subject matter experts)\n3 Conduct the Workshop\n4 Post ",
+      "usage": "",
+      "source": "Techniques Detail · dòng 51",
+      "keyLearning": {
+        "clue": "[[predefined goal]] (mục tiêu có trước) + nhiều [[stakeholders]] (bên liên quan)",
+        "principle": "[[Workshop]] = đưa stakeholder cùng thảo luận, phối hợp để đạt một mục tiêu cụ thể.",
+        "contrast": "[[Brainstorming]] thiên về tạo ý tưởng; [[Focus Group]] thiên về ý kiến/cảm nhận."
+      }
+    }
+  ],
+  "tasks": [
+    {
+      "section": "3.1",
+      "name": "3.1 Plan Business Analysis Approach",
+      "purpose": "- Purpose: \n+ Define appropriate method to conduct BA activities\n- Description:\n+ describe overall method will be followed when performing BA work; how and when\ntasks will be performed, and the deliverables that will be produced\n+ identify an initial set of techniques to use (có thể thay đổi)\n+ BA approach: be defined by a methodology (Predictive/Adaptive) or by organizational standards \n -- If organizational standards do not exist, BA works with the appropriate stakeholders to determine how the work will be completed. \nShould:\n• align to overall goals of the change\n• coordinate BA tasks with activities and deliverables of overall change,\n• include tasks to manage any risks - reduce the quality of BA deliverables or impede task efficiency\n• leverage approaches and select techniques and tools have historically worked well.\n( khớp với mục tiêu dự án/ BA task phải kết nối với hoạt động và đầu ra của dự án/ có task kiểm soát rủi ro/ có thể sử dụng pphaps hoặc kỹ thuật đã từng sử dụng hiệu quả)",
+      "elements": "1. Planning Approach\n- Predictive Approach (PA): \n+ focus on minimizing uncertainty and ensuring solution is defined before implementation begins --> maximize control and minimize risk\n+ preferred in situations where requirements can effectively be defined ahead of implementation, risk of an incorrect implementation is unacceptably high\n+ engaging SH present singinficant challenges\n+ task perform specific phase\n==> kiểm soats tối đa, giảm rủ ro, phải có req trc khi thực hiện. Áp dụng khi có thể làm rõ req trc khi thực hiện hoăcj ko thể chấp nhận rủi ro khi triển khai hoặc khi việc thu hút SH khó \n- Adaptive Approach (AA): \n+ focus on rapid delivery of business value in short iterations --> finding best solution or for incremental improvement of existing solution\n+ task perform ineratively\n==> Dùng để tìm ra giải pháp tối nhất hoặc cải thiện giải pháp hiện có. \n- Different approaches be used within same initiative\n=> BA approach should describe how plans be altered if changes are required\n2. Formality & Level of detail of BA deliverable\n- PA: formal documentation and representations at various levels of detail, follow standard template.\n+ Specific content & formart depend on organization methodlogies, processes, template\n- AA: Informal and formal (formal doc thường được viết sau khi thực hiện solution)\n+ define req & design through team interaction & gather feedback on working s",
+      "inputs": "- Needs:\nProblem or opportunity faced by organization",
+      "outputs": "1. BA performance assesment: cung cấp kết quả đánh giá trc đó để review và kết hợp vào pp lập kế hoạch\n2. Business polices: xác định giới hạn của quyết đinhj: regulation, contract, agreement, deals, warrantíes, certification, legal obligation (nghĩa vụ pháp lý)\n3. Expert judment (đánh gía của chuyên gia): SH, Organizational Centres of excellence, consultant, association and industry groups (trung ",
+      "source": "KA Detail_PA · dòng 2",
+      "keyLearning": {
+        "clue": "[[Predictive / Adaptive]] = 2 cách [[BA approach]] (tiếp cận công việc BA).",
+        "principle": "[[Plan Business Analysis Approach]] = chọn phương pháp, trình tự task, thời điểm, deliverables và kỹ thuật.",
+        "contrast": "[[Predictive]] định nghĩa nhiều trước; [[Adaptive]] làm từng vòng ngắn, nhận feedback.",
+        "specific": false
+      }
+    },
+    {
+      "section": "3.2",
+      "name": "3.2 Plan Stakeholder Engagement",
+      "purpose": "- Purpose: \n+ Establish and maintain effective working relationships with stakeholders\n- Description:\n+ Identify all involved stakeholder & analyze their characteristic\n+ Define best collaboration & communication approach and appropriately plan for stakeholder risks\n+ New of different techniques be required when engagement move from collaborate with few stakeholder to dozen, hundred, thousand,..",
+      "elements": "1. Perform Stakeholder Analysis\n- Identify stakeholder & their characteristic, analyze information once collected\n- A thorough and detailed stakeholder list ensures that stakeholders are not overlooked\n+ Understand who stakeholder, impact of proposed change on them, influence they have on change --> Vital to understand what needs, wants, expectations must be satisfied by a solution.\n -- If not, BA miss uncovering critical needs. \n -- If late, require revision to BA task (progress, completed) -> Increase cost, decreased stakeholder satisfaction\n- Org chart and business processes as initial source --> Identify internal stakeholders, sponsor identify stakeholder\n- Stakeholder outside identify by understand exitsting contract, vendor, regulatory --> Shareholders, customers, suppliers considered when searching external stakeholders\n- Roles:\n+ Understand where & how stakeholder contribute to intiative. \n- Attitudes:\n+ Can positively or negatively impact change\n+ Understand what may impact a stakeholder’s actions and behaviours.\n--> Plan their collaboration & engament with stakeholder\n+ BA analyze stakeholder attitudes about:\n• business goals, objectives of initiative, and any proposed solutions,\n• BA in general,\n• level of interest in change,\n• sponsor,\n• team members and other stakeholders\n• collaboration and a team-based approach\n- Decision Making Authority:\n+ Identify authority le",
+      "inputs": "- Needs:\nHelp identify stakeholder\n- BA approach:\nEnsure consistency across approaches",
+      "outputs": "+ Business Analysis Performance Assessment: provides results of previous\nassessments that should be reviewed and incorporated.\n+ Change Strategy: used for improved assessment of stakeholder impact and\nthe development of more effective stakeholder engagement strategies.\n+ Current State Description: Giúp hiểu thêm về bối cảnh nhu cầu và ảnh hưởng dự án đến các bên liên quan",
+      "source": "KA Detail_PA · dòng 3",
+      "keyLearning": {
+        "clue": "[[roles / attitudes / power]] (vai trò / thái độ / mức ảnh hưởng) của stakeholder.",
+        "principle": "[[Plan Stakeholder Engagement]] = xác định ai tham gia, đặc điểm và cách [[collaboration / communication]].",
+        "contrast": "[[Governance]] quy định ai quyết định; [[Engagement]] quy định ai cần được phối hợp.",
+        "specific": false
+      }
+    },
+    {
+      "section": "3.3",
+      "name": "3.3 Plan Business Analysis Governance",
+      "purpose": "- Purpose: \n+ Define how decisions are made about requirements and designs, including reviews, change control, approvals, and prioritization.\n- Description:\n+ Governance process identifies:\n -- decision maker, process, information required\n -- how approvals & prioritization decisions\n+ BA identify:\n• how BA work be approached and prioritized,\n• what process proposing change to BA information,\n• who has authority and responsibility to propose changes and who should involved in change discussions,\n• who has responsibility analyzing change requests,\n• who has authority to approve changes\n• how changes be documented and communicated.",
+      "elements": "1. Decision Making\n- Stakeholder serve various role:\n• participant in decision-making discussions,\n• subject matter expert (SME) lending experience and knowledge to decision-making process,\n• reviewer of information\n• approver of decisions.\n- Decision-making process define what happen when team cann't reach consensus (identify escalation path, key SH hold final authority\n2. Change control process: quy trình kiểm soát sự thay đổi: \n- xác định req và design được đề xuất, các bước thực hiện đề xuất *thời gian, người đề xuất, cách thức đề xuất\n- xem xét các yếu tố của req và design được đề xuất (chi phí, nỗ lực, lợi nhuận, rủi ro, độ ưu tiên, hướng thực hiện). xác định cách đánh giá độ ưu tiên,, cách trình bày, cách truyền đạt, người phân tích, ng phê duyệt\n• Determine the process for requesting changes: Specify req & design that process cover. This process detail step for propse change, when change be proposed, who can propose, how change are communicated?\n• Determine the elements of the change request: identify infor be included in proposal\n • Cost and time estimates: expected cost of change is estimated\n • Benefits: show how change adds value. Include: financial benefit, tactical benefit (implication to scope, time, cost, quality, resources)\n • Risks: analysis risks to project, solution, business objectives\n • Priority: level importance of change (org objectives, regulatory comp",
+      "inputs": "- BA approach: incorporating --> ensure consistency across approaches\n- Stakeholder Engagement Approach: useful determine their participation in governance approach\n The engagement approach may be updated based on the completion of the governance approach.",
+      "outputs": "- Business Analysis Performance Assessment: provides results of previous\nassessments that should be reviewed and incorporated into all planning\napproaches.\n- Business Policies: define the limits within which decisions must be made (regulations, contracts, agreements, warranties, certifications or other legal obligations).\n- Current State Description: provides the context within which the work need",
+      "source": "KA Detail_PA · dòng 4",
+      "keyLearning": {
+        "clue": "[[decision / approval / change control]] (quyết định / phê duyệt / kiểm soát thay đổi).",
+        "principle": "[[Plan BA Governance]] = xác định người có quyền, quy trình đề nghị, ưu tiên và duyệt thay đổi.",
+        "contrast": "[[Stakeholder Engagement]] không thay cho quy trình phê duyệt.",
+        "specific": false
+      }
+    },
+    {
+      "section": "3.4",
+      "name": "3.4 Plan Business Analysis Information Management",
+      "purpose": "- Purpose: \n+ develop approach for how BA infor be stored & accessed?\n- Description:\n+ BA infor comprised of all infor BA elicit, create, compile, and disseminate when perform BA\n + Infor management identify: \n• how information be organized,\n• level of detail at which information should be captured,\n• any relationships between infor,\n• how infor be used across multiple project and throughout enterprise,\n• how infor should be accessed and stored\n• characteristics about infor must be maintained.",
+      "elements": "1. Organization of BA infor\n- BA org BA infor allow efficient access & use (Not difficult to locate, conflict, needlessly duplicated)\n- BA work at start of project. Type & amount of infor be collected. \n + Relationship among type of infor be defined\n2. Level of Abstraction\n- Describe breadth & depth of infor\n- Consider need of SH, complexity, importance of change when determine how much detail each SH require.\n- BA should present infor with appropriate level of detail based on SH's role\n- BA infor regard topic significant importance\n3. Plan tracecibility approach\n- Trace approach based on:\n• complexity domain,\n• number of views of requirements\n• any requirement-related risks, organizational standards, applicable regulatory requirements, and\n• understanding of costs and benefits tracing.\n-> BA ensure approach at level detail -> add value without excessive overhead\n4. Plan for Req Reuse\n- Save org time, effort, cost\n- Req are potential candidate for long-term use: req an org must meet on an ongoing. Such as:\n• regulatory req,\n• contractual obligations,\n• quality standards,\n• service level agreements,\n• business rules,\n• business processes, or\n• req describing products.\n- when describe common features/ service across multiple system, process, program\n- Req must be clearly named, defined, stored ìn reposity\n5. Storage & Access\n- Can store many ways. \n- Org standard & tool availabil",
+      "inputs": "- BA approach: ensure consistency across the approaches\n- Governance approach:How BA manage change to req & design, decision, prioritize\n- SH Engagement approach:Determine specific infor management of SH",
+      "outputs": "",
+      "source": "KA Detail_PA · dòng 5",
+      "keyLearning": {
+        "clue": "[[storage / access / attributes / reuse]] (lưu / truy cập / thuộc tính / dùng lại).",
+        "principle": "[[Plan BA Information Management]] = tổ chức, bảo quản, truy xuất, liên kết và tái sử dụng thông tin BA.",
+        "contrast": "[[Communicate BA Information]] là truyền đạt tới người cần; [[Information Management]] quản lý thông tin lâu dài.",
+        "specific": false
+      }
+    },
+    {
+      "section": "3.5",
+      "name": "3.5 Identify Business Analysis Performance Improvements",
+      "purpose": "- Purpose: \n+ assess BA work and plan to improve processes where required\n- Description:\n+ Establish performance measures, conduct the performance analysis, report on the results of the analysis, and identify any necessary preventive, corrective, or developmental actions.\n+ Performance analysis occur throughout project. Once potential performance improvements are identified, they become guidelines for the next time a task is executed.",
+      "elements": "1. Performance Analysis\n- Effective BA work depends on context of a particular org or project- BA work at start of project. Type & amount of infor be collected. \n + Relationship among type of infor be defined\n2. Assessment Measures (Phép đo đánh giá)\n- BA leverage current measures or determine new measures\n- Performance measures based on:\n+ deliverable due date\n+ metric: frequency of change to BA work, number of review cycle, task efficiency, qualitative feedback from SH\n- Measure both: qualitative (heavily influenced by SH's attitude, perceptions); quantitative\n- Possible measures:\n• Accuracy and Completeness: determine BA work products correct and relevant when delivered, or whether ongoing revisions to gain acceptance by SH.\n• Knowledge: assess BA had the skills/ experience to perform assigned task.\n• Effectiveness: assess BA work products easy to use as standalone deliverables or they required extensive explanation to be understood.\n• Organizational Support: assess adequate resources available to complete BA activities as needed.\n• Significance: consider benefit obtained & assess cost, time, and resource investments justified for value they delivered.\n• Strategic: look at whether business objectives met, problems solved, and improvements achieved.\n• Timeliness: evaluate BA delivered work on time per SH expectations and schedule.\n3. Analyze Results\n- BA process and deliverab",
+      "inputs": "- BA approach: identifies BA deliverables be produced, activities that will need to be performed, techniques that be used\n- Performance Objectives (external): Describe desired performance outcomes that org hoping to achieve",
+      "outputs": "",
+      "source": "KA Detail_PA · dòng 6",
+      "keyLearning": {
+        "clue": "[[performance assessment]] (đánh giá hiệu suất) của chính công việc BA.",
+        "principle": "[[Identify BA Performance Improvements]] = so kết quả BA với tiêu chí, tìm nguyên nhân và hành động cải tiến.",
+        "contrast": "[[BA performance]] ≠ [[Solution performance]] (hiệu quả giải pháp đã triển khai).",
+        "specific": false
+      }
+    },
+    {
+      "section": "4.1",
+      "name": "4.1 Prepare for Elicitation",
+      "purpose": "- Purpose: \n+ understand scope of elicitation activity, \n+ select appropriate techniques\n+ plan for appropriate supporting materials & resources.\n- Description:\nBA prepare: \n+ Define desired outcome, SH, goals\n+ Techniques, elecitation logistic, supporting materials, ..",
+      "elements": "1. Understand scope of elecitation\n- BA consider:\n• business domain, culture & environment,\n• SH involved and their group dynamics; location\n• other source of BA infor, such as output from other elecitation activities\n• output desired from elecitation\n• strategy or solution approach; scope of solution\n2. Select Elecitation Techniques\n- Factor: \n+ Cost & time contrainst\n+ Type of source available to elecit infor from\n+ Culture\n+ Desired outcome\n&\n• common tech used in similar initiatives,\n• tech specifically suited to situation, \n• tasks needed to prepare, execute, and complete each tech.\n3. Set up Logistic\n• participants: People, their roles, communication channels, languages\n• Resource: people, room, suppliers. agenda\n• locations: Place for elecitaion\n• communication channels,\n4. Secure supporting material\n- Source of infor: \n• People, systems, historical data, materials \n• Document: current system document, business rules, relevant org material\n• Output of analysis work. Such as draft version of analysis model\n5. Prepare SH\n- Educate SH about elecitation tech (explain how tech work, expected of SH, value to SH)\n- Some SH unresponsive (dont understand purpose, not align) --> BA should ensure buy-in from all necessary SH\n- Request SH review supporting material piror to elecitation activity \n- Elecit through research & exploration --> Not require prepare other SH",
+      "inputs": "- Needs: \n+ Scope, purpose of elecitation\n- 3.2. SH Engagement Approach: \n+ Understand SH's communication/ collaboration need --> Plan & prepare elecitation",
+      "outputs": "",
+      "source": "KA Detail_PA · dòng 8",
+      "keyLearning": {
+        "clue": "[[before elicitation / logistics]] (trước khi khai thác / hậu cần).",
+        "principle": "[[Prepare for Elicitation]] = chọn kỹ thuật, phạm vi, stakeholder và vật liệu; đầu ra [[Elicitation Activity Plan]].",
+        "contrast": "[[Conduct Elicitation]] thu thông tin; [[Prepare]] chuẩn bị để thu hiệu quả.",
+        "specific": false
+      }
+    },
+    {
+      "section": "4.2",
+      "name": "4.2 Conduct Elicitation",
+      "purpose": "- Purpose: \n+ draw out, explore, & identify infor relevant change\n- Description:\n3 common type:\n+ Collaborative: direct interact with SH, relies on their experiences, expertise, and judgment\n+ Research: discovering and studying infor from materials or sources not directly known by SH involved in the change. Include data analysis of historical data to identify trends or past results.\n+ Experiments: identify infor couldn't known without some sort of controlled test. Because it is unknown. Include observational studies, proofs of concept, and prototype",
+      "elements": "1. Guide Elecitation Activity\n- In BA planning: define desired kind of output - result of elecitation activities\n- 8 essential BA question:\n• elicitation activity goals and agenda,\n• scope of the change,\n• what forms of output activity will generate,\n• what other representations the activity results will support,\n• how output integrates into what is already known,\n• who provides infor\n• who will use the infor\n• how infor will be used\n--> BA uses this infor to determine when sufficient elicitation, to stop activity\n2. Capture Elecitation Outcomes\n- Conducting elicitation is frequently iterative and takes place in series of sessions\n- If elicitation activity is unplanned, outcomes captured and integrated into appropriate planned outcomes.\n- Capturing outcome ensure infor is recorded for later reference and use.",
+      "inputs": "4.1. Elecitation Activity Plan:\nElecitation activities, tech, activity logistic, scope, available source",
+      "outputs": "",
+      "source": "KA Detail_PA · dòng 9",
+      "keyLearning": {
+        "clue": "[[draw out / explore / identify information]] (khơi gợi / tìm hiểu thông tin).",
+        "principle": "[[Conduct Elicitation]] = thu thông tin qua [[Collaborative / Research / Experiments]]; đầu ra chưa xác nhận.",
+        "contrast": "[[Confirm Elicitation Results]] đối chiếu độ chính xác sau khi thu thập.",
+        "specific": false
+      }
+    },
+    {
+      "section": "4.3",
+      "name": "4.3 Confirm Elicitation Results",
+      "purpose": "- Purpose:\ncheck infor gathered during elicitation session for accuracy and consistency with other infor\n- Desciption:\n+ review may discover errors, omissions, conflicts, and ambiguity\n+ elicitation results compared against their source and other elicitation results to ensure consistency. BA require more elicitation if need",
+      "elements": "1. Compare Elicitation Results Against Source Infor\n- Including documents and SH knowledge\n- BA lead follow-up meetings - SH correct elecitation result (SH confirm result indepently)\n2. Compare Elicitation Results Against Other Elicitation Results\n- BA compare results collected through multiple elicitation activities to confirm infor consistent and accurately represented.\n- BA identify variations results and resolve them in collaboration with SH\n- Inconsistencies in elicitation results often uncovered when BA develop specifications and models",
+      "inputs": "- Elicitation Results (unconfirmed):",
+      "outputs": "",
+      "source": "KA Detail_PA · dòng 10",
+      "keyLearning": {
+        "clue": "[[accuracy / consistency / compare with source]] (đúng / nhất quán / so nguồn).",
+        "principle": "[[Confirm Elicitation Results]] = kiểm tra điều đã thu có phản ánh đúng nguồn và các lần elicitation khác.",
+        "contrast": "[[Verify Requirements]] kiểm chất lượng yêu cầu đã mô hình hóa; [[Confirm]] kiểm thông tin mới thu.",
+        "specific": false
+      }
+    },
+    {
+      "section": "4.4",
+      "name": "4.4 Communicate BA Infor.",
+      "purpose": "- Purpose:\nensure SH have shared understanding of BA infor\n- Desciption:\n+ BA must communicate appropriate infor to SH at right time & in formats meet their needs. \n+ Communication of BA infor is bi-directional and iterative\n+ BA engage SH to ensure they understand infor and gain agreement. Multiple forms of communication might be required same infor",
+      "elements": "1. Determine Objectives and Format of Communication\n- Reason prepare BA infor:\n• communication req and designs to SH,\n• early assessment of quality and planning,\n• evaluation of possible alternatives,\n• formal reviews and approvals,\n• inputs to solution design,\n• conformance to contractual and regulatory obligations, and\n• maintenance for reuse.\n- To help decide how present req, BA ask types of questions:\n• Who is audience of package?\n• What will each type of SH understand and need from communication?\n• What is each SH's preferred style of communication or learning?\n• What infor is important to communicate?\n• Are presentation and format of package, and infor contained in the package, appropriate for the type of audience?\n• How does package support other activities?\n• Are there any regulatory or contractual constraints to conform to?\n-Possible forms for packages may include:\n• Formal doc: based on template used by org and may include text, matrices, or diagrams. It provides a stable, easy to use, long-term record infor\n• Informal doc: may include text, diagrams, or matrices that are used during a change but not part of formal org process.\n• Presentations: deliver a high-level overview appropriate for understanding goals of change, functions of solution, or infor to support decision making.\n2. Communicate Business Analysis Package\n- Purpose: provide SH appropriate level of detail",
+      "inputs": "- BA Infor: BA infor becomes input for task when need is discovered to\ncommunicate the infor to additional SH\n- 3.2. SH Engagemnt Approach: describes SH groups, roles, and general needs regarding communication of BA infor",
+      "outputs": "",
+      "source": "KA Detail_PA · dòng 11",
+      "keyLearning": {
+        "clue": "[[shared understanding / right audience / right time]] (hiểu chung / đúng người / đúng lúc).",
+        "principle": "[[Communicate BA Information]] = đóng gói và truyền đạt thông tin đúng mức chi tiết, phương thức, đối tượng.",
+        "contrast": "[[Manage Stakeholder Collaboration]] chú trọng duy trì sự phối hợp và cam kết.",
+        "specific": false
+      }
+    },
+    {
+      "section": "4.5",
+      "name": "4.5 Manage Stakeholder Collaboration",
+      "purpose": "",
+      "elements": "",
+      "inputs": "",
+      "outputs": "",
+      "source": "KA Detail_PA · dòng 12",
+      "keyLearning": {
+        "clue": "[[engagement / commitments / participation]] (gắn kết / cam kết / tham gia).",
+        "principle": "[[Manage Stakeholder Collaboration]] = theo dõi tham gia, xử lý trở ngại, duy trì cam kết từ stakeholder.",
+        "contrast": "[[Plan Stakeholder Engagement]] lên phương án; [[Manage]] giữ cộng tác trong lúc thực hiện.",
+        "specific": false
+      }
+    },
+    {
+      "section": "5.1",
+      "name": "5.1 Trace Requirements",
+      "purpose": "- Purpose:\n + Ensure req and designs at different levels are aligned to one another, and to manage effects of change to one level on related req.\n- Desciption:\n+ backward traceability, its forward traceability.\n+ Traceability help ensure solution conforms to req and to assist in scope, change, risk, time, cost, and communication management.\n+ Traceability enables:\n• faster and simpler impact analysis,\n• inconsistencies and gaps in requirements,\n• deeper insights into the scope and complexity of a change\n• reliable assessment of which req have been addressed and which have not",
+      "elements": "1. Level of Formality\n- Effort to trace req grows significantly when number req or level of formality increases\n2. Relationships\n• Derive: when req is derived from another req. Ex, a solution req derived from a business or a SH req.\n• Depends: when a req depends on another req. Types of relationships include:\n -- Necessity: when it only makes sense to implement a particular req if a related req is also implemented.\n -- Effort: when a req is easier to implement if a related req is also implemented.\n• Satisfy: relationship between an implementation element and req it is satisfying. Ex: between functional req and a solution component that is implementing it.\n• Validate: relationship between a req and TC or other element that can determine whether a solution fulfills the req.\n3. Traceability Repository\n- Req management tools can provide significant benefits when trace a large number of req that may be deemed unmanageable with manual approaches.",
+      "inputs": "- Req, Design: may be traced to other req",
+      "outputs": "",
+      "source": "KA Detail_PA · dòng 14",
+      "keyLearning": {
+        "clue": "[[forward/backward trace / lineage / impact analysis]] (truy vết / nguồn gốc / tác động).",
+        "principle": "[[Trace Requirements]] = nối yêu cầu với nguồn gốc, thiết kế, test và giải pháp để phân tích ảnh hưởng.",
+        "contrast": "[[Maintain]] lưu giữ và cập nhật; [[Trace]] kiểm quan hệ và độ bao phủ.",
+        "specific": false
+      }
+    },
+    {
+      "section": "5.2",
+      "name": "5.2 Maintain Requirements",
+      "purpose": "- Purpose:\n + retain req accuracy and consistence during entire req life cycle, and to support reuse of req in other solutions\n- Desciption:\nIn order to maximize benefits of maintaining and reusing req, req should be:\n• consistently represented,\n• reviewed and approved for maintenance using a standardized process that defines proper access rights and ensures quality, and\n• easily accessible and understandable",
+      "elements": "1. Maintain Requirements\n- 2 aspects to req maintenance\n+ Maitain the accuracy of req: clearly named and defined, and easily available to SH\n+ Maitain the (traced) relationship among req --> context and original intent of the req is preserved\n2. Maintain Attributes\n- Infor such as the req's source, priority, and complexity aid in managing each req throughout the life cycle\n- Some attribute could change,..\n3. Reusing Requirements\n- Req are candidates for long-term use by org are identified, clearly named, defined, and stored in a manner makes them easily retrievable by other SH\n- Req can be reused:\n• within current initiative,\n• within similar initiatives,\n• within similar departments, and\n• throughout the entire org.\n- Req are represented in general manner, without direct ties to a particular tool or org structure, tend to be more reusable. These req are also less subject to revision during a change.\n- Req are expressed in more detail, they become more tightly associated with a specific solution --> limit reuse of req and designs across org.",
+      "inputs": "- Req, Design: be maintained throughout their life cycle",
+      "outputs": "",
+      "source": "KA Detail_PA · dòng 15",
+      "keyLearning": {
+        "clue": "[[accurate / consistent / reuse / repository]] (đúng / nhất quán / tái dùng / kho).",
+        "principle": "[[Maintain Requirements]] = giữ thông tin có hiệu lực, dễ truy cập, định nghĩa rõ và tái sử dụng.",
+        "contrast": "[[Trace]] chú trọng quan hệ; [[Maintain]] chú trọng tính chính xác và vòng đời.",
+        "specific": false
+      }
+    },
+    {
+      "section": "5.3",
+      "name": "5.3 Prioritize Requirements",
+      "purpose": "- Purpose:\n + rank req in the order of relative importance.\n- Desciption:\n+ ranking req to determine their relative importance to SH\n+ Priority can refer to relative value of req, or to sequence in which it will be implemented.",
+      "elements": "1. Basis for Prioritization (CRDB PRTS)\n- Typical factors:\n• Cost: effort and resources needed to implement req. Often compared to benefit\n• Risk: the chance that req cannot deliver potential value, or cannot be met at all. If risk that solution is not technically feasible, req is most difficult to implement be prioritized to top of list to minimize resources that spent. A PoC may be developed to establish high risk options are possible.\n• Dependencies: relationships between req where one req cannot be fulfilled unless the other req is fulfilled. Dependencies may also be external to the initiative\n• Benefit: advantage that accrues to SH as a result of req implementation, as measured against the goals and objectives for the change. If there are multiple SH, each group may perceive benefits differently. Conflict resolution skill are required to resolve\n• Penalty: consequences result from not implementing a given req. Penatlty refers not only to regulatory or compliance fines, but also to negative impacts such as lesser user experiences\n• Regulatory or Policy Compliance: req must be implemented to meet regulatory or policy demands imposed on org, which may take precedence over other SH interests.\n• Time Sensitivity: Date by req need to be implemented to achieve maximum value. There are some effort that undertaken to bring value before cutoff date\n• Stability: likelihood that req w",
+      "inputs": "- Req, Design:",
+      "outputs": "",
+      "source": "KA Detail_PA · dòng 16",
+      "keyLearning": {
+        "clue": "[[benefit / cost / risk / dependency / stability]] (lợi ích / chi phí / rủi ro / phụ thuộc / ổn định).",
+        "principle": "[[Prioritize Requirements]] = xếp hạng theo giá trị và nhiều tiêu chí; thứ tự ưu tiên thay đổi theo bối cảnh.",
+        "contrast": "[[Stability]] là dễ thay đổi; [[Dependency]] là phụ thuộc; [[Penalty]] là hậu quả nếu không làm.",
+        "specific": false
+      }
+    },
+    {
+      "section": "5.4",
+      "name": "5.4 Assess Requirements Changes",
+      "purpose": "- Purpose:\n + evaluate implications of proposed changes to req and designs\n- Desciption:\n+ Is performed as new needs or possible solutions are identified. May or may not align change strategy/ solution scope. Assessment must be performed to determine whether a proposed change will increase the value of the solution, and if so, what action should be taken.\n+ BA assess potential effect of the change to solution value, and whether proposed changes introduce conflicts with other req or increase the level of risk.\n+ BA consider:\n• aligns with overall strategy,\n• affects value delivered to the business or stakeholder groups,\n• impacts the time to deliver or resources required to deliver the value, and\n• alters any risks, opportunities, or constraints associated with the overall initiative.",
+      "elements": "1. Assessment Fomarlity\n- Predictive approach: more formal assessment of proposed changes, impact of each change can be disruptive\n--> generate a substantial reworking of tasks and activities completed in previous activities. \n- Adaptive approach: require less formality in the assessment of proposed changes\n--> minimize impact of changes by utilizing iterative and incremental implementation techniques. \n2. Impact Analysis (C BUSI)\n- Assess or evaluate the effect of a change. Traceability is a useful tool for performing impact analysis\n- BA consider: \n• Cost: total cost to implement the change including the cost to make the change, the cost of associated rework, and the opportunity costs such as the number of other features that may need to be sacrificed or deferred if the change is approved.\n• Benefit: benefit that will be gained by accepting the change.\n• Urgency: level of importance including the factors which drive necessity such as regulator or safety issues\n• Schedule: impact to existing delivery commitments if the change is approved.\n• Impact: number of customers or business processes affected if the change is accepted.\n3. Impact Resolution\n- All impacts and resolutions resulting from the change analysis are to be documented and communicated to all SH.",
+      "inputs": "- Req, Design:\n- Proposed change",
+      "outputs": "",
+      "source": "KA Detail_PA · dòng 17",
+      "keyLearning": {
+        "clue": "[[change impact / benefit / cost / schedule / urgency]] (ảnh hưởng / lợi ích / chi phí / lịch / khẩn cấp).",
+        "principle": "[[Assess Requirements Changes]] = xem thay đổi được đề xuất có tăng giá trị, tăng rủi ro hay ảnh hưởng yêu cầu khác.",
+        "contrast": "[[Approve Requirements]] là đạt đồng thuận và phê duyệt; [[Assess Changes]] phân tích trước khi quyết định.",
+        "specific": false
+      }
+    },
+    {
+      "section": "5.5",
+      "name": "5.5 Approve Requirements",
+      "purpose": "- Purpose:\n + obtain agreement on and approval of req and designs for BA work to continue and/or solution construction to proceed\n- Desciption:\n+ BA are responsible for ensuring clear communication of req, designs, and other BA infor to the key SH responsible for approving that infor.\n+ Approval of req and designs may be formal or informal. \n -- Predictive approaches: perform approvals at the end of the phase or during planned change control meetings. \n -- Adaptive approaches: approve req only when construction and implementation of a solution meeting the req can begin. BA work with key SH to gain consensus on new and changed req, communicate the outcome of discussions, and track and manage the approval.",
+      "elements": "1. Understand SH Roles\n- BA responsible for obtaining SH approvals and required to understand who holds decision-making responsibility and who possesses authority for sign-off across the initiative.\n- BA consider any influential SH who should be consulted or informed about req. Few SH may have the authority to approve or deny changes, but many SH may be able to influence these decisions.\n2. Conflict and Issue Management\n- SH groups frequently have varying points of view and conflicting priorities. \n- Conflict may arise among SH as a result of different interpretations of req or designs and conflicting values placed on them.\n- BA facilitates communication between SH in areas of conflict so that each group has an improved appreciation for the needs of the others.\n3. Gain Consensus\n- BA responsible for ensuring that SH with approval authority understand and accept the req. BA obtain approval by reviewing req or changes to req with the accountable individuals or groups and requesting that they approve, indicating their agreement with the solution or designs described.\n- BA facilitate this approval process by addressing any questions or providing additional infor when requested.\n- Complete agreement may not be necessary for a successful change, but if lack of agreement, associated risks are to be identified and managed accordingly.\n4. Track and Communicate Approval\n- Record the deci",
+      "inputs": "- 7.2. Req (Verified)\n- Design",
+      "outputs": "",
+      "source": "KA Detail_PA · dòng 18",
+      "keyLearning": {
+        "clue": "[[sign-off / approval authority / consensus]] (ký duyệt / người có quyền / đồng thuận).",
+        "principle": "[[Approve Requirements]] = bảo đảm người có thẩm quyền đồng ý với yêu cầu/thiết kế đã đủ chất lượng.",
+        "contrast": "[[Verify]] hỏi viết đúng chưa; [[Approve]] hỏi người có quyền đã chấp thuận chưa.",
+        "specific": false
+      }
+    },
+    {
+      "section": "6.1",
+      "name": "6. 1 Analyze Current state",
+      "purpose": "- Purpose:\n + Understand reason why enterprise need to chage & what would be affected by change\n\n- Desciption:\n+ BA work to help SH enable change by exploring and articulating business needs that drive the desire to change\n+ Understanding current state of enterprise prior to the change is necessary to identify what will need to change to achieve a desired future state and how the effect of the change will be assessed.\n+ Boundaries of the current state scope are determined by components of the enterprise and its environment as they relate to the needs.\n+ Current state often dynamic, influenced internal or external. Any change to current state might cause change to future state",
+      "elements": "1. Business Need\n- Business needs are problems and opportunities of strategic importance faced by enterprise. \n- Ex: customer complaint, a loss of revenue, or a new market opportunity\n- Business need be identified at many different level:\n• From the top-down: a strategic goal that needs to be achieved.\n• From the bottom-up: a problem with the current state of a process, function or system.\n• From middle management: a manager needs additional information to make sound decisions or must perform additional functions to meet business objectives.\n• From external drivers: customer demand or business competition in the marketplace\n- Define of business needs is critical step of BA efforts. Business needs are always expressed from the perspective of the enterprise,\n- BA should question assumptions and constraints that are generally buried in the statement of the issue\n- BA consider include:\n• adverse impacts the problem is causing within the org and quantify those impacts  (potential lost revenue, inefficiencies, dissatisfied customers, low employee morale),\n• expected benefits from any potential solution ( increased revenue, reduced costs, increased market share),\n• how quickly the problem could potentially be resolved or the opportunity could be taken, and the cost of doing nothing, and\n• the underlying source of the problem\n\n2. Org Structure and Culture\n- Org structure defines the formal relationships between people working in the enterprise\n- Org culture is the beliefs, values, and norms shared by the members of an org. BA assess culture to: \n• identify if cultural changes are required to better achieve the goals,\n• identify whether SH understand the rationale for the current state of the enterprise and the value delivered by it, and\n• ascertain whether the SH view the current state as satisfactory or if change is needed.\n\n3. Capabilities and Processes\n- Describe activities an enterprise performs. Include knowledge enterprise has, products and services it provides, functions it supports, and methods it uses to make decisions.\n- BA may use:\n• A capability-centric view of enterprise when looking for innovative solutions that combine existing capabilities to produce a new outcome\n• A process-centric view of the enterprise when looking for ways to improve the performance of current activities. \n\n4. Technology and Infrastructure \n- Infor systems support people in executing processes, making decisions, and in interactions with suppliers and customers.\n- infrastructure describes enterprise’s environment. Include: computer hardware, physical plants, and logistics, as well as their operation and upkeep\n\n5. Policies\n- Policies define scope of decision making at different levels of enterprise. They generally address routine operations rather than strategic change. \n- Policies: guide behaviour and actions, support governance, and determine when & how new resource be acquired\n\n6. Business Architecture\n- BA must understand how all of these elements of the current state fit together and support one another in order to recommend changes that will be effective\n\n7. Internal Assets\n- Resources can be tangible or intangible, such as financial resources, patents, reputation, and brand names\n\n8. External Influencers\n- Sources of external influence include:\n• Industry Structure: individual industries have distinct ways in which value is created within that industry. \n• Competitors: the nature and intensity of competitors between enterprises within an industry can be significant. The entry of a new competitor may also change the nature of the industry or increase competition.\n• Customers: the size and nature of existing and potential customer segments can provide influences such as negotiating power and a degree of price sensitivity. Alternatively, the emergence of new alternative ways that customers can meet their needs may drive the enterprise to deliver greater value.\n• Suppliers: the variety and diversity of suppliers might be an influencer, as can the power that suppliers have over their customers.\n• Political and Regulatory Environment: there is often influence from the current and potential impact of laws and regulations upon the industry.\n• Technology: the productivity enhancing potential of recent and expected technological innovations might influence the need.\n• Macroeconomic Factors: the constraints and opportunities that exist within the existing and expected macroeconomic environment (for example, trade, unemployment, or inflation) might influence the need.\nSome of these sources might use different terminology, based on whether the enterprise is a for-profit corporation, a non-profit enterprise, or a government agency. For example, a country does not have customers; it has citizens.",
+      "inputs": "- 4.3. Elecitation Result (Confirmed)\n- Need",
+      "outputs": "",
+      "source": "KA Detail_PA · dòng 20",
+      "keyLearning": {
+        "clue": "[[business need / current state / why change]] (nhu cầu / hiện trạng / vì sao cần đổi).",
+        "principle": "[[Analyze Current State]] = tìm vấn đề/cơ hội, hiểu tổ chức hiện vận hành ra sao và điều gì sẽ bị ảnh hưởng.",
+        "contrast": "[[Current State]] xem thực tế hiện tại; [[Future State]] xem kết quả đích.",
+        "specific": false
+      }
+    },
+    {
+      "section": "6.2",
+      "name": "6.2 Define Future state",
+      "purpose": "- Purpose:\n + determine the set of necessary conditions to meet the business need\n- Desciption:\n+ BA work to ensure future state of the enterprise is well defined, that it is achievable with the resources available, and that key stakeholders have a shared consensus vision of the outcome.\n+ future state will be defined at a level of detail that:\n• allows for competing strategies to achieve the future state to be identified and assessed,\n• provides a clear definition of the outcomes that will satisfy the business needs,\n• details the scope of the solution space,\n• allows for value associated with the future state to be assessed, and\n• enables consensus to be achieved among key SH. \n+ Des context about the proposed future state. Change be needed to any component of the enterprise:\n• business processes,\n• functions,\n• lines of business,\n• organization structures,\n• staff competencies,\n• knowledge and skills,\n• training,\n• facilities,\n• desktop tools,\n• organization locations,\n• data and information,\n• application systems, and/or\n• technology infrastructure.\n+ Changes result in predictabl",
+      "elements": "1. Business Goals & Objectives\n- Goals are longer term, ongoing, and qualitative statements of a state or condition that the org is seeking to establish and maintain. Include:\n• Create a new capability such as a new product or service, address a competitive disadvantage, or create a new competitive advantage.\n• Improve revenue by increasing sales or reducing cost.\n• Increase customer satisfaction.\n• Increase employee satisfaction.\n• Comply with new regulations.\n• Improve safety.\n• Reduce time to deliver a product or service.\n- Objectives that are measurable enable teams to know if needs were addressed and whether a change was effective. A common test for assessing objectives is to ensure that they are SMART:\n• Specific: describing something that has an observable outcome,\n• Measurable: tracking and measuring the outcome,\n• Achievable: testing the feasibility of the effort,\n• Relevant: aligning with the enterprise’s vision, mission, and goals, and\n• Time-bounded: defining a time frame that is consistent with the need.\n2. Scope of Solution Space\n- The scope of the solution space defines which kinds of options will be considered when investigating possible solutions. Include:\n+ Changes to the organizational structure or culture\n+ capabilities and processes\n+ technology and infrastructure\n+ policies, products, or services,\n--> Solutions in each of these areas generally require spec",
+      "inputs": "- 6.1. Business Req",
+      "outputs": "",
+      "source": "KA Detail_PA · dòng 21",
+      "keyLearning": {
+        "clue": "[[future state / goals / SMART objectives]] (trạng thái đích / mục tiêu rộng / mục tiêu đo được).",
+        "principle": "[[Define Future State]] = mô tả điều kiện cần đạt, mục tiêu và giá trị tiềm năng của thay đổi.",
+        "contrast": "[[Goal]] dài hạn và định tính; [[Objective]] nên cụ thể, đo được, có thời hạn.",
+        "specific": false
+      }
+    },
+    {
+      "section": "6.3",
+      "name": "6.3 Assess Risks",
+      "purpose": "",
+      "elements": "",
+      "inputs": "",
+      "outputs": "",
+      "source": "KA Detail_PA · dòng 22",
+      "keyLearning": {
+        "clue": "[[likelihood / impact / risk tolerance]] (khả năng xảy ra / mức ảnh hưởng / mức chịu rủi ro).",
+        "principle": "[[Assess Risks]] = phân tích bất định và ảnh hưởng tiêu cực lên giá trị, lựa chọn cách ứng phó.",
+        "contrast": "[[Risk-averse]] ngại rủi ro; [[Risk-seeking]] chấp nhận nhiều rủi ro để kỳ vọng lợi ích.",
+        "specific": false
+      }
+    },
+    {
+      "section": "6.4",
+      "name": "6.4 Define Change Strategy",
+      "purpose": "",
+      "elements": "",
+      "inputs": "",
+      "outputs": "",
+      "source": "KA Detail_PA · dòng 23",
+      "keyLearning": {
+        "clue": "[[gap analysis / transition states / change strategy]] (khoảng cách / bước chuyển / chiến lược thay đổi).",
+        "principle": "[[Define Change Strategy]] = từ current → future state, phân tích gaps, so sánh cách chuyển đổi và chọn hướng tối ưu.",
+        "contrast": "[[Change Strategy]] ở mức chiến lược; [[Design Options]] là các thiết kế cụ thể.",
+        "specific": false
+      }
+    },
+    {
+      "section": "7.1",
+      "name": "7.1 Specify and Model Req.",
+      "purpose": "- Purpose:\nAnalyze, synthesize, refine elecitation result into req & design\n- Desciption:\n+ Focus specifying and modelling activity understanding need, outputs referred to req. \n+ Focus specifying and modelling activity on solution, outputs are referred to as designs.\nPhân tích, tổng hợp và sàng lọc các kết quả khơi gợi để thành yêu cầu và thiết kế\n1. Model req: \n- Lựa chọn định dạng mô hình: Matrics/ Diagram\n- Chọn danh mục cụ thể và mô hình cụ thể\n- Sử dụng 1 hoặc kết hợp nhiều loại mô hình.\n2. Analyze req: \n- Phân rã yc thành các thành phần nhỏ hơn\n3. Represent Requirements and Attributes:\n- Phân loại yêu cầu và thuộc tính vào 1 trong 4 loại yc\n4. Implement the Appropriate Levels of Abstraction\n- Triển khai mức độ chi tiết phù hợp với từng SH, theo BA approach",
+      "elements": "1. Model Req\n- Model is descriptive & visual way to convey infor to specific audience to support analysis, communication, understand\n- Modeling format:\n• Matrices:\n -- Modelling req have a complex but uniform structure\n -- Used for data dictionaries, requirements traceability, or gap analysis, prioritizing req\n -- recording other requirements attributes and metadata\n• Diagram:\n -- Is a visual, often pictorial, representation of req\n -- Useful to depict complexity in way that would be difficult to do with words\n -- Define boundaries for business domains, to categorize and create hierarchies of items, \n -- show data and their relationships\n- Modeling categories:\n• People and Roles: \n -- Represent org, groups of people, roles, and relationships within enterprise and solution\n -- Tech: Org Modelling, Roles and Permissions Matrix and SH List, Map, or Personas\n• Rationale:\n -- Represent ‘why’ of a change\n -- Tech: Decision Modelling, Scope Modelling, Business Model Canvas, Root Cause Analysis, and Business Rules Analysis.\n• Activity Flow:\n -- Represent sequence of actions, events, or a course be taken\n -- Tech: Process Modelling, Use Cases and Scenarios, and User Stories\n• Capability:\n -- focus on features or functions of enterprise or solution\n -- Tech: Business Capability Analysis, Functional Decomposition, and Prototyping.\n• Data and Information:\n -- Represent characteristics and ",
+      "inputs": "- 4.2. 4.3. Elecitation Result (any state): describes SH groups, roles, and general needs regarding communication of BA infor",
+      "outputs": "",
+      "source": "KA Detail_PA · dòng 25",
+      "keyLearning": {
+        "clue": "[[model / diagram / matrix / abstraction]] (mô hình / sơ đồ / ma trận / độ trừu tượng).",
+        "principle": "[[Specify and Model Requirements]] = chuyển elicitation thành yêu cầu/thiết kế dưới dạng mô hình có cấu trúc.",
+        "contrast": "[[Verify]] kiểm chất lượng mô hình; [[Specify & Model]] tạo và diễn tả mô hình.",
+        "specific": false
+      }
+    },
+    {
+      "section": "7.2",
+      "name": "7.2 Verify Req.",
+      "purpose": "- Purpose:\nEnsure req and designs specifications and models meet quality standards and are usable for purpose they serve.\n- Desciption:\n+ Ensures req and designs have been defined correctly\n+ A high-quality specification is well written and easily understood by its intended audience. A high-quality model follows formal or informal notation standards\n+ Important characteristic of quality req and designs is fitness for use. They must meet the needs of stakeholders who will use them for a particular purpose. Quality is ultimately determined by stakeholders\n- Đảm bảo rằng thông số kỹ thuật và mô hình của req và design đảm bảo chất lượng và sử dụng đúng mục đích.\n- đảm bảo được định nghĩa chính xác\n- đạt chất lượng cao nếu được viết chi tiết và dễ hiểu, theo tiêu chuẩn ký hiệu chính thức và không chính thức và thể hiện thực tế hiệu quả\n- phù hợp để sử dụng, đáp ứng SH need\n==> Chất lượng được quyết định bởi SH.\n1. Characteristics (đặc điểm) of Requirements and Designs Quality: \n2. Verification Activities: thực hiện các hoạt động verify theo các tiêu chuẩn của doanh nghiệp (công cụ, phương",
+      "elements": "1. Characteristics of Req and Designs Quality\n• Atomic:\n -- self-contained and capable of being understood independently\n• Complete:\n -- enough to guide further work and at the appropriate level of detail for work to continue\n• Consistent: \n -- aligned with identified needs of SH and not conflicting with other req.\n• Concise:\n -- contains no extraneous and unnecessary content\n• Feasible: Khả thi\n -- reasonable and possible within agreed-upon risk, schedule, and budget\n -- feasible enough to investigate further through experiments or prototypes\n• Unambiguous:\n -- req must be clearly stated\n• Testable:\n -- verify req or design has been fulfilled\n• Prioritized:\n -- ranked, grouped, or negotiated in terms of importance and value against all other req\n• Understandable:\n -- using common terminology of the audience\n2. Verification Activities\n- Include:\n• checking for compliance with org performance standards (right tools and methods),\n• checking for correct use of modelling notation, templates, or forms,\n• checking for completeness within each model,\n• comparing each model against other relevant models, (missing, consistently)\n• ensuring the terminology used is understandable to SH and consistent with the use of those terms in org\n• adding examples where appropriate for clarification.\n- Common communication platforms include:\n--> level of decomposition, level of detail depending on th",
+      "inputs": "- 7.1. Requirements (specified and modelled)",
+      "outputs": "",
+      "source": "KA Detail_PA · dòng 26",
+      "keyLearning": {
+        "clue": "[[atomic / complete / feasible / unambiguous / testable]] (đơn nhất / đầy đủ / khả thi / rõ / kiểm thử được).",
+        "principle": "[[Verify Requirements]] = kiểm yêu cầu có được viết **đúng chuẩn, nhất quán, đủ chất lượng** để sử dụng.",
+        "contrast": "[[Validate]] kiểm yêu cầu có đáp ứng nhu cầu và giá trị thực hay không.",
+        "specific": false
+      }
+    },
+    {
+      "section": "7.3",
+      "name": "7.3 Validate Req.",
+      "purpose": "- Purpose:\nEnsure all req and designs align to business req and support delivery of needed value.\n- Desciption:\n+ Is ongoing process. Ensure SH, solution, and transition req align business req and designs satisfy req.\n+ Overall goal of implementing req is to achieve SH' desired future state\nXác nhận yêu cầu: đảm bảo req và design đúng business req, và có đủ các đầu ra cần thiết.\n- Đảm bảo rằng sau khi thực hiện req và deisgn thì sẽ đạt được SH's future state\n- Hoạt động validate có thể bắt đầu thực hiện từ trước khi verify nhưng chỉ hoàn thành sau khi yc được verify\n1. Identify Assumptions/ xác định giả định: giả định các kết quả (lợi ích) và rủi ro khi triển khai req.\n2, Define Measurable Evaluation Criteria: xác định các tiêu chí đánh giá mức độ thành công của giải pháp (baseline metrics: dựa trên trạng thái hiện tại; baseline metrics: phản ánh mức độ hoàn thành các mục tiêu)\n3. Evaluate Alignment with Solution Scope: đánh giá các yêu cầu có đúng mục tiêu giải pháp không, thỏa mãn yc của các bên liên quan ko. nếu ko, đánh giá lại future state, solution scope hoặc bỏ req",
+      "elements": "1. Identify Assumptions/ xác định giả định\n- If unprecedented product or service, it necessary to make assumptions about customer or SH response\n- In other cases, difficult to prove particular problem derives from an identified root cause. SH may have assumed that certain benefits will result from implementation of req. These assumptions are identified and defined so that associated risks can be managed.\n2. Define Measurable Evaluation Criteria\n- BA define evaluation criteria that will be used to evaluate how successful change has been after the solution is implemented. \n -- Baseline metrics might be established based on the current state. \n -- Target metrics can be developed to reflect achievement of business objectives or some other measurement of success.\n3. Evaluate Alignment with Solution Scope\n- A req can be of benefit to SH and still not part of a solution. Req not deliver benefit to SH is a strong candidate for elimination. \n- When req do not align, future state must be re-evaluated and solution scope changed, or req removed from solution scope.\n- If design cannot support req, there might be a missing or misunderstood req, or the design must change.",
+      "inputs": "- 7.1. Requirements (specified and modelled): validation activities cannot be completed before req are completely verified",
+      "outputs": "",
+      "source": "KA Detail_PA · dòng 27",
+      "keyLearning": {
+        "clue": "[[business value / business needs / align goals]] (giá trị / nhu cầu / phù hợp mục tiêu).",
+        "principle": "[[Validate Requirements]] = kiểm yêu cầu đúng cái tổ chức cần, có thể tạo giá trị và đáp ứng mục tiêu.",
+        "contrast": "[[Verify]] là chất lượng thể hiện; [[Validate]] là sự phù hợp nhu cầu.",
+        "specific": false
+      }
+    },
+    {
+      "section": "7.4",
+      "name": "7.4 Define Req Architecture",
+      "purpose": "- Purpose:\nEnsure req collectively support one another to fully achieve objectives\n- Desciption:\n+ Req architecture is structure of all req of a change\n+ BA use req architecture to:\n• understand which models are appropriate for domain, solution scope,\nand audience,\n• organize req into structures relevant to different SH,\n• illustrate how req and models interact with and relate to each\nother, and show how the parts fit together into a meaningful whole,\n• ensure req work together to achieve overall objectives\n• make trade-off decisions about req while considering overall\nobjectives.\n- Đảm bảo req hỗ trợ lẫn nhau để hoàn thành đầy đủ mục tiêu.\n- kiến trúc req là cấu trúc tất cả các req thành 1 tổng thể, hỗ trợ các yêu cầu nghiệp vụ và cấu trúc theo nhiều các khác nhau để phù hợp với góc nhìn của từng SH. \n- Kỹ thuật truy suất nguồn gốc (Traceability) dùng để hỗ trợ chứ không chứng minh các req là 1 khối tổng thể \n1 Requirements Viewpoints and Views\n- Viewpoints: là 1 tập hợp các trình bày req ở các góc nhìn khác nhau (view) tùy thuộc vào đối tượng trình bày; cách các view được tổ chức v",
+      "elements": "1. Req View & Viewpoint\n- Viewpoint is a set of conventions that define how req will be represented\n- Req viewpoints frequently include standards and guidelines:\n• model types used for req,\n• attributes included and consistently used in different models,\n• model notations that are used\n• analytical approaches used to identify and maintain relevant relationships among models.\n- Examples of viewpoints include:\n• Business process models,\n• Data models and information,\n• User interactions, including use cases and/or user experience,\n• Audit and security, and\n• Business models.\n-The actual req and designs for a particular solution from a chosen viewpoint are referred to as a view\n- Viewpoints tell BA what infor they should provide for each SH group to address their concerns, while views describe actual requirements and designs that are produced\n2. Template Architectures\n- Architectural framework is collection of viewpoints that is standard across an industry, sector, or org\n3. Completeness\n- Entire set of req should be able to be understood by audience in way that the set is cohesive and tells a full story.\n- Structuring req according to different viewpoints helps ensure this completeness. Iterations of elicitation, specification, and analysis activities can help identify gaps.\n4. Relate and Verify Requirements Relationships\n- BA examine each relationship to ensure that relationship",
+      "inputs": "- 3.4. Infor Management Approach: \n- Requirements (any state): \n- 6.4. Solution Scope",
+      "outputs": "",
+      "source": "KA Detail_PA · dòng 28",
+      "keyLearning": {
+        "clue": "[[cohesive whole / viewpoints / views]] (tổng thể nhất quán / góc nhìn / bản nhìn).",
+        "principle": "[[Define Requirements Architecture]] = tổ chức các yêu cầu để chúng phối hợp, cùng phục vụ mục tiêu.",
+        "contrast": "[[Traceability]] chứng minh liên kết nguồn gốc; [[Architecture]] chứng minh sự đồng bộ tổng thể.",
+        "specific": false
+      }
+    },
+    {
+      "section": "7.5",
+      "name": "7.5 Define Design Options",
+      "purpose": "- Purpose:\n+ Define solution approach, \n+ Identify opportunities to improve business, allocate req across solution components, and represent design options - achieve desired future state\n- Desciption: xây dựng các solution, đánh giá value của từng solution với SH\n+ 1 design option: satify 1 set of req.\n+ 1 solution có 1 hoặc nhiều cách thiết kế. mỗi cách thiết kế thì thỏa mãn 1 tập req. Ba đánh giá hiệu quả các solution design mang lại value cho các SH.\n+ co thể dựa vào chiến lược của dự án để đánh giá khả năng/ khả thi của solution.\n+ Design options exist at a lower level than the change strategy, and are tactical rather than strategic\n7.1 Lựa chọn tạo mới hay mua sẵn giải pháp hay cả 2 . 7.2 xác định các cơ hội cải tiến;",
+      "elements": "1. Define Solution Approaches\n- Solution approaches include:\n• Create: solution components are assembled, constructed, or developed by experts. Req and design options enough detail to make decision about which solution to construct. This option includes modifying an existing solution.\n• Purchase: solution components are selected from a set of offerings that fulfill the req. Req and design options have enough detail to make recommendation about which solution to purchase. These offerings are usually products or services owned and maintained by third parties.\n• Combination of both: not all design options will fall strictly into one of the categories above. Design options may include a combination of both\ncreation and purchase of components\n2. Identify Improvement Opportunities\n- Some common examples of opportunities include:\n• Increase Efficiencies: automate or simplify the work people perform by reengineering or sharing processes, changing responsibilities, outsourcing. --> increase consistency of behaviour, reducing the likelihood of different SH performing the same function in distinctly different fashions.\n• Improve Access to Information: provide greater amounts of infor to staff who interface directly or indirectly with customers --> reducing need for specialists.\n• Identify Additional Capabilities: highlight capabilities that have the potential to provide future value and c",
+      "inputs": "- 6.4. Change Strategy: chiến lược của doanh nghiệp \n- 5.3, 7.3. Requirements (validated, prioritized): chỉ có req đã validated mới dùng để design solution. solution meet req có độ quan trọng càng lớn thì càng đươc ưu tiên _ req architect",
+      "outputs": "",
+      "source": "KA Detail_PA · dòng 29",
+      "keyLearning": {
+        "clue": "[[create / purchase / allocate requirements]] (tự xây / mua / phân bổ yêu cầu).",
+        "principle": "[[Define Design Options]] = xác định phương án thiết kế có thể đáp ứng yêu cầu và phân bổ vào từng thành phần.",
+        "contrast": "[[Change Strategy]] là con đường thay đổi; [[Design Options]] mô tả cách xây giải pháp.",
+        "specific": false
+      }
+    },
+    {
+      "section": "7.6",
+      "name": "7.6 Analyze Potential Value and Recommend Solution",
+      "purpose": "- Purpose:\n+ estimate potential value for each design option to establish which one is most appropriate to meet enterprise’s req\n- Desciption:\n+ Describe how to estimate & model potential value delivered by req. Value be described in terms: finance, reputation, impact on marketplace.\n+ Compare potential value of each option to the other options.",
+      "elements": "1. Expected Benefit\n- Describe positive value that a solution is intended to deliver to SH\n- Value can include: benefits, reduced risk, compliance with business policies and regulations, an improved user experience,...\n- Total expected benefit is net benefit of all req a particular design option addresses\n2. Expected Cost\n- Include any potential negative value associated with a solution, including cost to acquire the solution, any negative effects it may have on SH, and the cost to maintain\n- Expected cost include: \n• timeline,\n• effort,\n• operating costs,\n• purchase and/or implementation costs,\n• maintenance costs,\n• physical resources,\n• Infor resources, and\n• human resources.\n- Expected costs for a design option consider the cumulative costs \n- BA consider opportunity cost when estimating expected cost of a change\n3. Determine Value\n- Potential value of solution to SH is based on the benefits delivered by that solution and associated costs. Value can positive & negative\n- BA consider potential value from point of view of SH\n- Potential value is uncertain value. Intangible or uncertain benefits, while costs are described as tangible\n4. Assess Design Option & Recommend Solution\n- Each design option is assessed based on the potential value it is expected to delive\n- Several factor consider:\n• Available Resources: limitations regarding the amount req be implemented based on the ",
+      "inputs": "- 6.2. Potential Value \n- 7.5. Design option",
+      "outputs": "",
+      "source": "KA Detail_PA · dòng 30",
+      "keyLearning": {
+        "clue": "[[expected benefits / expected costs / potential value]] (lợi ích / chi phí / giá trị tiềm năng).",
+        "principle": "[[Analyze Potential Value & Recommend Solution]] = so giá trị, chi phí, rủi ro các phương án và đề xuất tốt nhất.",
+        "contrast": "[[Potential Value]] là dự kiến; [[Realized Value]] là giá trị thực đo sau triển khai.",
+        "specific": false
+      }
+    }
+  ],
+  "comparison": [
+    {
+      "name": "Brainstoming",
+      "source": "Compare_Simi_Tẹc",
+      "when": "Khi cần 1 ý tưởng mới. Ý tưởng càng nhiều càng tốt mà không bị đánh giá hay thảo luận",
+      "people": "ai cũng đc, ko cần có chuyên môn\n - Cần 1 ng tạo điều kiện",
+      "preparation": "Không cần chuẩn bị nhiều",
+      "result": "Ra đc 1 list các ý tưởng"
+    },
+    {
+      "name": "Focus group",
+      "source": "Compare_Simi_Tẹc",
+      "when": "Khi cần giải quyết 1 vấn đề gì đó hiện có như cơ hội, sản phẩm. (gần như để đánh giá sản phẩm hoặc cơ hội)\n (Review hoặc retro: nằm trong aglie)\n-- Specific product, service, opportunity\n==> Khơi gợi yêu cầu vè people's attitudes, experiences, and desires.",
+      "people": "Cần có chuyên môn\n - Ng điều hành là: moderator",
+      "preparation": "Phải chuẩn bị.\n - Ngay sau khi kết thúc thì BA phải (nhanh nhất có thể) doc, và phân tích bất kể sự dồng ý/ ko đồng ý, trend và tổng hợp kết quả",
+      "result": "- topic: product under development ==> updating existing requirements or uncovering new requirements. \n- topic: completed product ready to be launched ==> how to position the product in the market.\n-t"
+    },
+    {
+      "name": "Interview",
+      "source": "Compare_Simi_Tẹc",
+      "when": "",
+      "people": "Internal",
+      "preparation": "Phải chuẩn bị các câu hỏi, câu hỏi có thể có cấu trúc hoặc không.",
+      "result": ""
+    },
+    {
+      "name": "Survey and questions",
+      "source": "Compare_Simi_Tẹc",
+      "when": "",
+      "people": "External",
+      "preparation": "Phải chuẩn bị các câu hỏi. Câu hỏi luôn là các câu hỏi có cấu trúc.",
+      "result": "When using closed-ended questions, surveys can be effective for obtaining quantitative data for use in statistical analysis. • When using open-ended questions, survey results may yield insights and op"
+    },
+    {
+      "name": "Work shop",
+      "source": "Compare_Simi_Tẹc",
+      "when": "- Khi cần chuyển thông tin cùng lúc cho 1 nhóm lớn \n - Mỗi 1 workshop thì đã có mục tiêu từ trước. Khi ws là để mọi ng thảo luận với nhau nhưng ko phải thảo luận linh tinh mà là thảo luận để đạt đc cái mục tiêu đề ra ban đầu. Ví dụ trong 1 buổi ws có mục tiêu là: Define đc mong muốn của SH về quy trình bồi thường tương lai sẽ ntn <-- chỉ thảo luận để đạt đc mục tiêu này",
+      "people": "External",
+      "preparation": "Phải chuẩn bị rất nhiều",
+      "result": ""
+    },
+    {
+      "name": "Collaborative Games",
+      "source": "Compare_Simi_Tẹc",
+      "when": "- Để cùng chia sẻ hiểu biết và kinh nghiệm về 1 vấn đề hoặc 1 giải pháp\n - Bước cuối cùng là đánh giá để ra ý tưởng tốt nhất",
+      "people": "- Cần 1 ng tạo điều kiện",
+      "preparation": "",
+      "result": "Ra đc những quyết định hoặc action nào đó vì ng tham gia đã học đc trong game"
+    }
+  ],
+  "situations": [
+    {
+      "ka": 3,
+      "note": "-- 3.2. Tech: SH map: des relationship of SH to solution",
+      "source": "PROB_SIMU · dòng 2, cột 2"
+    },
+    {
+      "ka": 4,
+      "note": "-- 4.2. Who capturing the elicitation outcomes from the workshop --> BA",
+      "source": "PROB_SIMU · dòng 2, cột 3"
+    },
+    {
+      "ka": 5,
+      "note": "-- 5.2. Data models will identify similar data structures across the enterprise to facilitate reuse.",
+      "source": "PROB_SIMU · dòng 2, cột 4"
+    },
+    {
+      "ka": 6,
+      "note": "-- 6.1. evaluating and investigating underlying rationale --> Output: Business Req\n-- Without understand business need --> conflict SH demand",
+      "source": "PROB_SIMU · dòng 2, cột 5"
+    },
+    {
+      "ka": 7,
+      "note": "-- 7.1. Why need decompose infor: \n--> Identify what must change, not change, any missing component\n-- 7.1.4.3. Different types of requirements might be specified and modeled at the same time.\n-- 7.1.6. Interface analysis: Identify & validate input & output of solution. Prototyping identify mising or improper req",
+      "source": "PROB_SIMU · dòng 2, cột 6"
+    },
+    {
+      "ka": 8,
+      "note": "-- 8.2. Khi data collect được không đưa ra được any conclusion --> Dùng Observation để quan sát",
+      "source": "PROB_SIMU · dòng 2, cột 7"
+    },
+    {
+      "ka": 9,
+      "note": "-- 9.3. BA understanding of fundamental business principles\nand best practices --> Business Knowledge \n-- Understanding how the people, processes, and technology within org interact --> System Thinking\n--> Industry Knowledge is one component of Business Knowledge.",
+      "source": "PROB_SIMU · dòng 2, cột 8"
+    },
+    {
+      "ka": 3,
+      "note": "-- 3.1. The performance of all BA activities are directed waht document???\n--> BA approach",
+      "source": "PROB_SIMU · dòng 3, cột 2"
+    },
+    {
+      "ka": 4,
+      "note": "-- 4.5. Tech SH list, map, personas in task Manage SH collaboration to show relationship between SH",
+      "source": "PROB_SIMU · dòng 3, cột 3"
+    },
+    {
+      "ka": 8,
+      "note": "-- 8.4. A cultural assessment will determine if the existing org is capable of accepting a solution. If cultural changes are needed, it will judge the org's ability and willingness to adapt to those changes.\n--> Performing cultural assessment",
+      "source": "PROB_SIMU · dòng 3, cột 7"
+    },
+    {
+      "ka": 9,
+      "note": "-- 9.5. Interaction skill: Facilitation, Leadership & Influencing, Teamwork, Negotiation & Conflict Resolution, Teaching\n-- 9.1. Analytical Thinking and Problem Solving: Creative Thinking, Decision Making, Learning, Problem Solving, Systems Thinking, Conceptual Thinking, Visual Thinking",
+      "source": "PROB_SIMU · dòng 3, cột 8"
+    },
+    {
+      "ka": 4,
+      "note": "-- Maslow's hierachy: \n+ Self-actulization\n+ Esteem\n+ Love/ Belonging\n+ Safety\n+ Physiological",
+      "source": "PROB_SIMU · dòng 4, cột 3"
+    },
+    {
+      "ka": 8,
+      "note": "-- 8.3. Assess Solution Limitation: Input: implemented solution and the results of the solution performance analysis.",
+      "source": "PROB_SIMU · dòng 4, cột 7"
+    },
+    {
+      "ka": 9,
+      "note": "-- 9.1. Creative thinking: generate new idea, approach, alternative to problem solving & opportunities\n--> Measure: exploring concepts and ideas that are new, exploring changes to existing concepts and ideas",
+      "source": "PROB_SIMU · dòng 4, cột 8"
+    },
+    {
+      "ka": 8,
+      "note": "-- 8.1. Measure Solution Performance: Define expected characteristic of solution",
+      "source": "PROB_SIMU · dòng 5, cột 7"
+    },
+    {
+      "ka": 9,
+      "note": "-- 9.1.3. Learning - Tech\n+ Visual\n+ Auditory\n+ Kinesthetic: learning by doing",
+      "source": "PROB_SIMU · dòng 5, cột 8"
+    }
+  ]
+}
