@@ -1255,12 +1255,8 @@ function babokPdfPublicUrl(): string {
 }
 
 function babokPdfHref(bookPage: number): string {
-  return `${babokPdfPublicUrl()}#page=${babokPdfPage(bookPage)}`;
-}
-
-function babokPdfEmbedHref(bookPage: number): string {
-  const pdfPage = babokPdfPage(bookPage);
-  return `${babokPdfPublicUrl()}#page=${pdfPage}`;
+  const baseUrl = import.meta.env.BASE_URL || '/';
+  return `${baseUrl}?babokPage=${babokPdfPage(bookPage)}`;
 }
 
 function getBabokBookPageRange(topic: BabokTopic): { start: number; end: number } {
@@ -2481,6 +2477,305 @@ function buildMinimalBabokMemory(
   };
 }
 
+/* ===== BABOK PDF VIEWER - KHONG CAN NPM INSTALL ===== */
+
+type BabokPdfRenderTask = {
+  promise: Promise<void>;
+  cancel: () => void;
+};
+
+type BabokPdfPage = {
+  getViewport: (options: { scale: number }) => {
+    width: number;
+    height: number;
+  };
+  render: (options: {
+    canvasContext: CanvasRenderingContext2D;
+    viewport: { width: number; height: number };
+    transform?: number[];
+  }) => BabokPdfRenderTask;
+};
+
+type BabokPdfDocument = {
+  numPages: number;
+  getPage: (page: number) => Promise<BabokPdfPage>;
+};
+
+type BabokPdfLibrary = {
+  GlobalWorkerOptions: { workerSrc: string };
+  getDocument: (options: { url: string }) => {
+    promise: Promise<BabokPdfDocument>;
+  };
+};
+
+let babokPdfLibraryPromise: Promise<BabokPdfLibrary> | null = null;
+let babokPdfDocumentPromise: Promise<BabokPdfDocument> | null = null;
+
+function loadBabokPdfLibrary(): Promise<BabokPdfLibrary> {
+  if (babokPdfLibraryPromise) return babokPdfLibraryPromise;
+
+  babokPdfLibraryPromise = new Promise((resolve, reject) => {
+    const existing = (
+      window as Window & { pdfjsLib?: BabokPdfLibrary }
+    ).pdfjsLib;
+
+    if (existing) {
+      resolve(existing);
+      return;
+    }
+
+    const script = document.createElement('script');
+
+    script.src =
+      'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
+
+    script.onload = () => {
+      const pdfjs = (
+        window as Window & { pdfjsLib?: BabokPdfLibrary }
+      ).pdfjsLib;
+
+      if (!pdfjs) {
+        reject(new Error('Không khởi tạo được PDF.js'));
+        return;
+      }
+
+      pdfjs.GlobalWorkerOptions.workerSrc =
+        'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+      resolve(pdfjs);
+    };
+
+    script.onerror = () => {
+      reject(new Error('Không tải được PDF.js từ CDN'));
+    };
+
+    document.head.appendChild(script);
+  }).catch((error) => {
+    babokPdfLibraryPromise = null;
+    throw error;
+  });
+
+  return babokPdfLibraryPromise;
+}
+
+function getBabokPdfDocument(): Promise<BabokPdfDocument> {
+  if (!babokPdfDocumentPromise) {
+    babokPdfDocumentPromise = loadBabokPdfLibrary()
+      .then((pdfjs) =>
+        pdfjs.getDocument({
+          url: babokPdfPublicUrl(),
+        }).promise
+      )
+      .catch((error) => {
+        babokPdfDocumentPromise = null;
+        throw error;
+      });
+  }
+
+  return babokPdfDocumentPromise;
+}
+
+function BabokPdfCanvas({
+  pageNumber,
+  fullScreen = false,
+}: {
+  pageNumber: number;
+  fullScreen?: boolean;
+}) {
+  const containerRef = React.useRef<HTMLDivElement>(null);
+  const canvasHostRef = React.useRef<HTMLDivElement>(null);
+  const scrollRef = React.useRef<HTMLDivElement>(null);
+
+  const [currentPage, setCurrentPage] = useState(pageNumber);
+  const [totalPages, setTotalPages] = useState<number | null>(null);
+  const [width, setWidth] = useState(400);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  // Khi câu hỏi thay đổi, PDF chuyển đúng trang mới.
+  useEffect(() => {
+    setCurrentPage(pageNumber);
+  }, [pageNumber]);
+
+  // Điều chỉnh kích thước theo khung PDF.
+  useEffect(() => {
+    const element = containerRef.current;
+    if (!element) return;
+
+    const updateWidth = () => {
+      setWidth(Math.max(200, element.clientWidth - 20));
+    };
+
+    updateWidth();
+
+    const observer = new ResizeObserver(updateWidth);
+    observer.observe(element);
+
+    return () => observer.disconnect();
+  }, []);
+
+  // Render trực tiếp trang được yêu cầu.
+  useEffect(() => {
+    let cancelled = false;
+    let renderTask: BabokPdfRenderTask | null = null;
+
+    setLoading(true);
+    setError('');
+
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = 0;
+    }
+
+    async function renderPdfPage() {
+      try {
+        const pdf = await getBabokPdfDocument();
+        if (cancelled) return;
+
+        setTotalPages(pdf.numPages);
+
+        const safePage = Math.max(
+          1,
+          Math.min(currentPage, pdf.numPages)
+        );
+
+        const page = await pdf.getPage(safePage);
+        if (cancelled) return;
+
+        const baseViewport = page.getViewport({ scale: 1 });
+        const targetWidth = Math.min(width, 1400);
+        const scale = targetWidth / baseViewport.width;
+        const viewport = page.getViewport({ scale });
+
+        const canvas = document.createElement('canvas');
+        const context = canvas.getContext('2d');
+
+        if (!context) {
+          throw new Error('Không tạo được Canvas');
+        }
+
+        const pixelRatio = Math.min(
+          window.devicePixelRatio || 1,
+          2
+        );
+
+        canvas.width = Math.ceil(viewport.width * pixelRatio);
+        canvas.height = Math.ceil(viewport.height * pixelRatio);
+
+        canvas.style.width = `${viewport.width}px`;
+        canvas.style.height = `${viewport.height}px`;
+
+        const host = canvasHostRef.current;
+        if (!host || cancelled) return;
+
+        host.replaceChildren(canvas);
+
+        renderTask = page.render({
+          canvasContext: context,
+          viewport,
+          transform: [
+            pixelRatio, 0,
+            0, pixelRatio,
+            0, 0,
+          ],
+        });
+
+        await renderTask.promise;
+
+        if (!cancelled) {
+          setLoading(false);
+        }
+      } catch (err) {
+        if (cancelled) return;
+
+        setError(
+          err instanceof Error
+            ? err.message
+            : 'Không hiển thị được trang PDF'
+        );
+
+        setLoading(false);
+      }
+    }
+
+    void renderPdfPage();
+
+    return () => {
+      cancelled = true;
+      renderTask?.cancel();
+    };
+  }, [currentPage, width]);
+
+  return (
+    <div
+      ref={containerRef}
+      className="w-full min-w-0 overflow-hidden bg-white"
+    >
+      <div className="flex items-center justify-between gap-2 border-b border-slate-300 bg-slate-100 px-3 py-2 text-slate-900">
+        <button
+          type="button"
+          disabled={currentPage <= 1}
+          onClick={() =>
+            setCurrentPage((p) => Math.max(1, p - 1))
+          }
+          className="rounded-lg border border-slate-300 px-2 py-1 text-xs font-semibold disabled:opacity-40"
+        >
+          ← Trước
+        </button>
+
+        <span className="text-xs font-semibold">
+          Trang {currentPage} / {totalPages ?? '...'}
+        </span>
+
+        <button
+          type="button"
+          disabled={!totalPages || currentPage >= totalPages}
+          onClick={() =>
+            setCurrentPage((p) =>
+              Math.min(totalPages ?? p, p + 1)
+            )
+          }
+          className="rounded-lg border border-slate-300 px-2 py-1 text-xs font-semibold disabled:opacity-40"
+        >
+          Tiếp →
+        </button>
+      </div>
+
+      <div
+        ref={scrollRef}
+        className={
+          fullScreen
+            ? 'h-[calc(100vh-110px)] overflow-auto bg-slate-200'
+            : 'h-[520px] overflow-auto bg-slate-200 lg:h-[calc(100vh-285px)] lg:min-h-[520px] xl:h-[calc(100vh-260px)]'
+        }
+      >
+        {loading && !error && (
+          <p className="p-4 text-center text-xs text-slate-600">
+            Đang tải trang PDF {currentPage}...
+          </p>
+        )}
+
+        {error && (
+          <div className="p-4 text-sm text-red-700">
+            Lỗi tải PDF: {error}
+          </div>
+        )}
+
+        <div
+          ref={canvasHostRef}
+          className="flex justify-center p-2"
+          style={{
+            visibility: loading || Boolean(error)
+              ? 'hidden'
+              : 'visible',
+          }}
+        />
+      </div>
+    </div>
+  );
+}
+
+/* ===== END BABOK PDF VIEWER ===== */
+
 function BabokStudyGuidePanel({
   question,
   note,
@@ -2493,9 +2788,8 @@ function BabokStudyGuidePanel({
 }) {
   const guide = buildBabokStudyGuide(question);
   const memory = buildMinimalBabokMemory(question, guide, note);
-  const pdfPage = babokPdfPage(memory.bookPage);
-  const pdfHref = babokPdfHref(memory.bookPage);
-  const pdfEmbedHref = babokPdfEmbedHref(memory.bookPage);
+const pdfPage = babokPdfPage(memory.bookPage);
+const pdfHref = babokPdfHref(memory.bookPage);
   const [showVietnameseSummary, setShowVietnameseSummary] = useState(false);
 
   useEffect(() => {
@@ -2580,17 +2874,10 @@ function BabokStudyGuidePanel({
         </p>
       </div>
 
-      <object
+     <BabokPdfCanvas
   key={`${question.id}-${pdfPage}`}
-  data={pdfEmbedHref}
-  type="application/pdf"
-  aria-label={`BABOK ${memory.section} - ${memory.title}`}
-  className="h-[520px] w-full bg-white lg:h-[calc(100vh-285px)] lg:min-h-[520px] xl:h-[calc(100vh-260px)]"
->
-  <a href={pdfHref} target="_blank" rel="noopener noreferrer">
-    Mở BABOK tại trang PDF {pdfPage}
-  </a>
-</object>
+  pageNumber={pdfPage}
+/>
 
       <div className="border-t border-white/10 px-3 py-2 text-[10px] text-slate-400 md:px-4">
         Trình duyệt không hiển thị PDF?{' '}
@@ -3070,6 +3357,41 @@ export default function QuizLearningApp() {
     setSession(null);
     setCurrentIndex(0);
   };
+
+const pdfPageParam =
+  typeof window !== 'undefined'
+    ? new URLSearchParams(window.location.search).get('babokPage')
+    : null;
+
+const requestedPdfPage =
+  pdfPageParam !== null ? Number(pdfPageParam) : NaN;
+
+if (
+  Number.isInteger(requestedPdfPage) &&
+  requestedPdfPage >= 1
+) {
+  return (
+    <div className="min-h-screen bg-slate-950 p-3">
+      <div className="mb-3 flex items-center justify-between rounded-xl border border-white/10 p-3 text-white">
+        <h1 className="font-bold">
+          BABOK v3 — Trang PDF {requestedPdfPage}
+        </h1>
+
+        <a
+          href={import.meta.env.BASE_URL || '/'}
+          className="rounded-lg bg-cyan-400 px-3 py-2 text-sm font-semibold text-slate-950"
+        >
+          Về ứng dụng
+        </a>
+      </div>
+
+      <BabokPdfCanvas
+        pageNumber={requestedPdfPage}
+        fullScreen={true}
+      />
+    </div>
+  );
+}
 
   if (isLoadingDefaults) {
     return (
