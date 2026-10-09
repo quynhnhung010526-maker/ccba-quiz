@@ -2581,15 +2581,13 @@ function BabokStudyGuidePanel({
         </p>
       </div>
 
-     function babokPdfPage(bookPage: number): number {
-    return bookPage + BABOK_PDF_PAGE_OFFSET;
-    }
-
-  function babokPdfEmbedHref(bookPage: number): string {
-  return `${babokPdfPublicUrl()}#page=${babokPdfPage(
-    bookPage
-  )}&zoom=page-width&navpanes=0`;
-    }
+      <iframe
+        key={`${question.id}-${pdfPage}`}
+        src={pdfEmbedHref}
+        title={`BABOK ${memory.section} - ${memory.title}`}
+        loading="lazy"
+        className="h-[520px] w-full bg-white lg:h-[calc(100vh-285px)] lg:min-h-[520px] xl:h-[calc(100vh-260px)]"
+      />
 
       <div className="border-t border-white/10 px-3 py-2 text-[10px] text-slate-400 md:px-4">
         Trình duyệt không hiển thị PDF?{' '}
