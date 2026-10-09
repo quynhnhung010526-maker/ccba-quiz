@@ -2575,83 +2575,48 @@ function getBabokPdfDocument(): Promise<BabokPdfDocument> {
   return babokPdfDocumentPromise;
 }
 
-function BabokPdfCanvas({
+
+/* ===== PDF PAGE - RENDER KHI CAN ===== */
+
+const BabokPdfLazyPage = React.memo(function BabokPdfLazyPage({
   pageNumber,
-  fullScreen = false,
+  width,
+  visible,
 }: {
   pageNumber: number;
-  fullScreen?: boolean;
+  width: number;
+  visible: boolean;
 }) {
-  const containerRef = React.useRef<HTMLDivElement>(null);
-  const canvasHostRef = React.useRef<HTMLDivElement>(null);
-  const scrollRef = React.useRef<HTMLDivElement>(null);
-
-  const [currentPage, setCurrentPage] = useState(pageNumber);
-  const [totalPages, setTotalPages] = useState<number | null>(null);
-  const [width, setWidth] = useState(400);
-  const [loading, setLoading] = useState(true);
+  const canvasRef = React.useRef<HTMLCanvasElement>(null);
+  const [ready, setReady] = useState(false);
   const [error, setError] = useState('');
 
-  // Khi câu hỏi thay đổi, PDF chuyển đúng trang mới.
   useEffect(() => {
-    setCurrentPage(pageNumber);
-  }, [pageNumber]);
+    if (!visible) return;
 
-  // Điều chỉnh kích thước theo khung PDF.
-  useEffect(() => {
-    const element = containerRef.current;
-    if (!element) return;
-
-    const updateWidth = () => {
-      setWidth(Math.max(200, element.clientWidth - 20));
-    };
-
-    updateWidth();
-
-    const observer = new ResizeObserver(updateWidth);
-    observer.observe(element);
-
-    return () => observer.disconnect();
-  }, []);
-
-  // Render trực tiếp trang được yêu cầu.
-  useEffect(() => {
     let cancelled = false;
     let renderTask: BabokPdfRenderTask | null = null;
 
-    setLoading(true);
+    setReady(false);
     setError('');
 
-    if (scrollRef.current) {
-      scrollRef.current.scrollTop = 0;
-    }
-
-    async function renderPdfPage() {
+    async function drawPage() {
       try {
         const pdf = await getBabokPdfDocument();
         if (cancelled) return;
 
-        setTotalPages(pdf.numPages);
-
-        const safePage = Math.max(
-          1,
-          Math.min(currentPage, pdf.numPages)
-        );
-
-        const page = await pdf.getPage(safePage);
+        const page = await pdf.getPage(pageNumber);
         if (cancelled) return;
 
-        const baseViewport = page.getViewport({ scale: 1 });
-        const targetWidth = Math.min(width, 1400);
-        const scale = targetWidth / baseViewport.width;
+        const canvas = canvasRef.current;
+        const context = canvas?.getContext('2d');
+
+        if (!canvas || !context) return;
+
+        const initialViewport = page.getViewport({ scale: 1 });
+        const targetWidth = Math.min(width, 1200);
+        const scale = targetWidth / initialViewport.width;
         const viewport = page.getViewport({ scale });
-
-        const canvas = document.createElement('canvas');
-        const context = canvas.getContext('2d');
-
-        if (!context) {
-          throw new Error('Không tạo được Canvas');
-        }
 
         const pixelRatio = Math.min(
           window.devicePixelRatio || 1,
@@ -2660,14 +2625,8 @@ function BabokPdfCanvas({
 
         canvas.width = Math.ceil(viewport.width * pixelRatio);
         canvas.height = Math.ceil(viewport.height * pixelRatio);
-
         canvas.style.width = `${viewport.width}px`;
         canvas.style.height = `${viewport.height}px`;
-
-        const host = canvasHostRef.current;
-        if (!host || cancelled) return;
-
-        host.replaceChildren(canvas);
 
         renderTask = page.render({
           canvasContext: context,
@@ -2681,42 +2640,267 @@ function BabokPdfCanvas({
 
         await renderTask.promise;
 
-        if (!cancelled) {
-          setLoading(false);
-        }
+        if (!cancelled) setReady(true);
       } catch (err) {
         if (cancelled) return;
 
         setError(
           err instanceof Error
             ? err.message
-            : 'Không hiển thị được trang PDF'
+            : 'Không render được trang PDF'
         );
-
-        setLoading(false);
       }
     }
 
-    void renderPdfPage();
+    void drawPage();
 
     return () => {
       cancelled = true;
       renderTask?.cancel();
     };
-  }, [currentPage, width]);
+  }, [visible, pageNumber, width]);
+
+  return (
+    <div
+      className="relative mx-auto mb-3 w-fit max-w-full bg-white shadow-md"
+      style={{
+        minHeight: Math.round(width * 1.3),
+        minWidth: Math.min(width, 1200),
+      }}
+    >
+      {visible && (
+        <>
+          <canvas
+            ref={canvasRef}
+            className="mx-auto block max-w-full"
+          />
+
+          {!ready && !error && (
+            <p className="absolute left-0 top-6 w-full text-center text-xs text-slate-500">
+              Đang tải trang {pageNumber}...
+            </p>
+          )}
+
+          {error && (
+            <p className="p-4 text-xs text-red-600">
+              Trang {pageNumber}: {error}
+            </p>
+          )}
+        </>
+      )}
+    </div>
+  );
+});
+
+/* ===== PDF VIEWER - CUON LIEN TUC ===== */
+
+function BabokPdfCanvas({
+  pageNumber,
+  fullScreen = false,
+}: {
+  pageNumber: number;
+  fullScreen?: boolean;
+}) {
+  const containerRef = React.useRef<HTMLDivElement>(null);
+  const scrollRef = React.useRef<HTMLDivElement>(null);
+
+  const [totalPages, setTotalPages] = useState<number | null>(null);
+  const [currentPage, setCurrentPage] = useState(pageNumber);
+  const [width, setWidth] = useState(400);
+  const [visiblePages, setVisiblePages] = useState<Set<number>>(
+    () => new Set()
+  );
+  const [error, setError] = useState('');
+
+  // 1. Tai PDF va lay tong so trang.
+  useEffect(() => {
+    let cancelled = false;
+
+    setError('');
+
+    getBabokPdfDocument()
+      .then((pdf) => {
+        if (!cancelled) setTotalPages(pdf.numPages);
+      })
+      .catch((err) => {
+        if (!cancelled) {
+          setError(
+            err instanceof Error
+              ? err.message
+              : 'Không tải được BABOK PDF'
+          );
+        }
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  // 2. Lay chieu rong cua khung hien thi.
+  useEffect(() => {
+    const element = containerRef.current;
+    if (!element) return;
+
+    const updateWidth = () => {
+      setWidth(Math.max(200, element.clientWidth - 24));
+    };
+
+    updateWidth();
+
+    const observer = new ResizeObserver(updateWidth);
+    observer.observe(element);
+
+    return () => observer.disconnect();
+  }, []);
+
+  // 3. Tao danh sach tat ca cac trang PDF.
+  const pages = useMemo(
+    () =>
+      Array.from(
+        { length: totalPages ?? 0 },
+        (_, index) => index + 1
+      ),
+    [totalPages]
+  );
+
+  // 4. Khi mo cau hoi, cuon thang den trang BABOK can doc.
+  useEffect(() => {
+    if (!totalPages) return;
+
+    const frame = requestAnimationFrame(() => {
+      const scroller = scrollRef.current;
+      if (!scroller) return;
+
+      const targetPage = Math.max(
+        1,
+        Math.min(pageNumber, totalPages)
+      );
+
+      const target = scroller.querySelector<HTMLElement>(
+        `[data-babok-page="${targetPage}"]`
+      );
+
+      if (!target) return;
+
+      scroller.scrollTop +=
+        target.getBoundingClientRect().top -
+        scroller.getBoundingClientRect().top;
+
+      setCurrentPage(targetPage);
+    });
+
+    return () => cancelAnimationFrame(frame);
+  }, [pageNumber, totalPages, width]);
+
+  // 5. Chi render nhung trang gan khu vuc dang xem.
+  // Khong tai cung luc 514 trang, tranh nang may.
+  useEffect(() => {
+    if (!totalPages) return;
+
+    const scroller = scrollRef.current;
+    if (!scroller) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        setVisiblePages((previous) => {
+          const next = new Set(previous);
+          let changed = false;
+
+          entries.forEach((entry) => {
+            const page = Number(
+              entry.target.getAttribute('data-babok-page')
+            );
+
+            if (!page) return;
+
+            if (entry.isIntersecting && !next.has(page)) {
+              next.add(page);
+              changed = true;
+            } else if (
+              !entry.isIntersecting &&
+              next.has(page)
+            ) {
+              next.delete(page);
+              changed = true;
+            }
+          });
+
+          return changed ? next : previous;
+        });
+      },
+      {
+        root: scroller,
+        rootMargin: '700px 0px',
+        threshold: 0,
+      }
+    );
+
+    scroller
+      .querySelectorAll<HTMLElement>('[data-babok-page]')
+      .forEach((element) => observer.observe(element));
+
+    return () => observer.disconnect();
+  }, [totalPages]);
+
+  // 6. Cap nhat so trang khi nguoi dung cuon chuot.
+  const handleScroll = () => {
+    const scroller = scrollRef.current;
+    if (!scroller) return;
+
+    const rect = scroller.getBoundingClientRect();
+
+    const element = document.elementFromPoint(
+      rect.left + Math.min(40, rect.width / 2),
+      rect.top + Math.min(90, rect.height / 3)
+    );
+
+    const pageElement = element?.closest('[data-babok-page]');
+
+    if (pageElement) {
+      const page = Number(
+        pageElement.getAttribute('data-babok-page')
+      );
+
+      if (page >= 1) setCurrentPage(page);
+    }
+  };
+
+  // 7. Nut Truoc / Tiep van su dung duoc.
+  const scrollToPage = (targetPage: number) => {
+    if (!totalPages) return;
+
+    const safePage = Math.max(
+      1,
+      Math.min(targetPage, totalPages)
+    );
+
+    const scroller = scrollRef.current;
+
+    const target = scroller?.querySelector<HTMLElement>(
+      `[data-babok-page="${safePage}"]`
+    );
+
+    if (!scroller || !target) return;
+
+    scroller.scrollTop +=
+      target.getBoundingClientRect().top -
+      scroller.getBoundingClientRect().top;
+
+    setCurrentPage(safePage);
+  };
 
   return (
     <div
       ref={containerRef}
       className="w-full min-w-0 overflow-hidden bg-white"
     >
+      {/* Thanh dieu huong PDF */}
       <div className="flex items-center justify-between gap-2 border-b border-slate-300 bg-slate-100 px-3 py-2 text-slate-900">
         <button
           type="button"
           disabled={currentPage <= 1}
-          onClick={() =>
-            setCurrentPage((p) => Math.max(1, p - 1))
-          }
+          onClick={() => scrollToPage(currentPage - 1)}
           className="rounded-lg border border-slate-300 px-2 py-1 text-xs font-semibold disabled:opacity-40"
         >
           ← Trước
@@ -2729,50 +2913,57 @@ function BabokPdfCanvas({
         <button
           type="button"
           disabled={!totalPages || currentPage >= totalPages}
-          onClick={() =>
-            setCurrentPage((p) =>
-              Math.min(totalPages ?? p, p + 1)
-            )
-          }
+          onClick={() => scrollToPage(currentPage + 1)}
           className="rounded-lg border border-slate-300 px-2 py-1 text-xs font-semibold disabled:opacity-40"
         >
           Tiếp →
         </button>
       </div>
 
+      {/* Khu vuc cuon lien tuc */}
       <div
         ref={scrollRef}
+        onScroll={handleScroll}
         className={
           fullScreen
-            ? 'h-[calc(100vh-110px)] overflow-auto bg-slate-200'
-            : 'h-[520px] overflow-auto bg-slate-200 lg:h-[calc(100vh-285px)] lg:min-h-[520px] xl:h-[calc(100vh-260px)]'
+            ? 'h-[calc(100vh-110px)] overflow-y-auto overflow-x-hidden bg-slate-200'
+            : 'h-[520px] overflow-y-auto overflow-x-hidden bg-slate-200 lg:h-[calc(100vh-285px)] lg:min-h-[520px] xl:h-[calc(100vh-260px)]'
         }
+        style={{
+          overscrollBehavior: 'contain',
+        }}
       >
-        {loading && !error && (
+        {!totalPages && !error && (
           <p className="p-4 text-center text-xs text-slate-600">
-            Đang tải trang PDF {currentPage}...
+            Đang tải BABOK PDF...
           </p>
         )}
 
         {error && (
-          <div className="p-4 text-sm text-red-700">
+          <p className="p-4 text-sm text-red-600">
             Lỗi tải PDF: {error}
-          </div>
+          </p>
         )}
 
-        <div
-          ref={canvasHostRef}
-          className="flex justify-center p-2"
-          style={{
-            visibility: loading || Boolean(error)
-              ? 'hidden'
-              : 'visible',
-          }}
-        />
+        {pages.map((page) => (
+          <div
+            key={page}
+            data-babok-page={page}
+            className="px-2 pt-2"
+          >
+            <BabokPdfLazyPage
+              pageNumber={page}
+              width={width}
+              visible={visiblePages.has(page)}
+            />
+          </div>
+        ))}
       </div>
     </div>
   );
 }
+
+/* ===== END BABOK PDF VIEWER ===== */
 
 /* ===== END BABOK PDF VIEWER ===== */
 
