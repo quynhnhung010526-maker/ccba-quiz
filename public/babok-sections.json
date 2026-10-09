@@ -1395,5 +1395,7 @@
     "9.6.1": 106,
     "9.6.2": 107,
     "9.6.3": 107
-  }
+  },
+  "referenceDocument": "BABOK Guide v3 Study Notes (107-page PDF)",
+  "pageNumbering": "PDF page numbers (1-based); bookPage equals PDF page for this document"
 }
