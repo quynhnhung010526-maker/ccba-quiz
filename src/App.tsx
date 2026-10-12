@@ -3010,6 +3010,117 @@ function emphasizeBilingualKeys(value: string): React.ReactNode {
   );
 }
 
+/**
+ * Chỉ xử lý CÁCH HIỂN THỊ cho mục "Dễ nhầm — Cách loại trừ".
+ * Nội dung kiến thức luôn do ccba-excel-knowledge.json quyết định:
+ *   [[thuật ngữ]] / **thuật ngữ** = nhấn xanh có chủ đích;
+ *   từ chưa đánh dấu = chỉ nhấn xanh nếu thực sự là tên lựa chọn/thuật ngữ
+ *   có mặt nguyên văn trong đoạn giải thích (không tự sinh thêm lời giải).
+ */
+function emphasizeContrastKeys(
+  value: string,
+  question: Question,
+  kb?: ExcelKnowledge | null
+): React.ReactNode {
+  // Các nhãn bố cục không phải KEY kiến thức; in đậm nhẹ nhưng KHÔNG xanh.
+  const nonKeyLabels = new Set([
+    'ý mà đề yêu cầu', 'ý đề yêu cầu', 'lựa chọn gây nhiễu',
+    'đáp án còn lại', 'câu hỏi', 'cách loại trừ', 'kiến thức cần nhớ',
+  ]);
+  const lower = value.toLocaleLowerCase();
+  const candidateTerms: string[] = [];
+  const seenTerms = new Set<string>();
+  const addTerm = (raw: string) => {
+    const term = raw.trim().replace(/\s+/g, ' ');
+    const lowered = term.toLocaleLowerCase();
+    if (
+      term.length < 5 || term.length > 90 ||
+      nonKeyLabels.has(lowered) ||
+      /^(?:business|project|requirements?|stakeholders?|solutions?|designs?|approach|task|note)$/i.test(term) ||
+      !lower.includes(lowered) || seenTerms.has(lowered)
+    ) return;
+    seenTerms.add(lowered);
+    candidateTerms.push(term);
+  };
+
+  // Các đáp án gây nhiễu là nội dung cần nhận diện rõ nhất ở mục loại trừ.
+  for (const option of question.options) {
+    if (option.isCorrect) continue;
+    const clean = option.text.trim().replace(/\s+/g, ' ');
+    if (clean.length <= 90) {
+      addTerm(clean);
+    } else {
+      // JSON thường chỉ trích một phần đầu của phương án dài.
+      // Chỉ lấy cụm đầu nguyên văn, không tự viết lại lựa chọn.
+      const preview = clean.slice(0, 65).replace(/\s+\S*$/, '').trim();
+      if (preview.length >= 22) addTerm(preview);
+    }
+  }
+  for (const term of KEYWORD_GLOSSARY) addTerm(term.en);
+  for (const term of kb?.dictionary || []) addTerm(term.en);
+  for (const term of kb?.techniques || []) addTerm(term.name);
+  for (const task of kb?.tasks || []) {
+    addTerm(task.name.replace(/^\d+(?:\.\d+)+\s*/, ''));
+  }
+
+  const parts = value.split(/(\[\[[^\]]+\]\]|\*\*[^*]+\*\*)/g);
+  let autoCount = 0;
+  const maxAuto = 5; // Tối đa 5 cụm tự nhận diện; KEY đánh dấu chủ đích không giới hạn.
+  const decorated: React.ReactNode[] = [];
+  for (let i = 0; i < parts.length; i++) {
+    const part = parts[i];
+    if (!part) continue;
+    const bracket = part.startsWith('[[') && part.endsWith(']]');
+    const markdown = part.startsWith('**') && part.endsWith('**');
+    if (bracket || markdown) {
+      const label = bracket ? part.slice(2, -2) : part.slice(2, -2);
+      decorated.push(
+        nonKeyLabels.has(label.trim().toLocaleLowerCase())
+          ? <strong key={`label-${i}`} className="font-semibold">{label}</strong>
+          : <strong key={`key-${i}`} className="ccba-learning-key">{label}</strong>
+      );
+      continue;
+    }
+    if (autoCount >= maxAuto || !candidateTerms.length) {
+      decorated.push(<React.Fragment key={`plain-${i}`}>{part}</React.Fragment>);
+      continue;
+    }
+
+    // Chọn các cụm dài trước để tránh tô lồng (VD "Domain SME" với "SME").
+    const matches: Array<{ start: number; end: number }> = [];
+    const partLower = part.toLocaleLowerCase();
+    for (const candidate of candidateTerms.sort((a, b) => b.length - a.length)) {
+      let from = 0;
+      const needle = candidate.toLocaleLowerCase();
+      while (from < part.length && matches.length < 24) {
+        const start = partLower.indexOf(needle, from);
+        if (start < 0) break;
+        const end = start + candidate.length;
+        from = end;
+        // Không tô một phần của từ dài hơn.
+        const before = start ? part[start - 1] : '';
+        const after = end < part.length ? part[end] : '';
+        if (/[a-zA-Z0-9]/.test(before) || /[a-zA-Z0-9]/.test(after)) continue;
+        if (matches.some(m => start < m.end && end > m.start)) continue;
+        matches.push({ start, end });
+        if (matches.length >= maxAuto - autoCount) break;
+      }
+      if (matches.length >= maxAuto - autoCount) break;
+    }
+    matches.sort((a, b) => a.start - b.start);
+    let offset = 0;
+    for (let j = 0; j < matches.length; j++) {
+      const match = matches[j];
+      if (match.start > offset) decorated.push(<React.Fragment key={`txt-${i}-${j}`}>{part.slice(offset, match.start)}</React.Fragment>);
+      decorated.push(<strong key={`term-${i}-${j}`} className="ccba-learning-key">{part.slice(match.start, match.end)}</strong>);
+      offset = match.end;
+      autoCount++;
+    }
+    if (offset < part.length) decorated.push(<React.Fragment key={`tail-${i}`}>{part.slice(offset)}</React.Fragment>);
+  }
+  return decorated;
+}
+
 /** Đọc QUY TẮC từ JSON, không viết kiến thức học cứng trong App.tsx. */
 function buildPracticalKeyInsight(
   question: Question,
@@ -3327,6 +3438,8 @@ function buildFocusedExcelInsight(
 type QuestionKeyAlignment = {
   phrases: string[];
   recognition: string;
+  // “suggested” chỉ là gợi ý trích từ nguyên văn đề, KHÔNG phải xác minh chuyên môn.
+  source: 'curated' | 'pattern' | 'suggested';
 };
 
 function locateExactQuestionPhrase(questionText: string, cue: string): string | null {
@@ -3341,11 +3454,70 @@ function locateExactQuestionPhrase(questionText: string, cue: string): string | 
   return match[0];
 }
 
+/** Luôn tạo điểm nhấn từ chính câu hỏi, kể cả khi ghi chú Excel chưa có KEY khớp.
+ * Gợi ý chỉ phục vụ đọc đề, không được ngụy nhận là KEY đã được xác minh.
+ */
+const KEY_FALLBACK_STOP_WORDS = new Set([
+  'what','which','where','when','why','how','who','whose','following','these','those',
+  'their','this','that','they','there','here','then','than','would','could','should',
+  'being','been','does','doing','done','have','has','had','from','with','without',
+  'after','before','during','between','through','about','some','many','very','most',
+  'into','only','also','will','shall','under','over','each','all','any','such','the',
+  'and','for','are','was','were','can','its','not','but','both','new','old','being',
+  'business','analyst','project','projects','question','following','performing',
+  'main','purpose','answer','answers','best','appropriate','given','week','past',
+]);
+const KEY_FALLBACK_SIGNALS = /(?:\b(?:catalogu(?:e|ing)|document(?:ing|ation)?|modif(?:y|ied|ication)|remov(?:e|ed|al)|replac(?:e|ed)|creat(?:e|ing|ion)|chang(?:e|ing|es)|transition|transfer|current|future|feasib\w*|validat\w*|verif\w*|approv\w*|elicitat\w*|priorit\w*|stakeholder\w*|requirement\w*|design\w*|scope|component\w*|capabilit\w*|perform\w*|output\w*|input\w*|risk\w*|constraint\w*|assum\w*|trace\w*|traceab\w*|dependenc\w*|qualit\w*|process\w*|efficien\w*|effectiv\w*|inform\w*|data|state|solution\w*|strateg\w*|valu\w*|impact\w*|measure\w*|metric\w*|role\w*|authorit\w*|objectiv\w*|outcome\w*|actor\w*|interfac\w*|system\w*|workshop\w*|interview\w*|survey\w*|observ\w*|uncertain\w*|control\w*|cost\w*|budge\w*|schedule\w*|time\w*|deadline\w*|evaluat\w*|test\w*|support\w*|accept\w*|complet\w*|implement\w*|responsib\w*|deliver\w*|consolidat\w*|analys\w*|compar\w*|identify\w*|identif\w*|understand\w*|review\w*|communicat\w*|collaborat\w*|manag\w*|plan\w*|alternativ\w*|benefit\w*|decision\w*|baseline\w*|existing|proposed|stakeholder\w*)\b)/i;
+
+function suggestExactQuestionPhrases(questionText: string, limit = 2): string[] {
+  const tokens = Array.from(questionText.matchAll(/[A-Za-z][A-Za-z0-9'’-]*/g))
+    .map(m => ({ word:m[0], from:m.index || 0, to:(m.index || 0)+m[0].length }));
+  if (!tokens.length) return [];
+  const total = tokens.length;
+  const candidates: Array<{phrase:string; start:number; end:number; score:number}> = [];
+  for(let i=0; i<total; i++) {
+    for(let size=2; size<=8 && i+size<=total; size++) {
+      const group=tokens.slice(i,i+size);
+      const first=group[0].word.toLowerCase();
+      const last=group[group.length-1].word.toLowerCase();
+      if(KEY_FALLBACK_STOP_WORDS.has(first) || KEY_FALLBACK_STOP_WORDS.has(last)) continue;
+      const words=group.map(t=>t.word.toLowerCase());
+      const informative=words.filter(w=>w.length>3 && !KEY_FALLBACK_STOP_WORDS.has(w));
+      const significant=informative.filter(w=>KEY_FALLBACK_SIGNALS.test(w));
+      if(!informative.length) continue;
+      const span=questionText.slice(group[0].from,group[group.length-1].to);
+      // Tuyệt đối không tô một KEY kéo xuyên qua hai câu hoặc chứa chữ viết tắt BA.
+      if (/[.!?;\n]/.test(span) || /\(\s*(?:BA|PM|IT)\s*\)/i.test(span)) continue;
+      // Không lấy lời dẫn chung kiểu “A business analyst ...” hoặc câu hỏi “Which ...”.
+      if(/^(?:a|an|the) business analyst\b/i.test(span)) continue;
+      if(/\b(?:what|which|how)\b.{0,30}\b(?:following|purpose|answer)\b/i.test(span)) continue;
+      const score=(significant.length*3.0 + informative.length*1.05)
+        / Math.pow(size,0.53) + (significant.length>=2 ? 0.9 : 0)
+        + (size>=3 && size<=7 ? 0.32 : 0)
+        - (words.filter(w=>KEY_FALLBACK_STOP_WORDS.has(w)).length)*0.11
+        - (informative.length-new Set(informative).size)*1.4;
+      if(score<1.2) continue;
+      candidates.push({phrase:span, start:group[0].from, end:group[group.length-1].to, score});
+    }
+  }
+  const chosen: typeof candidates = [];
+  for(const item of candidates.sort((a,b)=>b.score-a.score || a.start-b.start)) {
+    if(chosen.some(x=>item.start<x.end && item.end>x.start)) continue;
+    chosen.push(item);
+    if(chosen.length>=limit) break;
+  }
+  if(chosen.length) return chosen.sort((a,b)=>a.start-b.start).map(x=>x.phrase);
+  // Tình huống rất ngắn: vẫn lấy thuật ngữ có nghĩa, thay vì để toàn bộ đề đen.
+  const content=tokens.filter(t=>t.word.length>=4 && !KEY_FALLBACK_STOP_WORDS.has(t.word.toLowerCase()));
+  return (content.length ? content : tokens).slice(0,Math.max(1,limit)).map(t=>t.word);
+}
+
 function alignRecognitionToQuestion(
   questionText: string,
   insight: PracticalKeyInsight
 ): QuestionKeyAlignment {
   const cues: Array<{ phrase: string; vi: string }> = [];
+  let keySource: QuestionKeyAlignment['source'] = 'curated';
   const markedRx = /\[\[([^\]]+)\]\](?:\s*\(([^)]+)\))?/g;
   for (const match of insight.clue.matchAll(markedRx)) {
     const phrase = locateExactQuestionPhrase(questionText, match[1]);
@@ -3357,6 +3529,7 @@ function alignRecognitionToQuestion(
   // Khi quy tắc riêng không trích dẫn nguyên văn, dùng tín hiệu có mặt thật
   // trong đề; không tự suy ra KEY từ đáp án đúng.
   if (!cues.length) {
+    keySource = 'pattern';
     for (const [rx, vi] of QUESTION_KEY_PHRASES) {
       const match = rx.exec(questionText);
       if (!match) continue;
@@ -3364,6 +3537,15 @@ function alignRecognitionToQuestion(
       if (phrase.length < 5 || cues.some(c => c.phrase.toLowerCase() === phrase.toLowerCase())) continue;
       cues.push({ phrase, vi });
       if (cues.length === 3) break;
+    }
+  }
+
+  // Nếu Excel/regex chưa nhận diện, CHỦ ĐỘNG gợi ý cụm nguyên văn có ý nghĩa.
+  // Không ép người học đọc câu hỏi trơn màu chỉ vì hệ thống chưa có bằng chứng đầy đủ.
+  if (!cues.length) {
+    keySource = 'suggested';
+    for(const phrase of suggestExactQuestionPhrases(questionText, 2)) {
+      if(phrase.trim()) cues.push({phrase, vi:''});
     }
   }
 
@@ -3391,10 +3573,8 @@ function alignRecognitionToQuestion(
     return fromQuestion ? `[[${fromQuestion}]]` : candidate;
   });
   if (!phrases.length) {
-    return {
-      phrases: [],
-      recognition: `Chưa xác định được cụm KEY nguyên văn đủ tin cậy để tô trong câu hỏi. ${insight.clue.replace(/\[\[([^\]]+)\]\]/g, '$1')}`
-    };
+    // Chỉ xảy ra nếu đề hoàn toàn không có chữ cái Latin hợp lệ.
+    return { phrases: [], recognition: safeExplanation, source: 'suggested' };
   }
 
   // Bảo đảm TẤT CẢ chữ xanh trong đề đều có mặt ở Cách nhận diện (cùng ký tự).
@@ -3402,7 +3582,10 @@ function alignRecognitionToQuestion(
   const added = missing.map(item => `[[${item.phrase}]]${item.vi ? ` (${item.vi})` : ''}`).join(' + ');
   return {
     phrases,
-    recognition: added ? `KEY xuất hiện trong đề: ${added}. ${safeExplanation}` : safeExplanation,
+    source: keySource,
+    recognition: added
+      ? `${keySource === 'suggested' ? 'Cụm cần chú ý' : 'KEY xuất hiện trong đề'}: ${added}. ${safeExplanation}`
+      : safeExplanation,
   };
 }
 
@@ -3461,7 +3644,7 @@ function BabokStudyGuidePanel({
 
       <section className="ccba-study-section py-3.5">
         <h4 className="mb-2 flex items-center gap-2 text-xs font-bold text-slate-100"><span className="ccba-step-num">03</span> Dễ nhầm — Cách loại trừ</h4>
-        <p className="text-[13px] leading-[1.85] text-slate-300">{emphasizeBilingualKeys(practical.contrast)}</p>
+        <p className="text-[13px] leading-[1.85] text-slate-300">{emphasizeContrastKeys(practical.contrast, question, excelKnowledge)}</p>
       </section>
 
       <div className="border-t border-white/10 py-3 text-[11px] leading-5 text-slate-400">
@@ -3470,6 +3653,11 @@ function BabokStudyGuidePanel({
           <p className="mt-1.5 leading-5 text-slate-400">
             <span className="font-semibold text-sky-300">Đoạn tài liệu liên quan: </span>
             <span>“{contextual.evidence.excerpt}”</span>
+          </p>
+        )}
+        {keyAlignment.source === 'suggested' && (
+          <p className="mt-1 text-[10px] leading-4 text-slate-500">
+            KEY xanh là cụm gợi ý trích từ đề; chưa xác minh riêng mức độ quyết định đáp án.
           </p>
         )}
         {contextual.reviewStatus ? (
