@@ -1621,5 +1621,686 @@
       "note": "-- 9.1.3. Learning - Tech\n+ Visual\n+ Auditory\n+ Kinesthetic: learning by doing",
       "source": "PROB_SIMU · dòng 5, cột 8"
     }
+  ],
+  "questionExplanations": {
+    "1": {
+      "1": {
+        "anchor": "relatively low amount of requirements",
+        "correctAnswer": "Coverage matrix",
+        "clue": "Gặp [[spreadsheet]] (bảng tính) + [[relatively low amount of requirements]] (ít yêu cầu) + [[traced]] (truy vết): đề tìm một ma trận nhẹ, dễ quản lý bằng bảng tính → [[Coverage Matrix]].",
+        "principle": "[[Coverage Matrix]] giúp đối chiếu phạm vi bao phủ của yêu cầu trong trường hợp dữ liệu không quá lớn. Khi số lượng và quan hệ trở nên phức tạp, cần công cụ quản lý yêu cầu phù hợp.",
+        "contrast": "[[RACI Chart]] xác định ai Responsible/Accountable/Consulted/Informed, không phải ma trận bảo đảm coverage. [[Roles and Responsibilities Chart]] mô tả vai trò; khác bảng truy vết.",
+        "source": "Đề CCBA1 câu 1 · BABOK 5.1 Trace Requirements; kiến thức kỹ thuật traceability",
+        "reviewStatus": "biên tập sơ bộ từ câu hỏi và tài liệu; cần kiểm định tiếp"
+      },
+      "2": {
+        "anchor": "internal enterprise asset",
+        "correctAnswer": "Organizational structure",
+        "clue": "Đề hỏi [[current state]] (hiện trạng) và [[internal enterprise asset]] (tài sản/năng lực nội bộ). Trong các lựa chọn, [[Organizational structure]] trực tiếp mô tả tổ chức đang bố trí con người và quyền hạn thế nào.",
+        "principle": "Khi [[Analyze Current State]], BA xem xét cơ cấu tổ chức, quy trình, hệ thống, nguồn lực và những gì đang tồn tại để hiểu năng lực hiện tại. Cơ cấu là thành tố nội bộ giúp xác định cách công việc được tổ chức.",
+        "contrast": "[[Business need]] là lý do thúc đẩy thay đổi. [[Mission statement]] là tuyên bố định hướng; không mô tả cấu trúc hoạt động hiện tại. [[Brand name]] là tài sản vô hình, nhưng câu này hướng vào mô tả trạng thái vận hành.",
+        "source": "Excel KA Detail_PA · 6.1 Analyze Current State; BABOK 6.1",
+        "reviewStatus": "biên tập sơ bộ từ câu hỏi và tài liệu; cần kiểm định tiếp"
+      },
+      "3": {
+        "anchor": "event-based elicitation task",
+        "correctAnswer": "Ground rules",
+        "clue": "Thấy [[event-based elicitation task]] (buổi khai thác có sự kiện rõ ràng) và [[requirements workshop]] (hội thảo) với [[participants]] (người tham dự) → cần thống nhất [[Ground rules]] trước khi trao đổi.",
+        "principle": "[[Ground Rules]] = nguyên tắc làm việc chung (quyền phát biểu, tôn trọng, thời gian, cách xử lý ý kiến khác nhau) để workshop diễn ra có cấu trúc và hiệu quả. Đây là hoạt động chuẩn bị/chỉ đạo elicitation.",
+        "contrast": "[[Purpose of the workshop]] là mục tiêu của buổi họp, cũng cần biết nhưng câu hỏi nhấn mạnh điều thiết lập [[với người tham dự]]. [[Deadlines]] và [[Cost management]] là các ràng buộc quản lý, không thay được quy ước tương tác.",
+        "source": "Excel KA Detail_PA · 4.1 Prepare for Elicitation; 4.2 Conduct Elicitation",
+        "reviewStatus": "biên tập sơ bộ từ câu hỏi và tài liệu; cần kiểm định tiếp"
+      },
+      "4": {
+        "anchor": "longer-term, ongoing, and qualitative",
+        "correctAnswer": "Goals",
+        "clue": "Đọc đúng ba dấu hiệu [[longer-term]] (dài hạn), [[ongoing]] (liên tục) và [[qualitative]] (định tính) → [[Goals]] chứ không phải objective đo lường cụ thể.",
+        "principle": "[[Business Goal]] = định hướng/kết quả mong muốn ở mức khái quát và dài hạn. [[Business Objective]] = đích cụ thể hơn, có thể đo, thường kiểm tra bằng tiêu chí [[SMART]].",
+        "contrast": "[[Goals]] định hướng chung; [[Objectives]] chỉ tiêu có thước đo và thời hạn; [[Requirements]] mô tả nhu cầu cần thỏa; [[Operations]] là hoạt động thường xuyên.",
+        "source": "Excel KA Detail_PA · 6.2 Define Future State; BABOK 6.2",
+        "reviewStatus": "biên tập sơ bộ từ câu hỏi và tài liệu; cần kiểm định tiếp"
+      },
+      "6": {
+        "anchor": "method to store the project requirements",
+        "correctAnswer": "A repository",
+        "clue": "Gặp [[store the project requirements]] (lưu các yêu cầu) cùng nhiều trạng thái [[under development]], [[under review]], [[approved]] → trọng tâm là [[nơi lưu/tra cứu có quản lý]], tức [[Repository]].",
+        "principle": "[[Repository]] = kho quản lý thông tin yêu cầu và thiết kế suốt vòng đời; cho phép tổ chức, truy cập, lưu phiên bản và dùng lại. Excel mô tả mục [[Plan Business Analysis Information Management]] để xác định cách lưu và chia sẻ BA information.",
+        "contrast": "[[Change management system]] xử lý yêu cầu thay đổi; [[Requirements register]] là danh sách ghi nhận yêu cầu; [[Project scope statement]] mô tả phạm vi dự án, không phải kho lưu nhiều trạng thái.",
+        "source": "Excel KA Detail_PA · 3.4 Plan Business Analysis Information Management",
+        "reviewStatus": "biên tập sơ bộ từ câu hỏi và tài liệu; cần kiểm định tiếp"
+      },
+      "7": {
+        "anchor": "Complete, Feasible, Unambiguous, Testable",
+        "correctAnswer": "To verify requirements",
+        "clue": "Khi checklist nêu [[Complete]], [[Feasible]], [[Unambiguous]], [[Testable]] → đó là [[tiêu chí chất lượng cách viết yêu cầu]] → chọn [[Verify Requirements]].",
+        "principle": "[[Verify]] = kiểm xem requirement/design [[được đặc tả đúng]], đáp ứng chuẩn chất lượng và dùng được cho công việc tiếp theo. Excel mục 7.2 ghi các tiêu chí [[Atomic]], [[Complete]], [[Consistent]], [[Concise]], [[Feasible]], [[Unambiguous]], [[Testable]].",
+        "contrast": "[[Verify]] hỏi “yêu cầu đã viết đúng chuẩn chưa?”; [[Validate]] hỏi “yêu cầu có đáp ứng nhu cầu/giá trị kinh doanh không?”. [[Measure Solution Performance]] đánh giá giải pháp đã vận hành, không đánh giá câu chữ yêu cầu.",
+        "source": "Excel KA Detail_PA · 7.2 Verify Req. · Elements: Characteristics of Req and Designs Quality",
+        "reviewStatus": "biên tập sơ bộ từ câu hỏi và tài liệu; cần kiểm định tiếp"
+      },
+      "8": {
+        "anchor": "formal relationships between people",
+        "correctAnswer": "Organizational modelling",
+        "clue": "Gặp [[formal relationships between people]] (quan hệ chính thức giữa con người) trong [[enterprise]] (doanh nghiệp) → chọn [[Organizational Modelling]].",
+        "principle": "[[Organizational Modeling]] biểu diễn các đơn vị, vai trò, mối quan hệ báo cáo và trách nhiệm trong tổ chức, giúp BA thấy cấu trúc stakeholder.",
+        "contrast": "[[Stakeholder Modeling]] chú trọng ai liên quan, mức ảnh hưởng và tương tác. [[Functional Decomposition]] phân rã chức năng, không biểu diễn quan hệ báo cáo. [[Focus Group]] là kỹ thuật thu ý kiến.",
+        "source": "BABOK kỹ thuật Organizational Modeling; Excel Techniques Detail",
+        "reviewStatus": "biên tập sơ bộ từ câu hỏi và tài liệu; cần kiểm định tiếp"
+      },
+      "9": {
+        "anchor": "creating a summarized version",
+        "correctAnswer": "Implement appropriate level of abstraction",
+        "clue": "Đề nói cùng một bộ requirements nhưng [[complete set]] gửi nhóm trực tiếp, còn [[creating a summarized version]] gửi lãnh đạo → cần thay đổi [[level of abstraction]] (mức độ tổng quát).",
+        "principle": "[[Level of Abstraction]] = điều chỉnh độ chi tiết theo [[mục đích và đối tượng nhận thông tin]]. Nhóm cần thi công xem chi tiết; lãnh đạo thường cần tổng quan để ra quyết định.",
+        "contrast": "[[Stakeholder Analysis]] xác định người nhận; [[Approval Authority]] xác định ai phê duyệt; [[Organize Requirements Categories]] phân nhóm nội dung. Chỉ [[appropriate level of abstraction]] giải thích việc trình bày hai mức chi tiết khác nhau.",
+        "source": "Excel KA Detail_PA · 3.4 Plan BA Information Management; BABOK 7.1 Specify and Model Requirements",
+        "reviewStatus": "biên tập sơ bộ từ câu hỏi và tài liệu; cần kiểm định tiếp"
+      },
+      "11": {
+        "anchor": "efficiency, capacity, security, and scalability",
+        "correctAnswer": "Non-functional requirements analysis",
+        "clue": "Bốn từ [[efficiency]], [[capacity]], [[security]], [[scalability]] đều nói về [[chất lượng vận hành]] hơn là chức năng → [[Non-functional Requirements Analysis]].",
+        "principle": "[[Non-functional Requirements]] mô tả thuộc tính chất lượng/ràng buộc của giải pháp (hiệu năng, năng lực xử lý, bảo mật, khả năng mở rộng). Khác [[Functional Requirements]] nói hệ thống phải làm chức năng nào.",
+        "contrast": "[[Functional Decomposition]] chia nhỏ chức năng; [[Scope Model]] vẽ ranh giới; [[Trace Requirements]] nối quan hệ yêu cầu. Không kỹ thuật nào trực tiếp phân tích nhóm thuộc tính chất lượng như đề.",
+        "source": "BABOK 2.3 Requirements Classification Schema; Excel Techniques Detail · Non-functional Requirements Analysis",
+        "reviewStatus": "biên tập sơ bộ từ câu hỏi và tài liệu; cần kiểm định tiếp"
+      },
+      "12": {
+        "anchor": "agreement on and approval of requirements",
+        "correctAnswer": "The stakeholder roles",
+        "clue": "Gặp [[obtain agreement on and approval of requirements]] (xin đồng thuận/phê duyệt yêu cầu) và hỏi BA cần hiểu gì [[trước khi thực hiện]] → phải biết [[stakeholder roles]]: ai có [[authority]] (thẩm quyền) ký/chấp thuận.",
+        "principle": "Theo Excel mục [[5.5 Approve Requirements]], phần [[Understand Stakeholder Roles]]: BA phải biết ai [[holds decision-making responsibility]] (chịu trách nhiệm quyết định), ai [[possesses authority for sign-off]] (có thẩm quyền ký duyệt), và ai cần được tham vấn/thông báo.",
+        "contrast": "[[Verified requirements]] là đầu vào thông tin đã đạt chất lượng, nhưng [[không trả lời ai có quyền phê duyệt]]. [[Solution design]] là nội dung xem xét; [[Business Analysis Approach]] là cách BA làm việc, không xác định người có quyền ký.",
+        "source": "Excel KA Detail_PA · 5.5 Approve Requirements · Elements: Understand SH Roles; BABOK 5.5",
+        "reviewStatus": "biên tập sơ bộ từ câu hỏi và tài liệu; cần kiểm định tiếp"
+      },
+      "13": {
+        "anchor": "large upfront planning and detailed documentation",
+        "correctAnswer": "predictive",
+        "clue": "Gặp [[heavily regulated]] (quản lý chặt), [[large upfront planning]] (lên kế hoạch nhiều từ đầu) và [[detailed documentation]] (tài liệu chi tiết) → nghiêng về [[Predictive Approach]].",
+        "principle": "[[Predictive]] lên kế hoạch và đặc tả tương đối sớm, kiểm soát thay đổi chặt khi yêu cầu tương đối ổn định. [[Adaptive]] lặp ngắn và thay đổi kế hoạch theo thông tin mới.",
+        "contrast": "[[Waterfall]] là ví dụ về cách triển khai theo giai đoạn, nhưng đề hỏi [[approach]] tổng quát; trong BABOK cặp đối chiếu chính là [[Predictive]] / [[Adaptive]].",
+        "source": "Excel KA Detail_PA · 3.1 Plan Business Analysis Approach",
+        "reviewStatus": "biên tập sơ bộ từ câu hỏi và tài liệu; cần kiểm định tiếp"
+      },
+      "14": {
+        "anchor": "part of the logistics for these interviews",
+        "correctAnswer": "Participants and their roles",
+        "clue": "Đề đã chọn phỏng vấn ([[interviewing]]) và hỏi [[logistics]] (khâu tổ chức buổi phỏng vấn). Vì vậy cần xác định [[participants and their roles]] (ai dự và giữ vai trò gì).",
+        "principle": "Excel mục [[Prepare for Elicitation]] có [[Set Up Logistics]]: bố trí người tham gia, vai trò, địa điểm/thời gian, thiết bị và tài liệu hỗ trợ; khác việc quyết định nội dung/chiến lược phân tích.",
+        "contrast": "[[Relationships between requirements]] là kết quả phân tích, [[Performance metrics]] là đo lường, [[Future state definition]] là mục tiêu chiến lược — không phải khâu hậu cần của interview.",
+        "source": "Excel KA Detail_PA · 4.1 Prepare for Elicitation · Element 3 Set Up Logistics",
+        "reviewStatus": "biên tập sơ bộ từ câu hỏi và tài liệu; cần kiểm định tiếp"
+      },
+      "15": {
+        "anchor": "completeness and coherence",
+        "correctAnswer": "Requirements architecture",
+        "clue": "Gặp [[completeness and coherence]] (đầy đủ và nhất quán tổng thể), [[variety of viewpoints]] (nhiều góc nhìn), [[collection of views]] (nhiều cách nhìn) → [[Requirements Architecture]].",
+        "principle": "[[Requirements Architecture]] tổ chức các requirements/designs thành tổng thể nhất quán, cho thấy các phần liên hệ thế nào để phục vụ mục tiêu. [[Viewpoint]] là góc nhìn; [[View]] là biểu diễn theo góc nhìn đó.",
+        "contrast": "[[Traceability Matrix]] chỉ nối các quan hệ truy vết; [[Solution Design]] tập trung cách triển khai; không phải cách sắp xếp các view để bảo đảm kiến trúc yêu cầu thống nhất.",
+        "source": "BABOK 7.4 Define Requirements Architecture; Excel KA Detail_PA",
+        "reviewStatus": "biên tập sơ bộ từ câu hỏi và tài liệu; cần kiểm định tiếp"
+      },
+      "16": {
+        "anchor": "no end to end process owner",
+        "correctAnswer": "Develop a process model with swimlanes to highlight the handoff points",
+        "clue": "Các đơn vị đều giải thích phần việc của mình nhưng [[no end to end process owner]] (không ai nắm toàn bộ quy trình), đề hỏi cách tìm [[consistency and omissions]] → dùng [[process model with swimlanes]] để ghép các bước và điểm bàn giao.",
+        "principle": "[[Swimlane Process Model]] thể hiện từng hoạt động nằm ở bộ phận/vai trò nào và luồng chuyển giao giữa các bên. Nhìn theo toàn chuỗi giúp thấy chỗ thiếu bước, trách nhiệm đứt gãy hoặc mô tả không thống nhất.",
+        "contrast": "[[Use Case Scenario]] mô tả tương tác theo tình huống cụ thể, chưa trực tiếp làm lộ handoff giữa các bộ phận. [[Logical Data Model]] tập trung dữ liệu, không phải trình tự công việc. Họp tiếp mà chưa có mô hình vẫn khó phát hiện lỗ hổng.",
+        "source": "BABOK kỹ thuật Process Modeling; Excel Techniques Detail",
+        "reviewStatus": "biên tập sơ bộ từ câu hỏi và tài liệu; cần kiểm định tiếp"
+      },
+      "17": {
+        "anchor": "some information is missing",
+        "correctAnswer": "Conduct elicitation activities",
+        "clue": "BA đang [[analysis, synthesis, and refinement]] (phân tích/tổng hợp/làm rõ) nhưng phát hiện [[some information is missing]] → cần quay lại nguồn để [[elicitation bổ sung]].",
+        "principle": "[[Conduct Elicitation]] là thu thập, khám phá và làm rõ BA information; khi còn thiếu dữ kiện, BA cần hỏi/quan sát/nghiên cứu thêm trước khi verify hoặc validate nội dung.",
+        "contrast": "[[Verify]] kiểm chất lượng thứ đã viết; [[Validate]] đối chiếu nhu cầu/giá trị; [[Traceability]] nối mối quan hệ. Không tác vụ nào trong ba cái tự tạo ra thông tin còn thiếu.",
+        "source": "Excel KA Detail_PA · 4.2 Conduct Elicitation",
+        "reviewStatus": "biên tập sơ bộ từ câu hỏi và tài liệu; cần kiểm định tiếp"
+      },
+      "26": {
+        "anchor": "change was never requested",
+        "correctAnswer": "Check the audit history of changes",
+        "clue": "Khi chủ hệ thống nói thay đổi [[was never requested]] (chưa từng yêu cầu), cần truy lại [[ai thay đổi / lúc nào / từ đâu]] → [[audit history of changes]].",
+        "principle": "[[Audit History]] lưu dấu lịch sử cập nhật requirement, hỗ trợ truy vết và kiểm soát thay đổi. Bằng chứng lịch sử phải được kiểm tra trước khi kết luận yêu cầu bị sửa sai.",
+        "contrast": "[[Revert back the changes]] là hành động sửa sau khi xác minh, chưa nên làm ngay. [[Record a defect]] là xử lý lỗi hệ thống; [[Consult Project Manager]] không thay được kiểm tra dấu vết.",
+        "source": "Excel KA Detail_PA · 3.4 Information Management, 5.1 Trace Requirements",
+        "reviewStatus": "biên tập sơ bộ từ câu hỏi và tài liệu; cần kiểm định tiếp"
+      },
+      "28": {
+        "anchor": "existing application already has some of the required functionality",
+        "correctAnswer": "Perform gap analysis of current and future states",
+        "clue": "Đề nói [[existing application already has some of the required functionality]] (hệ thống có sẵn một phần) và hỏi cần thêm gì → so sánh [[current]] với [[future]] để tìm phần còn thiếu.",
+        "principle": "[[Gap Analysis]] xác định khác biệt về năng lực và chức năng giữa [[Current State]] và [[Future State]], từ đó xác định những thay đổi cần thực hiện.",
+        "contrast": "[[Component dependencies]] chỉ xét quan hệ giữa thành phần, không xác định đủ toàn bộ khoảng trống. [[Competitor evaluation]] và [[Organizational culture]] không trực tiếp trả lời chức năng nào còn thiếu.",
+        "source": "Excel KA Detail_PA · 6.1 Analyze Current State, 6.2 Define Future State; BABOK Strategy Analysis",
+        "reviewStatus": "biên tập sơ bộ từ câu hỏi và tài liệu; cần kiểm định tiếp"
+      },
+      "34": {
+        "anchor": "budget should be approved by the Chief Financial Officer",
+        "correctAnswer": "Decision making authority",
+        "clue": "Đề đã xác định vendor nhưng mới phát hiện [[budget should be approved by the Chief Financial Officer]] → thiếu việc xác định [[decision making authority]] (ai có quyền phê duyệt ngân sách).",
+        "principle": "[[Decision-Making Authority]] là người/vai trò được phép chấp thuận một quyết định. Excel [[Plan Stakeholder Engagement]] và [[Approve Requirements]] yêu cầu xác định vai trò, trách nhiệm và người có quyền quyết định sớm.",
+        "contrast": "[[Influence]] = mức ảnh hưởng tới quyết định, chưa chắc có quyền ký. [[Role]] là chức trách chung; câu này đặc biệt hỏi [[thẩm quyền phê duyệt]] bị bỏ sót.",
+        "source": "Excel KA Detail_PA · 3.2 Plan Stakeholder Engagement; 5.5 Approve Requirements",
+        "reviewStatus": "biên tập sơ bộ từ câu hỏi và tài liệu; cần kiểm định tiếp"
+      },
+      "37": {
+        "anchor": "not finalized and still requires further analysis",
+        "correctAnswer": "Stability",
+        "clue": "Gặp [[not finalized]] (chưa chốt) + [[still requires further analysis]] (còn phải phân tích) → yêu cầu [[có khả năng đổi]] ⇒ yếu tố [[Stability]].",
+        "principle": "Theo Excel mục [[5.3 Prioritize Requirements]], [[Stability]] đánh giá mức độ yêu cầu có thể thay đổi trong quá trình phát triển; đây là một tiêu chí [[Basis for Prioritization]].",
+        "contrast": "[[Benefit]] = giá trị/lợi ích; [[Dependency]] = quan hệ phụ thuộc; [[Risk]] = khả năng không đạt giá trị hoặc không đáp ứng. Chỉ [[Stability]] diễn đạt yêu cầu chưa đủ ổn định.",
+        "source": "Excel KA Detail_PA · 5.3 Prioritize Requirements · Basis for Prioritization; Dictionary · Stability",
+        "reviewStatus": "biên tập sơ bộ từ câu hỏi và tài liệu; cần kiểm định tiếp"
+      },
+      "54": {
+        "anchor": "required work to satisfy the requirements of the project",
+        "correctAnswer": "Project scope",
+        "clue": "Gặp [[all of the required work]] (toàn bộ công việc phải làm) và [[requirements of the project]] → hỏi phạm vi [[công việc dự án]] ⇒ [[Project Scope]].",
+        "principle": "[[Project Scope]] = khối lượng công việc phải thực hiện để bàn giao kết quả theo yêu cầu. [[Product Scope]] = đặc tính và chức năng của sản phẩm/giải pháp sẽ bàn giao.",
+        "contrast": "[[Product Scope]] trả lời “sản phẩm có gì?”. [[Project Scope]] trả lời “phải làm những việc gì?”. [[Requirements envisioning / foundation]] không định nghĩa toàn bộ công việc dự án.",
+        "source": "Đề CCBA1 câu 54 · đối chiếu Project vs Product Scope; BABOK 6.4 về Solution Scope (không đồng nhất với Project Scope)",
+        "reviewStatus": "biên tập sơ bộ từ câu hỏi và tài liệu; cần kiểm định tiếp"
+      },
+      "55": {
+        "anchor": "received an email confirmation",
+        "correctAnswer": "Atomic",
+        "clue": "Yêu cầu trong đề nhắc [[received an email confirmation]], [[access the order status]], [[order submission]]: nhiều ý/hành vi đang dồn vào một câu → vấn đề [[Atomic]].",
+        "principle": "[[Atomic]] = một requirement [[tự đứng độc lập, diễn đạt một ý có thể hiểu riêng]], tránh gộp nhiều mệnh đề khiến khó kiểm tra và quản lý. Excel 7.2 ghi [[self-contained and capable of being understood independently]].",
+        "contrast": "[[Concise]] là bỏ chữ thừa; [[Understandable]] là dễ hiểu; [[Prioritized]] liên quan xếp mức ưu tiên. Câu này trọng tâm là [[yêu cầu chứa nhiều ý]], vì vậy bị vi phạm tính [[Atomic]].",
+        "source": "Excel KA Detail_PA · 7.2 Verify Req. · Characteristics: Atomic",
+        "reviewStatus": "biên tập sơ bộ từ câu hỏi và tài liệu; cần kiểm định tiếp"
+      },
+      "66": {
+        "anchor": "quality requirement",
+        "correctAnswer": "Consistent",
+        "clue": "Đề hỏi [[quality requirement]] (đặc tính của yêu cầu chất lượng); trong bốn phương án, [[Consistent]] là một tiêu chí chuẩn của BABOK.",
+        "principle": "[[Consistent]] = yêu cầu không mâu thuẫn với nhu cầu stakeholder và các yêu cầu khác. Trong Excel 7.2, nó nằm cùng nhóm [[Atomic, Complete, Concise, Feasible, Unambiguous, Testable]].",
+        "contrast": "[[Simplistic]] không phải tiêu chí chất lượng BABOK; [[Critical]] chỉ mức quan trọng; [[Functional]] là loại yêu cầu, không phải đặc tính chất lượng.",
+        "source": "Excel KA Detail_PA · 7.2 Verify Req. · Characteristics: Consistent",
+        "reviewStatus": "biên tập sơ bộ từ câu hỏi và tài liệu; cần kiểm định tiếp"
+      },
+      "73": {
+        "anchor": "feasible for the staff who perform the end of month procedures",
+        "correctAnswer": "Domain subject matter expert",
+        "clue": "Gặp [[feasible for the staff who perform the end of month procedures]] (khả thi với chính người làm quy trình) và hỏi [[stakeholders]] nào xác nhận → cần người [[hiểu sâu công việc thực tế]] ⇒ [[Domain SME]].",
+        "principle": "[[Domain Subject Matter Expert]] = chuyên gia am hiểu nghiệp vụ chuyên sâu; có thể là [[process owner]] (người phụ trách quy trình), nhân viên lâu năm, người vận hành nghiệp vụ. Họ giúp xác nhận quy trình đề xuất có dùng được trong môi trường thực tế.",
+        "contrast": "[[Implementation SME]] = am hiểu cách triển khai giải pháp/kỹ thuật; [[Operational Support]] = duy trì, hỗ trợ vận hành giải pháp; [[Project Sponsor]] = tài trợ và ra quyết định cấp cao. Câu này hỏi [[tính khả thi đối với người làm nghiệp vụ]], không hỏi người cấp ngân sách hay cấu hình hệ thống.",
+        "source": "BABOK Study Notes · 2.4.3 Domain Subject Matter Expert; Excel nhóm Stakeholder",
+        "reviewStatus": "biên tập sơ bộ từ câu hỏi và tài liệu; cần kiểm định tiếp"
+      },
+      "74": {
+        "anchor": "understanding the elicitation scope",
+        "correctAnswer": "By determining when elicitation is complete",
+        "clue": "Đề đặt trong [[preparing the elicitation activity plan]] và hỏi [[understanding the elicitation scope]] (hiểu phạm vi cần khai thác) giúp gì. Khi biết [[cần lấy thông tin nào và kết quả nào là đủ]], BA xác định được [[when elicitation is complete]] (khi nào có thể kết thúc khai thác).",
+        "principle": "Excel [[4.1 Prepare for Elicitation]]: phải hiểu [[scope of elicitation]], [[desired outcomes]] (kết quả mong đợi), stakeholder và nguồn thông tin cần dùng. Excel [[4.2 Conduct Elicitation]], phần [[Guide Elicitation Activity]], nêu BA dùng mục tiêu, phạm vi, đầu ra dự kiến và người cung cấp thông tin để biết khi nào đã thu đủ và có thể dừng.",
+        "contrast": "[[Validate requirements in time]] là xác thực yêu cầu theo nhu cầu, [[khác]] quyết định phạm vi khai thác đã đủ. [[Record elicitation results]] là ghi nhận kết quả sau/đang thu thập. [[Level of stakeholder collaboration]] thuộc kế hoạch gắn kết, [[không trực tiếp định nghĩa điều kiện kết thúc]]. Chọn D vì nó trả lời đúng việc scope giúp xác định [[điểm hoàn tất]].",
+        "source": "Excel KA Detail_PA · 4.1 Prepare for Elicitation · Understand Scope; 4.2 Conduct Elicitation · Guide Elicitation Activity",
+        "reviewStatus": "biên tập sơ bộ từ câu hỏi và tài liệu; cần kiểm định tiếp"
+      },
+      "75": {
+        "anchor": "align them with the enterprise",
+        "correctAnswer": "Relevant",
+        "clue": "Đề nhấn mạnh objectives phải [[align them with the enterprise]] (phù hợp định hướng) và [[vision, mission and goals]] → chữ [[Relevant]] trong SMART.",
+        "principle": "[[SMART]]: Specific (cụ thể), Measurable (đo được), Achievable (khả thi), [[Relevant]] (phù hợp chiến lược), Time-bound (có hạn). Đề hỏi khía cạnh [[liên kết với sứ mệnh/mục tiêu tổ chức]].",
+        "contrast": "[[Measurable]] liên quan con số nhân đôi doanh thu; [[Achievable]] hỏi liệu có đạt được; riêng việc [[align vision, mission and goals]] chỉ về [[Relevant]].",
+        "source": "Excel KA Detail_PA · 6.2 Define Future State; các tiêu chí SMART",
+        "reviewStatus": "biên tập sơ bộ từ câu hỏi và tài liệu; cần kiểm định tiếp"
+      },
+      "80": {
+        "anchor": "predicted that many of the regulations currently imposed",
+        "correctAnswer": "Identify assumptions",
+        "clue": "Đề ghi chuyên gia [[dự đoán]] [[regulations currently imposed]] sẽ đổi; đây là thông tin [[chưa chắc chắn]] nhưng ảnh hưởng dự án → xác định [[assumptions]] (giả định).",
+        "principle": "[[Assumption]] là yếu tố được tạm coi đúng để tiếp tục phân tích nhưng cần ghi lại/kiểm chứng. Khi tình hình pháp lý thay đổi, BA phải xét lại giả định ảnh hưởng requirements.",
+        "contrast": "[[Constraint]] là giới hạn thực sự phải tuân thủ; [[Measurable evaluation criteria]] là chuẩn đánh giá; [[Alignment with solution scope]] xét yêu cầu có nằm trong phạm vi giải pháp. Dự báo tương lai chưa xảy ra phù hợp với giả định.",
+        "source": "BABOK 7.3 Validate Requirements · Identify Assumptions; Excel KA Detail_PA",
+        "reviewStatus": "biên tập sơ bộ từ câu hỏi và tài liệu; cần kiểm định tiếp"
+      },
+      "101": {
+        "anchor": "users have lodged a complaint",
+        "correctAnswer": "Collect system metrics and communicate results in an understandable format",
+        "clue": "Gặp [[users have lodged a complaint]] (người dùng phàn nàn) nhưng [[performance statistics show more efficiency]] (số liệu cho thấy hiệu quả hơn) → cần [[thu thập số đo và diễn giải dễ hiểu]], không chọn giải pháp sửa hệ thống ngay.",
+        "principle": "[[Solution Performance Measures]] đo hiệu quả thật của hệ thống; khi đánh giá, cần đối chiếu các nguồn số liệu và trình bày [[performance measures]] theo cách stakeholder có thể hiểu và kiểm tra.",
+        "contrast": "[[Upgrade hardware]] hay [[evaluate process changes]] là đề xuất cải tiến [[sau khi đã xác định vấn đề]]. [[Dependencies]] là mối liên kết kỹ thuật. Câu hỏi yêu cầu [[chứng minh/giải thích hiệu suất]], nên bước phù hợp là metrics + communication.",
+        "source": "BABOK 8.1–8.2 Solution Performance; Excel KA Detail_PA (liên hệ kiến thức)",
+        "reviewStatus": "biên tập sơ bộ từ câu hỏi và tài liệu; cần kiểm định tiếp"
+      },
+      "120": {
+        "anchor": "stakeholder matrix showing information on how to engage",
+        "correctAnswer": "Ensure the suppliers are kept informed by showing interest in their needs",
+        "clue": "Đề nói đã có [[stakeholder matrix showing information on how to engage]] → sử dụng kế hoạch tương tác để chọn cách liên hệ với [[suppliers]], không áp dụng cùng một mức tương tác cho mọi nhóm.",
+        "principle": "[[Stakeholder Engagement Approach]] xác định nhu cầu thông tin, mức ảnh hưởng và mức tham gia phù hợp từng nhóm; trong trường hợp này đáp án nhấn mạnh [[giữ thông tin cập nhật và thể hiện quan tâm tới nhu cầu nhà cung cấp]].",
+        "contrast": "[[Meet regularly]] chưa chắc cần cho nhà cung cấp; [[general communication]] quá chung nếu không lắng nghe nhu cầu; [[discuss their needs]] có thể hữu ích nhưng đáp án nguồn yêu cầu [[duy trì được nhận biết và quan tâm xuyên suốt]].",
+        "source": "Excel KA Detail_PA · 3.2 Plan Stakeholder Engagement",
+        "reviewStatus": "biên tập sơ bộ từ câu hỏi và tài liệu; cần kiểm định tiếp"
+      }
+    }
+  },
+  "examRules": [
+    {
+      "answerPattern": "domain subject matter expert|domain sme",
+      "answerFlags": "",
+      "questionPattern": "staff who perform|feasible for the staff|operational procedures|business process",
+      "questionFlags": "",
+      "clue": "Cụm [[feasible for the staff]] (khả thi với người trực tiếp thực hiện quy trình) cho thấy đề cần người am hiểu thực tế công việc. Nếu đề nhấn mạnh [[staff who perform]], hãy nghĩ đến chuyên gia nghiệp vụ.",
+      "principle": "[[Domain Subject Matter Expert (Domain SME)]] = người có hiểu biết sâu về nghiệp vụ và cách quy trình thực sự được thực hiện; họ đánh giá tính phù hợp/khả thi về mặt nghiệp vụ.",
+      "contrast": "[[Implementation SME]] tập trung triển khai giải pháp; [[Operational Support]] hỗ trợ vận hành; [[Sponsor]] bảo trợ, cấp nguồn lực. Không đánh đồng các vai trò này với [[Domain SME]]."
+    },
+    {
+      "answerPattern": "\\bnecessity\\b",
+      "answerFlags": "",
+      "questionPattern": "only makes sense|if a related|related requirement.*implemented|cannot.*unless",
+      "questionFlags": "",
+      "clue": "[[only makes sense]] (chỉ có ý nghĩa) khi một [[related requirement]] (yêu cầu liên quan) được triển khai.",
+      "principle": "[[Depends – Necessity]] = chỉ triển khai requirement A có ý nghĩa nếu requirement B cũng được triển khai; thuộc các kiểu [[traceability relationships]].",
+      "contrast": "[[Effort]] = có B thì việc làm A dễ hơn, nhưng A vẫn có thể làm riêng; [[Necessity]] = A chỉ có ý nghĩa khi B tồn tại."
+    },
+    {
+      "answerPattern": "\\beffort\\b",
+      "answerFlags": "",
+      "questionPattern": "easier|depends|implement|related requirement",
+      "questionFlags": "",
+      "clue": "[[easier to implement]] (dễ triển khai hơn) khi có requirement khác.",
+      "principle": "[[Depends – Effort]] = một yêu cầu có thể triển khai dễ hơn nếu yêu cầu liên quan được triển khai trước.",
+      "contrast": "[[Necessity]] = yêu cầu chỉ có ý nghĩa nếu yêu cầu liên quan được làm; [[Effort]] = dễ làm hơn, không nhất thiết là bắt buộc."
+    },
+    {
+      "answerPattern": "\\bderive\\b",
+      "answerFlags": "",
+      "questionPattern": "derived|from another requirement|level of abstraction|trac",
+      "questionFlags": "",
+      "clue": "[[derived from]] = được suy ra từ yêu cầu khác, thường khác [[level of abstraction]] (mức khái quát).",
+      "principle": "[[Derive]] = liên hệ yêu cầu mức cao với yêu cầu mức thấp được suy ra từ nó.",
+      "contrast": "[[Depends]] = phụ thuộc để triển khai; [[Derive]] = nguồn gốc hình thành yêu cầu."
+    },
+    {
+      "answerPattern": "\\bvalidate\\b",
+      "answerFlags": "",
+      "questionPattern": "test case|traceability|relationship between a requirement|fulfills",
+      "questionFlags": "",
+      "clue": "[[test case]] (ca kiểm thử) kiểm tra solution có đáp ứng [[requirement]] hay không.",
+      "principle": "Quan hệ [[Validate]] trong traceability nối requirement với test case / phần tử dùng để xác nhận yêu cầu được đáp ứng.",
+      "contrast": "[[Satisfy]] = solution component thực hiện requirement; [[Validate]] = test case xác nhận requirement đã được thực hiện."
+    },
+    {
+      "answerPattern": "\\bsatisfy\\b",
+      "answerFlags": "",
+      "questionPattern": "implementation element|solution component|implementing|traceability",
+      "questionFlags": "",
+      "clue": "[[implementation element]] (thành phần triển khai) đang [[satisfying requirements]] (đáp ứng yêu cầu).",
+      "principle": "[[Satisfy]] = mối quan hệ giữa một component được triển khai và requirement mà component đó đáp ứng.",
+      "contrast": "[[Validate]] nối yêu cầu với kiểm thử; [[Satisfy]] nối yêu cầu với phần thực thi."
+    },
+    {
+      "answerPattern": "benefit.*penalty.*cost.*risk.*dependenc",
+      "answerFlags": "i",
+      "questionPattern": "factor|prioritization|prioritize",
+      "questionFlags": "",
+      "clue": "[[factors]] (tiêu chí) ảnh hưởng tới [[requirements prioritization]] (ưu tiên yêu cầu) → hỏi danh sách đầy đủ.",
+      "principle": "Excel KA Detail_PA · [[5.3]]: 8 yếu tố [[Benefit]] (lợi ích), [[Penalty]] (hệ quả không làm), [[Cost]], [[Risk]], [[Dependencies]], [[Time Sensitivity]], [[Stability]], [[Regulatory/Policy Compliance]].",
+      "contrast": "[[Urgency]] được nhắc ở phần attributes, nhưng không thay một trong tám yếu tố [[Basis for Prioritization]] của mục 5.3.4."
+    },
+    {
+      "answerPattern": "\\bpenalt(?:y|ies)\\b",
+      "answerFlags": "",
+      "questionPattern": "regulation|compliance|fine|non.compliance|consequen|not implement",
+      "questionFlags": "",
+      "clue": "[[penalties]] (hậu quả/phạt), [[regulatory compliance]] (tuân thủ quy định) hoặc hệ quả nếu không triển khai.",
+      "principle": "[[Penalty]] là chi phí/hậu quả do [[không thực hiện]] yêu cầu; Excel KA Detail_PA · 5.3 nhấn mạnh không chỉ là tiền phạt mà cả tác động tiêu cực cho khách hàng.",
+      "contrast": "[[Risk]] = khả năng yêu cầu không tạo được giá trị hoặc không thể thực hiện; [[Penalty]] = hậu quả của việc bỏ qua yêu cầu."
+    },
+    {
+      "answerPattern": "collaborative.*research.*experiments?",
+      "answerFlags": "i",
+      "questionPattern": "types? of elicitation|common types?",
+      "questionFlags": "",
+      "clue": "[[three common types of elicitation]] = hỏi chính xác 3 nhóm hình thức khai thác thông tin.",
+      "principle": "Excel Học thuộc · 4.2: [[Collaborative]] = trao đổi trực tiếp; [[Research]] = đọc/phân tích tài liệu, dữ liệu; [[Experiments]] = thử nghiệm mới biết kết quả.",
+      "contrast": "[[Observation / Interviews / Focus Groups]] là [[kỹ thuật]] có thể áp dụng, không phải tên đầy đủ của 3 [[nhóm elicitation]]."
+    },
+    {
+      "answerPattern": "specify.*verify.*validate.*architecture.*design.*solution",
+      "answerFlags": "i",
+      "questionPattern": "complete set of tasks|tasks in the requirements analysis|knowledge area",
+      "questionFlags": "",
+      "clue": "[[complete set of tasks]] (đủ danh sách task) thuộc [[Requirements Analysis and Design Definition]].",
+      "principle": "BABOK Chapter 7 có 6 task: [[7.1 Specify and Model]], [[7.2 Verify]], [[7.3 Validate]], [[7.4 Requirements Architecture]], [[7.5 Design Options]], [[7.6 Analyze Potential Value and Recommend Solution]].",
+      "contrast": "[[Prioritize Requirements]] thuộc KA 5; [[Assess Risks]] thuộc KA 6. Đừng lấy chúng thay cho một task của KA 7."
+    },
+    {
+      "answerPattern": "\\batomic\\b",
+      "answerFlags": "",
+      "questionPattern": "self.contain|independent|independently|other requirements",
+      "questionFlags": "",
+      "clue": "[[self-contained]] = tự đầy đủ; [[independently]] = hiểu độc lập, không cần đọc yêu cầu khác.",
+      "principle": "[[Atomic]] là một đặc tính chất lượng của requirement: mỗi yêu cầu chứa một ý độc lập, có thể hiểu riêng. Excel Học thuộc · 7.2.4.",
+      "contrast": "[[Complete]] = đủ thông tin để tiếp tục công việc; [[Atomic]] = tự đứng độc lập. Đề nhấn mạnh hiểu độc lập → [[Atomic]]."
+    },
+    {
+      "answerPattern": "\\bcomplete\\b",
+      "answerFlags": "",
+      "questionPattern": "missing|enough|detail|further work|additional information|not provide|not specify",
+      "questionFlags": "",
+      "clue": "[[enough detail]] (đủ chi tiết), [[missing]] (thiếu) hoặc không đủ để thực hiện bước tiếp theo.",
+      "principle": "[[Complete]] = có đủ nội dung và mức chi tiết để công việc tiếp tục. Excel Học thuộc · 7.2.4.",
+      "contrast": "[[Unambiguous]] = không thể hiểu theo nhiều nghĩa; [[Atomic]] = hiểu độc lập; [[Complete]] = không thiếu thông tin cần thiết."
+    },
+    {
+      "answerPattern": "\\bunambiguous\\b",
+      "answerFlags": "",
+      "questionPattern": "ambigu|interpret|confus|unclear|different meaning",
+      "questionFlags": "",
+      "clue": "[[ambiguous]] (mơ hồ), [[interpret]] (diễn giải) hoặc nhiều bên hiểu một yêu cầu khác nhau.",
+      "principle": "[[Unambiguous]] = yêu cầu được diễn đạt rõ, có thể xác định solution có đáp ứng hay không. Excel Học thuộc · 7.2.4.",
+      "contrast": "[[Consistent]] = không mâu thuẫn với yêu cầu khác; [[Unambiguous]] = bản thân câu yêu cầu không đa nghĩa."
+    },
+    {
+      "answerPattern": "\\btestable\\b",
+      "answerFlags": "",
+      "questionPattern": "test|verify|measure|fulfilled",
+      "questionFlags": "",
+      "clue": "[[verify]] (kiểm tra) liệu yêu cầu đã được [[fulfilled]] (đáp ứng) hay chưa.",
+      "principle": "[[Testable]] = có cách đánh giá/kiểm thử xác nhận requirement được thực hiện. Excel Học thuộc · 7.2.4.",
+      "contrast": "[[Feasible]] = có thể thực hiện với ngân sách/thời gian/rủi ro; [[Testable]] = có thể kiểm tra đã đáp ứng."
+    },
+    {
+      "answerPattern": "\\bmaintain requirements\\b|\\breusable\\b",
+      "answerFlags": "",
+      "questionPattern": "long.term|reuse|other initiative|preserve|current|reusable",
+      "questionFlags": "",
+      "clue": "[[long-term use]] (dùng dài hạn), [[reuse]] (sử dụng lại) hoặc duy trì nguồn gốc/ý nghĩa của requirements.",
+      "principle": "[[Maintain Requirements]] = giữ requirement đúng, cập nhật và dễ truy cập để tái sử dụng. Excel Học thuộc: yêu cầu tái sử dụng phải được đặt tên, định nghĩa và lưu giữ rõ ràng.",
+      "contrast": "[[Trace Requirements]] = liên kết nguồn gốc & tác động; [[Maintain Requirements]] = giữ yêu cầu có thể tái sử dụng theo thời gian."
+    },
+    {
+      "answerPattern": "\\bgoals?\\b|\\bbusiness goal\\b",
+      "answerFlags": "",
+      "questionPattern": "long.term|ongoing|qualitative|state or condition",
+      "questionFlags": "",
+      "clue": "[[longer-term]] (dài hạn), [[ongoing]] (liên tục), [[qualitative]] (định tính).",
+      "principle": "[[Business Goal]] = hướng lớn, kết quả mong muốn có tính dài hạn/định tính; từ goal mới cụ thể hóa thành [[SMART objective]] có thể đo.",
+      "contrast": "[[Objective]] phải cụ thể/đo lường được, không chỉ là một mong muốn dài hạn."
+    },
+    {
+      "answerPattern": "\\bstakeholder engagement\\b",
+      "answerFlags": "",
+      "questionPattern": "willingness|encourage|work towards a common goal",
+      "questionFlags": "",
+      "clue": "[[willingness]] (sẵn lòng) + [[engage]] (tham gia/cộng tác) cùng business analyst.",
+      "principle": "[[Stakeholder Engagement]] (kết quả của Manage Stakeholder Collaboration) là stakeholder sẵn sàng phối hợp khi cần; khác tài liệu kế hoạch [[Stakeholder Engagement Approach]].",
+      "contrast": "[[Stakeholder Engagement Approach]] = kế hoạch phối hợp (output của Plan Stakeholder Engagement); [[Stakeholder Engagement]] = sự tham gia thực tế."
+    },
+    {
+      "answerPattern": "\\bresearch\\b",
+      "answerFlags": "",
+      "questionPattern": "historical data|trend|studying|material|documents|sources",
+      "questionFlags": "",
+      "clue": "[[historical data]] (dữ liệu quá khứ), [[identify trends]] (tìm xu hướng), [[studying information]] (nghiên cứu nguồn).",
+      "principle": "[[Research]] là một trong ba loại [[elicitation]]: phân tích nguồn dữ liệu/tài liệu; không cần trực tiếp tương tác stakeholder trong mỗi hoạt động.",
+      "contrast": "[[Collaborative]] = tương tác trực tiếp; [[Experiments]] = phải thử nghiệm kiểm soát mới khám phá được thông tin."
+    },
+    {
+      "answerPattern": "\\bdata dictionary\\b",
+      "answerFlags": "",
+      "questionPattern": "data element|standardiz|data definition|business vs.*tech|technical",
+      "questionFlags": "",
+      "clue": "[[data elements]] (phần tử dữ liệu), [[standardize]] (chuẩn hóa định nghĩa dữ liệu) hoặc dữ liệu giữa business và IT.",
+      "principle": "[[Data Dictionary]] = định nghĩa nhất quán từng data element (có thể primitive / composite). Đây là kiến thức trong Excel · Học thuộc / Techniques Detail.",
+      "contrast": "[[Glossary]] = giải nghĩa thuật ngữ nghiệp vụ; [[Data Dictionary]] = định nghĩa phần tử dữ liệu, kiểu dữ liệu/thuộc tính cụ thể."
+    },
+    {
+      "answerPattern": "\\brequirements attributes?\\b",
+      "answerFlags": "",
+      "questionPattern": "source|priority|complex|owner|status|last modified|additional information",
+      "questionFlags": "",
+      "clue": "Gặp [[source]] (nguồn), [[priority]] (ưu tiên), [[complexity]] (độ phức tạp) đi kèm từng yêu cầu.",
+      "principle": "[[Requirements Attributes]] = thông tin mô tả/metadata giúp quản lý requirement; Excel Học thuộc có mẹo [[CARAS SOUPS]] cho các thuộc tính.",
+      "contrast": "[[Requirement]] = nội dung nhu cầu cần đáp ứng; [[Attribute]] = thông tin quản trị của requirement, không phải yêu cầu mới."
+    },
+    {
+      "answerPattern": "\\bstability\\b",
+      "answerFlags": "",
+      "questionPattern": "not final|further analysis|may change|likely to change|not stable",
+      "questionFlags": "",
+      "clue": "Gặp [[not finalized]] (chưa chốt) + [[further analysis]] (cần phân tích thêm) ⇒ yêu cầu dễ thay đổi.",
+      "principle": "Đây là [[Stability]] (tính ổn định): xem yêu cầu có khả năng thay đổi trong tương lai hay không. Đây là một [[basis for prioritization]] (tiêu chí ưu tiên).",
+      "contrast": "[[Risk]] = nguy cơ không đạt giá trị; [[Dependencies]] = yêu cầu phụ thuộc nhau. Chưa được chốt ≠ phụ thuộc."
+    },
+    {
+      "answerPattern": "risk.averse|risk aversion",
+      "answerFlags": "",
+      "questionPattern": "risk|uncertain|untested|tolerance",
+      "questionFlags": "",
+      "clue": "Đề mô tả doanh nghiệp [[avoid risk]] (né rủi ro), không muốn thử phương án chưa chắc chắn.",
+      "principle": "[[Risk-averse]] = ngại rủi ro, ưu tiên hạn chế [[uncertainty]] (bất định), có thể tránh hoặc giảm thiểu rủi ro.",
+      "contrast": "[[Risk-neutral]] = chấp nhận một mức rủi ro; [[Risk-seeking]] = sẵn sàng nhận rủi ro cao để đổi giá trị kỳ vọng."
+    },
+    {
+      "answerPattern": "\\bpredictive\\b|\\bwaterfall\\b",
+      "answerFlags": "",
+      "questionPattern": "up.front|formal|defined before|specific phases|uncertainty|regulated|planning",
+      "questionFlags": "",
+      "clue": "Gặp [[upfront planning]] (lập kế hoạch trước), [[formal documentation]] (tài liệu chính thức), hoặc [[specific phases]] (giai đoạn rõ).",
+      "principle": "[[Predictive approach]] = xác định nhiều thứ trước khi triển khai, giảm [[upfront uncertainty]] (bất định ban đầu), tăng khả năng kiểm soát.",
+      "contrast": "[[Adaptive approach]] = chia [[short iterations]] (vòng lặp ngắn), nhận phản hồi và điều chỉnh liên tục."
+    },
+    {
+      "answerPattern": "\\badaptive\\b|\\bagile\\b",
+      "answerFlags": "",
+      "questionPattern": "short iteration|rapid delivery|feedback|prioritiz|team interaction|incremental",
+      "questionFlags": "",
+      "clue": "Gặp [[short iterations]] (vòng lặp ngắn), [[rapid delivery]] (giao giá trị nhanh), [[feedback]] (phản hồi).",
+      "principle": "[[Adaptive approach]] = làm từng phần, nhận phản hồi và liên tục [[prioritize requirements]] (ưu tiên yêu cầu).",
+      "contrast": "[[Predictive]] thiên về lên kế hoạch và đặc tả trước; [[Adaptive]] chấp nhận điều chỉnh khi biết thêm thông tin."
+    },
+    {
+      "answerPattern": "verify requirements|verification of requirements|\\bverify\\b",
+      "answerFlags": "",
+      "questionPattern": "quality|defined correctly|testable|unambiguous|complete|consisten|review",
+      "questionFlags": "",
+      "clue": "Thấy [[quality standards]] (tiêu chuẩn chất lượng), [[complete]] (đầy đủ), [[unambiguous]] (không mơ hồ) hoặc [[testable]] (kiểm thử được).",
+      "principle": "[[Verify Requirements]] = yêu cầu được [[defined correctly]] (viết/đặc tả đúng chuẩn), đủ chất lượng để dùng cho công việc tiếp theo.",
+      "contrast": "[[Validate Requirements]] hỏi yêu cầu có đúng [[business need]] và tạo [[business value]] hay không. Nhớ: Verify = viết đúng; Validate = đúng cái cần."
+    },
+    {
+      "answerPattern": "validate requirements|\\bvalidation\\b|\\bvalidate\\b",
+      "answerFlags": "",
+      "questionPattern": "business value|business requirement|business need|desired future state|stakeholders.*need|align|conflicting needs",
+      "questionFlags": "",
+      "clue": "Thấy [[business need]] (nhu cầu), [[business value]] (giá trị), [[desired future state]] (trạng thái mong muốn).",
+      "principle": "[[Validate Requirements]] = xác nhận yêu cầu đáp ứng nhu cầu thực, phù hợp [[business goals and objectives]] và mang lại giá trị.",
+      "contrast": "[[Verify]] kiểm tra chất lượng cách viết; [[Validate]] kiểm tra đúng vấn đề/giá trị cần giải quyết."
+    },
+    {
+      "answerPattern": "traceability|trace requirements|traceable|requirements management tool",
+      "answerFlags": "",
+      "questionPattern": "backward|forward|lineage|impact analysis|large number of requirements|trace",
+      "questionFlags": "",
+      "clue": "Gặp [[backward/forward traceability]] (truy vết xuôi/ngược), [[lineage]] (nguồn gốc), [[impact analysis]] (phân tích ảnh hưởng).",
+      "principle": "[[Trace Requirements]] = nối quan hệ giữa yêu cầu, thiết kế và giải pháp để biết nguồn gốc, độ bao phủ và tác động khi thay đổi.",
+      "contrast": "[[Maintain Requirements]] = giữ yêu cầu chính xác và tái sử dụng; [[Trace]] = theo dõi quan hệ và tác động giữa các yêu cầu."
+    },
+    {
+      "answerPattern": "requirements architecture",
+      "answerFlags": "",
+      "questionPattern": "harmony|cohesive|single whole|work together|viewpoints|collection of views|completeness",
+      "questionFlags": "",
+      "clue": "Gặp [[work in harmony]] (phối hợp hài hòa), [[cohesive whole]] (một tổng thể nhất quán), [[views/viewpoints]].",
+      "principle": "[[Requirements Architecture]] = tổ chức các yêu cầu/mô hình thành một tổng thể cùng phục vụ [[business objectives]].",
+      "contrast": "[[Traceability]] chứng minh mối liên hệ và độ bao phủ; [[Architecture]] xem các phần có phối hợp thành một tổng thể hiệu quả không."
+    },
+    {
+      "answerPattern": "stakeholder engagement approach",
+      "answerFlags": "",
+      "questionPattern": "output|plan stakeholder engagement|stakeholder analysis|collaboration and communication",
+      "questionFlags": "",
+      "clue": "Đề hỏi [[output]] (đầu ra) của [[Plan Stakeholder Engagement]] hoặc kết quả phân tích stakeholder.",
+      "principle": "[[Stakeholder Engagement Approach]] = ghi stakeholder, đặc điểm, vai trò, cách [[collaborate]] (cộng tác) và [[communicate]] (trao đổi).",
+      "contrast": "[[Governance Approach]] quy định quyền ra quyết định/phê duyệt; [[Engagement Approach]] quy định cách làm việc với stakeholder."
+    },
+    {
+      "answerPattern": "governance approach|plan business analysis governance",
+      "answerFlags": "",
+      "questionPattern": "approv|authority|change control|decision|prioritiz",
+      "questionFlags": "",
+      "clue": "Gặp [[approval authority]] (quyền phê duyệt), [[change control]] (kiểm soát thay đổi), [[decision making]] (ra quyết định).",
+      "principle": "[[Governance Approach]] = ai có quyền quyết định, quy trình xét duyệt, ưu tiên, xử lý yêu cầu thay đổi.",
+      "contrast": "[[Stakeholder Engagement Approach]] chú trọng ai tham gia và cộng tác ra sao, không thay thế quy định phê duyệt."
+    },
+    {
+      "answerPattern": "confirm elicitation results|confirmation of elicitation results",
+      "answerFlags": "",
+      "questionPattern": "accuracy|consistency|compare|source information|elicitation|discrepanc",
+      "questionFlags": "",
+      "clue": "Gặp [[elicitation results]] (kết quả khai thác) + [[accuracy/consistency]] (đúng và nhất quán) hoặc so với tài liệu nguồn.",
+      "principle": "[[Confirm Elicitation Results]] = đối chiếu với [[source information]] và kết quả khai thác khác, làm rõ sai lệch trước khi sử dụng.",
+      "contrast": "[[Conduct Elicitation]] = thu thập thông tin; [[Confirm]] = kiểm tra thông tin thu thập có phản ánh đúng nguồn."
+    },
+    {
+      "answerPattern": "prepare for elicitation|elicitation activity plan",
+      "answerFlags": "",
+      "questionPattern": "prepar|before|logistic|scope|materials|technique",
+      "questionFlags": "",
+      "clue": "Gặp [[before elicitation]] (trước khi khai thác), [[logistics]] (hậu cần), [[supporting materials]] (tài liệu hỗ trợ).",
+      "principle": "[[Prepare for Elicitation]] = xác định [[scope]] (phạm vi), kỹ thuật, người tham gia và hậu cần; đầu ra là [[Elicitation Activity Plan]].",
+      "contrast": "[[Conduct Elicitation]] là lúc thực sự thu thập thông tin; [[Prepare]] là chuẩn bị cho hoạt động đó."
+    },
+    {
+      "answerPattern": "\\bexperiments\\b",
+      "answerFlags": "",
+      "questionPattern": "proof of concept|prototyp|test|experiment",
+      "questionFlags": "",
+      "clue": "Gặp [[proof of concept]] (thử nghiệm tính khả thi), [[prototype]] (nguyên mẫu), [[controlled test]] (thử nghiệm kiểm soát).",
+      "principle": "[[Experiments]] là một loại [[elicitation]]: khám phá điều chưa thể biết nếu chưa thử nghiệm.",
+      "contrast": "[[Research]] = tìm hiểu tài liệu/dữ liệu; [[Collaborative]] = trao đổi trực tiếp với stakeholder."
+    },
+    {
+      "answerPattern": "\\bscope model|\\bscope modeling|\\bscope modelling",
+      "answerFlags": "",
+      "questionPattern": "boundar|in.scope|out.of.scope",
+      "questionFlags": "",
+      "clue": "Gặp [[boundary]] (ranh giới), [[in-scope/out-of-scope]] (trong/ngoài phạm vi).",
+      "principle": "[[Scope Modelling]] = thể hiện ranh giới của phạm vi đang xem xét và phân biệt thứ gì nằm trong/ngoài phạm vi.",
+      "contrast": "[[Data Modelling]] diễn tả dữ liệu và quan hệ; [[Process Modelling]] diễn tả quy trình/các bước."
+    },
+    {
+      "answerPattern": "data flow diagram",
+      "answerFlags": "",
+      "questionPattern": "input|processed|stored|extracted|flow|systems",
+      "questionFlags": "",
+      "clue": "Gặp [[input → process → store → output]] (dữ liệu vào → xử lý → lưu → ra), hoặc dòng dữ liệu giữa các hệ thống.",
+      "principle": "[[Data Flow Diagram (DFD)]] = mô tả [[data flow]] (luồng dữ liệu) qua các tiến trình, kho dữ liệu và tác nhân.",
+      "contrast": "[[Process Model]] thiên về trình tự công việc; [[Entity Relationship Diagram]] thiên về thực thể và quan hệ."
+    },
+    {
+      "answerPattern": "sequence diagram",
+      "answerFlags": "",
+      "questionPattern": "interact|information passed|during a scenario|sequence",
+      "questionFlags": "",
+      "clue": "Gặp [[interact during a scenario]] (tương tác trong kịch bản) và [[information passed]] (thông tin/thông điệp trao đổi).",
+      "principle": "[[Sequence Diagram]] cho thấy các đối tượng tương tác theo [[time order]] (thứ tự thời gian) và trao đổi thông điệp.",
+      "contrast": "[[State Diagram]] là các trạng thái và điều kiện chuyển trạng thái; [[Process Model]] là bước xử lý nghiệp vụ."
+    },
+    {
+      "answerPattern": "state diagram|state model",
+      "answerFlags": "",
+      "questionPattern": "life cycle|status|trigger|change their status",
+      "questionFlags": "",
+      "clue": "Gặp [[life cycle]] (vòng đời), [[status]] (trạng thái), [[trigger]] (sự kiện kích hoạt chuyển trạng thái).",
+      "principle": "[[State Modelling]] biểu diễn các trạng thái của một đối tượng và điều kiện chuyển đổi giữa chúng.",
+      "contrast": "[[Sequence Diagram]] là tương tác theo thời gian; [[State Diagram]] là trạng thái của một đối tượng."
+    },
+    {
+      "answerPattern": "functional decomposition",
+      "answerFlags": "",
+      "questionPattern": "complex function|constituent parts|break down|product scope",
+      "questionFlags": "",
+      "clue": "Gặp [[break down]] (phân rã), [[complex business function]] (chức năng nghiệp vụ phức tạp), [[constituent parts]].",
+      "principle": "[[Functional Decomposition]] = tách một năng lực/chức năng lớn thành các chức năng nhỏ hơn để dễ phân tích.",
+      "contrast": "[[Work Breakdown Structure (WBS)]] phân rã công việc dự án; [[Functional Decomposition]] phân rã chức năng/năng lực của sản phẩm."
+    },
+    {
+      "answerPattern": "\\bbusiness goals?\\b|\\bgoals\\b",
+      "answerFlags": "",
+      "questionPattern": "long.term|ongoing|qualitative|business goal",
+      "questionFlags": "",
+      "clue": "Gặp [[long-term]] (dài hạn), [[ongoing]] (liên tục), [[qualitative]] (định tính).",
+      "principle": "[[Goal]] = định hướng/kết quả lớn mong muốn; [[Objective]] = mục tiêu cụ thể, đo được, thường theo [[SMART]].",
+      "contrast": "Nếu đề nhấn mạnh [[measurable]] (đo được), [[time-bound]] (có thời hạn) thì nghiêng về [[Objective]] hơn [[Goal]]."
+    },
+    {
+      "answerPattern": "\\bobjective|\\bsmart\\b",
+      "answerFlags": "",
+      "questionPattern": "measur|specific|achiev|time.bound",
+      "questionFlags": "",
+      "clue": "Gặp [[specific / measurable / achievable / relevant / time-bound]] (cụ thể / đo được / khả thi / phù hợp / có hạn).",
+      "principle": "[[SMART]] là phép kiểm tra [[business objectives]]: kết quả phải có thước đo, không chỉ là mong muốn chung.",
+      "contrast": "[[Business Goal]] có thể định tính, dài hạn; [[Business Objective]] cần cụ thể và đánh giá được mức đạt."
+    },
+    {
+      "answerPattern": "solution scope",
+      "answerFlags": "",
+      "questionPattern": "boundar|new capabilities|scope of the solution",
+      "questionFlags": "",
+      "clue": "Gặp [[boundaries of the solution]] (ranh giới giải pháp), [[new capabilities]] (năng lực mới sẽ cung cấp).",
+      "principle": "[[Solution Scope]] = mô tả phạm vi giải pháp đủ để stakeholder hiểu thay đổi sẽ cung cấp những gì.",
+      "contrast": "[[Project Scope]] = công việc cần làm để triển khai; [[Solution Scope]] = bản thân giải pháp sẽ có những gì."
+    },
+    {
+      "answerPattern": "\\bgap analysis\\b",
+      "answerFlags": "",
+      "questionPattern": "current|future|gap|missing capabilities",
+      "questionFlags": "",
+      "clue": "Gặp [[current state]] (hiện tại) so với [[future state]] (tương lai), hỏi còn thiếu năng lực gì.",
+      "principle": "[[Gap Analysis]] = tìm khoảng cách về năng lực/nguồn lực giữa trạng thái hiện tại và mục tiêu.",
+      "contrast": "[[Current State Analysis]] mô tả hiện trạng; [[Gap Analysis]] so sánh hiện trạng với tương lai để xác định điểm thiếu."
+    },
+    {
+      "answerPattern": "assess enterprise limitations|enterprise limitations?",
+      "answerFlags": "",
+      "questionPattern": "enterprise|organization|outside|culture|structure",
+      "questionFlags": "",
+      "clue": "Gặp [[enterprise]] (tổ chức), [[culture]] (văn hóa), [[organizational structure]] (cơ cấu), cản trở dùng giải pháp.",
+      "principle": "[[Enterprise Limitations]] = giới hạn bên ngoài bản thân giải pháp khiến tổ chức chưa nhận đủ giá trị.",
+      "contrast": "[[Solution Limitations]] = vấn đề bên trong giải pháp; [[Enterprise Limitations]] = vấn đề về tổ chức, quy trình, văn hóa."
+    },
+    {
+      "answerPattern": "assess solution limitations|solution limitations?",
+      "answerFlags": "",
+      "questionPattern": "under.perform|solution|root cause|defect",
+      "questionFlags": "",
+      "clue": "Gặp [[under-performing solution]] (giải pháp hoạt động kém), [[root causes]] (nguyên nhân gốc) thuộc bản thân giải pháp.",
+      "principle": "[[Assess Solution Limitations]] = tìm những giới hạn bên trong solution khiến kết quả thực tế thấp hơn mong đợi.",
+      "contrast": "[[Assess Enterprise Limitations]] tìm trở ngại của tổ chức (quy trình, con người, văn hóa), không phải lỗi nội tại của solution."
+    },
+    {
+      "answerPattern": "\\bquantitative\\b",
+      "answerFlags": "",
+      "questionPattern": "numeric|count|number|rate|quantitative|baseline",
+      "questionFlags": "",
+      "clue": "Thấy [[numeric / count / rate]] (con số / số lượng / tỷ lệ).",
+      "principle": "[[Quantitative]] = chỉ số định lượng có thể đo hoặc đếm bằng số.",
+      "contrast": "[[Qualitative]] = cảm nhận, thái độ, đánh giá chủ quan; không phải cứ có số là đủ phản ánh giá trị."
+    },
+    {
+      "answerPattern": "\\bqualitative\\b",
+      "answerFlags": "",
+      "questionPattern": "subjective|perception|attitude",
+      "questionFlags": "",
+      "clue": "Gặp [[perception]] (nhận thức), [[attitude]] (thái độ), [[subjective]] (chủ quan).",
+      "principle": "[[Qualitative]] = dữ liệu định tính mô tả cảm nhận, đánh giá của người dùng/stakeholder.",
+      "contrast": "[[Quantitative]] = số liệu đo đếm như số lần, lượng, tỷ lệ."
+    },
+    {
+      "answerPattern": "\\btransition requirements\\b",
+      "answerFlags": "",
+      "questionPattern": "training|data conversion|transition|temporary",
+      "questionFlags": "",
+      "clue": "Gặp [[training]] (đào tạo), [[data conversion]] (chuyển đổi dữ liệu) hoặc nhu cầu chỉ có lúc chuyển sang hệ thống mới.",
+      "principle": "[[Transition Requirements]] = yêu cầu tạm thời, chỉ cần để chuyển từ [[current state]] sang [[future state]].",
+      "contrast": "[[Solution Requirements]] là khả năng/chất lượng của giải pháp khi vận hành lâu dài, không chỉ giai đoạn chuyển đổi."
+    }
   ]
 }
