@@ -4581,7 +4581,7 @@ if (
           </div>
         </div>
 
-        <div className="ccba-three-pane grid gap-2 lg:min-h-0 lg:flex-1 lg:grid-cols-[minmax(0,42fr)_minmax(0,32fr)_minmax(0,26fr)]">
+       <div className="ccba-three-pane grid gap-2 lg:min-h-0 lg:flex-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)]">
           <main ref={questionPaneRef} className="ccba-quiz-panel min-w-0 min-h-0 overflow-y-auto rounded-xl border border-white/10 bg-white/[0.04] p-4 md:p-5">
             <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-2">
               <div>
