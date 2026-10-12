@@ -171,6 +171,18 @@ type CuratedQuestionInsight = {
   contrast: string;
   source: string;
   reviewStatus?: string;
+  coverageLevel?: 'existing' | 'rule' | 'named' | 'supported' | 'context' | 'gap';
+  sourceOrdinal?: number;
+  originalNumber?: number;
+  matchScore?: number;
+  reviewedByHuman?: boolean;
+  evidence?: {
+    source: string | null;
+    excerpt?: string;
+    route?: string;
+    directSupport: boolean;
+    matchMethod?: string;
+  };
 };
 type ExcelExamRule = {
   answerPattern: string;
@@ -3217,13 +3229,17 @@ function extractExcelLineMatchingAnswer(text: string, answer: string): string | 
 function buildFocusedExcelInsight(
   question:Question, guide:BabokStudyGuide, kb:ExcelKnowledge | null | undefined,
   basic:PracticalKeyInsight
-): {insight:PracticalKeyInsight; source?:string; verified:boolean} {
+): {insight:PracticalKeyInsight; source?:string; verified:boolean; reviewStatus?:string; coverageLevel?:string; evidence?: CuratedQuestionInsight['evidence']} {
   const curated=findCuratedQuestionInsight(question,kb);
   if (curated) {
     return {
-      insight: {clue:curated.clue, principle:curated.principle, contrast:curated.contrast, specific:true},
+      insight: {clue:curated.clue, principle:curated.principle, contrast:curated.contrast, specific: Boolean(curated.reviewedByHuman || (curated.evidence?.directSupport && curated.coverageLevel !== 'gap'))},
       source:curated.source,
-      verified:true
+      // Có dữ liệu cho đủ 1.017 câu không đồng nghĩa đã thẩm định chuyên môn 1.017 lời giải.
+      verified:curated.reviewedByHuman === true,
+      reviewStatus:curated.reviewStatus,
+      coverageLevel:curated.coverageLevel,
+      evidence:curated.evidence
     };
   }
   const answer=question.options.find(x=>x.isCorrect)?.text || '';
@@ -3449,8 +3465,20 @@ function BabokStudyGuidePanel({
       </section>
 
       <div className="border-t border-white/10 py-3 text-[11px] leading-5 text-slate-400">
-        <p>Nguồn học: <span className="text-sky-300">{sourceLine}</span></p>
-        {!contextual.verified && <p className="mt-1 text-amber-300">Câu này chưa có lời giải riêng được biên tập/đối chiếu đầy đủ. Phần hiện tại chỉ là gợi ý, hãy đối chiếu BABOK bên phải.</p>}
+        <p>Nguồn học tham khảo: <span className="text-sky-300">{contextual.evidence?.directSupport && contextual.evidence.source ? contextual.evidence.source : sourceLine}</span></p>
+        {contextual.evidence?.directSupport && contextual.evidence.excerpt && (
+          <p className="mt-1.5 leading-5 text-slate-400">
+            <span className="font-semibold text-sky-300">Đoạn tài liệu liên quan: </span>
+            <span>“{contextual.evidence.excerpt}”</span>
+          </p>
+        )}
+        {contextual.reviewStatus ? (
+          <p className={cn('mt-1', ['context', 'gap'].includes(contextual.coverageLevel || '') ? 'text-amber-300' : 'text-slate-400')}>
+            Trạng thái nội dung: {contextual.reviewStatus}.
+          </p>
+        ) : !contextual.verified && (
+          <p className="mt-1 text-amber-300">Chưa có lời giải riêng được đối chiếu đầy đủ. Hãy kiểm tra BABOK bên phải.</p>
+        )}
       </div>
     </div>
   );
