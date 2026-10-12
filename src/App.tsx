@@ -1583,26 +1583,23 @@ function escapeRegExp(value: string): string {
   return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
+/** Câu hỏi chỉ tô đúng các KEY đã được sử dụng ở mục Cách nhận diện.
+ * Không lấy thuật ngữ ngẫu nhiên từ glossary hay đáp án để tô ở đây. */
 function highlightLearningKeywords(
   text: string,
-  keywords: KeywordItem[]
+  phrases: string[]
 ): React.ReactNode {
-  const phrases = keywords
-    .filter((item) => item.appearsInQuestion)
-    .map((item) => item.en)
-    .sort((left, right) => right.length - left.length);
+  const unique = Array.from(new Set(phrases.map(p => p.toLocaleLowerCase())));
+  const matched = phrases
+    .filter((p, i) => p.trim().length >= 3 && unique.indexOf(p.toLocaleLowerCase()) === i)
+    .sort((a, b) => b.length - a.length);
+  if (!matched.length) return text;
 
-  if (phrases.length === 0) return text;
-
-  const pattern = new RegExp(`(${phrases.map(escapeRegExp).join('|')})`, 'gi');
-  const keywordSet = new Set(phrases.map((phrase) => phrase.toLowerCase()));
-
-  return text.split(pattern).map((part, index) =>
-    keywordSet.has(part.toLowerCase()) ? (
-      <mark
-        key={`${part}-${index}`}
-        className="ccba-question-key font-bold text-sky-300"
-      >
+  const rx = new RegExp(`(${matched.map(escapeRegExp).join('|')})`, 'gi');
+  const keys = new Set(matched.map(p => p.toLocaleLowerCase()));
+  return text.split(rx).map((part, index) =>
+    keys.has(part.toLocaleLowerCase()) ? (
+      <mark key={`${part}-${index}`} className="ccba-question-key font-bold text-sky-300">
         {part}
       </mark>
     ) : (
@@ -2995,6 +2992,16 @@ function buildPracticalKeyInsight(
     specific: true,
   });
 
+  // Người hiểu công việc thực tế: ưu tiên dấu hiệu nằm nguyên văn trong câu hỏi.
+  if (includesAnswer(/domain subject matter expert|domain sme/) &&
+      includesQuestion(/staff who perform|feasible for the staff|operational procedures|business process/)) {
+    return insight(
+      'Cụm [[feasible for the staff]] (khả thi với người trực tiếp thực hiện quy trình) cho thấy đề cần người am hiểu thực tế công việc. Nếu đề nhấn mạnh [[staff who perform]], hãy nghĩ đến chuyên gia nghiệp vụ.',
+      '[[Domain Subject Matter Expert (Domain SME)]] = người có hiểu biết sâu về nghiệp vụ và cách quy trình thực sự được thực hiện; họ đánh giá tính phù hợp/khả thi về mặt nghiệp vụ.',
+      '[[Implementation SME]] tập trung triển khai giải pháp; [[Operational Support]] hỗ trợ vận hành; [[Sponsor]] bảo trợ, cấp nguồn lực. Không đánh đồng các vai trò này với [[Domain SME]].'
+    );
+  }
+
   // Excel KA Detail_PA · 5.1: Relationship types: Derive / Depends (Necessity, Effort) / Satisfy / Validate.
   if (includesAnswer(/\bnecessity\b/) && includesQuestion(/only makes sense|if a related|related requirement.*implemented|cannot.*unless/)) {
     return insight(
@@ -3584,11 +3591,98 @@ function buildFocusedExcelInsight(
   }
   return {
     insight:{
-      clue:evidence.length ? `Trong đề có ${evidence.join(' + ')} → liên hệ [[${answerCue}]].` : basic.specific ? basic.clue : `${contextualQuestionExcerpt(question.text)} Đáp án nguồn: [[${answer}]].`,
+      // Quy tắc riêng đã biên tập cho câu hỏi có ưu tiên cao hơn các từ khóa chung.
+      clue:basic.specific ? basic.clue : evidence.length ? `Trong đề có ${evidence.join(' + ')} → đối chiếu với [[${answerCue}]].` : `${contextualQuestionExcerpt(question.text)} Đáp án nguồn: [[${answer}]].`,
       principle,
       contrast:selectedContrast,
       specific: Boolean(concrete || basic.specific || technique?.keyLearning)
     }, source, verified:Boolean(concrete || basic.specific)
+  };
+}
+
+
+/** Một nguồn bằng chứng duy nhất cho chữ xanh ở câu hỏi và Cách nhận diện.
+ * Chỉ lấy cụm có thật trong nguyên văn câu hỏi, KHÔNG tô tự động theo từ điển.
+ */
+type QuestionKeyAlignment = {
+  phrases: string[];
+  recognition: string;
+};
+
+function locateExactQuestionPhrase(questionText: string, cue: string): string | null {
+  const trimmed = cue.trim();
+  if (!trimmed || trimmed.length < 3 || /[\/→·]/.test(trimmed)) return null;
+  const rx = new RegExp(escapeRegExp(trimmed).replace(/\\s\+/g, '\\s+'), 'i');
+  const match = rx.exec(questionText);
+  if (!match) return null;
+  const before = questionText[match.index - 1] || '';
+  const after = questionText[match.index + match[0].length] || '';
+  if (/\w/.test(before) || /\w/.test(after)) return null;
+  return match[0];
+}
+
+function alignRecognitionToQuestion(
+  questionText: string,
+  insight: PracticalKeyInsight
+): QuestionKeyAlignment {
+  const cues: Array<{ phrase: string; vi: string }> = [];
+  const markedRx = /\[\[([^\]]+)\]\](?:\s*\(([^)]+)\))?/g;
+  for (const match of insight.clue.matchAll(markedRx)) {
+    const phrase = locateExactQuestionPhrase(questionText, match[1]);
+    if (phrase && !cues.some(c => c.phrase.toLowerCase() === phrase.toLowerCase())) {
+      cues.push({ phrase, vi: match[2] || '' });
+    }
+  }
+
+  // Khi quy tắc riêng không trích dẫn nguyên văn, dùng tín hiệu có mặt thật
+  // trong đề; không tự suy ra KEY từ đáp án đúng.
+  if (!cues.length) {
+    for (const [rx, vi] of QUESTION_KEY_PHRASES) {
+      const match = rx.exec(questionText);
+      if (!match) continue;
+      const phrase = match[0].trim();
+      if (phrase.length < 5 || cues.some(c => c.phrase.toLowerCase() === phrase.toLowerCase())) continue;
+      cues.push({ phrase, vi });
+      if (cues.length === 3) break;
+    }
+  }
+
+  // Tránh phủ màu các cụm con trùng lên cụm dài. Cả hai vị trí dùng cùng danh sách.
+  const sorted = cues.sort((a, b) => b.phrase.length - a.phrase.length);
+  const chosen: typeof sorted = [];
+  for (const item of sorted) {
+    const start = questionText.toLowerCase().indexOf(item.phrase.toLowerCase());
+    if (start < 0) continue;
+    const end = start + item.phrase.length;
+    const overlaps = chosen.some(selected => {
+      const selectedStart = questionText.toLowerCase().indexOf(selected.phrase.toLowerCase());
+      return start < selectedStart + selected.phrase.length && end > selectedStart;
+    });
+    if (!overlaps) chosen.push(item);
+    if (chosen.length >= 3) break;
+  }
+  const phrases = chosen.map(item => item.phrase);
+
+  // Các cụm [[...]] trong hướng dẫn nhưng KHÔNG có nguyên văn ở đề
+  // sẽ chỉ là chữ bình thường, không được đánh đồng với KEY đã highlight.
+  const sourceCase = new Map(phrases.map(p => [p.toLowerCase(), p]));
+  const safeExplanation = insight.clue.replace(/\[\[([^\]]+)\]\]/g, (_, candidate: string) => {
+    const fromQuestion = sourceCase.get(candidate.toLowerCase());
+    return fromQuestion ? `[[${fromQuestion}]]` : candidate;
+  });
+  if (!phrases.length) {
+    return {
+      phrases: [],
+      recognition: `Chưa xác định được cụm KEY nguyên văn đủ tin cậy để tô trong câu hỏi. ${insight.clue.replace(/\[\[([^\]]+)\]\]/g, '$1')}`
+    };
+  }
+
+  // Bảo đảm TẤT CẢ chữ xanh trong đề đều có mặt ở Cách nhận diện (cùng ký tự).
+  const missing = chosen.filter(item => !new RegExp(`\\[\\[${escapeRegExp(item.phrase)}\\]\\]`, 'i').test(safeExplanation));
+  const added = missing.map(item => `[[${item.phrase}]]${item.vi ? ` (${item.vi})` : ''}`).join(' + ');
+  return {
+    phrases,
+    recognition: added ? `KEY xuất hiện trong đề: ${added}. ${safeExplanation}` : safeExplanation,
   };
 }
 
@@ -3603,17 +3697,20 @@ function BabokStudyGuidePanel({
   question,
   note,
   excelKnowledge,
+  alignedKeys,
 }: {
   question: Question;
   note?: LearningNote;
   selectedOptionId?: string;
   excelKnowledge?: ExcelKnowledge | null;
+  alignedKeys?: QuestionKeyAlignment;
 }) {
   const guide = buildBabokStudyGuide(question);
   const memory = buildMinimalBabokMemory(question, guide, note);
   const basicInsight = buildPracticalKeyInsight(question, guide);
   const contextual = buildFocusedExcelInsight(question, guide, excelKnowledge, basicInsight);
   const practical = contextual.insight;
+  const keyAlignment = alignedKeys || alignRecognitionToQuestion(question.text, practical);
   const correct = question.options.find(option => option.isCorrect);
   const isNegative = isNegativeExamQuestion(question.text);
   const sourceLine = contextual.source || (memory.section ? `BABOK ${memory.section}` : 'Nguồn cần đối chiếu');
@@ -3633,7 +3730,7 @@ function BabokStudyGuidePanel({
         <h4 className="mb-2 flex items-center gap-2 text-xs font-bold text-slate-100"><span className="ccba-step-num">01</span> Cách nhận diện</h4>
         <p className="text-[13px] leading-[1.85] text-slate-300">
           {isNegative && <strong className="text-amber-300">NOT / EXCEPT / LEAST = tìm phương án ngoại lệ. </strong>}
-          {emphasizeBilingualKeys(practical.clue)}
+          {emphasizeBilingualKeys(keyAlignment.recognition)}
         </p>
       </section>
 
@@ -4518,11 +4615,15 @@ if (
   const hasAnsweredCurrent = Boolean(currentPickedId);
   const currentAnswerIsCorrect = Boolean(currentPickedOption?.isCorrect);
   const currentLearningNote = learningNotes[currentQuestion.id];
-  const currentKeywords =
-    currentLearningNote?.keywords ||
-    (hasAnsweredCurrent && currentCorrectOption
-      ? extractLearningKeywords(currentQuestion.text, currentCorrectOption.text)
-      : []);
+  // Một phép phân tích chung cho cột Câu hỏi và cột Học KEY.
+  const currentKeyAlignment = (hasAnsweredCurrent || session.submitted)
+    ? (() => {
+        const guide = buildBabokStudyGuide(currentQuestion);
+        const basic = buildPracticalKeyInsight(currentQuestion, guide);
+        const focused = buildFocusedExcelInsight(currentQuestion, guide, excelKnowledge, basic);
+        return alignRecognitionToQuestion(currentQuestion.text, focused.insight);
+      })()
+    : null;
 
   const goToQuestion = (nextIndex: number) => {
     const safeIndex = Math.max(
@@ -4581,7 +4682,7 @@ if (
           </div>
         </div>
 
-       <div className="ccba-three-pane grid gap-2 lg:min-h-0 lg:flex-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)]">
+        <div className="ccba-three-pane grid gap-2 lg:min-h-0 lg:flex-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)]">
           <main ref={questionPaneRef} className="ccba-quiz-panel min-w-0 min-h-0 overflow-y-auto rounded-xl border border-white/10 bg-white/[0.04] p-4 md:p-5">
             <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-2">
               <div>
@@ -4607,8 +4708,8 @@ if (
             </div>
 
             <h2 className="mt-4 whitespace-pre-line text-[15px] font-semibold leading-[1.8] md:text-[16px]">
-              {hasAnsweredCurrent
-                ? highlightLearningKeywords(currentQuestion.text, currentKeywords)
+              {(hasAnsweredCurrent || session.submitted)
+                ? highlightLearningKeywords(currentQuestion.text, currentKeyAlignment?.phrases || [])
                 : currentQuestion.text}
             </h2>
 
@@ -4727,7 +4828,7 @@ if (
               <div className="min-h-0 flex-1">
                 {excelLoadError && <p className="px-4 pt-2 text-xs text-amber-200">{excelLoadError} — phần KEY cơ bản vẫn hoạt động.</p>}
                 {(hasAnsweredCurrent || session.submitted) ? (
-                  <BabokStudyGuidePanel question={currentQuestion} note={currentLearningNote} excelKnowledge={excelKnowledge} selectedOptionId={currentPickedId} />
+                  <BabokStudyGuidePanel question={currentQuestion} note={currentLearningNote} excelKnowledge={excelKnowledge} selectedOptionId={currentPickedId} alignedKeys={currentKeyAlignment || undefined} />
                 ) : (
                   <div className="px-5 py-6 text-sm leading-7 text-slate-400">Sau khi trả lời, vùng này sẽ hiện <strong className="text-sky-300">KEY quyết định</strong>, cách nhận diện trong đề, kiến thức nền và các đáp án dễ nhầm.</div>
                 )}
