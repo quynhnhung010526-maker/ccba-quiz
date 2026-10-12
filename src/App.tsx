@@ -163,6 +163,24 @@ type ExcelMemory = {
   source: string;
 };
 type ExcelDictionaryTerm = { en: string; vi: string };
+type CuratedQuestionInsight = {
+  anchor: string;
+  correctAnswer: string;
+  clue: string;
+  principle: string;
+  contrast: string;
+  source: string;
+  reviewStatus?: string;
+};
+type ExcelExamRule = {
+  answerPattern: string;
+  answerFlags?: string;
+  questionPattern: string;
+  questionFlags?: string;
+  clue: string;
+  principle: string;
+  contrast: string;
+};
 type ExcelTask = { section: string; name: string; purpose: string; elements?: string; inputs?: string; outputs?: string; source: string; keyLearning?: PracticalKeyInsight };
 type ExcelKnowledge = {
   techniques: ExcelTechnique[];
@@ -170,6 +188,10 @@ type ExcelKnowledge = {
   dictionary: ExcelDictionaryTerm[];
   tasks: ExcelTask[];
   comparison?: Array<{name:string;when:string;people?:string;preparation?:string;result?:string;source:string}>;
+  // Lời giải riêng cho câu: key cấp 1 = số file CCBA (1-9), key cấp 2 = số câu gốc hoặc @thứ tự trong file.
+  questionExplanations?: Record<string, Record<string, CuratedQuestionInsight>>;
+  // Các quy tắc KEY có thể tái sử dụng, nhưng phải kiểm tra điều kiện câu hỏi và đáp án đúng.
+  examRules?: ExcelExamRule[];
 };
 
 const STORAGE_VERSION = 2;
@@ -2976,373 +2998,47 @@ function emphasizeBilingualKeys(value: string): React.ReactNode {
   );
 }
 
+/** Đọc QUY TẮC từ JSON, không viết kiến thức học cứng trong App.tsx. */
 function buildPracticalKeyInsight(
   question: Question,
-  guide: BabokStudyGuide
+  guide: BabokStudyGuide,
+  kb?: ExcelKnowledge | null
 ): PracticalKeyInsight {
-  const q = question.text.toLowerCase();
-  const answer = (question.options.find((item) => item.isCorrect)?.text || '').toLowerCase();
-  const section = guide.primary.section;
-  const includesAnswer = (pattern: RegExp) => pattern.test(answer);
-  const includesQuestion = (pattern: RegExp) => pattern.test(q);
-  const insight = (clue: string, principle: string, contrast: string): PracticalKeyInsight => ({
-    clue,
-    principle,
-    contrast,
-    specific: true,
-  });
-
-  // Người hiểu công việc thực tế: ưu tiên dấu hiệu nằm nguyên văn trong câu hỏi.
-  if (includesAnswer(/domain subject matter expert|domain sme/) &&
-      includesQuestion(/staff who perform|feasible for the staff|operational procedures|business process/)) {
-    return insight(
-      'Cụm [[feasible for the staff]] (khả thi với người trực tiếp thực hiện quy trình) cho thấy đề cần người am hiểu thực tế công việc. Nếu đề nhấn mạnh [[staff who perform]], hãy nghĩ đến chuyên gia nghiệp vụ.',
-      '[[Domain Subject Matter Expert (Domain SME)]] = người có hiểu biết sâu về nghiệp vụ và cách quy trình thực sự được thực hiện; họ đánh giá tính phù hợp/khả thi về mặt nghiệp vụ.',
-      '[[Implementation SME]] tập trung triển khai giải pháp; [[Operational Support]] hỗ trợ vận hành; [[Sponsor]] bảo trợ, cấp nguồn lực. Không đánh đồng các vai trò này với [[Domain SME]].'
-    );
+  const q = question.text;
+  const answer = question.options.find((item) => item.isCorrect)?.text || '';
+  for (const rule of kb?.examRules || []) {
+    try {
+      const answerRx = new RegExp(rule.answerPattern, rule.answerFlags || 'i');
+      const questionRx = new RegExp(rule.questionPattern, rule.questionFlags || 'i');
+      if (answerRx.test(answer) && questionRx.test(q)) {
+        return {clue:rule.clue, principle:rule.principle, contrast:rule.contrast, specific:true};
+      }
+    } catch {
+      // Một quy tắc nhập sai định dạng không được phép làm hỏng màn hình câu hỏi.
+      continue;
+    }
   }
-
-  // Excel KA Detail_PA · 5.1: Relationship types: Derive / Depends (Necessity, Effort) / Satisfy / Validate.
-  if (includesAnswer(/\bnecessity\b/) && includesQuestion(/only makes sense|if a related|related requirement.*implemented|cannot.*unless/)) {
-    return insight(
-      '[[only makes sense]] (chỉ có ý nghĩa) khi một [[related requirement]] (yêu cầu liên quan) được triển khai.',
-      '[[Depends – Necessity]] = chỉ triển khai requirement A có ý nghĩa nếu requirement B cũng được triển khai; thuộc các kiểu [[traceability relationships]].',
-      '[[Effort]] = có B thì việc làm A dễ hơn, nhưng A vẫn có thể làm riêng; [[Necessity]] = A chỉ có ý nghĩa khi B tồn tại.'
-    );
-  }
-  if (includesAnswer(/\beffort\b/) && includesQuestion(/easier|depends|implement|related requirement/)) {
-    return insight(
-      '[[easier to implement]] (dễ triển khai hơn) khi có requirement khác.',
-      '[[Depends – Effort]] = một yêu cầu có thể triển khai dễ hơn nếu yêu cầu liên quan được triển khai trước.',
-      '[[Necessity]] = yêu cầu chỉ có ý nghĩa nếu yêu cầu liên quan được làm; [[Effort]] = dễ làm hơn, không nhất thiết là bắt buộc.'
-    );
-  }
-  if (includesAnswer(/\bderive\b/) && includesQuestion(/derived|from another requirement|level of abstraction|trac/)) {
-    return insight(
-      '[[derived from]] = được suy ra từ yêu cầu khác, thường khác [[level of abstraction]] (mức khái quát).',
-      '[[Derive]] = liên hệ yêu cầu mức cao với yêu cầu mức thấp được suy ra từ nó.',
-      '[[Depends]] = phụ thuộc để triển khai; [[Derive]] = nguồn gốc hình thành yêu cầu.'
-    );
-  }
-  if (includesAnswer(/\bvalidate\b/) && includesQuestion(/test case|traceability|relationship between a requirement|fulfills/)) {
-    return insight(
-      '[[test case]] (ca kiểm thử) kiểm tra solution có đáp ứng [[requirement]] hay không.',
-      'Quan hệ [[Validate]] trong traceability nối requirement với test case / phần tử dùng để xác nhận yêu cầu được đáp ứng.',
-      '[[Satisfy]] = solution component thực hiện requirement; [[Validate]] = test case xác nhận requirement đã được thực hiện.'
-    );
-  }
-  if (includesAnswer(/\bsatisfy\b/) && includesQuestion(/implementation element|solution component|implementing|traceability/)) {
-    return insight(
-      '[[implementation element]] (thành phần triển khai) đang [[satisfying requirements]] (đáp ứng yêu cầu).',
-      '[[Satisfy]] = mối quan hệ giữa một component được triển khai và requirement mà component đó đáp ứng.',
-      '[[Validate]] nối yêu cầu với kiểm thử; [[Satisfy]] nối yêu cầu với phần thực thi.'
-    );
-  }
-  if (includesAnswer(/benefit.*penalty.*cost.*risk.*dependenc/i) && includesQuestion(/factor|prioritization|prioritize/)) {
-    return insight(
-      '[[factors]] (tiêu chí) ảnh hưởng tới [[requirements prioritization]] (ưu tiên yêu cầu) → hỏi danh sách đầy đủ.',
-      'Excel KA Detail_PA · [[5.3]]: 8 yếu tố [[Benefit]] (lợi ích), [[Penalty]] (hệ quả không làm), [[Cost]], [[Risk]], [[Dependencies]], [[Time Sensitivity]], [[Stability]], [[Regulatory/Policy Compliance]].',
-      '[[Urgency]] được nhắc ở phần attributes, nhưng không thay một trong tám yếu tố [[Basis for Prioritization]] của mục 5.3.4.'
-    );
-  }
-  if (includesAnswer(/\bpenalt(?:y|ies)\b/) && includesQuestion(/regulation|compliance|fine|non.compliance|consequen|not implement/)) {
-    return insight(
-      '[[penalties]] (hậu quả/phạt), [[regulatory compliance]] (tuân thủ quy định) hoặc hệ quả nếu không triển khai.',
-      '[[Penalty]] là chi phí/hậu quả do **không thực hiện** yêu cầu; Excel KA Detail_PA · 5.3 nhấn mạnh không chỉ là tiền phạt mà cả tác động tiêu cực cho khách hàng.',
-      '[[Risk]] = khả năng yêu cầu không tạo được giá trị hoặc không thể thực hiện; [[Penalty]] = hậu quả của việc bỏ qua yêu cầu.'
-    );
-  }
-  if (includesAnswer(/collaborative.*research.*experiments?/i) && includesQuestion(/types? of elicitation|common types?/)) {
-    return insight(
-      '[[three common types of elicitation]] = hỏi chính xác 3 nhóm hình thức khai thác thông tin.',
-      'Excel Học thuộc · 4.2: [[Collaborative]] = trao đổi trực tiếp; [[Research]] = đọc/phân tích tài liệu, dữ liệu; [[Experiments]] = thử nghiệm mới biết kết quả.',
-      '[[Observation / Interviews / Focus Groups]] là **kỹ thuật** có thể áp dụng, không phải tên đầy đủ của 3 **nhóm elicitation**.'
-    );
-  }
-  if (includesAnswer(/specify.*verify.*validate.*architecture.*design.*solution/i) && includesQuestion(/complete set of tasks|tasks in the requirements analysis|knowledge area/)) {
-    return insight(
-      '[[complete set of tasks]] (đủ danh sách task) thuộc [[Requirements Analysis and Design Definition]].',
-      'BABOK Chapter 7 có 6 task: [[7.1 Specify and Model]], [[7.2 Verify]], [[7.3 Validate]], [[7.4 Requirements Architecture]], [[7.5 Design Options]], [[7.6 Analyze Potential Value and Recommend Solution]].',
-      '[[Prioritize Requirements]] thuộc KA 5; [[Assess Risks]] thuộc KA 6. Đừng lấy chúng thay cho một task của KA 7.'
-    );
-  }
-  // Quy tắc học thuộc từ Excel: Học thuộc · 7.2.4 (đặc tính của requirements).
-  if (includesAnswer(/\batomic\b/) && includesQuestion(/self.contain|independent|independently|other requirements/)) {
-    return insight(
-      '[[self-contained]] = tự đầy đủ; [[independently]] = hiểu độc lập, không cần đọc yêu cầu khác.',
-      '[[Atomic]] là một đặc tính chất lượng của requirement: mỗi yêu cầu chứa một ý độc lập, có thể hiểu riêng. Excel Học thuộc · 7.2.4.',
-      '[[Complete]] = đủ thông tin để tiếp tục công việc; [[Atomic]] = tự đứng độc lập. Đề nhấn mạnh hiểu độc lập → [[Atomic]].'
-    );
-  }
-  if (includesAnswer(/\bcomplete\b/) && includesQuestion(/missing|enough|detail|further work|additional information|not provide|not specify/)) {
-    return insight(
-      '[[enough detail]] (đủ chi tiết), [[missing]] (thiếu) hoặc không đủ để thực hiện bước tiếp theo.',
-      '[[Complete]] = có đủ nội dung và mức chi tiết để công việc tiếp tục. Excel Học thuộc · 7.2.4.',
-      '[[Unambiguous]] = không thể hiểu theo nhiều nghĩa; [[Atomic]] = hiểu độc lập; [[Complete]] = không thiếu thông tin cần thiết.'
-    );
-  }
-  if (includesAnswer(/\bunambiguous\b/) && includesQuestion(/ambigu|interpret|confus|unclear|different meaning/)) {
-    return insight(
-      '[[ambiguous]] (mơ hồ), [[interpret]] (diễn giải) hoặc nhiều bên hiểu một yêu cầu khác nhau.',
-      '[[Unambiguous]] = yêu cầu được diễn đạt rõ, có thể xác định solution có đáp ứng hay không. Excel Học thuộc · 7.2.4.',
-      '[[Consistent]] = không mâu thuẫn với yêu cầu khác; [[Unambiguous]] = bản thân câu yêu cầu không đa nghĩa.'
-    );
-  }
-  if (includesAnswer(/\btestable\b/) && includesQuestion(/test|verify|measure|fulfilled/)) {
-    return insight(
-      '[[verify]] (kiểm tra) liệu yêu cầu đã được [[fulfilled]] (đáp ứng) hay chưa.',
-      '[[Testable]] = có cách đánh giá/kiểm thử xác nhận requirement được thực hiện. Excel Học thuộc · 7.2.4.',
-      '[[Feasible]] = có thể thực hiện với ngân sách/thời gian/rủi ro; [[Testable]] = có thể kiểm tra đã đáp ứng.'
-    );
-  }
-  if (includesAnswer(/\bmaintain requirements\b|\breusable\b/) && includesQuestion(/long.term|reuse|other initiative|preserve|current|reusable/)) {
-    return insight(
-      '[[long-term use]] (dùng dài hạn), [[reuse]] (sử dụng lại) hoặc duy trì nguồn gốc/ý nghĩa của requirements.',
-      '[[Maintain Requirements]] = giữ requirement đúng, cập nhật và dễ truy cập để tái sử dụng. Excel Học thuộc: yêu cầu tái sử dụng phải được đặt tên, định nghĩa và lưu giữ rõ ràng.',
-      '[[Trace Requirements]] = liên kết nguồn gốc & tác động; [[Maintain Requirements]] = giữ yêu cầu có thể tái sử dụng theo thời gian.'
-    );
-  }
-  if (includesAnswer(/\bgoals?\b|\bbusiness goal\b/) && includesQuestion(/long.term|ongoing|qualitative|state or condition/)) {
-    return insight(
-      '[[longer-term]] (dài hạn), [[ongoing]] (liên tục), [[qualitative]] (định tính).',
-      '[[Business Goal]] = hướng lớn, kết quả mong muốn có tính dài hạn/định tính; từ goal mới cụ thể hóa thành [[SMART objective]] có thể đo.',
-      '[[Objective]] phải cụ thể/đo lường được, không chỉ là một mong muốn dài hạn.'
-    );
-  }
-  if (includesAnswer(/\bstakeholder engagement\b/) && includesQuestion(/willingness|encourage|work towards a common goal/)) {
-    return insight(
-      '[[willingness]] (sẵn lòng) + [[engage]] (tham gia/cộng tác) cùng business analyst.',
-      '[[Stakeholder Engagement]] (kết quả của Manage Stakeholder Collaboration) là stakeholder sẵn sàng phối hợp khi cần; khác tài liệu kế hoạch [[Stakeholder Engagement Approach]].',
-      '[[Stakeholder Engagement Approach]] = kế hoạch phối hợp (output của Plan Stakeholder Engagement); [[Stakeholder Engagement]] = sự tham gia thực tế.'
-    );
-  }
-  if (includesAnswer(/\bresearch\b/) && includesQuestion(/historical data|trend|studying|material|documents|sources/)) {
-    return insight(
-      '[[historical data]] (dữ liệu quá khứ), [[identify trends]] (tìm xu hướng), [[studying information]] (nghiên cứu nguồn).',
-      '[[Research]] là một trong ba loại [[elicitation]]: phân tích nguồn dữ liệu/tài liệu; không cần trực tiếp tương tác stakeholder trong mỗi hoạt động.',
-      '[[Collaborative]] = tương tác trực tiếp; [[Experiments]] = phải thử nghiệm kiểm soát mới khám phá được thông tin.'
-    );
-  }
-  if (includesAnswer(/\bdata dictionary\b/) && includesQuestion(/data element|standardiz|data definition|business vs.*tech|technical/)) {
-    return insight(
-      '[[data elements]] (phần tử dữ liệu), [[standardize]] (chuẩn hóa định nghĩa dữ liệu) hoặc dữ liệu giữa business và IT.',
-      '[[Data Dictionary]] = định nghĩa nhất quán từng data element (có thể primitive / composite). Đây là kiến thức trong Excel · Học thuộc / Techniques Detail.',
-      '[[Glossary]] = giải nghĩa thuật ngữ nghiệp vụ; [[Data Dictionary]] = định nghĩa phần tử dữ liệu, kiểu dữ liệu/thuộc tính cụ thể.'
-    );
-  }
-  if (includesAnswer(/\brequirements attributes?\b/) && includesQuestion(/source|priority|complex|owner|status|last modified|additional information/)) {
-    return insight(
-      'Gặp [[source]] (nguồn), [[priority]] (ưu tiên), [[complexity]] (độ phức tạp) đi kèm từng yêu cầu.',
-      '[[Requirements Attributes]] = thông tin mô tả/metadata giúp quản lý requirement; Excel Học thuộc có mẹo [[CARAS SOUPS]] cho các thuộc tính.',
-      '[[Requirement]] = nội dung nhu cầu cần đáp ứng; [[Attribute]] = thông tin quản trị của requirement, không phải yêu cầu mới.'
-    );
-  }
-  if (includesAnswer(/\bstability\b/) && includesQuestion(/not final|further analysis|may change|likely to change|not stable/)) {
-    return insight(
-      'Gặp [[not finalized]] (chưa chốt) + [[further analysis]] (cần phân tích thêm) ⇒ yêu cầu dễ thay đổi.',
-      'Đây là [[Stability]] (tính ổn định): xem yêu cầu có khả năng thay đổi trong tương lai hay không. Đây là một [[basis for prioritization]] (tiêu chí ưu tiên).',
-      '[[Risk]] = nguy cơ không đạt giá trị; [[Dependencies]] = yêu cầu phụ thuộc nhau. Chưa được chốt ≠ phụ thuộc.',
-    );
-  }
-  if (includesAnswer(/risk.averse|risk aversion/) && includesQuestion(/risk|uncertain|untested|tolerance/)) {
-    return insight(
-      'Đề mô tả doanh nghiệp [[avoid risk]] (né rủi ro), không muốn thử phương án chưa chắc chắn.',
-      '[[Risk-averse]] = ngại rủi ro, ưu tiên hạn chế [[uncertainty]] (bất định), có thể tránh hoặc giảm thiểu rủi ro.',
-      '[[Risk-neutral]] = chấp nhận một mức rủi ro; [[Risk-seeking]] = sẵn sàng nhận rủi ro cao để đổi giá trị kỳ vọng.',
-    );
-  }
-  if (includesAnswer(/\bpredictive\b|\bwaterfall\b/) && includesQuestion(/up.front|formal|defined before|specific phases|uncertainty|regulated|planning/)) {
-    return insight(
-      'Gặp [[upfront planning]] (lập kế hoạch trước), [[formal documentation]] (tài liệu chính thức), hoặc [[specific phases]] (giai đoạn rõ).',
-      '[[Predictive approach]] = xác định nhiều thứ trước khi triển khai, giảm [[upfront uncertainty]] (bất định ban đầu), tăng khả năng kiểm soát.',
-      '[[Adaptive approach]] = chia [[short iterations]] (vòng lặp ngắn), nhận phản hồi và điều chỉnh liên tục.',
-    );
-  }
-  if (includesAnswer(/\badaptive\b|\bagile\b/) && includesQuestion(/short iteration|rapid delivery|feedback|prioritiz|team interaction|incremental/)) {
-    return insight(
-      'Gặp [[short iterations]] (vòng lặp ngắn), [[rapid delivery]] (giao giá trị nhanh), [[feedback]] (phản hồi).',
-      '[[Adaptive approach]] = làm từng phần, nhận phản hồi và liên tục [[prioritize requirements]] (ưu tiên yêu cầu).',
-      '[[Predictive]] thiên về lên kế hoạch và đặc tả trước; [[Adaptive]] chấp nhận điều chỉnh khi biết thêm thông tin.',
-    );
-  }
-  if (includesAnswer(/verify requirements|verification of requirements|\bverify\b/) && includesQuestion(/quality|defined correctly|testable|unambiguous|complete|consisten|review/)) {
-    return insight(
-      'Thấy [[quality standards]] (tiêu chuẩn chất lượng), [[complete]] (đầy đủ), [[unambiguous]] (không mơ hồ) hoặc [[testable]] (kiểm thử được).',
-      '[[Verify Requirements]] = yêu cầu được [[defined correctly]] (viết/đặc tả đúng chuẩn), đủ chất lượng để dùng cho công việc tiếp theo.',
-      '[[Validate Requirements]] hỏi yêu cầu có đúng [[business need]] và tạo [[business value]] hay không. Nhớ: Verify = viết đúng; Validate = đúng cái cần.',
-    );
-  }
-  if (includesAnswer(/validate requirements|\bvalidation\b|\bvalidate\b/) && includesQuestion(/business value|business requirement|business need|desired future state|stakeholders.*need|align|conflicting needs/)) {
-    return insight(
-      'Thấy [[business need]] (nhu cầu), [[business value]] (giá trị), [[desired future state]] (trạng thái mong muốn).',
-      '[[Validate Requirements]] = xác nhận yêu cầu đáp ứng nhu cầu thực, phù hợp [[business goals and objectives]] và mang lại giá trị.',
-      '[[Verify]] kiểm tra chất lượng cách viết; [[Validate]] kiểm tra đúng vấn đề/giá trị cần giải quyết.',
-    );
-  }
-  if (includesAnswer(/traceability|trace requirements|traceable|requirements management tool/) && includesQuestion(/backward|forward|lineage|impact analysis|large number of requirements|trace/)) {
-    return insight(
-      'Gặp [[backward/forward traceability]] (truy vết xuôi/ngược), [[lineage]] (nguồn gốc), [[impact analysis]] (phân tích ảnh hưởng).',
-      '[[Trace Requirements]] = nối quan hệ giữa yêu cầu, thiết kế và giải pháp để biết nguồn gốc, độ bao phủ và tác động khi thay đổi.',
-      '[[Maintain Requirements]] = giữ yêu cầu chính xác và tái sử dụng; [[Trace]] = theo dõi quan hệ và tác động giữa các yêu cầu.',
-    );
-  }
-  if (includesAnswer(/requirements architecture/) && includesQuestion(/harmony|cohesive|single whole|work together|viewpoints|collection of views|completeness/)) {
-    return insight(
-      'Gặp [[work in harmony]] (phối hợp hài hòa), [[cohesive whole]] (một tổng thể nhất quán), [[views/viewpoints]].',
-      '[[Requirements Architecture]] = tổ chức các yêu cầu/mô hình thành một tổng thể cùng phục vụ [[business objectives]].',
-      '[[Traceability]] chứng minh mối liên hệ và độ bao phủ; [[Architecture]] xem các phần có phối hợp thành một tổng thể hiệu quả không.',
-    );
-  }
-  if (includesAnswer(/stakeholder engagement approach/) && includesQuestion(/output|plan stakeholder engagement|stakeholder analysis|collaboration and communication/)) {
-    return insight(
-      'Đề hỏi [[output]] (đầu ra) của [[Plan Stakeholder Engagement]] hoặc kết quả phân tích stakeholder.',
-      '[[Stakeholder Engagement Approach]] = ghi stakeholder, đặc điểm, vai trò, cách [[collaborate]] (cộng tác) và [[communicate]] (trao đổi).',
-      '[[Governance Approach]] quy định quyền ra quyết định/phê duyệt; [[Engagement Approach]] quy định cách làm việc với stakeholder.',
-    );
-  }
-  if (includesAnswer(/governance approach|plan business analysis governance/) && includesQuestion(/approv|authority|change control|decision|prioritiz/)) {
-    return insight(
-      'Gặp [[approval authority]] (quyền phê duyệt), [[change control]] (kiểm soát thay đổi), [[decision making]] (ra quyết định).',
-      '[[Governance Approach]] = ai có quyền quyết định, quy trình xét duyệt, ưu tiên, xử lý yêu cầu thay đổi.',
-      '[[Stakeholder Engagement Approach]] chú trọng ai tham gia và cộng tác ra sao, không thay thế quy định phê duyệt.',
-    );
-  }
-  if (includesAnswer(/confirm elicitation results|confirmation of elicitation results/) && includesQuestion(/accuracy|consistency|compare|source information|elicitation|discrepanc/)) {
-    return insight(
-      'Gặp [[elicitation results]] (kết quả khai thác) + [[accuracy/consistency]] (đúng và nhất quán) hoặc so với tài liệu nguồn.',
-      '[[Confirm Elicitation Results]] = đối chiếu với [[source information]] và kết quả khai thác khác, làm rõ sai lệch trước khi sử dụng.',
-      '[[Conduct Elicitation]] = thu thập thông tin; [[Confirm]] = kiểm tra thông tin thu thập có phản ánh đúng nguồn.',
-    );
-  }
-  if (includesAnswer(/prepare for elicitation|elicitation activity plan/) && includesQuestion(/prepar|before|logistic|scope|materials|technique/)) {
-    return insight(
-      'Gặp [[before elicitation]] (trước khi khai thác), [[logistics]] (hậu cần), [[supporting materials]] (tài liệu hỗ trợ).',
-      '[[Prepare for Elicitation]] = xác định [[scope]] (phạm vi), kỹ thuật, người tham gia và hậu cần; đầu ra là [[Elicitation Activity Plan]].',
-      '[[Conduct Elicitation]] là lúc thực sự thu thập thông tin; [[Prepare]] là chuẩn bị cho hoạt động đó.',
-    );
-  }
-  if (includesAnswer(/\bexperiments\b/) && includesQuestion(/proof of concept|prototyp|test|experiment/)) {
-    return insight(
-      'Gặp [[proof of concept]] (thử nghiệm tính khả thi), [[prototype]] (nguyên mẫu), [[controlled test]] (thử nghiệm kiểm soát).',
-      '[[Experiments]] là một loại [[elicitation]]: khám phá điều chưa thể biết nếu chưa thử nghiệm.',
-      '[[Research]] = tìm hiểu tài liệu/dữ liệu; [[Collaborative]] = trao đổi trực tiếp với stakeholder.',
-    );
-  }
-  if (includesAnswer(/\bscope model|\bscope modeling|\bscope modelling/) && includesQuestion(/boundar|in.scope|out.of.scope/)) {
-    return insight(
-      'Gặp [[boundary]] (ranh giới), [[in-scope/out-of-scope]] (trong/ngoài phạm vi).',
-      '[[Scope Modelling]] = thể hiện ranh giới của phạm vi đang xem xét và phân biệt thứ gì nằm trong/ngoài phạm vi.',
-      '[[Data Modelling]] diễn tả dữ liệu và quan hệ; [[Process Modelling]] diễn tả quy trình/các bước.',
-    );
-  }
-  if (includesAnswer(/data flow diagram/) && includesQuestion(/input|processed|stored|extracted|flow|systems/)) {
-    return insight(
-      'Gặp [[input → process → store → output]] (dữ liệu vào → xử lý → lưu → ra), hoặc dòng dữ liệu giữa các hệ thống.',
-      '[[Data Flow Diagram (DFD)]] = mô tả [[data flow]] (luồng dữ liệu) qua các tiến trình, kho dữ liệu và tác nhân.',
-      '[[Process Model]] thiên về trình tự công việc; [[Entity Relationship Diagram]] thiên về thực thể và quan hệ.',
-    );
-  }
-  if (includesAnswer(/sequence diagram/) && includesQuestion(/interact|information passed|during a scenario|sequence/)) {
-    return insight(
-      'Gặp [[interact during a scenario]] (tương tác trong kịch bản) và [[information passed]] (thông tin/thông điệp trao đổi).',
-      '[[Sequence Diagram]] cho thấy các đối tượng tương tác theo [[time order]] (thứ tự thời gian) và trao đổi thông điệp.',
-      '[[State Diagram]] là các trạng thái và điều kiện chuyển trạng thái; [[Process Model]] là bước xử lý nghiệp vụ.',
-    );
-  }
-  if (includesAnswer(/state diagram|state model/) && includesQuestion(/life cycle|status|trigger|change their status/)) {
-    return insight(
-      'Gặp [[life cycle]] (vòng đời), [[status]] (trạng thái), [[trigger]] (sự kiện kích hoạt chuyển trạng thái).',
-      '[[State Modelling]] biểu diễn các trạng thái của một đối tượng và điều kiện chuyển đổi giữa chúng.',
-      '[[Sequence Diagram]] là tương tác theo thời gian; [[State Diagram]] là trạng thái của một đối tượng.',
-    );
-  }
-  if (includesAnswer(/functional decomposition/) && includesQuestion(/complex function|constituent parts|break down|product scope/)) {
-    return insight(
-      'Gặp [[break down]] (phân rã), [[complex business function]] (chức năng nghiệp vụ phức tạp), [[constituent parts]].',
-      '[[Functional Decomposition]] = tách một năng lực/chức năng lớn thành các chức năng nhỏ hơn để dễ phân tích.',
-      '[[Work Breakdown Structure (WBS)]] phân rã công việc dự án; [[Functional Decomposition]] phân rã chức năng/năng lực của sản phẩm.',
-    );
-  }
-  if (includesAnswer(/\bbusiness goals?\b|\bgoals\b/) && includesQuestion(/long.term|ongoing|qualitative|business goal/)) {
-    return insight(
-      'Gặp [[long-term]] (dài hạn), [[ongoing]] (liên tục), [[qualitative]] (định tính).',
-      '[[Goal]] = định hướng/kết quả lớn mong muốn; [[Objective]] = mục tiêu cụ thể, đo được, thường theo [[SMART]].',
-      'Nếu đề nhấn mạnh [[measurable]] (đo được), [[time-bound]] (có thời hạn) thì nghiêng về [[Objective]] hơn [[Goal]].',
-    );
-  }
-  if (includesAnswer(/\bobjective|\bsmart\b/) && includesQuestion(/measur|specific|achiev|time.bound/)) {
-    return insight(
-      'Gặp [[specific / measurable / achievable / relevant / time-bound]] (cụ thể / đo được / khả thi / phù hợp / có hạn).',
-      '[[SMART]] là phép kiểm tra [[business objectives]]: kết quả phải có thước đo, không chỉ là mong muốn chung.',
-      '[[Business Goal]] có thể định tính, dài hạn; [[Business Objective]] cần cụ thể và đánh giá được mức đạt.',
-    );
-  }
-  if (includesAnswer(/solution scope/) && includesQuestion(/boundar|new capabilities|scope of the solution/)) {
-    return insight(
-      'Gặp [[boundaries of the solution]] (ranh giới giải pháp), [[new capabilities]] (năng lực mới sẽ cung cấp).',
-      '[[Solution Scope]] = mô tả phạm vi giải pháp đủ để stakeholder hiểu thay đổi sẽ cung cấp những gì.',
-      '[[Project Scope]] = công việc cần làm để triển khai; [[Solution Scope]] = bản thân giải pháp sẽ có những gì.',
-    );
-  }
-  if (includesAnswer(/\bgap analysis\b/) && includesQuestion(/current|future|gap|missing capabilities/)) {
-    return insight(
-      'Gặp [[current state]] (hiện tại) so với [[future state]] (tương lai), hỏi còn thiếu năng lực gì.',
-      '[[Gap Analysis]] = tìm khoảng cách về năng lực/nguồn lực giữa trạng thái hiện tại và mục tiêu.',
-      '[[Current State Analysis]] mô tả hiện trạng; [[Gap Analysis]] so sánh hiện trạng với tương lai để xác định điểm thiếu.',
-    );
-  }
-  if (includesAnswer(/assess enterprise limitations|enterprise limitations?/) && includesQuestion(/enterprise|organization|outside|culture|structure/)) {
-    return insight(
-      'Gặp [[enterprise]] (tổ chức), [[culture]] (văn hóa), [[organizational structure]] (cơ cấu), cản trở dùng giải pháp.',
-      '[[Enterprise Limitations]] = giới hạn bên ngoài bản thân giải pháp khiến tổ chức chưa nhận đủ giá trị.',
-      '[[Solution Limitations]] = vấn đề bên trong giải pháp; [[Enterprise Limitations]] = vấn đề về tổ chức, quy trình, văn hóa.',
-    );
-  }
-  if (includesAnswer(/assess solution limitations|solution limitations?/) && includesQuestion(/under.perform|solution|root cause|defect/)) {
-    return insight(
-      'Gặp [[under-performing solution]] (giải pháp hoạt động kém), [[root causes]] (nguyên nhân gốc) thuộc bản thân giải pháp.',
-      '[[Assess Solution Limitations]] = tìm những giới hạn bên trong solution khiến kết quả thực tế thấp hơn mong đợi.',
-      '[[Assess Enterprise Limitations]] tìm trở ngại của tổ chức (quy trình, con người, văn hóa), không phải lỗi nội tại của solution.',
-    );
-  }
-  if (includesAnswer(/\bquantitative\b/) && includesQuestion(/numeric|count|number|rate|quantitative|baseline/)) {
-    return insight(
-      'Thấy [[numeric / count / rate]] (con số / số lượng / tỷ lệ).',
-      '[[Quantitative]] = chỉ số định lượng có thể đo hoặc đếm bằng số.',
-      '[[Qualitative]] = cảm nhận, thái độ, đánh giá chủ quan; không phải cứ có số là đủ phản ánh giá trị.',
-    );
-  }
-  if (includesAnswer(/\bqualitative\b/) && includesQuestion(/subjective|perception|attitude/)) {
-    return insight(
-      'Gặp [[perception]] (nhận thức), [[attitude]] (thái độ), [[subjective]] (chủ quan).',
-      '[[Qualitative]] = dữ liệu định tính mô tả cảm nhận, đánh giá của người dùng/stakeholder.',
-      '[[Quantitative]] = số liệu đo đếm như số lần, lượng, tỷ lệ.',
-    );
-  }
-  if (includesAnswer(/\btransition requirements\b/) && includesQuestion(/training|data conversion|transition|temporary/)) {
-    return insight(
-      'Gặp [[training]] (đào tạo), [[data conversion]] (chuyển đổi dữ liệu) hoặc nhu cầu chỉ có lúc chuyển sang hệ thống mới.',
-      '[[Transition Requirements]] = yêu cầu tạm thời, chỉ cần để chuyển từ [[current state]] sang [[future state]].',
-      '[[Solution Requirements]] là khả năng/chất lượng của giải pháp khi vận hành lâu dài, không chỉ giai đoạn chuyển đổi.',
-    );
-  }
-
-  // Chỉ nêu điều có thể kiểm chứng từ nội dung JSON và đáp án gốc; không tự chế lời giải từng câu.
-  const matched = extractLearningKeywords(question.text, '').filter((item) => item.appearsInQuestion && item.vi).slice(0, 2);
-  const keywordCue = matched.length
-    ? matched.map((item) => `[[${item.en}]] (${item.vi})`).join(' + ')
-    : includesQuestion(/\bnot\b|\bexcept\b|\bleast\b|\bincorrect\b|\bfalse\b/)
-    ? '[[NOT / EXCEPT / LEAST]] = câu hỏi loại trừ, tìm phương án không phù hợp'
-    : includesQuestion(/\binputs?\b|\boutputs?\b|\btechniques?\b|\bstakeholders?\b/)
-    ? 'Nhận diện đề đang hỏi [[Inputs]] (đầu vào), [[Outputs]] (đầu ra), [[Techniques]] (kỹ thuật) hay [[Stakeholders]] (ai tham gia)'
-    : 'Xác định [[động từ nghiệp vụ]] trong đề (việc BA đang làm) và [[đầu ra mong đợi]]';
-
   return {
-    clue: `Trong đề chú ý ${keywordCue}.`,
-    principle: `Ôn [[${guide.primary.titleEn}]] (${guide.primary.titleVi}). ${guide.primary.summaryVi}`,
-    contrast: `Đây là phần ôn nền theo BABOK ${section}, chưa có quy tắc KEY riêng đã đối chiếu cho câu này. So sánh các phương án theo [[Purpose]] (mục đích), [[Inputs]] (đầu vào) và [[Outputs]] (đầu ra); không suy luận chỉ từ một từ giống nhau.`,
-    specific: false,
+    clue:'Câu này chưa có quy tắc KEY đủ cụ thể. Hãy xác định chính xác ý mà câu hỏi đang kiểm tra.',
+    principle:`Tham khảo BABOK ${guide.focus.sectionLabel} — ${guide.primary.titleEn}. Chưa có lời giải riêng đã được kiểm tra đầy đủ.`,
+    contrast:'Chưa có thông tin đủ chắc chắn để loại trừ cụ thể từng đáp án trong dữ liệu học.',
+    specific:false
   };
+}
+
+/** Câu có lời giải biên tập được xác định bằng file + câu gốc + kiểm tra nguyên văn và đáp án. */
+function findCuratedQuestionInsight(question: Question, kb?: ExcelKnowledge | null): CuratedQuestionInsight | undefined {
+  if (!kb?.questionExplanations) return undefined;
+  const setKey = detectQuestionSetKey(question);
+  if (!setKey) return undefined;
+  const notes = kb.questionExplanations[setKey];
+  const match = notes?.[`@${question.sourceOrdinal}`] || notes?.[String(question.originalNumber)];
+  if (!match || !match.anchor || !match.correctAnswer) return undefined;
+  if (!question.text.toLowerCase().includes(match.anchor.toLowerCase())) return undefined;
+  const correct = question.options.find(item => item.isCorrect)?.text || '';
+  const normalize = (s:string) => s.toLowerCase().replace(/\s+/g,' ').trim();
+  if (normalize(correct) !== normalize(match.correctAnswer)) return undefined;
+  return match;
 }
 
 /** Cho câu trả lời đã chọn: tìm đúng mục kỹ thuật / ghi chú trong Excel, không match bừa bằng mã 10.x. */
@@ -3522,6 +3218,14 @@ function buildFocusedExcelInsight(
   question:Question, guide:BabokStudyGuide, kb:ExcelKnowledge | null | undefined,
   basic:PracticalKeyInsight
 ): {insight:PracticalKeyInsight; source?:string; verified:boolean} {
+  const curated=findCuratedQuestionInsight(question,kb);
+  if (curated) {
+    return {
+      insight: {clue:curated.clue, principle:curated.principle, contrast:curated.contrast, specific:true},
+      source:curated.source,
+      verified:true
+    };
+  }
   const answer=question.options.find(x=>x.isCorrect)?.text || '';
   const answerCue=answer.length>80 ? 'nhóm kiến thức trong đáp án đúng' : answer;
   const evidence=detectQuestionKeyEvidence(question.text);
@@ -3707,7 +3411,7 @@ function BabokStudyGuidePanel({
 }) {
   const guide = buildBabokStudyGuide(question);
   const memory = buildMinimalBabokMemory(question, guide, note);
-  const basicInsight = buildPracticalKeyInsight(question, guide);
+  const basicInsight = buildPracticalKeyInsight(question, guide, excelKnowledge);
   const contextual = buildFocusedExcelInsight(question, guide, excelKnowledge, basicInsight);
   const practical = contextual.insight;
   const keyAlignment = alignedKeys || alignRecognitionToQuestion(question.text, practical);
@@ -3746,7 +3450,7 @@ function BabokStudyGuidePanel({
 
       <div className="border-t border-white/10 py-3 text-[11px] leading-5 text-slate-400">
         <p>Nguồn học: <span className="text-sky-300">{sourceLine}</span></p>
-        {!contextual.verified && <p className="mt-1 text-amber-300">Câu này chưa có KEY riêng được đối chiếu đầy đủ từ Excel. Hãy kiểm tra BABOK bên phải.</p>}
+        {!contextual.verified && <p className="mt-1 text-amber-300">Câu này chưa có lời giải riêng được biên tập/đối chiếu đầy đủ. Phần hiện tại chỉ là gợi ý, hãy đối chiếu BABOK bên phải.</p>}
       </div>
     </div>
   );
@@ -4619,7 +4323,7 @@ if (
   const currentKeyAlignment = (hasAnsweredCurrent || session.submitted)
     ? (() => {
         const guide = buildBabokStudyGuide(currentQuestion);
-        const basic = buildPracticalKeyInsight(currentQuestion, guide);
+        const basic = buildPracticalKeyInsight(currentQuestion, guide, excelKnowledge);
         const focused = buildFocusedExcelInsight(currentQuestion, guide, excelKnowledge, basic);
         return alignRecognitionToQuestion(currentQuestion.text, focused.insight);
       })()
