@@ -644,6 +644,11 @@ function detectQuestionSetKey(question: Question): string | null {
 }
 
 function knownQuestionRoute(question: Question): string | null {
+  // Câu Pre Exam 01/Q73: stakeholder hiểu nghiệp vụ, KHÔNG PHẢI Verify Requirements.
+  if (/feasible for the staff who perform/i.test(question.text) &&
+      question.options.some(option => option.isCorrect && /domain subject matter expert/i.test(option.text))) {
+    return '2.4';
+  }
   const questionSetKey = detectQuestionSetKey(question);
   if (!questionSetKey) return null;
 
@@ -1596,7 +1601,7 @@ function highlightLearningKeywords(
     keywordSet.has(part.toLowerCase()) ? (
       <mark
         key={`${part}-${index}`}
-        className="rounded-md bg-amber-300/20 px-1 text-amber-100 ring-1 ring-amber-300/30"
+        className="ccba-question-key font-bold text-sky-300"
       >
         {part}
       </mark>
@@ -2679,9 +2684,11 @@ const BabokPdfLazyPage = React.memo(function BabokPdfLazyPage({
 function BabokPdfCanvas({
   pageNumber,
   fullScreen = false,
+  compact = false,
 }: {
   pageNumber: number;
   fullScreen?: boolean;
+  compact?: boolean;
 }) {
   const readerRef = React.useRef<HTMLDivElement>(null);
   const scrollRef = React.useRef<HTMLDivElement>(null);
@@ -2868,7 +2875,17 @@ function BabokPdfCanvas({
   };
 
   return (
-    <div className="flex w-full min-w-0 flex-col overflow-hidden bg-white text-slate-900">
+    <div className={cn('flex w-full min-w-0 flex-col overflow-hidden bg-white text-slate-900', compact && 'h-full min-h-0')}>
+      {compact ? (
+        <div className="flex shrink-0 items-center justify-between gap-1 border-b border-slate-300 bg-slate-100 px-2 py-2 text-[11px]">
+          <button type="button" disabled={!pdf || currentPage<=1} onClick={() => scrollToPage(currentPage-1)} className="rounded border border-slate-300 px-2 py-1 disabled:opacity-40">‹</button>
+          <span className="whitespace-nowrap"><strong>{currentPage}</strong> / {pdf?.numPages ?? '…'}</span>
+          <button type="button" disabled={!pdf || currentPage>=(pdf?.numPages||0)} onClick={() => scrollToPage(currentPage+1)} className="rounded border border-slate-300 px-2 py-1 disabled:opacity-40">›</button>
+          <button type="button" onClick={() => setZoom(z=>Math.max(.5,+(z-.2).toFixed(2)))} className="rounded border border-slate-300 px-2 py-1">−</button>
+          <span className="whitespace-nowrap">{Math.round(zoom*100)}%</span>
+          <button type="button" onClick={() => setZoom(z=>Math.min(2,+(z+.2).toFixed(2)))} className="rounded border border-slate-300 px-2 py-1">+</button>
+        </div>
+      ) : (
       <div className="flex flex-wrap items-center gap-1.5 border-b border-slate-300 bg-slate-100 p-2 text-xs">
         <button type="button" onClick={() => setShowOutline((value) => !value)}
           className="rounded border border-slate-300 px-2 py-1">☰ Mục lục</button>
@@ -2896,19 +2913,21 @@ function BabokPdfCanvas({
         <a href={babokPdfPublicUrl()} target="_blank" rel="noreferrer"
           className="rounded border border-slate-300 px-2 py-1">PDF gốc</a>
       </div>
+      )}
       {searchStatus && <p className="bg-slate-50 px-2 py-1 text-[11px] text-slate-600">{searchStatus}</p>}
-      <div className="flex min-h-0 w-full overflow-hidden">
+      <div className={cn('flex min-h-0 w-full overflow-hidden', compact && 'flex-1')}>
         {showOutline && (
-          <aside className="max-h-[370px] w-36 shrink-0 overflow-auto border-r border-slate-200 bg-white sm:w-44 lg:max-h-[calc(100vh-450px)]">
+          <aside className={cn('w-36 shrink-0 overflow-auto border-r border-slate-200 bg-white sm:w-44',compact ? 'h-full max-h-full' : 'max-h-[370px] lg:max-h-[calc(100vh-450px)]')}>
             {outline.length ? renderOutline(outline) : (
               <p className="p-3 text-xs text-slate-500">File PDF chưa có bookmark/mục lục.</p>
             )}
           </aside>
         )}
-        <div ref={readerRef} className="min-w-0 flex-1">
+        <div ref={readerRef} className="min-w-0 min-h-0 flex-1">
           <div ref={scrollRef} onScroll={handleScroll}
             className={fullScreen
               ? 'h-[calc(100vh-170px)] overflow-auto bg-slate-300'
+              : compact ? 'h-full min-h-0 overflow-auto bg-slate-300'
               : 'h-[370px] overflow-auto bg-slate-300 lg:h-[calc(100vh-450px)] lg:min-h-[280px]'}
             style={{ overscrollBehavior: 'contain' }}>
             {error && <p className="p-3 text-sm text-red-700">Lỗi PDF: {error}</p>}
@@ -2951,7 +2970,7 @@ type PracticalKeyInsight = {
 function emphasizeBilingualKeys(value: string): React.ReactNode {
   return value.split(/(\[\[[^\]]+\]\])/g).map((part, index) =>
     part.startsWith('[[') && part.endsWith(']]') ? (
-      <strong key={index} className="font-semibold text-cyan-200">
+      <strong key={index} className="font-extrabold text-sky-300">
         {part.slice(2, -2)}
       </strong>
     ) : (
@@ -3592,93 +3611,66 @@ function BabokStudyGuidePanel({
 }) {
   const guide = buildBabokStudyGuide(question);
   const memory = buildMinimalBabokMemory(question, guide, note);
-  const technicalExcel = matchExcelTechnique(question, excelKnowledge);
   const basicInsight = buildPracticalKeyInsight(question, guide);
-  const contextual = buildFocusedExcelInsight(question,guide,excelKnowledge,basicInsight);
+  const contextual = buildFocusedExcelInsight(question, guide, excelKnowledge, basicInsight);
   const practical = contextual.insight;
-  const excelWords = (excelKnowledge?.dictionary || [])
-    .filter((item) => item.en && item.vi && new RegExp(`\\b${item.en.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i').test(question.text))
-    .slice(0, 2);
-  const pdfPage = babokPdfPage(memory.bookPage);
-  const pdfHref = babokPdfHref(memory.bookPage);
-  const correct = question.options.find((option) => option.isCorrect);
-  const keywordPairs = extractLearningKeywords(question.text, '')
-    .filter((item) => item.appearsInQuestion && Boolean(item.vi))
-    .slice(0, 3);
+  const correct = question.options.find(option => option.isCorrect);
   const isNegative = isNegativeExamQuestion(question.text);
+  const sourceLine = contextual.source || (memory.section ? `BABOK ${memory.section}` : 'Nguồn cần đối chiếu');
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04]">
-      <div className="space-y-2.5 border-b border-white/10 px-4 py-3.5">
-        <h3 className="text-sm font-bold text-cyan-100">Học KEY ngay sau câu trả lời</h3>
-        {(keywordPairs.length > 0 || excelWords.length > 0) ? (
-          <p className="text-sm leading-6 text-slate-200">
-            {[...keywordPairs, ...excelWords
-              .filter(item => !keywordPairs.some(k => k.en.toLowerCase() === item.en.toLowerCase()))
-              .map(item => ({...item, appearsInQuestion:true}))]
-              .slice(0, 4).map((item, index) => (
-              <React.Fragment key={item.en}>
-                {index > 0 ? <span className="text-slate-500"> · </span> : null}
-                <strong className="text-cyan-200">{item.en}</strong>{' '}
-                <span className="text-slate-400">({item.vi})</span>
-              </React.Fragment>
-            ))}
-          </p>
-        ) : (
-          <p className="text-sm text-slate-300">
-            <strong className="text-cyan-200">{memory.keyEn}</strong>
-          </p>
+    <div className="ccba-study-guide h-full min-h-0 overflow-y-auto px-4 py-3.5 xl:px-5">
+      <div className="border-b border-white/10 pb-3">
+        <p className="mb-2 text-[10px] font-semibold uppercase tracking-widest text-sky-300">KEY quyết định câu trả lời</p>
+        <h3 className="break-words text-xl font-extrabold leading-snug text-slate-100 xl:text-[23px]">{correct?.text || 'Chưa có đáp án trong đề'}</h3>
+        {note?.status === 'ready' && note.correctAnswerVi && (
+          <p className="mt-1.5 text-xs leading-5 text-slate-400">{note.correctAnswerVi}</p>
         )}
-        <p className="text-sm leading-6 text-slate-100">
-          <span className="font-semibold text-emerald-200">Đáp án đúng:</span>{' '}
-          {correct?.text || 'Chưa có đáp án trong dữ liệu'}
-          {note?.status === 'ready' && note.correctAnswerVi && (
-            <span className="block text-slate-300">{note.correctAnswerVi}</span>
-          )}
+        {note?.status === 'loading' && <p className="mt-1.5 text-xs text-slate-400">Đang dịch nghĩa đáp án…</p>}
+      </div>
+
+      <section className="ccba-study-section py-3.5">
+        <h4 className="mb-2 flex items-center gap-2 text-xs font-bold text-slate-100"><span className="ccba-step-num">01</span> Cách nhận diện</h4>
+        <p className="text-[13px] leading-[1.85] text-slate-300">
+          {isNegative && <strong className="text-amber-300">NOT / EXCEPT / LEAST = tìm phương án ngoại lệ. </strong>}
+          {emphasizeBilingualKeys(practical.clue)}
         </p>
-        {note?.status === 'loading' && (
-          <p className="text-xs text-slate-400">Đang dịch nghĩa đáp án...</p>
-        )}
-        {note?.status === 'error' && (
-          <p className="text-xs text-amber-200">Chưa dịch được đáp án. Nội dung tiếng Anh vẫn có thể ôn tập.</p>
-        )}
-        <div className="space-y-2 border-t border-white/10 pt-2.5 text-[13px] leading-5">
-          <p className="text-slate-200">
-            <span className="font-bold text-amber-200">Cách nhận diện · KEY: </span>
-            {isNegative && <span className="font-semibold text-amber-200">NOT / EXCEPT / LEAST = tìm ngoại lệ. </span>}
-            {emphasizeBilingualKeys(practical.clue)}
-          </p>
-          <p className="text-slate-200">
-            <span className="font-bold text-emerald-200">Kiến thức nền · Nhớ: </span>
-            {emphasizeBilingualKeys(practical.principle)}
-          </p>
-          <p className="text-slate-300">
-            <span className="font-semibold text-slate-100">Dễ nhầm: </span>
-            {emphasizeBilingualKeys(practical.contrast)}
-          </p>
-          {contextual.source && (
-            <p className="text-[11px] text-violet-200/90">Nguồn ghi nhớ: {contextual.source}</p>
-          )}
-          {!contextual.verified && (
-            <p className="text-[11px] text-amber-200/90">Gợi ý theo phạm vi task; câu này chưa có lời giải KEY riêng được xác minh từ ghi chú Excel.</p>
-          )}
-        </div>
+      </section>
+
+      <section className="ccba-study-section py-3.5">
+        <h4 className="mb-2 flex items-center gap-2 text-xs font-bold text-slate-100"><span className="ccba-step-num">02</span> Kiến thức nền cần nhớ</h4>
+        <p className="text-[13px] leading-[1.85] text-slate-300">{emphasizeBilingualKeys(practical.principle)}</p>
+      </section>
+
+      <section className="ccba-study-section py-3.5">
+        <h4 className="mb-2 flex items-center gap-2 text-xs font-bold text-slate-100"><span className="ccba-step-num">03</span> Dễ nhầm — Cách loại trừ</h4>
+        <p className="text-[13px] leading-[1.85] text-slate-300">{emphasizeBilingualKeys(practical.contrast)}</p>
+      </section>
+
+      <div className="border-t border-white/10 py-3 text-[11px] leading-5 text-slate-400">
+        <p>Nguồn học: <span className="text-sky-300">{sourceLine}</span></p>
+        {!contextual.verified && <p className="mt-1 text-amber-300">Câu này chưa có KEY riêng được đối chiếu đầy đủ từ Excel. Hãy kiểm tra BABOK bên phải.</p>}
       </div>
-      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 px-4 py-2.5">
+    </div>
+  );
+}
+
+function BabokSourcePanel({ question }: { question: Question }) {
+  const guide = buildBabokStudyGuide(question);
+  const memory = buildMinimalBabokMemory(question, guide);
+  const pdfPage = babokPdfPage(memory.bookPage);
+  return (
+    <div className="flex h-full min-h-0 flex-col overflow-hidden">
+      <header className="flex shrink-0 items-center justify-between gap-2 border-b border-white/10 px-3 py-2.5">
         <div className="min-w-0">
-          <p className="text-xs font-semibold text-slate-100">
-            BABOK {memory.section} · {memory.title}
-          </p>
-          <p className="mt-0.5 text-[11px] text-slate-400">
-            PDF trang {pdfPage} · Vị trí tham khảo, cần đối chiếu nội dung câu hỏi
-          </p>
+          <div className="truncate text-xs font-semibold text-slate-100">BABOK {memory.section} · {memory.title}</div>
+          <div className="mt-0.5 text-[10px] text-slate-400">Trang PDF {pdfPage} · Tham khảo nội dung liên quan</div>
         </div>
-        <a href={pdfHref} target="_blank" rel="noreferrer"
-          className="shrink-0 text-xs font-semibold text-cyan-200 hover:underline">
-          Toàn màn hình ↗
-        </a>
+        <a href={babokPdfHref(memory.bookPage)} target="_blank" rel="noreferrer" className="shrink-0 text-[11px] font-semibold text-sky-300 hover:underline">Mở lớn ↗</a>
+      </header>
+      <div className="min-h-0 flex-1">
+        <BabokPdfCanvas key={`${question.id}-${pdfPage}`} pageNumber={pdfPage} compact />
       </div>
-      <BabokPdfCanvas key={`${question.id}-${pdfPage}`} pageNumber={pdfPage} />
     </div>
   );
 }
@@ -3686,19 +3678,22 @@ function BabokStudyGuidePanel({
 function ThemeController({
   isDarkMode,
   onToggle,
+  inline = false,
 }: {
   isDarkMode: boolean;
   onToggle: () => void;
+  inline?: boolean;
 }) {
   return (
     <>
-      <style>{LIGHT_THEME_OVERRIDES}</style>
+      <style>{LIGHT_THEME_OVERRIDES + '\n.ccba-workspace .ccba-step-num { display:inline-flex; align-items:center; justify-content:center; width:24px; height:22px; border-radius:6px; background:#233e68; color:#9dc8ff; font-size:10px; font-weight:800; }\n.ccba-workspace .ccba-study-section + .ccba-study-section { border-top:1px solid rgba(148,163,184,.18); }\n.ccba-workspace .ccba-learning-key, .ccba-workspace .ccba-question-key { color:#79c8ff !important; font-weight:800; background:none !important; box-shadow:none !important; text-decoration:none !important; padding:0 !important; }\n.ccba-workspace.theme-light .ccba-learning-key, .ccba-workspace.theme-light .ccba-question-key { color:#0759aa !important; }\n.ccba-workspace.theme-light .ccba-step-num { background:#e4edfa; color:#1c5192; }\n.ccba-workspace .ccba-study-guide { scrollbar-width:thin; scrollbar-color:#475569 transparent; }\n.ccba-workspace .ccba-question-map { scrollbar-width:thin; scrollbar-color:#475569 transparent; }\n.ccba-workspace.theme-light .ccba-quiz-panel, .ccba-workspace.theme-light .ccba-study-panel, .ccba-workspace.theme-light .ccba-pdf-panel { background:#ffffff !important; border-color:#cbd5e1 !important; }\n.ccba-workspace.theme-light .ccba-study-guide h3, .ccba-workspace.theme-light .ccba-study-guide h4 { color:#16243d !important; }\n.ccba-workspace.theme-light .ccba-study-guide p.text-slate-300 { color:#37475e !important; }\n.ccba-workspace.theme-light .ccba-study-guide .text-slate-400 { color:#64748b !important; }\n.ccba-workspace.theme-light .ccba-study-guide .text-sky-300 { color:#0759aa !important; }\n.ccba-workspace.theme-light .ccba-study-guide .text-amber-300 { color:#92560d !important; }\n@media(min-width:1024px) { .ccba-workspace { height:100dvh; overflow:hidden; } .ccba-workspace .ccba-three-pane { min-height:0; } }\n'}</style>
       <button
         type="button"
         onClick={onToggle}
         aria-label={isDarkMode ? 'Chuyển sang chế độ sáng' : 'Chuyển sang chế độ tối'}
         title={isDarkMode ? 'Chuyển sang chế độ sáng' : 'Chuyển sang chế độ tối'}
         className={cn(
+          inline ? 'inline-flex items-center gap-1.5 rounded-lg border px-2.5 py-2 text-[11px] font-semibold transition' :
           'fixed bottom-4 right-4 z-[100] inline-flex items-center gap-2 rounded-full border px-4 py-2.5 text-sm font-semibold shadow-2xl backdrop-blur transition hover:-translate-y-0.5',
           isDarkMode
             ? 'border-white/10 bg-slate-900/90 text-slate-100 hover:bg-slate-800'
@@ -3749,6 +3744,7 @@ export default function QuizLearningApp() {
   const [questionLimit, setQuestionLimit] = useState('all');
   const [search, setSearch] = useState('');
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [questionMapOpen, setQuestionMapOpen] = useState(false);
   const [session, setSession] = useState<QuizSession | null>(null);
   const [learningNotes, setLearningNotes] = useState<Record<string, LearningNote>>({});
   const [questionTranslations, setQuestionTranslations] = useState<
@@ -4535,15 +4531,16 @@ if (
     );
 
     setCurrentIndex(safeIndex);
+    setQuestionMapOpen(false);
     questionPaneRef.current?.scrollTo({ top: 0, behavior: 'auto' });
     scrollToPageTop();
   };
 
   return (
-    <div className={appThemeClass('min-h-screen bg-slate-950 text-slate-100')}>
-      <ThemeController isDarkMode={isDarkMode} onToggle={toggleTheme} />
-      <div className="mx-auto max-w-[1880px] px-2.5 py-2 md:px-3">
-        <div className="mb-3 flex flex-col gap-2 rounded-2xl border border-white/10 bg-white/[0.04] p-3 sm:flex-row sm:items-center sm:justify-between">
+    <div className={appThemeClass('ccba-workspace min-h-screen bg-slate-950 text-slate-100')}>
+      <div className="mx-auto flex min-h-0 max-w-[1880px] flex-col px-2.5 py-2 md:px-3 lg:h-full">
+
+        <div className="mb-2 flex shrink-0 flex-col gap-2 rounded-xl border border-white/10 bg-white/[0.04] p-2.5 sm:flex-row sm:items-center sm:justify-between">
           <div className="min-w-0">
             <button
               onClick={resetToHome}
@@ -4567,20 +4564,7 @@ if (
               <span className="text-amber-200">Chưa làm <strong>{score.unanswered}</strong></span>
               {session.submitted && <span className="font-semibold text-cyan-200">{score.percent}%</span>}
             </div>
-            <label className="sr-only" htmlFor="ccba-jump-question">Chọn câu hỏi</label>
-            <select
-              id="ccba-jump-question"
-              value={currentIndex}
-              onChange={(event) => goToQuestion(Number(event.target.value))}
-              className="max-w-[150px] rounded-xl border border-white/10 bg-slate-900 px-2.5 py-2 text-xs text-slate-100"
-            >
-              {session.questions.map((question, index) => {
-                const picked = session.answers[question.id];
-                const correct = question.options.find((option) => option.id === picked)?.isCorrect;
-                const mark = !picked ? '—' : correct ? '✓' : '✕';
-                return <option key={question.id} value={index}>Câu {index + 1} {mark}</option>;
-              })}
-            </select>
+            <ThemeController isDarkMode={isDarkMode} onToggle={toggleTheme} inline />
             <button
               onClick={() => startQuiz(session.setId)}
               className="inline-flex items-center gap-1.5 rounded-xl border border-white/10 px-3 py-2 text-xs font-semibold text-slate-200 transition hover:bg-white/10"
@@ -4597,42 +4581,8 @@ if (
           </div>
         </div>
 
-        <nav aria-label="Bản đồ câu hỏi: chọn số để mở câu, màu thể hiện đúng sai chưa làm" className="mb-3 rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2">
-          <div className="mb-2 flex flex-wrap items-center justify-between gap-2 text-[11px]">
-            <strong className="text-slate-200">Tình trạng từng câu · Bấm số để xem lại</strong>
-            <div className="flex items-center gap-3 text-slate-300">
-              <span><span className="text-emerald-300">●</span> Đúng</span>
-              <span><span className="text-rose-300">●</span> Sai</span>
-              <span><span className="text-slate-500">●</span> Chưa làm</span>
-              <span className="text-cyan-300">▢ Đang xem</span>
-            </div>
-          </div>
-          <div ref={questionNavRef} className="grid max-h-[90px] grid-cols-10 gap-1 overflow-y-auto pr-1 sm:grid-cols-[repeat(15,minmax(0,1fr))] lg:grid-cols-[repeat(20,minmax(0,1fr))]">
-            {session.questions.map((q,index) => {
-              const picked = session.answers[q.id];
-              const isRight = Boolean(q.options.find(option => option.id === picked)?.isCorrect);
-              const status = !picked ? 'Chưa làm' : isRight ? 'Đúng' : 'Sai';
-              return (
-                <button key={q.id} type="button" data-question-index={index}
-                  onClick={() => goToQuestion(index)}
-                  title={`Câu ${index+1} (câu gốc ${q.originalNumber}): ${status}`}
-                  aria-label={`Mở câu ${index+1}: ${status}`}
-                  aria-current={currentIndex===index ? 'step' : undefined}
-                  className={cn(
-                    'h-7 min-w-0 rounded-md border text-[11px] font-semibold transition hover:brightness-125',
-                    !picked && 'border-white/10 bg-slate-700/60 text-slate-200',
-                    picked && isRight && 'border-emerald-500/50 bg-emerald-500/25 text-emerald-100',
-                    picked && !isRight && 'border-rose-500/50 bg-rose-500/25 text-rose-100',
-                    currentIndex===index && 'ring-2 ring-cyan-300 ring-offset-1 ring-offset-slate-950'
-                  )}
-                >{index+1}</button>
-              );
-            })}
-          </div>
-        </nav>
-
-        <div className="grid gap-3 lg:grid-cols-[minmax(0,55fr)_minmax(0,45fr)] lg:items-start">
-          <main ref={questionPaneRef} className="min-w-0 rounded-2xl border border-white/10 bg-white/[0.04] p-4 shadow-xl md:p-5 lg:h-[calc(100vh-116px)] lg:overflow-y-auto">
+        <div className="ccba-three-pane grid gap-2 lg:min-h-0 lg:flex-1 lg:grid-cols-[minmax(0,42fr)_minmax(0,32fr)_minmax(0,26fr)]">
+          <main ref={questionPaneRef} className="ccba-quiz-panel min-w-0 min-h-0 overflow-y-auto rounded-xl border border-white/10 bg-white/[0.04] p-4 md:p-5">
             <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-2">
               <div>
                 <p className="text-xs font-semibold text-slate-300">
@@ -4656,7 +4606,7 @@ if (
               </div>
             </div>
 
-            <h2 className="mt-5 whitespace-pre-line text-base font-semibold leading-7 md:text-[17px] md:leading-7">
+            <h2 className="mt-4 whitespace-pre-line text-[15px] font-semibold leading-[1.8] md:text-[16px]">
               {hasAnsweredCurrent
                 ? highlightLearningKeywords(currentQuestion.text, currentKeywords)
                 : currentQuestion.text}
@@ -4771,24 +4721,73 @@ if (
             </div>
           </main>
 
-          <section className="min-w-0 lg:h-[calc(100vh-116px)] lg:overflow-y-auto">
-            {excelLoadError && <p className="mb-2 text-xs text-amber-200">{excelLoadError} — phần KEY cơ bản vẫn hoạt động.</p>}
-            {(hasAnsweredCurrent || session.submitted) ? (
-              <BabokStudyGuidePanel
-                question={currentQuestion}
-                note={currentLearningNote}
-                excelKnowledge={excelKnowledge}
-                selectedOptionId={currentPickedId}
-              />
-            ) : (
-              <div className="rounded-2xl border border-white/10 bg-white/[0.04] px-5 py-6 text-sm text-slate-400">
-                Sau khi chọn đáp án, KEY cần nhớ và trang BABOK liên quan sẽ hiển thị tại đây.
+          <section className="ccba-study-panel min-h-[360px] min-w-0 overflow-hidden rounded-xl lg:min-h-0 border border-white/10 bg-white/[0.04]">
+            <div className="flex h-full min-h-0 flex-col">
+              <div className="shrink-0 border-b border-white/10 px-4 py-3 text-xs font-bold text-slate-200">02 — Học KEY từ Excel <span className="ml-1 text-[10px] font-normal text-slate-400">Nhận diện · Ghi nhớ · Loại trừ</span></div>
+              <div className="min-h-0 flex-1">
+                {excelLoadError && <p className="px-4 pt-2 text-xs text-amber-200">{excelLoadError} — phần KEY cơ bản vẫn hoạt động.</p>}
+                {(hasAnsweredCurrent || session.submitted) ? (
+                  <BabokStudyGuidePanel question={currentQuestion} note={currentLearningNote} excelKnowledge={excelKnowledge} selectedOptionId={currentPickedId} />
+                ) : (
+                  <div className="px-5 py-6 text-sm leading-7 text-slate-400">Sau khi trả lời, vùng này sẽ hiện <strong className="text-sky-300">KEY quyết định</strong>, cách nhận diện trong đề, kiến thức nền và các đáp án dễ nhầm.</div>
+                )}
               </div>
-            )}
+            </div>
           </section>
-
-
+          <aside className="ccba-pdf-panel min-h-0 min-w-0 overflow-hidden rounded-xl border border-white/10 bg-white/[0.04]">
+            <div className="border-b border-white/10 px-3 py-3 text-xs font-bold text-slate-200">03 — Tài liệu BABOK</div>
+            <div className="h-[480px] min-h-0 sm:h-[580px] lg:h-[calc(100%-41px)]">
+              <BabokSourcePanel question={currentQuestion} />
+            </div>
+          </aside>
         </div>
+        <nav aria-label="Trạng thái từng câu và điều hướng" className="ccba-question-nav relative mt-2 shrink-0 rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2">
+          {questionMapOpen && (
+            <div className="absolute bottom-[calc(100%+8px)] left-0 right-0 z-30 overflow-hidden rounded-xl border border-white/20 bg-slate-900 p-3 shadow-2xl">
+              <div className="mb-2 flex items-center justify-between text-xs font-semibold text-slate-200"><span>Tất cả {session.questions.length} câu · Bấm số để xem lại</span><button onClick={() => setQuestionMapOpen(false)} className="rounded border border-white/20 px-2 py-1">Đóng ✕</button></div>
+              <div ref={questionNavRef} className="ccba-question-map grid max-h-[min(58vh,430px)] grid-cols-8 gap-1.5 overflow-y-auto sm:grid-cols-12 lg:grid-cols-20">
+                {session.questions.map((q,index) => {
+                  const picked = session.answers[q.id];
+                  const isRight = Boolean(q.options.find(option => option.id === picked)?.isCorrect);
+                  const status = !picked ? 'Chưa làm' : isRight ? 'Đúng' : 'Sai';
+                  return <button key={q.id} type="button" data-question-index={index} onClick={() => goToQuestion(index)} title={`Câu ${index+1}: ${status}`}
+                    aria-current={currentIndex===index ? 'step' : undefined}
+                    className={cn('h-8 rounded-md border text-[11px] font-semibold transition hover:brightness-125',
+                      !picked && 'border-white/10 bg-slate-700/70 text-slate-200',
+                      picked && isRight && 'border-emerald-500/50 bg-emerald-500/25 text-emerald-100',
+                      picked && !isRight && 'border-rose-500/50 bg-rose-500/25 text-rose-100',
+                      currentIndex===index && 'ring-2 ring-sky-300')}>{index+1}</button>;
+                })}
+              </div>
+            </div>
+          )}
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <div className="flex items-center gap-2">
+              <button onClick={() => goToQuestion(currentIndex-1)} disabled={currentIndex===0} aria-label="Câu trước" className="rounded-lg border border-white/10 px-2.5 py-1.5 text-xs disabled:opacity-30">‹</button>
+              <span className="min-w-[65px] text-center text-xs font-bold text-slate-100">{currentIndex+1}/{session.questions.length}</span>
+              <button onClick={() => goToQuestion(currentIndex+1)} disabled={currentIndex===session.questions.length-1} aria-label="Câu tiếp" className="rounded-lg border border-white/10 px-2.5 py-1.5 text-xs disabled:opacity-30">›</button>
+              <div className="ml-2 hidden flex-wrap gap-1 md:flex">
+                {session.questions.slice(Math.max(0,Math.min(session.questions.length-15,currentIndex-7)),Math.max(0,Math.min(session.questions.length-15,currentIndex-7))+15).map(q => {
+                  const index=session.questions.indexOf(q);
+                  const picked=session.answers[q.id];
+                  const isRight=Boolean(q.options.find(opt=>opt.id===picked)?.isCorrect);
+                  return <button key={q.id} onClick={() => goToQuestion(index)} title={`Câu ${index+1}: ${!picked?'Chưa làm':isRight?'Đúng':'Sai'}`}
+                    className={cn('h-7 min-w-[27px] rounded border text-[10px] font-semibold',
+                    !picked && 'border-white/10 bg-slate-700/60 text-slate-200',
+                    picked && isRight && 'border-emerald-400/60 bg-emerald-500/25 text-emerald-100',
+                    picked && !isRight && 'border-rose-400/60 bg-rose-500/25 text-rose-100',
+                    currentIndex===index && 'ring-2 ring-sky-300')}>{index+1}</button>;
+                })}
+              </div>
+            </div>
+            <div className="flex items-center gap-3 text-[11px] text-slate-300">
+              <span className="hidden sm:inline"><span className="text-emerald-300">●</span> Đúng</span>
+              <span className="hidden sm:inline"><span className="text-rose-300">●</span> Sai</span>
+              <span className="hidden sm:inline"><span className="text-slate-400">●</span> Chưa làm</span>
+              <button onClick={() => setQuestionMapOpen(open=>!open)} aria-expanded={questionMapOpen} className="rounded-lg bg-sky-100 px-3 py-1.5 text-[11px] font-bold text-slate-900 hover:bg-white">{questionMapOpen?'Thu gọn':'Tất cả câu'}</button>
+            </div>
+          </div>
+        </nav>
 
       </div>
     </div>
