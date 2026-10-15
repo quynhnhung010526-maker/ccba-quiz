@@ -163,9 +163,26 @@ type ExcelMemory = {
   source: string;
 };
 type ExcelDictionaryTerm = { en: string; vi: string };
+type StudyParagraphBlock = {
+  type: 'paragraph' | 'insight' | 'tip' | 'answer' | 'process';
+  text?: string;
+  steps?: string[];
+};
+type AnswerOptionExplanation = { text: string; why: string };
+type QuestionStudyBlocks = {
+  recognition: StudyParagraphBlock[];
+  foundation: StudyParagraphBlock[];
+  confusion?: StudyParagraphBlock[];
+};
 type CuratedQuestionInsight = {
   anchor: string;
   correctAnswer: string;
+  studyBlocks?: QuestionStudyBlocks;
+  optionReasons?: AnswerOptionExplanation[];
+  keyPhrasesInQuestion?: string[];
+  sourceEvidence?: Array<{ label: string; claim: string }>;
+  sourceQualification?: string;
+  contentFormat?: string;
   clue: string;
   principle: string;
   contrast: string;
@@ -2999,14 +3016,62 @@ type PracticalKeyInsight = {
 
 /** Viết [[KEY tiếng Anh]] để làm nổi bật KEY ngay trong câu tiếng Việt. */
 function emphasizeBilingualKeys(value: string): React.ReactNode {
-  return value.split(/(\[\[[^\]]+\]\])/g).map((part, index) =>
-    part.startsWith('[[') && part.endsWith(']]') ? (
-      <strong key={index} className="font-extrabold text-sky-300">
-        {part.slice(2, -2)}
-      </strong>
-    ) : (
-      <React.Fragment key={index}>{part}</React.Fragment>
-    )
+  const pieces = value.split(/(\[\[[^\]]+\]\]|\*\*[^*]+\*\*|\*[^*\n]+\*|\n)/g);
+  return pieces.map((piece, index) => {
+    if (piece.startsWith('[[') && piece.endsWith(']]')) {
+      return <strong key={index} className="ccba-learning-key">{piece.slice(2, -2)}</strong>;
+    }
+    if (piece.startsWith('**') && piece.endsWith('**')) {
+      return <strong key={index} className="ccba-learning-key">{piece.slice(2, -2)}</strong>;
+    }
+    if (piece.startsWith('*') && piece.endsWith('*')) {
+      return <em key={index}>{piece.slice(1, -1)}</em>;
+    }
+    return piece === '\n' ? <br key={index} /> : <React.Fragment key={index}>{piece}</React.Fragment>;
+  });
+}
+
+/** Present the content blocks stored in JSON; no CCBA theory or per-question answer hardcoded in the UI. */
+function renderStudyBlocks(blocks: StudyParagraphBlock[] | undefined, fallback: string): React.ReactNode {
+  const chosen = blocks?.length ? blocks : [{type: 'paragraph' as const, text: fallback}];
+  return chosen.map((block, index) => {
+    const text = block.text || '';
+    if (block.type === 'process') {
+      return <div key={index} className="ccba-lesson-process">
+        <span className="ccba-lesson-process-caption">TRÌNH TỰ CẦN NHỚ</span>
+        <div className="ccba-lesson-process-steps">{(block.steps || []).map((step, idx) =>
+          <React.Fragment key={idx}>{idx > 0 && <span className="ccba-lesson-arrow">→</span>}<span className="ccba-lesson-process-step">{step}</span></React.Fragment>
+        )}</div>
+      </div>;
+    }
+    const className = block.type === 'insight' ? 'ccba-lesson-insight' :
+      block.type === 'tip' ? 'ccba-lesson-tip' :
+      block.type === 'answer' ? 'ccba-lesson-answer' : 'ccba-lesson-paragraph';
+    return <div key={index} className={className}>{emphasizeBilingualKeys(text)}</div>;
+  });
+}
+
+/** Only show per-option reasoning when authored in JSON and matched to the ACTUAL options in this question. */
+function renderOptionReasons(question: Question, explanations: AnswerOptionExplanation[] | undefined): React.ReactNode | null {
+  if (!explanations?.length || explanations.length !== question.options.length) return null;
+  const normalized = (value: string) => value.replace(/\s+/g,' ').trim().toLocaleLowerCase();
+  if (!question.options.every((opt,i) => normalized(opt.text) === normalized(explanations[i].text))) return null;
+  return <div className="ccba-option-reason-list">{question.options.map((option, index) => (
+    <div key={option.id} className={'ccba-option-reason' + (option.isCorrect ? ' ccba-option-reason-correct' : '')}>
+      <div className="ccba-option-head"><span className="ccba-option-letter">{String.fromCharCode(65+index)}</span>
+        <strong className="ccba-option-title">{option.text}</strong>{option.isCorrect && <span className="ccba-option-correct-tag">✓ Đúng</span>}
+      </div>
+      <div className="ccba-option-detail">{emphasizeBilingualKeys(explanations[index].why)}</div>
+    </div>
+  ))}</div>;
+}
+
+/** A paragraph-only fallback for older JSON, so all 1017 questions gain legible spacing without invented rationales. */
+function renderContrastParagraphs(text: string, question: Question, kb?: ExcelKnowledge | null, blocks?: StudyParagraphBlock[]): React.ReactNode {
+  const paragraphs = blocks?.length ? blocks.map(block=>block.text || '').filter(Boolean)
+    : text.split(/\n+|(?<=[.;!?])\s+(?=(?:\[\[)?[A-ZÀ-ỸĐ])/).filter(part=>part.trim());
+  return paragraphs.map((part,index) =>
+    <p key={index} className="ccba-lesson-paragraph">{emphasizeContrastKeys(part.trim(), question, kb)}</p>
   );
 }
 
@@ -3613,6 +3678,7 @@ function BabokStudyGuidePanel({
   const basicInsight = buildPracticalKeyInsight(question, guide, excelKnowledge);
   const contextual = buildFocusedExcelInsight(question, guide, excelKnowledge, basicInsight);
   const practical = contextual.insight;
+  const curated = findCuratedQuestionInsight(question, excelKnowledge);
   const keyAlignment = alignedKeys || alignRecognitionToQuestion(question.text, practical);
   const correct = question.options.find(option => option.isCorrect);
   const isNegative = isNegativeExamQuestion(question.text);
@@ -3631,20 +3697,23 @@ function BabokStudyGuidePanel({
 
       <section className="ccba-study-section py-3.5">
         <h4 className="mb-2 flex items-center gap-2 text-xs font-bold text-slate-100"><span className="ccba-step-num">01</span> Cách nhận diện</h4>
-        <p className="text-[13px] leading-[1.85] text-slate-300">
-          {isNegative && <strong className="text-amber-300">NOT / EXCEPT / LEAST = tìm phương án ngoại lệ. </strong>}
-          {emphasizeBilingualKeys(keyAlignment.recognition)}
-        </p>
+        {isNegative && <p className="mb-2 text-[12px] font-bold text-amber-300">NOT / EXCEPT / LEAST = tìm phương án ngoại lệ.</p>}
+        {curated?.contentFormat === 'approved-structured-v1'
+          ? renderStudyBlocks(curated.studyBlocks?.recognition, practical.clue)
+          : <>
+            <p className="ccba-key-link">{emphasizeBilingualKeys('**KEY trong đề:** ' + (keyAlignment.phrases.map(phrase => '[['+phrase+']]').join(' · ') || 'Đối chiếu nội dung câu hỏi'))}</p>
+            {renderStudyBlocks(curated?.studyBlocks?.recognition, practical.clue)}
+          </>}
       </section>
 
       <section className="ccba-study-section py-3.5">
         <h4 className="mb-2 flex items-center gap-2 text-xs font-bold text-slate-100"><span className="ccba-step-num">02</span> Kiến thức nền cần nhớ</h4>
-        <p className="text-[13px] leading-[1.85] text-slate-300">{emphasizeBilingualKeys(practical.principle)}</p>
+        {renderStudyBlocks(curated?.studyBlocks?.foundation, practical.principle)}
       </section>
 
       <section className="ccba-study-section py-3.5">
         <h4 className="mb-2 flex items-center gap-2 text-xs font-bold text-slate-100"><span className="ccba-step-num">03</span> Dễ nhầm — Cách loại trừ</h4>
-        <p className="text-[13px] leading-[1.85] text-slate-300">{emphasizeContrastKeys(practical.contrast, question, excelKnowledge)}</p>
+        {renderOptionReasons(question, curated?.optionReasons) || renderContrastParagraphs(practical.contrast, question, excelKnowledge, curated?.studyBlocks?.confusion)}
       </section>
 
       <div className="border-t border-white/10 py-3 text-[11px] leading-5 text-slate-400">
@@ -3655,6 +3724,7 @@ function BabokStudyGuidePanel({
             <span>“{contextual.evidence.excerpt}”</span>
           </p>
         )}
+        {curated?.sourceQualification && <p className="mt-2 text-[11px] leading-5 text-slate-500">{curated.sourceQualification}</p>}
         {keyAlignment.source === 'suggested' && (
           <p className="mt-1 text-[10px] leading-4 text-slate-500">
             KEY xanh là cụm gợi ý trích từ đề; chưa xác minh riêng mức độ quyết định đáp án.
@@ -3703,7 +3773,7 @@ function ThemeController({
 }) {
   return (
     <>
-      <style>{LIGHT_THEME_OVERRIDES + '\n.ccba-workspace .ccba-step-num { display:inline-flex; align-items:center; justify-content:center; width:24px; height:22px; border-radius:6px; background:#233e68; color:#9dc8ff; font-size:10px; font-weight:800; }\n.ccba-workspace .ccba-study-section + .ccba-study-section { border-top:1px solid rgba(148,163,184,.18); }\n.ccba-workspace .ccba-learning-key, .ccba-workspace .ccba-question-key { color:#79c8ff !important; font-weight:800; background:none !important; box-shadow:none !important; text-decoration:none !important; padding:0 !important; }\n.ccba-workspace.theme-light .ccba-learning-key, .ccba-workspace.theme-light .ccba-question-key { color:#0759aa !important; }\n.ccba-workspace.theme-light .ccba-step-num { background:#e4edfa; color:#1c5192; }\n.ccba-workspace .ccba-study-guide { scrollbar-width:thin; scrollbar-color:#475569 transparent; }\n.ccba-workspace .ccba-question-map { scrollbar-width:thin; scrollbar-color:#475569 transparent; }\n.ccba-workspace.theme-light .ccba-quiz-panel, .ccba-workspace.theme-light .ccba-study-panel, .ccba-workspace.theme-light .ccba-pdf-panel { background:#ffffff !important; border-color:#cbd5e1 !important; }\n.ccba-workspace.theme-light .ccba-study-guide h3, .ccba-workspace.theme-light .ccba-study-guide h4 { color:#16243d !important; }\n.ccba-workspace.theme-light .ccba-study-guide p.text-slate-300 { color:#37475e !important; }\n.ccba-workspace.theme-light .ccba-study-guide .text-slate-400 { color:#64748b !important; }\n.ccba-workspace.theme-light .ccba-study-guide .text-sky-300 { color:#0759aa !important; }\n.ccba-workspace.theme-light .ccba-study-guide .text-amber-300 { color:#92560d !important; }\n@media(min-width:1024px) { .ccba-workspace { height:100dvh; overflow:hidden; } .ccba-workspace .ccba-three-pane { min-height:0; } }\n'}</style>
+      <style>{LIGHT_THEME_OVERRIDES + '\n.ccba-workspace .ccba-step-num { display:inline-flex; align-items:center; justify-content:center; width:24px; height:22px; border-radius:6px; background:#233e68; color:#9dc8ff; font-size:10px; font-weight:800; }\n.ccba-workspace .ccba-study-section + .ccba-study-section { border-top:1px solid rgba(148,163,184,.18); }\n.ccba-workspace .ccba-learning-key, .ccba-workspace .ccba-question-key { color:#79c8ff !important; font-weight:800; background:none !important; box-shadow:none !important; text-decoration:none !important; padding:0 !important; }\n.ccba-workspace.theme-light .ccba-learning-key, .ccba-workspace.theme-light .ccba-question-key { color:#0759aa !important; }\n.ccba-workspace.theme-light .ccba-step-num { background:#e4edfa; color:#1c5192; }\n.ccba-workspace .ccba-study-guide { scrollbar-width:thin; scrollbar-color:#475569 transparent; }\n.ccba-workspace .ccba-question-map { scrollbar-width:thin; scrollbar-color:#475569 transparent; }\n.ccba-workspace.theme-light .ccba-quiz-panel, .ccba-workspace.theme-light .ccba-study-panel, .ccba-workspace.theme-light .ccba-pdf-panel { background:#ffffff !important; border-color:#cbd5e1 !important; }\n.ccba-workspace.theme-light .ccba-study-guide h3, .ccba-workspace.theme-light .ccba-study-guide h4 { color:#16243d !important; }\n.ccba-workspace.theme-light .ccba-study-guide p.text-slate-300 { color:#37475e !important; }\n.ccba-workspace.theme-light .ccba-study-guide .text-slate-400 { color:#64748b !important; }\n.ccba-workspace.theme-light .ccba-study-guide .text-sky-300 { color:#0759aa !important; }\n.ccba-workspace.theme-light .ccba-study-guide .text-amber-300 { color:#92560d !important; }\n\n.ccba-workspace .ccba-study-guide .ccba-lesson-paragraph, .ccba-workspace .ccba-study-guide .ccba-lesson-insight, .ccba-workspace .ccba-study-guide .ccba-lesson-answer, .ccba-workspace .ccba-study-guide .ccba-lesson-tip, .ccba-workspace .ccba-study-guide .ccba-option-detail {font-size:13px;line-height:1.75;color:#cbd5e1;}\n.ccba-workspace .ccba-study-guide .ccba-lesson-paragraph + .ccba-lesson-paragraph, .ccba-workspace .ccba-study-guide .ccba-lesson-paragraph + .ccba-lesson-insight, .ccba-workspace .ccba-study-guide .ccba-lesson-insight + .ccba-lesson-paragraph, .ccba-workspace .ccba-study-guide .ccba-lesson-insight + .ccba-lesson-tip, .ccba-workspace .ccba-study-guide .ccba-lesson-process + .ccba-lesson-paragraph {margin-top:11px;}\n.ccba-workspace .ccba-study-guide .ccba-lesson-insight {margin:10px 0;padding:10px 12px;border-left:3px solid #38bdf8;background:rgba(56,189,248,.09);border-radius:0 8px 8px 0;}\n.ccba-workspace .ccba-study-guide .ccba-lesson-answer {margin-top:11px;border:1px solid rgba(52,211,153,.34);background:rgba(16,185,129,.10);border-radius:8px;padding:10px 12px;font-weight:600;}\n.ccba-workspace .ccba-study-guide .ccba-lesson-tip {margin-top:11px;padding:10px 12px;background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.22);border-radius:8px;}\n.ccba-workspace .ccba-study-guide .ccba-lesson-process {margin:10px 0;padding:11px;background:rgba(148,163,184,.10);border-radius:8px;}\n.ccba-workspace .ccba-study-guide .ccba-lesson-process-caption {display:block;font-size:9px;letter-spacing:.1em;font-weight:800;color:#94a3b8;margin-bottom:7px;}\n.ccba-workspace .ccba-study-guide .ccba-lesson-process-steps {display:flex;align-items:center;flex-wrap:wrap;gap:6px;}\n.ccba-workspace .ccba-study-guide .ccba-lesson-process-step {border:1px solid rgba(148,163,184,.3);border-radius:6px;padding:5px 7px;font-size:11px;font-weight:700;color:#b9d5fa;}\n.ccba-workspace .ccba-study-guide .ccba-lesson-arrow {font-size:11px;color:#94a3b8;}\n.ccba-workspace .ccba-study-guide .ccba-key-link {font-size:11px;line-height:1.6;margin-bottom:10px;color:#a8bedb;}\n.ccba-workspace .ccba-study-guide .ccba-option-reason-list {display:flex;flex-direction:column;gap:9px;}\n.ccba-workspace .ccba-study-guide .ccba-option-reason {border:1px solid rgba(148,163,184,.24);border-radius:9px;padding:9px 11px;background:rgba(148,163,184,.06);}\n.ccba-workspace .ccba-study-guide .ccba-option-reason-correct {border-color:rgba(16,185,129,.45);background:rgba(16,185,129,.08);}\n.ccba-workspace .ccba-study-guide .ccba-option-head {display:flex;align-items:flex-start;gap:8px;margin-bottom:6px;}\n.ccba-workspace .ccba-study-guide .ccba-option-letter {min-width:23px;width:23px;height:23px;display:flex;align-items:center;justify-content:center;border-radius:6px;background:rgba(148,163,184,.22);font-weight:800;font-size:11px;}\n.ccba-workspace .ccba-study-guide .ccba-option-title {flex:1;line-height:1.5;font-size:12px;font-weight:700;}\n.ccba-workspace .ccba-study-guide .ccba-option-correct-tag {color:#34d399;white-space:nowrap;font-size:10px;font-weight:800;}\n.ccba-workspace.theme-light .ccba-study-guide .ccba-lesson-paragraph,.ccba-workspace.theme-light .ccba-study-guide .ccba-lesson-insight,.ccba-workspace.theme-light .ccba-study-guide .ccba-lesson-tip,.ccba-workspace.theme-light .ccba-study-guide .ccba-lesson-answer,.ccba-workspace.theme-light .ccba-study-guide .ccba-option-detail {color:#34435b;}\n.ccba-workspace.theme-light .ccba-study-guide .ccba-option-title {color:#1b2b45;}\n.ccba-workspace.theme-light .ccba-study-guide .ccba-lesson-insight {background:#eff7ff;border-color:#1680d7;}\n.ccba-workspace.theme-light .ccba-study-guide .ccba-lesson-answer {background:#edfdf6;border-color:#6ddcaa;}\n.ccba-workspace.theme-light .ccba-study-guide .ccba-lesson-tip {background:#f2f7ff;border-color:#cadaf8;}\n.ccba-workspace.theme-light .ccba-study-guide .ccba-lesson-process {background:#f0f4fa;}\n.ccba-workspace.theme-light .ccba-study-guide .ccba-lesson-process-step {color:#204b84;border-color:#cbd5e1;}\n.ccba-workspace.theme-light .ccba-study-guide .ccba-option-reason {background:#f8fafc;border-color:#dbe3ec;}\n.ccba-workspace.theme-light .ccba-study-guide .ccba-option-reason-correct {background:#eafbf3;border-color:#82e3b8;}\n.ccba-workspace.theme-light .ccba-study-guide .ccba-option-correct-tag {color:#047857;}\n.ccba-workspace.theme-light .ccba-study-guide .ccba-key-link {color:#586b86;}\n@media(min-width:1024px) { .ccba-workspace { height:100dvh; overflow:hidden; } .ccba-workspace .ccba-three-pane { min-height:0; } }\n'}</style>
       <button
         type="button"
         onClick={onToggle}
